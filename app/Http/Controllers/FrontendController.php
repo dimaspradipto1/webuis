@@ -32,6 +32,7 @@ use App\Models\PengumumanAgenda;
 use App\Models\PermintaanRilisSetting;
 use App\Models\PmbSetting;
 use App\Models\Prestasi;
+use App\Models\ProgramStudi;
 use App\Models\PusatInformasiHumas;
 use App\Models\PusatInformasiHumasSetting;
 use App\Models\SambutanDekan;
@@ -277,11 +278,40 @@ class FrontendController extends Controller
         return view('layouts.frontend.dosen', compact('prodis', 'currentProdi', 'dosens', 'totalDosen', 'search', 'pageTitle'));
     }
 
+    public function programStudi()
+    {
+        $prodis = ProgramStudi::where('is_active', true)->orderBy('urutan')->orderBy('id')->get();
+        $prodisS2 = $prodis->where('jenjang', 'S2')->values();
+        $prodisS1Grouped = $prodis->where('jenjang', '!=', 'S2')->groupBy('fakultas');
+        $fakultasLinks = Layanan::where('aktif', true)->orderBy('urutan')->get();
+
+        return view('layouts.frontend.program-studi', compact('prodis', 'prodisS2', 'prodisS1Grouped', 'fakultasLinks'));
+    }
+
+    public function programStudiDetail($slug)
+    {
+        $prodi = ProgramStudi::where(function ($q) use ($slug) {
+            $q->where('slug', $slug)
+                ->orWhere('id', $slug);
+        })->first();
+
+        if (! $prodi) {
+            return $this->layananDetail($slug);
+        }
+
+        if (is_numeric($slug) && ! empty($prodi->slug)) {
+            return redirect()->route('homepage.program-studi.detail', $prodi->slug, 301);
+        }
+
+        $allProdis = ProgramStudi::where('is_active', true)->orderBy('urutan')->orderBy('id')->get();
+        $groupedProdis = $allProdis->groupBy('fakultas');
+
+        return view('layouts.frontend.program-studi-detail', compact('prodi', 'allProdis', 'groupedProdis'));
+    }
+
     public function layanan()
     {
-        $layanans = Layanan::where('aktif', true)->orderBy('urutan')->get();
-
-        return view('layouts.frontend.layanan', compact('layanans'));
+        return $this->programStudi();
     }
 
     public function layananDetail($slug)

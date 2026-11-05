@@ -29,6 +29,7 @@ use App\Http\Controllers\PengumumanAgendaController;
 use App\Http\Controllers\PmbSettingController;
 use App\Http\Controllers\PrestasiController;
 use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\ProgramStudiController;
 use App\Http\Controllers\PublikasiController;
 use App\Http\Controllers\PusatInformasiHumasController;
 use App\Http\Controllers\SambutanDekanController;
@@ -62,8 +63,10 @@ Route::controller(FrontendController::class)->group(function () {
     Route::get('/kalender-akademik', 'kalenderAkademik')->name('homepage.kalender-akademik');
     Route::get('/pedoman-akademik', 'pedomanAkademik')->name('homepage.pedoman-akademik');
     Route::get('/sistem-akademik', 'sistemAkademik')->name('homepage.sistem-akademik');
-    Route::get('/layanan', 'layanan')->name('homepage.layanan');
-    Route::get('/layanan/{slug}', 'layananDetail')->name('homepage.layanan.detail');
+    Route::get('/program-studi', 'programStudi')->name('homepage.program-studi');
+    Route::get('/program-studi/{slug}', 'programStudiDetail')->name('homepage.program-studi.detail');
+    Route::get('/layanan', 'programStudi')->name('homepage.layanan');
+    Route::get('/layanan/{slug}', 'programStudiDetail')->name('homepage.layanan.detail');
     Route::get('/fasilitas', 'fasilitas')->name('homepage.fasilitas');
     Route::get('/fasilitas/{slug}', 'fasilitasDetail')->name('homepage.fasilitas.detail');
     Route::get('/galeri', 'galeri')->name('homepage.galeri');
@@ -202,6 +205,10 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
         ->names('organisasi-mahasiswa');
     Route::get('admin-program-studi', [LayananController::class, 'index'])->name('layanan.index');
     Route::post('admin-program-studi', [LayananController::class, 'updateAll'])->name('layanan.update-all');
+    Route::resource('admin-kelola-prodi', ProgramStudiController::class)
+        ->parameters(['admin-kelola-prodi' => 'programStudi'])
+        ->names('program-studi')
+        ->except(['show']);
     Route::get('admin-publikasi', [PublikasiController::class, 'index'])->name('publikasi.index');
     Route::post('admin-publikasi', [PublikasiController::class, 'updateAll'])->name('publikasi.update-all');
 

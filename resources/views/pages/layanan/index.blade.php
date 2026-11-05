@@ -1,14 +1,19 @@
 @extends('layouts.dashboard.template')
 
 @section('content')
-<div class="pagetitle">
-    <h1>Pengaturan Program Studi</h1>
-    <nav>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-            <li class="breadcrumb-item active">Program Studi</li>
-        </ol>
-    </nav>
+<div class="pagetitle d-flex flex-wrap align-items-center justify-content-between gap-2">
+    <div>
+        <h1>Pengaturan Menu Fakultas (Navbar)</h1>
+        <nav>
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+                <li class="breadcrumb-item active">Fakultas</li>
+            </ol>
+        </nav>
+    </div>
+    <a href="{{ route('program-studi.index') }}" class="btn btn-success rounded-3 px-3" style="background: #046B26; border-color: #046B26;">
+        <i class="bi bi-journal-bookmark-fill me-1"></i> Kelola Program Studi & Detail Prodi
+    </a>
 </div>
 
 <div class="row">
