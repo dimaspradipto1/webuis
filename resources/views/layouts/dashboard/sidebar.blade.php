@@ -19,25 +19,15 @@
           @endphp
 
           @if($isAdmin)
-          <!-- 2. Konten Beranda / Landing Page -->
+          <!-- 2. Konten Beranda / Landing Page (Urutan Sesuai Tampilan Beranda dari Atas ke Bawah) -->
           <li class="nav-item">
-              <a class="nav-link {{ Route::is('banner.*') || Route::is('layanan-terkait.*') || Route::is('social-media.*') || Route::is('feature.*') || Route::is('sarana.*') || Route::is('tridharma.*') || Route::is('pmb-setting.*') || Route::is('faculty-stat.*') ? '' : 'collapsed' }}" data-bs-target="#beranda-nav" data-bs-toggle="collapse" href="#">
+              <a class="nav-link {{ Route::is('banner.*') || Route::is('faculty-stat.*') || Route::is('feature.*') || Route::is('pmb-setting.*') || Route::is('sarana.*') || Route::is('layanan-terkait.*') || (Route::is('social-media.*') && request('kategori') !== 'humas') ? '' : 'collapsed' }}" data-bs-target="#beranda-nav" data-bs-toggle="collapse" href="#">
                   <i class="bi bi-layout-text-window-reverse"></i><span>Konten Beranda</span><i class="bi bi-chevron-down ms-auto"></i>
               </a>
-              <ul id="beranda-nav" class="nav-content collapse {{ Route::is('banner.*') || Route::is('layanan-terkait.*') || (Route::is('social-media.*') && request('kategori') !== 'humas') || Route::is('feature.*') || Route::is('sarana.*') || Route::is('tridharma.*') || Route::is('pmb-setting.*') || Route::is('faculty-stat.*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+              <ul id="beranda-nav" class="nav-content collapse {{ Route::is('banner.*') || Route::is('faculty-stat.*') || Route::is('feature.*') || Route::is('pmb-setting.*') || Route::is('sarana.*') || Route::is('layanan-terkait.*') || (Route::is('social-media.*') && request('kategori') !== 'humas') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
                   <li>
                       <a href="{{ route('banner.index') }}" class="{{ Route::is('banner.*') ? 'active' : '' }}">
                           <i class="bi bi-circle"></i><span>Banner Hero</span>
-                      </a>
-                  </li>
-                  <li>
-                      <a href="{{ route('layanan-terkait.index') }}" class="{{ Route::is('layanan-terkait.*') ? 'active' : '' }}">
-                          <i class="bi bi-circle"></i><span>Layanan Terkait</span>
-                      </a>
-                  </li>
-                  <li>
-                      <a href="{{ route('social-media.index', ['kategori' => 'universitas']) }}" class="{{ Route::is('social-media.*') && request('kategori') !== 'humas' ? 'active' : '' }}">
-                          <i class="bi bi-circle"></i><span>Media Sosial Universitas</span>
                       </a>
                   </li>
                   <li>
@@ -51,18 +41,23 @@
                       </a>
                   </li>
                   <li>
+                      <a href="{{ route('pmb-setting.index') }}" class="{{ Route::is('pmb-setting.*') ? 'active' : '' }}">
+                          <i class="bi bi-circle"></i><span>Banner PMB & Pendaftaran</span>
+                      </a>
+                  </li>
+                  <li>
                       <a href="{{ route('sarana.index') }}" class="{{ Route::is('sarana.*') ? 'active' : '' }}">
                           <i class="bi bi-circle"></i><span>Sarana Kampus</span>
                       </a>
                   </li>
                   <li>
-                      <a href="{{ route('tridharma.index') }}" class="{{ Route::is('tridharma.*') ? 'active' : '' }}">
-                          <i class="bi bi-circle"></i><span>Tri Dharma</span>
+                      <a href="{{ route('layanan-terkait.index') }}" class="{{ Route::is('layanan-terkait.*') ? 'active' : '' }}">
+                          <i class="bi bi-circle"></i><span>Layanan Terkait</span>
                       </a>
                   </li>
                   <li>
-                      <a href="{{ route('pmb-setting.index') }}" class="{{ Route::is('pmb-setting.*') ? 'active' : '' }}">
-                          <i class="bi bi-circle"></i><span>Banner PMB & Pendaftaran</span>
+                      <a href="{{ route('social-media.index', ['kategori' => 'universitas']) }}" class="{{ Route::is('social-media.*') && request('kategori') !== 'humas' ? 'active' : '' }}">
+                          <i class="bi bi-circle"></i><span>Media Sosial Universitas</span>
                       </a>
                   </li>
               </ul>
@@ -176,10 +171,10 @@
           @if($isAdmin || $isPenulis)
           <!-- 7. Informasi (Berita & Pengumuman) -->
           <li class="nav-item">
-              <a class="nav-link {{ Route::is('news.*') || Route::is('faq.*') ? '' : 'collapsed' }}" data-bs-target="#informasi-nav" data-bs-toggle="collapse" href="#">
+              <a class="nav-link {{ Route::is('news.*') || Route::is('pengumuman-agenda.*') || Route::is('faq.*') ? '' : 'collapsed' }}" data-bs-target="#informasi-nav" data-bs-toggle="collapse" href="#">
                   <i class="bi bi-newspaper"></i><span>Informasi</span><i class="bi bi-chevron-down ms-auto"></i>
               </a>
-              <ul id="informasi-nav" class="nav-content collapse {{ Route::is('news.*') || Route::is('faq.*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+              <ul id="informasi-nav" class="nav-content collapse {{ Route::is('news.*') || Route::is('pengumuman-agenda.*') || Route::is('faq.*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
                   <li>
                       <a href="{{ route('news.index') }}" class="{{ Route::is('news.index') ? 'active' : '' }}">
                           <i class="bi bi-circle"></i><span>Semua Berita & Pengumuman</span>
@@ -190,6 +185,11 @@
                           <i class="bi bi-circle"></i><span>Tulis Berita / Pengumuman</span>
                       </a>
                   </li>
+                  <li>
+                      <a href="{{ route('pengumuman-agenda.index') }}" class="{{ Route::is('pengumuman-agenda.*') ? 'active' : '' }}">
+                          <i class="bi bi-circle"></i><span>Pengumuman & Agenda</span>
+                      </a>
+                  </li>
                   @if($isAdmin)
                   <li>
                       <a href="{{ route('faq.index') }}" class="{{ Route::is('faq.*') ? 'active' : '' }}">
@@ -197,6 +197,37 @@
                       </a>
                   </li>
                   @endif
+              </ul>
+          </li>
+          @endif
+
+          @if($isAdmin)
+          <!-- 8. Laboratorium & Fasilitas (Di Bawah Menu Informasi) -->
+          @php
+              $sidebarSaranas = \App\Models\Sarana::orderBy('urutan')->get();
+          @endphp
+          <li class="nav-item">
+              <a class="nav-link {{ Route::is('sarana.*') ? '' : 'collapsed' }}" data-bs-target="#fasilitas-lab-nav" data-bs-toggle="collapse" href="#">
+                  <i class="bi bi-cpu"></i><span>Laboratorium & Fasilitas</span><i class="bi bi-chevron-down ms-auto"></i>
+              </a>
+              <ul id="fasilitas-lab-nav" class="nav-content collapse {{ Route::is('sarana.*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+                  <li>
+                      <a href="{{ route('sarana.index') }}" class="{{ Route::is('sarana.index') ? 'active' : '' }}">
+                          <i class="bi bi-circle"></i><span>Semua Lab & Fasilitas</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="{{ route('sarana.create') }}" class="{{ Route::is('sarana.create') ? 'active' : '' }}">
+                          <i class="bi bi-circle"></i><span>+ Tambah Lab / Fasilitas</span>
+                      </a>
+                  </li>
+                  @foreach($sidebarSaranas as $navSarana)
+                  <li>
+                      <a href="{{ route('sarana.edit', $navSarana->id) }}" class="{{ request()->is('admin/sarana/' . $navSarana->id . '/edit') ? 'active' : '' }}">
+                          <i class="bi bi-circle"></i><span>Detail: {{ \Illuminate\Support\Str::limit($navSarana->nama, 26) }}</span>
+                      </a>
+                  </li>
+                  @endforeach
               </ul>
           </li>
           @endif

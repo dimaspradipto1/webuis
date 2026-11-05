@@ -2,11 +2,11 @@
 
 @section('content')
 <div class="pagetitle">
-    <h1>Edit Sarana & Fasilitas</h1>
+    <h1>Edit Laboratorium & Fasilitas</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('sarana.index') }}">Sarana & Fasilitas</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('sarana.index') }}">Fasilitas & Laboratorium</a></li>
             <li class="breadcrumb-item active">Edit</li>
         </ol>
     </nav>
@@ -17,7 +17,7 @@
         <div class="card shadow-sm">
             <div class="card-header py-3">
                 <h5 class="mb-0 fw-semibold">
-                    <i class="bi bi-pencil-square me-2 text-warning"></i>Form Edit Sarana
+                    <i class="bi bi-pencil-square me-2 text-warning"></i>Form Edit Laboratorium / Fasilitas
                 </h5>
             </div>
             <div class="card-body pt-4">
@@ -35,60 +35,137 @@
                     </div>
                 @endif
 
-                <form action="{{ route('sarana.update', $sarana->id) }}" method="POST">
+                <form action="{{ route('sarana.update', $sarana->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PUT')
 
-                    <div class="mb-3">
-                        <label for="icon" class="form-label fw-semibold">
-                            Bootstrap Icon Class <span class="text-danger">*</span>
-                        </label>
-                        <div class="input-group">
-                            <span class="input-group-text bg-light" id="icon-preview-box" style="font-size:22px;color:#046B26;min-width:52px;justify-content:center;">
-                                <i class="bi {{ old('icon', $sarana->icon ?? 'bi-building') }}"></i>
-                            </span>
-                            <input type="text"
-                                   id="icon"
-                                   name="icon"
-                                   class="form-control @error('icon') is-invalid @enderror"
-                                   value="{{ old('icon', $sarana->icon ?? 'bi-building') }}"
-                                   placeholder="Contoh: bi-shield-check, bi-pc-display, bi-flask"
-                                   oninput="updateIconPreview(this.value)">
+                    <div class="row">
+                        <div class="col-md-7 mb-3">
+                            <label for="icon" class="form-label fw-semibold">
+                                Bootstrap Icon Class <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light" id="icon-preview-box" style="font-size:22px;color:#046B26;min-width:52px;justify-content:center;">
+                                    <i class="bi {{ old('icon', $sarana->icon ?? 'bi-building') }}"></i>
+                                </span>
+                                <input type="text"
+                                       id="icon"
+                                       name="icon"
+                                       class="form-control @error('icon') is-invalid @enderror"
+                                       value="{{ old('icon', $sarana->icon ?? 'bi-building') }}"
+                                       placeholder="Contoh: bi-shield-check, bi-pc-display, bi-flask"
+                                       oninput="updateIconPreview(this.value)">
+                            </div>
+                            <div class="form-text">
+                                Ketik nama class icon Bootstrap (<a href="https://icons.getbootstrap.com/" target="_blank">icons.getbootstrap.com</a>).
+                            </div>
+                            @error('icon')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
                         </div>
-                        <div class="form-text">
-                            Ketik nama class icon Bootstrap.
-                            Lihat daftar lengkap di <a href="https://icons.getbootstrap.com/" target="_blank">icons.getbootstrap.com</a>.
+
+                        <div class="col-md-5 mb-3">
+                            <label for="kategori" class="form-label fw-semibold">Kategori</label>
+                            <select id="kategori" name="kategori" class="form-select">
+                                <option value="Fasilitas Kampus" {{ old('kategori', $sarana->kategori) === 'Fasilitas Kampus' ? 'selected' : '' }}>Fasilitas Kampus</option>
+                                <option value="Laboratorium & Studio" {{ old('kategori', $sarana->kategori) === 'Laboratorium & Studio' ? 'selected' : '' }}>Laboratorium & Studio</option>
+                            </select>
                         </div>
-                        @error('icon')
-                            <div class="invalid-feedback d-block">{{ $message }}</div>
-                        @enderror
                     </div>
 
                     <div class="mb-3">
                         <label for="nama" class="form-label fw-semibold">
-                            Nama Sarana / Fasilitas <span class="text-danger">*</span>
+                            Nama Laboratorium / Fasilitas <span class="text-danger">*</span>
                         </label>
                         <input type="text"
                                id="nama"
                                name="nama"
                                class="form-control @error('nama') is-invalid @enderror"
                                value="{{ old('nama', $sarana->nama) }}"
-                               placeholder="Contoh: Lab K3 & Higiene Industri">
+                               placeholder="Contoh: Laboratorium Komputer, Jaringan & AI">
                         @error('nama')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
 
                     <div class="mb-3">
-                        <label for="deskripsi" class="form-label fw-semibold">Deskripsi</label>
+                        <label for="deskripsi" class="form-label fw-semibold">Ringkasan Singkat (Tampil di Kartu Beranda)</label>
                         <textarea id="deskripsi"
                                   name="deskripsi"
                                   class="form-control @error('deskripsi') is-invalid @enderror"
-                                  rows="4"
-                                  placeholder="Tuliskan keterangan detail sarana/fasilitas...">{{ old('deskripsi', $sarana->deskripsi) }}</textarea>
+                                  rows="3"
+                                  placeholder="Tuliskan ringkasan singkat 1-2 kalimat yang tampil di kartu beranda...">{{ old('deskripsi', $sarana->deskripsi) }}</textarea>
                         @error('deskripsi')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
+                    </div>
+
+                    {{-- Detail Halaman Fasilitas / Laboratorium --}}
+                    <div class="p-3 rounded-3 border bg-light bg-opacity-50 mb-3">
+                        <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mb-3">
+                            <h6 class="fw-bold text-success mb-0">
+                                <i class="bi bi-file-earmark-richtext me-1"></i> Pengaturan Halaman Detail Laboratorium / Fasilitas
+                            </h6>
+                            @if($sarana->slug)
+                                <a href="{{ route('homepage.fasilitas.detail', $sarana->slug) }}" target="_blank" class="btn btn-sm btn-outline-success">
+                                    <i class="bi bi-box-arrow-up-right me-1"></i> Lihat Halaman Detail
+                                </a>
+                            @endif
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Foto Utama Ruangan / Gedung</label>
+                                <input type="file" name="foto" class="form-control" accept="image/*">
+                                <div class="form-text small">Maksimal 20 MB (JPG, PNG, WEBP).</div>
+                                @if(!empty($sarana->foto))
+                                    <div class="mt-2">
+                                        <img src="{{ asset('storage/' . $sarana->foto) }}" alt="{{ $sarana->nama }}" class="rounded-2 border" style="height: 75px; object-fit: cover;">
+                                    </div>
+                                @endif
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Tambah Galeri Foto Dokumentasi</label>
+                                <input type="file" name="galeri[]" class="form-control" accept="image/*" multiple>
+                                <div class="form-text small">Maksimal 20 MB per foto.</div>
+                                @if(!empty($sarana->galeri) && is_array($sarana->galeri))
+                                    <div class="d-flex flex-wrap gap-2 mt-2">
+                                        @foreach($sarana->galeri as $gImg)
+                                            <img src="{{ asset('storage/' . $gImg) }}" alt="Galeri" class="rounded-2 border" style="height: 55px; width: 75px; object-fit: cover;">
+                                        @endforeach
+                                    </div>
+                                @endif
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Lokasi Gedung / Lantai</label>
+                                <input type="text" name="lokasi" class="form-control" value="{{ old('lokasi', $sarana->lokasi) }}" placeholder="Contoh: Gedung B Lantai 2">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Kapasitas Ruang</label>
+                                <input type="text" name="kapasitas" class="form-control" value="{{ old('kapasitas', $sarana->kapasitas) }}" placeholder="Contoh: 40 Mahasiswa">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Jam Operasional</label>
+                                <input type="text" name="jam_operasional" class="form-control" value="{{ old('jam_operasional', $sarana->jam_operasional) }}">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Kepala Lab / Penanggung Jawab</label>
+                                <input type="text" name="penanggung_jawab" class="form-control" value="{{ old('penanggung_jawab', $sarana->penanggung_jawab) }}">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold small">Deskripsi Lengkap Halaman Detail</label>
+                            <textarea name="konten_detail" rows="6" class="form-control tinymce-editor" placeholder="Tuliskan penjelasan lengkap mengenai fungsi laboratorium/fasilitas, kegiatan praktikum, riset, dan layanan yang tersedia...">{{ old('konten_detail', $sarana->konten_detail) }}</textarea>
+                        </div>
+
+                        <div class="mb-0">
+                            <label class="form-label fw-semibold small">Spesifikasi / Peralatan / Fasilitas Pendukung (1 Poin per Baris)</label>
+                            <textarea name="spesifikasi" rows="4" class="form-control" placeholder="Ruangan ber-AC penuh&#10;Koneksi internet serat optik berkecepatan tinggi&#10;Perangkat komputer spesifikasi tinggi">{{ old('spesifikasi', $sarana->spesifikasi) }}</textarea>
+                        </div>
                     </div>
 
                     <div class="row">

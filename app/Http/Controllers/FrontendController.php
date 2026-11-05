@@ -28,6 +28,7 @@ use App\Models\OrganisasiMahasiswa;
 use App\Models\OrganisasiMahasiswaSetting;
 use App\Models\Partner;
 use App\Models\PendampinganAcaraSetting;
+use App\Models\PengumumanAgenda;
 use App\Models\PermintaanRilisSetting;
 use App\Models\PmbSetting;
 use App\Models\Prestasi;
@@ -96,6 +97,16 @@ class FrontendController extends Controller
             ->latest()
             ->take(5)
             ->get();
+        $pengumumans = PengumumanAgenda::where('tipe', 'pengumuman')
+            ->where('is_active', true)
+            ->orderBy('urutan')
+            ->orderByDesc('id')
+            ->get();
+        $agendas = PengumumanAgenda::where('tipe', 'agenda')
+            ->where('is_active', true)
+            ->orderBy('urutan')
+            ->orderByDesc('id')
+            ->get();
         $faqs = Faq::take(6)->get();
         $galleries = Gallery::where(function ($q) {
             $q->where('kategori', 'universitas')->orWhereNull('kategori');
@@ -143,6 +154,8 @@ class FrontendController extends Controller
             'latestNews',
             'search',
             'announcements',
+            'pengumumans',
+            'agendas',
             'faqs',
             'galleries',
             'prestasis',
@@ -936,5 +949,42 @@ class FrontendController extends Controller
         return redirect()
             ->route('homepage.alumni.create')
             ->with('success', 'Terima kasih atas kontribusi Anda! Testimoni & kisah sukses Anda telah berhasil kami terima dan akan segera ditinjau oleh admin.');
+    }
+
+    public function fasilitas(Request $request)
+    {
+        $selectedKategori = $request->query('kategori', '');
+
+        $query = Sarana::where('is_active', true)->orderBy('urutan');
+
+        if (! empty($selectedKategori)) {
+            $query->where('kategori', $selectedKategori);
+        }
+
+        $saranas = $query->get();
+        $allSaranas = Sarana::where('is_active', true)->orderBy('urutan')->get();
+
+        return view('layouts.frontend.fasilitas', compact('saranas', 'allSaranas', 'selectedKategori'));
+    }
+
+    public function fasilitasDetail(string $slug)
+    {
+        $sarana = Sarana::where('slug', $slug)
+            ->orWhere(function ($q) use ($slug) {
+                if (is_numeric($slug)) {
+                    $q->where('id', (int) $slug);
+                }
+            })
+            ->firstOrFail();
+
+        if (is_numeric($slug) && ! empty($sarana->slug)) {
+            return redirect()->route('homepage.fasilitas.detail', $sarana->slug, 301);
+        }
+
+        $otherSaranas = Sarana::where('is_active', true)
+            ->orderBy('urutan')
+            ->get();
+
+        return view('layouts.frontend.fasilitas-detail', compact('sarana', 'otherSaranas'));
     }
 }

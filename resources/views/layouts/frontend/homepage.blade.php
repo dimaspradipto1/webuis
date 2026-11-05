@@ -694,11 +694,20 @@
       @if(isset($saranas) && $saranas->count())
         @foreach($saranas as $index => $sarana)
           <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ 100 + ($index * 100) }}">
-            <div class="fasilitas-box">
-              <div class="fasilitas-icon"><i class="bi {{ $sarana->icon ?? 'bi-building' }}"></i></div>
-              <h4 class="fasilitas-title">{{ $sarana->nama }}</h4>
-              <p class="fasilitas-desc">{{ $sarana->deskripsi ?: 'Fasilitas yang mendukung kegiatan akademik dan riset mahasiswa.' }}</p>
-            </div>
+            <a href="{{ route('homepage.fasilitas.detail', $sarana->slug ?: $sarana->id) }}" class="text-decoration-none d-block h-100" style="color: inherit;">
+              <div class="fasilitas-box d-flex flex-column justify-content-between h-100">
+                <div>
+                  <div class="fasilitas-icon"><i class="bi {{ $sarana->icon ?? 'bi-building' }}"></i></div>
+                  <h4 class="fasilitas-title">{{ $sarana->nama }}</h4>
+                  <p class="fasilitas-desc mb-3">{{ $sarana->deskripsi ?: 'Fasilitas yang mendukung kegiatan akademik dan riset mahasiswa.' }}</p>
+                </div>
+                <div class="pt-2 mt-auto">
+                  <span class="d-inline-flex align-items-center gap-1 fw-bold" style="font-size: 13px; color: inherit; opacity: 0.9;">
+                    Lihat Detail <i class="bi bi-arrow-right"></i>
+                  </span>
+                </div>
+              </div>
+            </a>
           </div>
         @endforeach
       @else
@@ -707,6 +716,14 @@
         </div>
       @endif
     </div>
+
+    @if(isset($saranas) && $saranas->count())
+      <div class="text-center mt-5" data-aos="fade-up">
+        <a href="{{ route('homepage.fasilitas') }}" class="btn btn-uis-outline rounded-pill px-4 py-2 fw-semibold">
+          <i class="bi bi-grid-fill me-2"></i>Lihat Seluruh Laboratorium & Fasilitas
+        </a>
+      </div>
+    @endif
   </div>
 </section>
 
@@ -1521,7 +1538,21 @@
           </div>
 
           <div class="announcement-list">
-            @if(isset($announcements) && $announcements->count() > 0)
+            @if(isset($pengumumans) && $pengumumans->count() > 0)
+              @foreach($pengumumans as $item)
+                @if(!empty($item->url))
+                  <a href="{{ $item->url }}" class="announcement-card-box">
+                    <div class="announcement-card-title">{{ $item->judul }}</div>
+                    <div class="announcement-card-date">{{ $item->waktu ?: '-' }}</div>
+                  </a>
+                @else
+                  <div class="announcement-card-box">
+                    <div class="announcement-card-title">{{ $item->judul }}</div>
+                    <div class="announcement-card-date">{{ $item->waktu ?: '-' }}</div>
+                  </div>
+                @endif
+              @endforeach
+            @elseif(isset($announcements) && $announcements->count() > 0)
               @foreach($announcements as $ann)
                 <a href="{{ route('homepage.news.detail', $ann->slug ?? $ann->id) }}" class="announcement-card-box">
                   <div class="announcement-card-title">{{ $ann->title }}</div>
@@ -1550,26 +1581,43 @@
           </div>
 
           <div class="agenda-list">
-            <div class="agenda-row mb-3">
-              <div class="agenda-time-text">20 - 31 Juli 2026:</div>
-              <div class="agenda-badge-card">
-                Pendaftaran Semester Antara
+            @if(isset($agendas) && $agendas->count() > 0)
+              @foreach($agendas as $agenda)
+                <div class="agenda-row mb-3">
+                  <div class="agenda-time-text">{{ rtrim($agenda->waktu, ':') }}:</div>
+                  @if(!empty($agenda->url))
+                    <a href="{{ $agenda->url }}" class="agenda-badge-card d-block text-decoration-none">
+                      {{ $agenda->judul }}
+                    </a>
+                  @else
+                    <div class="agenda-badge-card">
+                      {{ $agenda->judul }}
+                    </div>
+                  @endif
+                </div>
+              @endforeach
+            @else
+              <div class="agenda-row mb-3">
+                <div class="agenda-time-text">20 - 31 Juli 2026:</div>
+                <div class="agenda-badge-card">
+                  Pendaftaran Semester Antara
+                </div>
               </div>
-            </div>
 
-            <div class="agenda-row mb-3">
-              <div class="agenda-time-text">03 - 28 Agustus 2026:</div>
-              <div class="agenda-badge-card">
-                Perkuliahan Semester Antara
+              <div class="agenda-row mb-3">
+                <div class="agenda-time-text">03 - 28 Agustus 2026:</div>
+                <div class="agenda-badge-card">
+                  Perkuliahan Semester Antara
+                </div>
               </div>
-            </div>
 
-            <div class="agenda-row mb-3">
-              <div class="agenda-time-text">31 Agustus - 05 September 2026:</div>
-              <div class="agenda-badge-card">
-                Penyerahan Nilai Semester Antara
+              <div class="agenda-row mb-3">
+                <div class="agenda-time-text">31 Agustus - 05 September 2026:</div>
+                <div class="agenda-badge-card">
+                  Penyerahan Nilai Semester Antara
+                </div>
               </div>
-            </div>
+            @endif
 
             <div class="mt-3">
               <a href="{{ route('homepage.news', ['category' => 'Pengumuman & Agenda']) }}" class="btn-agenda-pill">

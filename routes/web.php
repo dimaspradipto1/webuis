@@ -25,6 +25,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\NilaiPerusahaanController;
 use App\Http\Controllers\OrganisasiMahasiswaController;
 use App\Http\Controllers\PartnerController;
+use App\Http\Controllers\PengumumanAgendaController;
 use App\Http\Controllers\PmbSettingController;
 use App\Http\Controllers\PrestasiController;
 use App\Http\Controllers\ProfilController;
@@ -63,6 +64,8 @@ Route::controller(FrontendController::class)->group(function () {
     Route::get('/sistem-akademik', 'sistemAkademik')->name('homepage.sistem-akademik');
     Route::get('/layanan', 'layanan')->name('homepage.layanan');
     Route::get('/layanan/{slug}', 'layananDetail')->name('homepage.layanan.detail');
+    Route::get('/fasilitas', 'fasilitas')->name('homepage.fasilitas');
+    Route::get('/fasilitas/{slug}', 'fasilitasDetail')->name('homepage.fasilitas.detail');
     Route::get('/galeri', 'galeri')->name('homepage.galeri');
     Route::get('/galeri/humas', 'galeriHumas')->name('homepage.galeri.humas');
     Route::get('/galeri/universitas', 'galeriUniversitas')->name('homepage.galeri.universitas');
@@ -128,6 +131,7 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::get('news/download-template', [NewsController::class, 'downloadTemplate'])->name('news.download-template');
     Route::post('news/import-excel', [NewsController::class, 'importExcel'])->name('news.import-excel');
     Route::resource('news', NewsController::class);
+    Route::resource('pengumuman-agenda', PengumumanAgendaController::class)->only(['index', 'store', 'update', 'destroy']);
     Route::resource('admin-faq', FaqController::class)
         ->parameters(['admin-faq' => 'faq'])
         ->names('faq');

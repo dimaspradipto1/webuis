@@ -35,62 +35,121 @@
                     </div>
                 @endif
 
-                <form action="{{ route('sarana.store') }}" method="POST">
+                <form action="{{ route('sarana.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
 
-                    {{-- Icon --}}
-                    <div class="mb-3">
-                        <label for="icon" class="form-label fw-semibold">
-                            Bootstrap Icon Class <span class="text-danger">*</span>
-                        </label>
-                        <div class="input-group">
-                            <span class="input-group-text bg-light" id="icon-preview-box" style="font-size:22px;color:#046B26;min-width:52px;justify-content:center;">
-                                <i class="bi bi-building"></i>
-                            </span>
-                            <input type="text"
-                                   id="icon"
-                                   name="icon"
-                                   class="form-control @error('icon') is-invalid @enderror"
-                                   value="{{ old('icon', 'bi-building') }}"
-                                   placeholder="Contoh: bi-shield-check, bi-pc-display, bi-flask"
-                                   oninput="updateIconPreview(this.value)">
+                    <div class="row">
+                        {{-- Icon --}}
+                        <div class="col-md-7 mb-3">
+                            <label for="icon" class="form-label fw-semibold">
+                                Bootstrap Icon Class <span class="text-danger">*</span>
+                            </label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light" id="icon-preview-box" style="font-size:22px;color:#046B26;min-width:52px;justify-content:center;">
+                                    <i class="bi bi-building"></i>
+                                </span>
+                                <input type="text"
+                                       id="icon"
+                                       name="icon"
+                                       class="form-control @error('icon') is-invalid @enderror"
+                                       value="{{ old('icon', 'bi-building') }}"
+                                       placeholder="Contoh: bi-shield-check, bi-pc-display, bi-flask"
+                                       oninput="updateIconPreview(this.value)">
+                            </div>
+                            <div class="form-text">
+                                Ketik nama class icon Bootstrap (<a href="https://icons.getbootstrap.com/" target="_blank">icons.getbootstrap.com</a>).
+                            </div>
+                            @error('icon')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
                         </div>
-                        <div class="form-text">
-                            Ketik nama class icon Bootstrap.
-                            Lihat daftar lengkap di <a href="https://icons.getbootstrap.com/" target="_blank">icons.getbootstrap.com</a>.
+
+                        {{-- Kategori --}}
+                        <div class="col-md-5 mb-3">
+                            <label for="kategori" class="form-label fw-semibold">Kategori</label>
+                            <select id="kategori" name="kategori" class="form-select">
+                                <option value="Fasilitas Kampus" {{ old('kategori') === 'Fasilitas Kampus' ? 'selected' : '' }}>Fasilitas Kampus</option>
+                                <option value="Laboratorium & Studio" {{ old('kategori') === 'Laboratorium & Studio' ? 'selected' : '' }}>Laboratorium & Studio</option>
+                            </select>
                         </div>
-                        @error('icon')
-                            <div class="invalid-feedback d-block">{{ $message }}</div>
-                        @enderror
                     </div>
 
                     {{-- Nama Sarana --}}
                     <div class="mb-3">
                         <label for="nama" class="form-label fw-semibold">
-                            Nama Sarana / Fasilitas <span class="text-danger">*</span>
+                            Nama Laboratorium / Fasilitas <span class="text-danger">*</span>
                         </label>
                         <input type="text"
                                id="nama"
                                name="nama"
                                class="form-control @error('nama') is-invalid @enderror"
                                value="{{ old('nama') }}"
-                               placeholder="Contoh: Lab K3 & Higiene Industri">
+                               placeholder="Contoh: Laboratorium Komputer, Jaringan & AI">
                         @error('nama')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
 
-                    {{-- Deskripsi --}}
+                    {{-- Deskripsi Singkat (Kartu Beranda) --}}
                     <div class="mb-3">
-                        <label for="deskripsi" class="form-label fw-semibold">Deskripsi</label>
+                        <label for="deskripsi" class="form-label fw-semibold">Ringkasan Singkat (Tampil di Kartu Beranda)</label>
                         <textarea id="deskripsi"
                                   name="deskripsi"
                                   class="form-control @error('deskripsi') is-invalid @enderror"
-                                  rows="4"
-                                  placeholder="Tuliskan keterangan detail sarana/fasilitas...">{{ old('deskripsi') }}</textarea>
+                                  rows="3"
+                                  placeholder="Tuliskan ringkasan singkat 1-2 kalimat yang tampil di kartu beranda...">{{ old('deskripsi') }}</textarea>
                         @error('deskripsi')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
+                    </div>
+
+                    {{-- Detail Halaman Fasilitas / Laboratorium --}}
+                    <div class="p-3 rounded-3 border bg-light bg-opacity-50 mb-3">
+                        <h6 class="fw-bold text-success mb-3">
+                            <i class="bi bi-file-earmark-richtext me-1"></i> Pengaturan Halaman Detail Laboratorium / Fasilitas
+                        </h6>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Foto Utama Ruangan / Gedung</label>
+                                <input type="file" name="foto" class="form-control" accept="image/*">
+                                <div class="form-text small">Maksimal 20 MB (JPG, PNG, WEBP).</div>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Galeri Foto Tambahan (Bisa Pilih Banyak)</label>
+                                <input type="file" name="galeri[]" class="form-control" accept="image/*" multiple>
+                                <div class="form-text small">Maksimal 20 MB per foto.</div>
+                            </div>
+                        </div>
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Lokasi Gedung / Lantai</label>
+                                <input type="text" name="lokasi" class="form-control" value="{{ old('lokasi', 'Kampus Terpadu Universitas Ibnu Sina, Batam') }}" placeholder="Contoh: Gedung B Lantai 2">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Kapasitas Ruang</label>
+                                <input type="text" name="kapasitas" class="form-control" value="{{ old('kapasitas', '40 Mahasiswa / Sesi Praktikum') }}" placeholder="Contoh: 40 Mahasiswa">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Jam Operasional</label>
+                                <input type="text" name="jam_operasional" class="form-control" value="{{ old('jam_operasional', 'Senin – Sabtu, 08.00 – 21.00 WIB') }}">
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold small">Kepala Lab / Penanggung Jawab</label>
+                                <input type="text" name="penanggung_jawab" class="form-control" value="{{ old('penanggung_jawab', 'Unit Pengelola Laboratorium & Sarana UIS') }}">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold small">Deskripsi Lengkap Halaman Detail</label>
+                            <textarea name="konten_detail" rows="5" class="form-control tinymce-editor" placeholder="Tuliskan penjelasan lengkap mengenai fungsi laboratorium/fasilitas, kegiatan praktikum, riset, dan layanan yang tersedia...">{{ old('konten_detail') }}</textarea>
+                        </div>
+
+                        <div class="mb-0">
+                            <label class="form-label fw-semibold small">Spesifikasi / Peralatan / Fasilitas Pendukung (1 Poin per Baris)</label>
+                            <textarea name="spesifikasi" rows="4" class="form-control" placeholder="Ruangan ber-AC penuh&#10;Koneksi internet serat optik berkecepatan tinggi&#10;Perangkat komputer spesifikasi tinggi">{{ old('spesifikasi', "Ruangan ber-AC penuh dan pencahayaan standar akademik\nKoneksi internet serat optik berkecepatan tinggi (Wi-Fi Kampus)\nPerangkat multimedia dan proyektor interaktif\nSistem keamanan CCTV 24 jam & prosedur K3 laboratorium") }}</textarea>
+                        </div>
                     </div>
 
                     <div class="row">

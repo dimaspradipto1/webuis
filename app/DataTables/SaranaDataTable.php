@@ -30,7 +30,11 @@ class SaranaDataTable extends DataTable
                      .'<span class="text-muted small">'.e($sarana->icon).'</span>';
             })
             ->addColumn('nama', function (Sarana $sarana) {
-                return '<span class="fw-semibold">'.e($sarana->nama).'</span>';
+                $kat = $sarana->kategori ?: 'Fasilitas Kampus';
+                $badgeClass = $kat === 'Laboratorium & Studio' ? 'bg-primary' : 'bg-success';
+
+                return '<div class="fw-semibold">'.e($sarana->nama).'</div>'
+                     .'<span class="badge '.$badgeClass.' mt-1" style="font-size:10.5px;">'.e($kat).'</span>';
             })
             ->addColumn('deskripsi', function (Sarana $sarana) {
                 if (! $sarana->deskripsi) {
@@ -53,11 +57,20 @@ class SaranaDataTable extends DataTable
             ->addColumn('action', function (Sarana $sarana) {
                 $btn = '<div class="d-flex justify-content-center align-items-center" style="gap:5px">';
 
+                // Tombol Lihat Detail di Frontend
+                $detailUrl = route('homepage.fasilitas.detail', $sarana->slug ?: $sarana->id);
+                $btn .= '<a href="'.$detailUrl.'" target="_blank"
+                            class="btn btn-sm btn-info text-white"
+                            style="width:30px;height:30px;display:flex;align-items:center;justify-content:center"
+                            title="Lihat Halaman Detail">
+                            <i class="bi bi-eye-fill" style="font-size:12px"></i>
+                         </a>';
+
                 // Tombol Edit
                 $btn .= '<a href="'.route('sarana.edit', $sarana->id).'"
                             class="btn btn-sm btn-warning text-white"
                             style="width:30px;height:30px;display:flex;align-items:center;justify-content:center"
-                            title="Edit">
+                            title="Edit Detail">
                             <i class="bi bi-pencil-fill" style="font-size:12px"></i>
                          </a>';
 
@@ -90,7 +103,7 @@ class SaranaDataTable extends DataTable
     public function query(Sarana $model): QueryBuilder
     {
         return $model->newQuery()
-            ->select(['id', 'icon', 'nama', 'deskripsi', 'urutan', 'is_active'])
+            ->select(['id', 'slug', 'kategori', 'icon', 'nama', 'deskripsi', 'urutan', 'is_active'])
             ->orderBy('urutan');
     }
 
