@@ -1097,20 +1097,20 @@
 <!-- ══════════════════════════════════════════════════════
      8. E-MAGAZINE PROFIL UNIVERSITAS
 ══════════════════════════════════════════════════════ -->
-@if(!isset($emagazine) || $emagazine->is_active)
+@if(!isset($emagazine) || $emagazine?->is_active)
 <section class="humas-emagz-section" id="emagazine-section">
   <div class="container">
     <div class="humas-emagz-container" data-aos="fade-up">
       <h2 class="fw-bold mb-3" style="color: #0f172a; font-size: 28px;">
-        {{ $emagazine->judul_seksi ?? 'E-Magazine Profil Universitas' }}
+        {{ $emagazine?->judul_seksi ?: 'E-Magazine Profil Universitas' }}
       </h2>
       
       <div class="d-flex align-items-center justify-content-center gap-2 mb-4">
         <button class="humas-emagz-btn-tab active" id="tabEmagzBtn" onclick="switchMagTab('emagz')">
-          <i class="bi bi-book-half me-1"></i> {{ $emagazine->tab_1_label ?? 'E-Magazine' }}
+          <i class="bi bi-book-half me-1"></i> {{ $emagazine?->tab_1_label ?: 'E-Magazine' }}
         </button>
         <button class="humas-emagz-btn-tab" id="tabBukuSakuBtn" onclick="switchMagTab('buku-saku')">
-          <i class="bi bi-journal-bookmark me-1"></i> {{ $emagazine->tab_2_label ?? 'Buku Saku' }}
+          <i class="bi bi-journal-bookmark me-1"></i> {{ $emagazine?->tab_2_label ?: 'Buku Saku' }}
         </button>
       </div>
 
@@ -1127,7 +1127,7 @@
               <div id="emagzCoverDefault" class="text-center p-2 {{ !empty($emagazine?->tab_1_cover_image) ? 'd-none' : '' }}">
                 <i class="bi bi-journal-richtext fs-1 d-block mb-1"></i>
                 <span id="emagzBadgeText" style="font-size: 11px; font-weight: 800; color: #fff; line-height: 1.2; display: block;">
-                  {{ $emagazine->tab_1_badge_text ?? 'PROFIL 2026' }}
+                  {{ $emagazine?->tab_1_badge_text ?: 'PROFIL 2026' }}
                 </span>
               </div>
 
@@ -1141,20 +1141,20 @@
 
           {{-- Judul & Deskripsi --}}
           <h4 class="fw-bold mb-2 text-dark" id="emagzTitle">
-            {{ $emagazine->tab_1_judul ?? 'E-Magazine Edisi Eksklusif Profil Kampus' }}
+            {{ $emagazine?->tab_1_judul ?: 'E-Magazine Edisi Eksklusif Profil Kampus' }}
           </h4>
           <p class="text-muted small mx-auto mb-4" id="emagzDesc" style="max-width: 500px;">
-            {{ $emagazine->tab_1_deskripsi ?? 'Jelajahi informasi lengkap mengenai fasilitas laboratorium, profil fakultas, program beasiswa, dan prestasi mahasiswa.' }}
+            {{ $emagazine?->tab_1_deskripsi ?: 'Jelajahi informasi lengkap mengenai fasilitas laboratorium, profil fakultas, program beasiswa, dan prestasi mahasiswa.' }}
           </p>
 
           {{-- Action Buttons --}}
           <div class="d-flex align-items-center justify-content-center gap-2 flex-wrap">
             <a id="emagzPreviewBtn" 
-               href="{{ $emagazine->tab_1_btn_preview_url ?: asset('frontend/img/gedung-uis.jpg') }}" 
+               href="{{ $emagazine?->tab_1_btn_preview_url ?: asset('frontend/img/gedung-uis.jpg') }}" 
                target="_blank" 
                rel="noopener noreferrer" 
                class="btn btn-outline-success rounded-pill px-4 fw-semibold">
-              <i class="bi bi-eye me-1"></i> <span id="emagzPreviewText">{{ $emagazine->tab_1_btn_preview_text ?? 'Pratinjau Interaktif' }}</span>
+              <i class="bi bi-eye me-1"></i> <span id="emagzPreviewText">{{ $emagazine?->tab_1_btn_preview_text ?: 'Pratinjau Interaktif' }}</span>
             </a>
             
             <a id="emagzDownloadBtn" 
@@ -1163,7 +1163,7 @@
                rel="noopener noreferrer" 
                class="btn btn-success rounded-pill px-4 fw-semibold" 
                style="background: #044b1c; border-color: #044b1c;">
-              <i class="bi bi-download me-1"></i> <span id="emagzDownloadText">{{ $emagazine->tab_1_btn_download_text ?? 'Unduh Dokumen' }}</span>
+              <i class="bi bi-download me-1"></i> <span id="emagzDownloadText">{{ $emagazine?->tab_1_btn_download_text ?: 'Unduh Dokumen' }}</span>
             </a>
           </div>
 
@@ -1176,24 +1176,24 @@
 <script>
   const emagzData = {
     'emagz': {
-      'title': {!! json_encode($emagazine->tab_1_judul ?? 'E-Magazine Edisi Eksklusif Profil Kampus') !!},
-      'desc': {!! json_encode($emagazine->tab_1_deskripsi ?? 'Jelajahi informasi lengkap mengenai fasilitas laboratorium, profil fakultas, program beasiswa, dan prestasi mahasiswa.') !!},
-      'badge': {!! json_encode($emagazine->tab_1_badge_text ?? 'PROFIL 2026') !!},
+      'title': {!! json_encode($emagazine?->tab_1_judul ?: 'E-Magazine Edisi Eksklusif Profil Kampus') !!},
+      'desc': {!! json_encode($emagazine?->tab_1_deskripsi ?: 'Jelajahi informasi lengkap mengenai fasilitas laboratorium, profil fakultas, program beasiswa, dan prestasi mahasiswa.') !!},
+      'badge': {!! json_encode($emagazine?->tab_1_badge_text ?: 'PROFIL 2026') !!},
       'cover': {!! json_encode(!empty($emagazine?->tab_1_cover_image) ? asset('storage/' . $emagazine->tab_1_cover_image) : '') !!},
-      'previewUrl': {!! json_encode($emagazine->tab_1_btn_preview_url ?: asset('frontend/img/gedung-uis.jpg')) !!},
-      'previewText': {!! json_encode($emagazine->tab_1_btn_preview_text ?? 'Pratinjau Interaktif') !!},
+      'previewUrl': {!! json_encode($emagazine?->tab_1_btn_preview_url ?: asset('frontend/img/gedung-uis.jpg')) !!},
+      'previewText': {!! json_encode($emagazine?->tab_1_btn_preview_text ?: 'Pratinjau Interaktif') !!},
       'downloadUrl': {!! json_encode($emagazine?->tab_1_download_link ?: route('homepage.tentang')) !!},
-      'downloadText': {!! json_encode($emagazine->tab_1_btn_download_text ?? 'Unduh Dokumen') !!}
+      'downloadText': {!! json_encode($emagazine?->tab_1_btn_download_text ?: 'Unduh Dokumen') !!}
     },
     'buku-saku': {
-      'title': {!! json_encode($emagazine->tab_2_judul ?? 'Buku Saku Panduan Mahasiswa & Akademik') !!},
-      'desc': {!! json_encode($emagazine->tab_2_deskripsi ?? 'Panduan ringkas dan praktis mengenai kehidupan kampus, tata tertib, hak & kewajiban, serta informasi penting perkuliahan di UIS.') !!},
-      'badge': {!! json_encode($emagazine->tab_2_badge_text ?? 'BUKU SAKU') !!},
+      'title': {!! json_encode($emagazine?->tab_2_judul ?: 'Buku Saku Panduan Mahasiswa & Akademik') !!},
+      'desc': {!! json_encode($emagazine?->tab_2_deskripsi ?: 'Panduan ringkas dan praktis mengenai kehidupan kampus, tata tertib, hak & kewajiban, serta informasi penting perkuliahan di UIS.') !!},
+      'badge': {!! json_encode($emagazine?->tab_2_badge_text ?: 'BUKU SAKU') !!},
       'cover': {!! json_encode(!empty($emagazine?->tab_2_cover_image) ? asset('storage/' . $emagazine->tab_2_cover_image) : '') !!},
-      'previewUrl': {!! json_encode($emagazine->tab_2_btn_preview_url ?: asset('frontend/img/gedung-uis.jpg')) !!},
-      'previewText': {!! json_encode($emagazine->tab_2_btn_preview_text ?? 'Pratinjau Interaktif') !!},
+      'previewUrl': {!! json_encode($emagazine?->tab_2_btn_preview_url ?: asset('frontend/img/gedung-uis.jpg')) !!},
+      'previewText': {!! json_encode($emagazine?->tab_2_btn_preview_text ?: 'Pratinjau Interaktif') !!},
       'downloadUrl': {!! json_encode($emagazine?->tab_2_download_link ?: route('homepage.tentang')) !!},
-      'downloadText': {!! json_encode($emagazine->tab_2_btn_download_text ?? 'Unduh Dokumen') !!}
+      'downloadText': {!! json_encode($emagazine?->tab_2_btn_download_text ?: 'Unduh Dokumen') !!}
     }
   };
 

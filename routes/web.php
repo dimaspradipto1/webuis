@@ -170,6 +170,7 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
         Route::put('{tipe}', [AkademikController::class, 'update'])->name('update');
     });
 
+    Route::post('milestone/setting', [MilestoneController::class, 'updateSetting'])->name('milestone.update-setting');
     Route::resource('milestone', MilestoneController::class);
     Route::resource('admin-kurikulum', KurikulumController::class)
         ->parameters(['admin-kurikulum' => 'kurikulum'])

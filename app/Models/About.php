@@ -34,6 +34,17 @@ class About extends Model
         'nilai_4_judul',
         'nilai_4_deskripsi',
         'nilai_4_icon',
+        'sejarah_label',
+        'sejarah_judul',
+        'sejarah_judul_highlight',
+        'sejarah_deskripsi_1',
+        'sejarah_deskripsi_2',
+        'sejarah_card_judul',
+        'sejarah_card_subjudul',
+        'sejarah_card_narasi',
+        'sejarah_pilar_1',
+        'sejarah_pilar_2',
+        'sejarah_pilar_3',
     ];
 
     /**
