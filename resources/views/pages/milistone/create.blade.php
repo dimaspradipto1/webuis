@@ -63,9 +63,11 @@
 
                     <div class="mb-4">
                         <label for="deskripsi" class="form-label fw-semibold">Deskripsi</label>
-                        <textarea id="deskripsi" name="deskripsi" rows="4"
+                        <textarea id="deskripsi" name="deskripsi" rows="8"
                                   class="form-control @error('deskripsi') is-invalid @enderror"
-                                  placeholder="Ceritakan pencapaian pada tahun tersebut...">{{ old('deskripsi') }}</textarea>
+                                  style="line-height: 1.7;"
+                                  placeholder="Ceritakan pencapaian pada tahun tersebut (gunakan Enter untuk membuat paragraf baru)...">{{ old('deskripsi') }}</textarea>
+                        <div class="form-text">Gunakan tombol <strong>Enter</strong> untuk membuat baris atau paragraf baru.</div>
                         @error('deskripsi')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror

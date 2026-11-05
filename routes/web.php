@@ -133,7 +133,10 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::get('news/download-template', [NewsController::class, 'downloadTemplate'])->name('news.download-template');
     Route::post('news/import-excel', [NewsController::class, 'importExcel'])->name('news.import-excel');
     Route::resource('news', NewsController::class);
-    Route::resource('pengumuman-agenda', PengumumanAgendaController::class)->except(['show']);
+    Route::resource('admin-pengumuman-agenda', PengumumanAgendaController::class)
+        ->parameters(['admin-pengumuman-agenda' => 'pengumumanAgenda'])
+        ->names('pengumuman-agenda')
+        ->except(['show']);
     Route::resource('admin-faq', FaqController::class)
         ->parameters(['admin-faq' => 'faq'])
         ->names('faq');

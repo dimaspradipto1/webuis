@@ -1152,6 +1152,198 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════
+     MEDIA SOSIAL (IKUTI UIS DI MEDIA SOSIAL)
+═══════════════════════════════════════════════ -->
+@if(isset($socialMedias) && $socialMedias->count() > 0)
+<section class="social-media-section" id="media-sosial">
+  <div class="container">
+    {{-- Header Judul Seksi --}}
+    <h2 class="social-media-title" data-aos="fade-up">
+      {{ $socialMediaSetting->judul_seksi ?? 'IKUTI UIS DI MEDIA SOSIAL' }}
+    </h2>
+
+    {{-- Divider Garis Ikon Share --}}
+    <div class="social-divider-wrap" data-aos="fade-up" data-aos-delay="50">
+      <span class="social-divider-line"></span>
+      <span class="social-divider-icon"><i class="bi bi-share"></i></span>
+      <span class="social-divider-line"></span>
+    </div>
+
+    {{-- Deskripsi Kutipan Ajakan --}}
+    @if(!empty($socialMediaSetting?->subjudul_seksi))
+      <p class="social-media-quote" data-aos="fade-up" data-aos-delay="100">
+        {{ $socialMediaSetting->subjudul_seksi }}
+      </p>
+    @endif
+
+    {{-- Tombol Baris Ikon Media Sosial --}}
+    <div class="social-media-grid" data-aos="fade-up" data-aos-delay="150">
+      @foreach($socialMedias as $sm)
+        <a href="{{ $sm->url }}"
+           target="_blank"
+           rel="noopener noreferrer"
+           class="social-media-btn"
+           title="{{ $sm->nama }}"
+           aria-label="{{ $sm->nama }}">
+          @if($sm->logo_url)
+            <img src="{{ $sm->logo_url }}" alt="{{ $sm->nama }}" class="social-media-img-logo">
+          @else
+            <i class="bi {{ $sm->icon ?: 'bi-globe' }} social-media-icon-fallback"></i>
+          @endif
+        </a>
+      @endforeach
+    </div>
+  </div>
+</section>
+@endif
+
+<!-- ═══════════════════════════════════════════════
+     11. BERITA, PENGUMUMAN & AGENDA (LAYOUT BARU)
+═══════════════════════════════════════════════ -->
+<section class="section-bg-white py-5" id="berita">
+  <div class="container py-3">
+    <div class="row g-4 g-lg-5">
+      
+      {{-- KOLOM KIRI (BERITA): 2-KOLOM GRID --}}
+      <div class="col-lg-8" data-aos="fade-right">
+        {{-- Header Berita + Search Bar --}}
+        <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-3">
+          <div class="d-flex align-items-center gap-2">
+            <i class="bi bi-newspaper fs-2" style="color: var(--uis-purple, #046B26);"></i>
+            <h2 class="section-heading-uis mb-0">Berita</h2>
+          </div>
+          <form action="{{ route('homepage') }}#berita" method="GET" class="news-search-pill" id="homepageNewsSearchForm">
+            <input type="text"
+                   name="q"
+                   id="homepageNewsSearchInput"
+                   value="{{ $search ?? request('q', '') }}"
+                   placeholder="Cari Berita Lainnya.."
+                   autocomplete="off">
+            <button type="button"
+                    id="homepageNewsSearchClear"
+                    class="news-search-clear {{ empty($search) && !request('q') ? 'd-none' : '' }}"
+                    aria-label="Hapus Pencarian"
+                    title="Hapus Pencarian">
+              <i class="bi bi-x-circle-fill"></i>
+            </button>
+            <button type="submit" id="homepageNewsSearchBtn" aria-label="Cari Berita">
+              <i class="bi bi-search" id="homepageNewsSearchIcon"></i>
+              <span class="spinner-border spinner-border-sm d-none" id="homepageNewsSearchSpinner" role="status" aria-hidden="true" style="width: 14px; height: 14px; border-width: 2px;"></span>
+            </button>
+          </form>
+        </div>
+
+        {{-- Container Grid Berita (Mendukung Live Search AJAX & Server-side Filter) --}}
+        <div id="homepageNewsGridContainer" class="news-grid-container position-relative">
+          @include('layouts.frontend.partials.homepage-news-grid', ['latestNews' => $latestNews, 'search' => $search ?? request('q', '')])
+        </div>
+
+        {{-- Tombol Lihat Berita Lainnya --}}
+        <div class="text-center mt-3 pt-2">
+          <a href="{{ route('homepage.news') }}{{ !empty($search) ? '?q=' . urlencode($search) : '' }}" class="btn-uis-pill" id="btnSeeAllNews">
+            Lihat Berita Lainnya
+          </a>
+        </div>
+      </div>
+
+      {{-- KOLOM KANAN (PENGUMUMAN & AGENDA) --}}
+      <div class="col-lg-4" data-aos="fade-left">
+        
+        {{-- SECTION PENGUMUMAN --}}
+        <div class="mb-4">
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <i class="bi bi-megaphone-fill fs-3" style="color: var(--uis-purple, #046B26);"></i>
+            <h3 class="section-heading-uis mb-0" style="font-size: 24px;">Pengumuman</h3>
+          </div>
+
+          <div class="announcement-list">
+            @if(isset($pengumumans) && $pengumumans->count() > 0)
+              @foreach($pengumumans as $item)
+                <a href="{{ route('homepage.pengumuman-agenda.detail', $item->slug ?: $item->id) }}" class="announcement-card-box text-decoration-none d-block">
+                  <div class="announcement-card-title">{{ $item->judul }}</div>
+                  <div class="announcement-card-date d-flex align-items-center justify-content-between">
+                    <span>{{ $item->waktu ?: '-' }}</span>
+                    <span class="small fw-semibold" style="color: #046B26; font-size: 11.5px;">Detail <i class="bi bi-arrow-right"></i></span>
+                  </div>
+                </a>
+              @endforeach
+            @elseif(isset($announcements) && $announcements->count() > 0)
+              @foreach($announcements as $ann)
+                <a href="{{ route('homepage.news.detail', $ann->slug ?? $ann->id) }}" class="announcement-card-box">
+                  <div class="announcement-card-title">{{ $ann->title }}</div>
+                  <div class="announcement-card-date">{{ $ann->created_at ? $ann->created_at->format('d F Y') : '-' }}</div>
+                </a>
+              @endforeach
+            @else
+              {{-- Default Item Pengumuman Fakultas --}}
+              <div class="announcement-card-box">
+                <div class="announcement-card-title">Pengumuman Pengisian KRS dan validasi KRS Tahun Akademik 2026/2027 Gasal</div>
+                <div class="announcement-card-date">15 August 2026</div>
+              </div>
+              <div class="announcement-card-box">
+                <div class="announcement-card-title">Pengumuman Semester Antara TA. 2025-2026</div>
+                <div class="announcement-card-date">1 August 2026</div>
+              </div>
+            @endif
+          </div>
+        </div>
+
+        {{-- SECTION AGENDA --}}
+        <div class="mt-4 pt-3 border-top">
+          <div class="d-flex align-items-center gap-2 mb-3">
+            <i class="bi bi-calendar4-week fs-3" style="color: var(--uis-purple, #046B26);"></i>
+            <h3 class="section-heading-uis mb-0" style="font-size: 24px;">Agenda</h3>
+          </div>
+
+          <div class="agenda-list">
+            @if(isset($agendas) && $agendas->count() > 0)
+              @foreach($agendas as $agenda)
+                <div class="agenda-row mb-3">
+                  <div class="agenda-time-text">{{ rtrim($agenda->waktu, ':') }}:</div>
+                  <a href="{{ route('homepage.pengumuman-agenda.detail', $agenda->slug ?: $agenda->id) }}" class="agenda-badge-card d-flex align-items-center justify-content-between text-decoration-none">
+                    <span>{{ $agenda->judul }}</span>
+                    <i class="bi bi-chevron-right small ms-2"></i>
+                  </a>
+                </div>
+              @endforeach
+            @else
+              <div class="agenda-row mb-3">
+                <div class="agenda-time-text">20 - 31 Juli 2026:</div>
+                <div class="agenda-badge-card">
+                  Pendaftaran Semester Antara
+                </div>
+              </div>
+
+              <div class="agenda-row mb-3">
+                <div class="agenda-time-text">03 - 28 Agustus 2026:</div>
+                <div class="agenda-badge-card">
+                  Perkuliahan Semester Antara
+                </div>
+              </div>
+
+              <div class="agenda-row mb-3">
+                <div class="agenda-time-text">31 Agustus - 05 September 2026:</div>
+                <div class="agenda-badge-card">
+                  Penyerahan Nilai Semester Antara
+                </div>
+              </div>
+            @endif
+
+            <div class="mt-3">
+              <a href="{{ route('homepage.pengumuman-agenda') }}" class="btn-agenda-pill">
+                Lihat Seluruh Agenda & Pengumuman
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════════════════════════════════════════
      10. ALUMNI & KARIER
 ═══════════════════════════════════════════════ -->
 <section class="section-bg-white py-5" id="alumni">
@@ -1478,198 +1670,6 @@
   </div>
 </section>
 @endif
-
-<!-- ═══════════════════════════════════════════════
-     MEDIA SOSIAL (IKUTI UIS DI MEDIA SOSIAL)
-═══════════════════════════════════════════════ -->
-@if(isset($socialMedias) && $socialMedias->count() > 0)
-<section class="social-media-section" id="media-sosial">
-  <div class="container">
-    {{-- Header Judul Seksi --}}
-    <h2 class="social-media-title" data-aos="fade-up">
-      {{ $socialMediaSetting->judul_seksi ?? 'IKUTI UIS DI MEDIA SOSIAL' }}
-    </h2>
-
-    {{-- Divider Garis Ikon Share --}}
-    <div class="social-divider-wrap" data-aos="fade-up" data-aos-delay="50">
-      <span class="social-divider-line"></span>
-      <span class="social-divider-icon"><i class="bi bi-share"></i></span>
-      <span class="social-divider-line"></span>
-    </div>
-
-    {{-- Deskripsi Kutipan Ajakan --}}
-    @if(!empty($socialMediaSetting?->subjudul_seksi))
-      <p class="social-media-quote" data-aos="fade-up" data-aos-delay="100">
-        {{ $socialMediaSetting->subjudul_seksi }}
-      </p>
-    @endif
-
-    {{-- Tombol Baris Ikon Media Sosial --}}
-    <div class="social-media-grid" data-aos="fade-up" data-aos-delay="150">
-      @foreach($socialMedias as $sm)
-        <a href="{{ $sm->url }}"
-           target="_blank"
-           rel="noopener noreferrer"
-           class="social-media-btn"
-           title="{{ $sm->nama }}"
-           aria-label="{{ $sm->nama }}">
-          @if($sm->logo_url)
-            <img src="{{ $sm->logo_url }}" alt="{{ $sm->nama }}" class="social-media-img-logo">
-          @else
-            <i class="bi {{ $sm->icon ?: 'bi-globe' }} social-media-icon-fallback"></i>
-          @endif
-        </a>
-      @endforeach
-    </div>
-  </div>
-</section>
-@endif
-
-<!-- ═══════════════════════════════════════════════
-     11. BERITA, PENGUMUMAN & AGENDA (LAYOUT BARU)
-═══════════════════════════════════════════════ -->
-<section class="section-bg-white py-5" id="berita">
-  <div class="container py-3">
-    <div class="row g-4 g-lg-5">
-      
-      {{-- KOLOM KIRI (BERITA): 2-KOLOM GRID --}}
-      <div class="col-lg-8" data-aos="fade-right">
-        {{-- Header Berita + Search Bar --}}
-        <div class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-3">
-          <div class="d-flex align-items-center gap-2">
-            <i class="bi bi-newspaper fs-2" style="color: var(--uis-purple, #046B26);"></i>
-            <h2 class="section-heading-uis mb-0">Berita</h2>
-          </div>
-          <form action="{{ route('homepage') }}#berita" method="GET" class="news-search-pill" id="homepageNewsSearchForm">
-            <input type="text"
-                   name="q"
-                   id="homepageNewsSearchInput"
-                   value="{{ $search ?? request('q', '') }}"
-                   placeholder="Cari Berita Lainnya.."
-                   autocomplete="off">
-            <button type="button"
-                    id="homepageNewsSearchClear"
-                    class="news-search-clear {{ empty($search) && !request('q') ? 'd-none' : '' }}"
-                    aria-label="Hapus Pencarian"
-                    title="Hapus Pencarian">
-              <i class="bi bi-x-circle-fill"></i>
-            </button>
-            <button type="submit" id="homepageNewsSearchBtn" aria-label="Cari Berita">
-              <i class="bi bi-search" id="homepageNewsSearchIcon"></i>
-              <span class="spinner-border spinner-border-sm d-none" id="homepageNewsSearchSpinner" role="status" aria-hidden="true" style="width: 14px; height: 14px; border-width: 2px;"></span>
-            </button>
-          </form>
-        </div>
-
-        {{-- Container Grid Berita (Mendukung Live Search AJAX & Server-side Filter) --}}
-        <div id="homepageNewsGridContainer" class="news-grid-container position-relative">
-          @include('layouts.frontend.partials.homepage-news-grid', ['latestNews' => $latestNews, 'search' => $search ?? request('q', '')])
-        </div>
-
-        {{-- Tombol Lihat Berita Lainnya --}}
-        <div class="text-center mt-3 pt-2">
-          <a href="{{ route('homepage.news') }}{{ !empty($search) ? '?q=' . urlencode($search) : '' }}" class="btn-uis-pill" id="btnSeeAllNews">
-            Lihat Berita Lainnya
-          </a>
-        </div>
-      </div>
-
-      {{-- KOLOM KANAN (PENGUMUMAN & AGENDA) --}}
-      <div class="col-lg-4" data-aos="fade-left">
-        
-        {{-- SECTION PENGUMUMAN --}}
-        <div class="mb-4">
-          <div class="d-flex align-items-center gap-2 mb-3">
-            <i class="bi bi-megaphone-fill fs-3" style="color: var(--uis-purple, #046B26);"></i>
-            <h3 class="section-heading-uis mb-0" style="font-size: 24px;">Pengumuman</h3>
-          </div>
-
-          <div class="announcement-list">
-            @if(isset($pengumumans) && $pengumumans->count() > 0)
-              @foreach($pengumumans as $item)
-                <a href="{{ route('homepage.pengumuman-agenda.detail', $item->slug ?: $item->id) }}" class="announcement-card-box text-decoration-none d-block">
-                  <div class="announcement-card-title">{{ $item->judul }}</div>
-                  <div class="announcement-card-date d-flex align-items-center justify-content-between">
-                    <span>{{ $item->waktu ?: '-' }}</span>
-                    <span class="small fw-semibold" style="color: #046B26; font-size: 11.5px;">Detail <i class="bi bi-arrow-right"></i></span>
-                  </div>
-                </a>
-              @endforeach
-            @elseif(isset($announcements) && $announcements->count() > 0)
-              @foreach($announcements as $ann)
-                <a href="{{ route('homepage.news.detail', $ann->slug ?? $ann->id) }}" class="announcement-card-box">
-                  <div class="announcement-card-title">{{ $ann->title }}</div>
-                  <div class="announcement-card-date">{{ $ann->created_at ? $ann->created_at->format('d F Y') : '-' }}</div>
-                </a>
-              @endforeach
-            @else
-              {{-- Default Item Pengumuman Fakultas --}}
-              <div class="announcement-card-box">
-                <div class="announcement-card-title">Pengumuman Pengisian KRS dan validasi KRS Tahun Akademik 2026/2027 Gasal</div>
-                <div class="announcement-card-date">15 August 2026</div>
-              </div>
-              <div class="announcement-card-box">
-                <div class="announcement-card-title">Pengumuman Semester Antara TA. 2025-2026</div>
-                <div class="announcement-card-date">1 August 2026</div>
-              </div>
-            @endif
-          </div>
-        </div>
-
-        {{-- SECTION AGENDA --}}
-        <div class="mt-4 pt-3 border-top">
-          <div class="d-flex align-items-center gap-2 mb-3">
-            <i class="bi bi-calendar4-week fs-3" style="color: var(--uis-purple, #046B26);"></i>
-            <h3 class="section-heading-uis mb-0" style="font-size: 24px;">Agenda</h3>
-          </div>
-
-          <div class="agenda-list">
-            @if(isset($agendas) && $agendas->count() > 0)
-              @foreach($agendas as $agenda)
-                <div class="agenda-row mb-3">
-                  <div class="agenda-time-text">{{ rtrim($agenda->waktu, ':') }}:</div>
-                  <a href="{{ route('homepage.pengumuman-agenda.detail', $agenda->slug ?: $agenda->id) }}" class="agenda-badge-card d-flex align-items-center justify-content-between text-decoration-none">
-                    <span>{{ $agenda->judul }}</span>
-                    <i class="bi bi-chevron-right small ms-2"></i>
-                  </a>
-                </div>
-              @endforeach
-            @else
-              <div class="agenda-row mb-3">
-                <div class="agenda-time-text">20 - 31 Juli 2026:</div>
-                <div class="agenda-badge-card">
-                  Pendaftaran Semester Antara
-                </div>
-              </div>
-
-              <div class="agenda-row mb-3">
-                <div class="agenda-time-text">03 - 28 Agustus 2026:</div>
-                <div class="agenda-badge-card">
-                  Perkuliahan Semester Antara
-                </div>
-              </div>
-
-              <div class="agenda-row mb-3">
-                <div class="agenda-time-text">31 Agustus - 05 September 2026:</div>
-                <div class="agenda-badge-card">
-                  Penyerahan Nilai Semester Antara
-                </div>
-              </div>
-            @endif
-
-            <div class="mt-3">
-              <a href="{{ route('homepage.pengumuman-agenda') }}" class="btn-agenda-pill">
-                Lihat Seluruh Agenda & Pengumuman
-              </a>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-    </div>
-  </div>
-</section>
 
 <!-- ═══════════════════════════════════════════════
      13. PARTNER & KERJA SAMA (2-ROW INFINITE SLIDER)

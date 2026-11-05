@@ -107,15 +107,11 @@
                             {{ \Illuminate\Support\Str::limit($item->deskripsi ?: 'Belum ada deskripsi singkat.', 110) }}
                         </p>
 
-                        <!-- Info Ringkas (Lokasi & Kapasitas) -->
+                        <!-- Info Ringkas (Lokasi) -->
                         <div class="bg-light rounded-3 p-2 px-3 mb-3 border" style="font-size: 12px;">
-                            <div class="d-flex align-items-center text-secondary mb-1">
+                            <div class="d-flex align-items-center text-secondary">
                                 <i class="bi bi-geo-alt-fill text-danger me-2"></i>
                                 <span class="text-truncate">{{ $item->lokasi ?: 'Lokasi belum diatur' }}</span>
-                            </div>
-                            <div class="d-flex align-items-center text-secondary">
-                                <i class="bi bi-people-fill text-success me-2"></i>
-                                <span class="text-truncate">{{ $item->kapasitas ?: 'Kapasitas belum diatur' }}</span>
                             </div>
                         </div>
                     </div>

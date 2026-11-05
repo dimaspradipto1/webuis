@@ -146,11 +146,6 @@
           <i class="bi bi-geo-alt-fill text-danger me-1"></i>{{ $sarana->lokasi }}
         </span>
       @endif
-      @if(!empty($sarana->kapasitas))
-        <span class="badge bg-light text-dark px-3 py-2 rounded-pill fw-semibold" style="font-size: 12px;">
-          <i class="bi bi-people-fill text-success me-1"></i>{{ $sarana->kapasitas }}
-        </span>
-      @endif
     </div>
 
     <div class="d-flex align-items-center gap-3 mt-2">
@@ -316,13 +311,6 @@
             <div class="info-meta-row">
               <span class="info-meta-label"><i class="bi bi-geo-alt me-1"></i> Lokasi</span>
               <span class="info-meta-val">{{ $sarana->lokasi }}</span>
-            </div>
-          @endif
-
-          @if(!empty($sarana->kapasitas))
-            <div class="info-meta-row">
-              <span class="info-meta-label"><i class="bi bi-people me-1"></i> Kapasitas</span>
-              <span class="info-meta-val">{{ $sarana->kapasitas }}</span>
             </div>
           @endif
 

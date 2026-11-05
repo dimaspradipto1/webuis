@@ -206,19 +206,15 @@
                         </div>
 
                         <div class="row g-3 mb-3">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label class="form-label fw-semibold small">Lokasi Gedung / Lantai</label>
                                 <input type="text" name="lokasi" class="form-control" value="{{ old('lokasi', $sarana->lokasi) }}" placeholder="Contoh: Gedung B Lantai 2">
                             </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold small">Kapasitas Ruang</label>
-                                <input type="text" name="kapasitas" class="form-control" value="{{ old('kapasitas', $sarana->kapasitas) }}" placeholder="Contoh: 40 Mahasiswa">
-                            </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label class="form-label fw-semibold small">Jam Operasional</label>
                                 <input type="text" name="jam_operasional" class="form-control" value="{{ old('jam_operasional', $sarana->jam_operasional) }}">
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label class="form-label fw-semibold small">Kepala Lab / Penanggung Jawab</label>
                                 <input type="text" name="penanggung_jawab" class="form-control" value="{{ old('penanggung_jawab', $sarana->penanggung_jawab) }}">
                             </div>
