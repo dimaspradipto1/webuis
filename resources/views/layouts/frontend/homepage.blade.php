@@ -142,36 +142,9 @@
       </div>
     @endif
 
-    <!-- 3. PILAR KEUNGGULAN (3 CARD HORIZONTAL & TOMBOL CTA) -->
-    <div class="row g-3 justify-content-center mb-5" data-aos="fade-up" data-aos-delay="250">
-      <div class="col-md-4">
-        <div class="p-3 rounded-3 h-100 shadow-sm" style="background: #fffbeb; border: 1px solid #fde68a; transition: transform 0.25s ease;">
-          <div class="d-flex align-items-center gap-2 mb-2 fw-bold" style="color: #b45309;">
-            <i class="bi bi-award-fill fs-5" style="color: #d97706;"></i>
-            <span>Kurikulum OBE</span>
-          </div>
-          <p class="small mb-0" style="color: #334155; line-height: 1.6;">Terintegrasi sertifikasi kompetensi industri dan pembinaan jiwa wirausaha muda.</p>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="p-3 rounded-3 h-100 shadow-sm" style="background: #fff7ed; border: 1px solid #fed7aa; transition: transform 0.25s ease;">
-          <div class="d-flex align-items-center gap-2 mb-2 fw-bold" style="color: #c2410c;">
-            <i class="bi bi-cpu-fill fs-5" style="color: #ea580c;"></i>
-            <span>Lab Terpadu & AI</span>
-          </div>
-          <p class="small mb-0" style="color: #334155; line-height: 1.6;">Laboratorium komputasi cerdas, studio logistik industri, dan pengujian K3 modern.</p>
-        </div>
-      </div>
-      <div class="col-md-4">
-        <div class="p-3 rounded-3 h-100 shadow-sm" style="background: #f0fdf4; border: 1px solid #bbf7d0; transition: transform 0.25s ease;">
-          <div class="d-flex align-items-center gap-2 mb-2 fw-bold" style="color: #046B26;">
-            <i class="bi bi-people-fill fs-5" style="color: #046B26;"></i>
-            <span>Dosen Doktor & Praktisi</span>
-          </div>
-          <p class="small mb-0" style="color: #334155; line-height: 1.6;">Dibimbing pakar berkualifikasi S3 serta praktisi industri multinasional kawasan Batam.</p>
-        </div>
-      </div>
-      <div class="col-12 text-center mt-3">
+    <!-- TOMBOL CTA PROFIL LENGKAP -->
+    <div class="row justify-content-center mb-4" data-aos="fade-up" data-aos-delay="250">
+      <div class="col-12 text-center">
         <a href="{{ route('homepage.tentang') }}" class="btn-primary-hero">
           <i class="bi bi-info-circle"></i>
           Profil Lengkap Universitas Ibnu Sina
