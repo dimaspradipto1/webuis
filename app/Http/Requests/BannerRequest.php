@@ -28,10 +28,10 @@ class BannerRequest extends FormRequest
 
         if ($this->isMethod('POST')) {
             // Saat create, gambar wajib
-            $rules['foto'] = ['required', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'];
+            $rules['foto'] = ['required', 'image', 'mimes:jpeg,png,jpg,webp', 'max:20480'];
         } else {
             // Saat update, gambar opsional
-            $rules['foto'] = ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'];
+            $rules['foto'] = ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:20480'];
         }
 
         return $rules;
@@ -43,7 +43,7 @@ class BannerRequest extends FormRequest
             'foto.required' => 'Gambar banner wajib diunggah.',
             'foto.image' => 'File harus berupa gambar.',
             'foto.mimes' => 'Format gambar harus jpeg, png, jpg, atau webp.',
-            'foto.max' => 'Ukuran gambar banner maksimal 2 MB.',
+            'foto.max' => 'Ukuran gambar banner maksimal 20 MB.',
             'judul.max' => 'Judul maksimal 255 karakter.',
             'urutan.integer' => 'Urutan harus berupa angka.',
             'urutan.min' => 'Urutan minimal 0.',

@@ -22,7 +22,7 @@ class PartnerRequest extends FormRequest
     {
         return [
             'nama' => ['required', 'string', 'max:255'],
-            'logo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp,svg', 'max:2048'],
+            'logo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp,svg', 'max:20480'],
             'urutan' => ['nullable', 'integer', 'min:0'],
             'aktif' => ['nullable', 'boolean'],
         ];
@@ -35,7 +35,7 @@ class PartnerRequest extends FormRequest
             'nama.max' => 'Nama maksimal 255 karakter.',
             'logo.image' => 'File harus berupa gambar.',
             'logo.mimes' => 'Format gambar harus jpeg, png, jpg, webp, atau svg.',
-            'logo.max' => 'Ukuran file logo maksimal 2 MB.',
+            'logo.max' => 'Ukuran file logo maksimal 20 MB.',
             'urutan.integer' => 'Urutan harus berupa angka.',
         ];
     }

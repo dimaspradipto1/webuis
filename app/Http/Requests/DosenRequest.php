@@ -21,7 +21,7 @@ class DosenRequest extends FormRequest
             'nidn' => ['nullable', 'string', 'max:50'],
             'nuptk' => ['nullable', 'string', 'max:50'],
             'link' => ['nullable', 'string', 'max:500'],
-            'foto' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
+            'foto' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:20480'],
             'is_active' => ['nullable'],
         ];
     }
@@ -32,7 +32,7 @@ class DosenRequest extends FormRequest
             'layanan_id.required' => 'Program Studi wajib dipilih.',
             'nama_dosen.required' => 'Nama Dosen beserta gelar wajib diisi.',
             'foto.image' => 'File foto harus berupa gambar.',
-            'foto.max' => 'Ukuran foto maksimal 2 MB.',
+            'foto.max' => 'Ukuran foto maksimal 20 MB.',
         ];
     }
 }

@@ -18,7 +18,7 @@ class AboutRequest extends FormRequest
             'deskripsi_profil_1' => ['nullable', 'string'],
             'deskripsi_profil_2' => ['nullable', 'string'],
             'video_url' => ['nullable', 'string', 'max:1000'],
-            'video_file' => ['nullable', 'file', 'mimes:mp4,webm,mov,ogg', 'max:51200'],
+            'video_file' => ['nullable', 'file', 'mimes:mp4,webm,mov,ogg', 'max:102400'],
             'visi' => ['nullable', 'string'],
             'visi_judul' => ['nullable', 'string', 'max:255'],
             'visi_icon' => ['nullable', 'string', 'max:255'],

@@ -843,182 +843,249 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════
-     9.3 ORGANISASI & KEGIATAN MAHASISWA (ORMAWA DECK SHOWCASE)
+     9.3 ORGANISASI & KEGIATAN MAHASISWA (MIRROR MOTION / 3D U-CURVE CAROUSEL)
 ═══════════════════════════════════════════════ -->
-<section class="ormawa-deck-section" id="organisasi-mahasiswa">
+<style>
+  .uis-cylinder-viewport {
+    width: 100%;
+    max-width: 100vw;
+    overflow: hidden;
+    position: relative;
+    perspective: 1200px;
+    perspective-origin: 50% 50%;
+    padding: 20px 0 40px 0;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: pan-y;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 10%, black 90%, transparent 100%);
+  }
+  .uis-cylinder-viewport:active {
+    cursor: grabbing;
+  }
+  .uis-cylinder-track {
+    position: relative;
+    width: 100%;
+    height: 335px;
+    transform-style: preserve-3d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+  .uis-cylinder-card {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 230px;
+    height: 310px;
+    transform-style: preserve-3d;
+    transform-origin: center bottom;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    will-change: transform, opacity;
+    cursor: pointer;
+    pointer-events: auto;
+  }
+  @media (max-width: 768px) {
+    .uis-cylinder-card {
+      width: 165px;
+      height: 235px;
+    }
+    .uis-cylinder-track {
+      height: 255px;
+    }
+    .uis-cylinder-viewport {
+      padding-bottom: 25px;
+    }
+  }
+  .uis-card-label {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1.2px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 10px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 100%;
+    transition: color 0.3s ease;
+  }
+  .uis-cylinder-card.is-active .uis-card-label {
+    color: #fed802;
+    text-shadow: 0 0 10px rgba(254, 216, 2, 0.6);
+  }
+  .uis-card-body {
+    width: 100%;
+    height: 270px;
+    background: linear-gradient(165deg, rgba(6, 94, 33, 0.95) 0%, rgba(3, 56, 20, 0.96) 60%, rgba(2, 32, 11, 0.98) 100%);
+    border: 1.5px solid rgba(254, 216, 2, 0.35);
+    border-radius: 16px;
+    padding: 10px;
+    display: flex;
+    align-items: stretch;
+    justify-content: stretch;
+    box-sizing: border-box;
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  @media (max-width: 768px) {
+    .uis-card-body {
+      height: 200px;
+      padding: 7px;
+    }
+  }
+  .uis-cylinder-card.is-active .uis-card-body,
+  .uis-cylinder-card:hover .uis-card-body {
+    border-color: rgba(254, 216, 2, 0.9);
+    box-shadow: 0 0 32px rgba(254, 216, 2, 0.5), 0 18px 40px rgba(0, 0, 0, 0.75);
+  }
+  .uis-card-media {
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    box-sizing: border-box;
+    box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.04), 0 4px 14px rgba(0, 0, 0, 0.14);
+    overflow: hidden;
+    position: relative;
+  }
+  .uis-card-logo {
+    width: 90%;
+    height: 90%;
+    max-width: 92%;
+    max-height: 195px;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    transition: transform 0.35s ease;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.08));
+  }
+  @media (max-width: 768px) {
+    .uis-card-media {
+      padding: 6px;
+    }
+    .uis-card-logo {
+      width: 92%;
+      height: 92%;
+      max-height: 145px;
+      max-width: 94%;
+    }
+  }
+  .uis-cylinder-card:hover .uis-card-logo {
+    transform: scale(1.06);
+  }
+</style>
+
+@if(isset($organisasis) && $organisasis->count() > 0)
+<section class="layanan-terkait-section" id="organisasi-mahasiswa">
+  {{-- Header inside Container --}}
   <div class="container position-relative">
-    <div class="row align-items-center g-5">
-      
-      <!-- LEFT COLUMN: Editorial & Controls -->
-      <div class="col-lg-5" data-aos="fade-right">
-        <div class="ormawa-deck-intro">
-          
-          <div class="ormawa-eyebrow-pill mb-3">
-            <span class="eyebrow-dot"></span>
-            <span class="eyebrow-text">{{ $organisasiSetting?->badge_teks ?: 'LEMBAGA KEMAHASISWAAN · UIS' }}</span>
-          </div>
+    <div class="mirror-hall-badge" data-aos="fade-down">
+      <span><i class="bi bi-people-fill me-1"></i> {{ $organisasiSetting?->badge_teks ?: 'LEMBAGA KEMAHASISWAAN · UIS' }}</span>
+    </div>
 
-          <h2 class="ormawa-deck-headline mb-3">
-            @if(!empty($organisasiSetting?->judul))
-              @php
-                $rawJudul = $organisasiSetting->judul;
-                $highlight = $organisasiSetting->judul_highlight;
-                if (!empty($highlight) && str_contains($rawJudul, $highlight)) {
-                    $escapedHighlight = e($highlight);
-                    $renderedJudul = str_replace($highlight, '<span class="gradient-text">' . $escapedHighlight . '</span>', e($rawJudul));
-                } else {
-                    $renderedJudul = e($rawJudul);
-                }
-              @endphp
-              {!! nl2br($renderedJudul) !!}
-            @else
-              Kiprah & <span class="gradient-text">Kepemimpinan</span><br>
-              Mahasiswa UIS
-            @endif
-          </h2>
+    <div class="text-center mb-4" data-aos="fade-up">
+      <h2 class="layanan-terkait-title">
+        {{ $organisasiSetting?->judul ?: 'ORGANISASI MAHASISWA UIS' }}
+      </h2>
+      <p class="layanan-terkait-desc">
+        “{{ trim(strip_tags($organisasiSetting?->deskripsi ?: 'Eksplorasi ragam organisasi kemahasiswaan, himpunan program studi, dan unit kegiatan minat bakat di Universitas Ibnu Sina Batam. Ruang kolaborasi untuk mengasah karakter, kepemimpinan, dan inovasi civitas kampus.')) }}”
+      </p>
+    </div>
+  </div>
 
-          <p class="ormawa-deck-lead mb-4">
-            {{ strip_tags($organisasiSetting?->deskripsi ?: 'Eksplorasi ragam organisasi kemahasiswaan, himpunan program studi, dan unit kegiatan minat bakat di Universitas Ibnu Sina Batam. Ruang kolaborasi untuk mengasah karakter, kepemimpinan, dan inovasi civitas kampus.') }}
-          </p>
+  {{-- Full Width Continuous 3D Cylinder Arc Stage --}}
+  <div class="uis-cylinder-viewport position-relative" id="ormawaCylinderViewport">
+    <div class="uis-cylinder-track" id="ormawaCylinderTrack">
+      @php
+        $ormawaTotalCount = $organisasis->count();
+        $ormawaRepeats = max(4, (int) ceil(12 / max(1, $ormawaTotalCount)));
+      @endphp
+      @for($r = 0; $r < $ormawaRepeats; $r++)
+        @foreach($organisasis as $idx => $ormawa)
+          @php
+            $singkat = $ormawa->singkatan ?: $ormawa->nama_organisasi;
+            $fullTitle = $ormawa->nama_organisasi . (!empty($ormawa->singkatan) ? ' (' . $ormawa->singkatan . ')' : '');
+            $ormawaDesc = trim(strip_tags($ormawa->deskripsi ?: ($ormawa->visi ?: 'Lembaga kemahasiswaan aktif di lingkungan Universitas Ibnu Sina.')));
+            $ormawaUrl = route('homepage.organisasi.detail', $ormawa->slug);
+            $itemNum = $idx + 1;
+          @endphp
+          <div class="uis-cylinder-card"
+               data-index="{{ sprintf('%02d', $itemNum) }}"
+               data-total="{{ sprintf('%02d', $ormawaTotalCount) }}"
+               data-name="{{ $fullTitle }}"
+               data-desc="{{ Str::limit($ormawaDesc, 160) }}"
+               data-url="{{ $ormawaUrl }}"
+               role="button"
+               tabindex="0"
+               aria-label="Profil {{ $ormawa->nama_organisasi }}">
 
-          <div class="d-flex align-items-center gap-3 flex-wrap mb-4">
-            <a href="{{ !empty($organisasiSetting?->tombol_url) ? $organisasiSetting->tombol_url : route('homepage.organisasi') }}" class="btn-deck-main">
-              <span>{{ $organisasiSetting?->tombol_teks ?: 'Jelajahi Semua Organisasi' }}</span>
-              <span class="btn-deck-icon"><i class="bi bi-arrow-right"></i></span>
-            </a>
-
-            <!-- Deck Navigation Buttons -->
-            <div class="deck-arrows-wrap">
-              <button type="button" class="btn-deck-arrow" id="deckPrevBtn" aria-label="Organisasi Sebelumnya" title="Sebelumnya">
-                <i class="bi bi-arrow-up"></i>
-              </button>
-              <button type="button" class="btn-deck-arrow" id="deckNextBtn" aria-label="Organisasi Selanjutnya" title="Selanjutnya">
-                <i class="bi bi-arrow-down"></i>
-              </button>
-            </div>
-          </div>
-
-          <!-- Micro Hint -->
-          <div class="deck-scroll-hint d-flex align-items-center gap-2 text-muted">
-            <span class="hint-wheel-icon"><i class="bi bi-mouse"></i></span>
-            <span class="hint-text">{{ $organisasiSetting?->hint_teks ?: 'Scroll mouse atau geser kartu untuk menggulir ormawa' }}</span>
-          </div>
-
-        </div>
-      </div>
-
-      <!-- RIGHT COLUMN: 3D Cascading Stacked Cards + Vertical Tracker -->
-      <div class="col-lg-7" data-aos="fade-left">
-        <div class="ormawa-showcase-stage" id="ormawaStageArea">
-          
-          <!-- Stack Container -->
-          <div class="ormawa-deck-viewport">
-            <div class="ormawa-deck-stack" id="ormawaDeckStack">
-              @if(isset($organisasis) && $organisasis->count() > 0)
-                @php
-                  $themes = [
-                    'radial-gradient(circle at 85% 15%, rgba(254, 216, 2, 0.32) 0%, transparent 45%), linear-gradient(155deg, #022c0f 0%, #046B26 48%, #011d0a 100%)', // Emerald Gold (UIS)
-                    'radial-gradient(circle at 85% 15%, rgba(56, 189, 248, 0.35) 0%, transparent 45%), linear-gradient(155deg, #0a192f 0%, #1e3a5f 48%, #050d1a 100%)', // Deep Navy / Blue
-                    'radial-gradient(circle at 85% 15%, rgba(216, 180, 254, 0.35) 0%, transparent 45%), linear-gradient(155deg, #2e1065 0%, #6b21a8 48%, #170536 100%)', // Royal Purple
-                    'radial-gradient(circle at 85% 15%, rgba(251, 191, 36, 0.35) 0%, transparent 45%), linear-gradient(155deg, #451a03 0%, #b45309 48%, #1c0701 100%)', // Amber Gold
-                    'radial-gradient(circle at 85% 15%, rgba(45, 212, 191, 0.35) 0%, transparent 45%), linear-gradient(155deg, #042f2e 0%, #0f766e 48%, #021a19 100%)', // Teal Lagoon
-                  ];
-                @endphp
-                @foreach($organisasis as $index => $ormawa)
-                  @php
-                    $singkat = $ormawa->singkatan ?: $ormawa->nama_organisasi;
-                    $cardTheme = $themes[$index % count($themes)];
-                    $initial = strtoupper(substr($ormawa->singkatan ?: $ormawa->nama_organisasi, 0, 2));
-                  @endphp
-                  <div class="ormawa-deck-card" 
-                       data-index="{{ $index }}"
-                       data-label="{{ $singkat }}"
-                       data-num="{{ sprintf('%02d', $index + 1) }}">
-                    
-                    <!-- Artistic Card Background (Logo image as full-bleed background) -->
-                    <div class="card-artistic-bg" style="background: {{ $cardTheme }};">
-                      @if(!empty($ormawa->logo))
-                        <img src="{{ asset('storage/' . $ormawa->logo) }}" alt="{{ $ormawa->nama_organisasi }}" class="card-bg-logo-img">
-                        <div class="card-bg-logo-overlay"></div>
-                      @else
-                        <div class="card-mesh-glow"></div>
-                        <div class="card-mesh-pattern"></div>
-                        <div class="card-organic-wave"></div>
-                        <div class="card-bg-watermark">{{ $initial }}</div>
-                      @endif
-                    </div>
-
-                    <!-- Card Header (Top Bar) -->
-                    <div class="card-top-bar">
-                      <div class="card-counter-badge">
-                        <span>{{ sprintf('%02d', $index + 1) }}</span>
-                        <span class="mx-1">/</span>
-                        <span>{{ sprintf('%02d', $organisasis->count()) }}</span>
-                      </div>
-                      <div class="card-cat-badge">
-                        {{ strtoupper($ormawa->kategori) }}
-                      </div>
-                    </div>
-
-                    <!-- Card Body & Footer (Bottom) -->
-                    <div class="card-content-bottom">
-                      <div class="card-kicker">CHAPTER {{ sprintf('%02d', $index + 1) }} · ORMAWA UIS</div>
-                      <h3 class="card-title-text">{{ $singkat }}</h3>
-                      <div class="card-subtitle-text">
-                        {{ $ormawa->nama_organisasi }}
-                        @if(!empty($ormawa->periode))
-                          · Periode {{ $ormawa->periode }}
-                        @endif
-                      </div>
-                      <p class="card-desc-snippet">
-                        {{ Str::limit(strip_tags($ormawa->deskripsi ?: ($ormawa->visi ?: 'Lembaga kemahasiswaan aktif di lingkungan Universitas Ibnu Sina.')), 105) }}
-                      </p>
-
-                      <div class="card-meta-row">
-                        <div class="card-meta-ketua">
-                          <i class="bi bi-person-fill"></i>
-                          <span>Ketua: {{ $ormawa->nama_ketua ?: 'Pengurus Ormawa' }}</span>
-                        </div>
-                        <a href="{{ route('homepage.organisasi.detail', $ormawa->slug) }}" class="card-link-action">
-                          <span>Profil Lengkap</span>
-                          <i class="bi bi-arrow-up-right"></i>
-                        </a>
-                      </div>
-                    </div>
-
+            <div class="uis-card-label">{{ $singkat }}</div>
+            <div class="uis-card-body">
+              <div class="uis-card-media">
+                @if(!empty($ormawa->logo))
+                  <img src="{{ asset('storage/' . $ormawa->logo) }}" alt="{{ $ormawa->nama_organisasi }}" class="uis-card-logo" loading="lazy">
+                @else
+                  <div class="mirror-card-fallback-icon">
+                    <i class="bi bi-people-fill"></i>
+                    <span class="mirror-fallback-title">{{ $singkat }}</span>
                   </div>
-                @endforeach
-              @endif
+                @endif
+              </div>
             </div>
           </div>
+        @endforeach
+      @endfor
+    </div>
+  </div>
 
-          <!-- Vertical Tracker / Progress Timeline (Right side of stack) -->
-          @if(isset($organisasis) && $organisasis->count() > 0)
-            <div class="ormawa-deck-tracker" id="ormawaTracker">
-              <div class="tracker-counter-box">
-                <span class="tracker-current-num" id="deckTrackerNum">01</span>
-                <span class="tracker-slash">/</span>
-                <span class="tracker-total-num">{{ sprintf('%02d', $organisasis->count()) }}</span>
-              </div>
-              
-              <div class="tracker-rail-container" id="deckTrackerRail" title="Klik untuk berpindah">
-                <div class="tracker-rail-track">
-                  <div class="tracker-rail-thumb" id="deckTrackerThumb"></div>
-                </div>
-              </div>
-
-              <div class="tracker-active-label" id="deckTrackerLabel">
-                {{ $organisasis->first()->singkatan ?: $organisasis->first()->nama_organisasi }}
-              </div>
-            </div>
-          @endif
-
-        </div>
+  {{-- Floor Info & Active Details (Mirror Hall Footer) inside Container --}}
+  <div class="container position-relative">
+    @php
+      $firstOrmawa = $organisasis->first();
+      $firstOrmawaTitle = $firstOrmawa ? ($firstOrmawa->nama_organisasi . (!empty($firstOrmawa->singkatan) ? ' (' . $firstOrmawa->singkatan . ')' : '')) : 'Organisasi Mahasiswa UIS';
+      $firstOrmawaDesc = $firstOrmawa ? Str::limit(trim(strip_tags($firstOrmawa->deskripsi ?: ($firstOrmawa->visi ?: 'Lembaga kemahasiswaan aktif di lingkungan Universitas Ibnu Sina.'))), 160) : '';
+      $firstOrmawaUrl = $firstOrmawa ? route('homepage.organisasi.detail', $firstOrmawa->slug) : route('homepage.organisasi');
+    @endphp
+    <div class="mirror-hall-floor" data-aos="fade-up" data-aos-delay="200">
+      <div class="mirror-counter-badge" id="ormawaMirrorCounter">
+        01 / {{ sprintf('%02d', $organisasis->count()) }}
       </div>
-
+      <h3 class="mirror-active-title" id="ormawaMirrorActiveTitle">
+        {{ $firstOrmawaTitle }}
+      </h3>
+      <p class="mirror-active-desc" id="ormawaMirrorActiveDesc">
+        {{ $firstOrmawaDesc }}
+      </p>
+      <div class="d-flex align-items-center justify-content-center gap-3 flex-wrap">
+        <a href="{{ $firstOrmawaUrl }}" class="mirror-active-cta" id="ormawaMirrorActiveBtn">
+          <span>Profil Lengkap</span>
+          <i class="bi bi-arrow-right-circle-fill"></i>
+        </a>
+        <a href="{{ !empty($organisasiSetting?->tombol_url) ? $organisasiSetting->tombol_url : route('homepage.organisasi') }}"
+           class="btn btn-outline-light rounded-pill px-4 py-2 fw-semibold"
+           style="font-size: 13px; border-color: rgba(254, 216, 2, 0.5); color: #fed802;">
+          <span>{{ $organisasiSetting?->tombol_teks ?: 'Jelajahi Semua Organisasi' }}</span>
+          <i class="bi bi-grid-fill ms-1"></i>
+        </a>
+      </div>
     </div>
   </div>
 </section>
+@endif
 
 <!-- ═══════════════════════════════════════════════
      9.5 GALERI DOKUMENTASI & KEGIATAN KAMPUS
@@ -1942,269 +2009,194 @@
         }
       }
     });
-    // ── 3D Stacked Card Deck Showcase (Ormawa & Kegiatan Mahasiswa) ────────
-    const deckStack = document.getElementById('ormawaDeckStack');
-    if (deckStack) {
-      const cards = Array.from(deckStack.querySelectorAll('.ormawa-deck-card'));
+    // ── Continuous 3D Cylinder Horizon Motion Engine (Ormawa & Kegiatan Mahasiswa) ────────
+    const ormawaViewport = document.getElementById('ormawaCylinderViewport');
+    const ormawaTrack = document.getElementById('ormawaCylinderTrack');
+
+    if (ormawaViewport && ormawaTrack) {
+      const cards = Array.from(ormawaTrack.querySelectorAll('.uis-cylinder-card'));
       const totalCards = cards.length;
+      const uniqueCount = {{ isset($organisasis) ? $organisasis->count() : 0 }};
 
-      if (totalCards > 0) {
-        let activeIdx = 0;
-        let isTransitioning = false;
-        let autoDeckTimer = null;
+      if (totalCards > 0 && uniqueCount > 0) {
+        const counterEl = document.getElementById('ormawaMirrorCounter');
+        const titleEl = document.getElementById('ormawaMirrorActiveTitle');
+        const descEl = document.getElementById('ormawaMirrorActiveDesc');
+        const btnEl = document.getElementById('ormawaMirrorActiveBtn');
 
-        const numEl = document.getElementById('deckTrackerNum');
-        const thumbEl = document.getElementById('deckTrackerThumb');
-        const labelEl = document.getElementById('deckTrackerLabel');
-        const railEl = document.getElementById('deckTrackerRail');
-        const prevBtn = document.getElementById('deckPrevBtn');
-        const nextBtn = document.getElementById('deckNextBtn');
-        const stageArea = document.getElementById('ormawaStageArea');
+        let cardWidth = cards[0].offsetWidth || (window.innerWidth < 768 ? 165 : 230);
+        let gap = window.innerWidth < 768 ? 14 : 22;
+        let itemStep = cardWidth + gap;
+        let singleCycleWidth = uniqueCount * itemStep;
 
-        // Slot tumpukan: 0 = kartu aktif di depan (bawah), 1..3 = kartu di belakang bertingkat ke atas
-        const SLOT_STYLE = [
-          { s: 1.00, y: 135, op: 1.00, br: 1.00, sh: '0 28px 55px -12px rgba(0, 35, 12, 0.50), 0 0 0 1px rgba(255,255,255,0.22) inset' },
-          { s: 0.94, y: 85,  op: 0.95, br: 0.92, sh: '0 20px 40px rgba(0, 0, 0, 0.28)' },
-          { s: 0.88, y: 40,  op: 0.82, br: 0.85, sh: '0 16px 32px rgba(0, 0, 0, 0.22)' },
-          { s: 0.82, y: 0,   op: 0.65, br: 0.75, sh: '0 12px 24px rgba(0, 0, 0, 0.16)' }
-        ];
-
-        // Spring-like easing (crisp organic settling)
-        const TRANSITION_ON = 'transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.55s cubic-bezier(0.16, 1, 0.3, 1), filter 0.55s ease, box-shadow 0.55s ease';
-
-        function getDeckPositions() {
-          const w = window.innerWidth;
-          const k = w <= 576 ? 0.75 : (w <= 991 ? 0.85 : 1);
-          return {
-            slotY: SLOT_STYLE.map(st => st.y * k),
-            yHidden: -60 * k,
-            yDrop: 560 * k
-          };
-        }
-
-        function applyState(card, state, pos) {
-          if (state === 'dropped') {
-            card.style.transform = `translate3d(0, ${pos.yDrop}px, 0) scale(1.04)`;
-            card.style.zIndex = '25';
-            card.style.opacity = '0';
-            card.style.pointerEvents = 'none';
-          } else if (state === 'hidden') {
-            card.style.transform = `translate3d(0, ${pos.yHidden}px, 0) scale(0.76)`;
-            card.style.zIndex = '15';
-            card.style.opacity = '0';
-            card.style.pointerEvents = 'none';
-          } else {
-            const st = SLOT_STYLE[state];
-            card.style.transform = `translate3d(0, ${pos.slotY[state]}px, 0) scale(${st.s})`;
-            card.style.zIndex = String(20 - state);
-            card.style.opacity = String(st.op);
-            card.style.filter = `brightness(${st.br})`;
-            card.style.pointerEvents = 'auto';
-            card.style.boxShadow = st.sh;
-          }
-        }
-
-        function renderDeck(targetIdx, smooth = true) {
-          if (targetIdx < 0) targetIdx = totalCards - 1;
-          if (targetIdx >= totalCards) targetIdx = 0;
-          activeIdx = targetIdx;
-
-          const pos = getDeckPositions();
-          const visibleSlots = Math.min(SLOT_STYLE.length, Math.max(1, totalCards - 1));
-
-          cards.forEach((card, idx) => {
-            const diff = ((idx - activeIdx) % totalCards + totalCards) % totalCards;
-            let state;
-            if (diff < visibleSlots) state = diff;
-            else if (totalCards > 1 && diff === totalCards - 1) state = 'dropped';
-            else state = 'hidden';
-
-            const prev = card.dataset.state;
-            clearTimeout(card._deckTimer);
-
-            if (!smooth || prev === undefined) {
-              card.style.transition = 'none';
-              applyState(card, state, pos);
-            } else if (prev === 'dropped' && state !== 0) {
-              // Kartu yang sudah jatuh disiapkan di hidden lalu meluncur ke slot belakang
-              card.style.transition = 'none';
-              applyState(card, 'hidden', pos);
-              void card.offsetHeight;
-              card.style.transition = TRANSITION_ON;
-              applyState(card, state, pos);
-            } else if (state === 'dropped' && prev !== '0') {
-              card.style.transition = TRANSITION_ON;
-              applyState(card, 'hidden', pos);
-              card._deckTimer = setTimeout(() => {
-                card.style.transition = 'none';
-                applyState(card, 'dropped', getDeckPositions());
-              }, 600);
-            } else {
-              card.style.transition = TRANSITION_ON;
-              applyState(card, state, pos);
-            }
-            card.dataset.state = String(state);
-          });
-
-          // Update Tracker UI
-          const currentCard = cards[activeIdx];
-          const formattedNum = (activeIdx + 1).toString().padStart(2, '0');
-          if (numEl) numEl.textContent = formattedNum;
-          if (labelEl) labelEl.textContent = currentCard.getAttribute('data-label') || '';
-
-          if (thumbEl && totalCards > 1) {
-            const pct = (activeIdx / (totalCards - 1)) * 100;
-            thumbEl.style.top = `calc(${pct}% - ${(pct / 100) * 28}px)`;
-          }
-        }
-
-        function nextCard() {
-          if (isTransitioning) return;
-          isTransitioning = true;
-          let next = activeIdx + 1;
-          if (next >= totalCards) next = 0;
-          renderDeck(next);
-          setTimeout(() => { isTransitioning = false; }, 550);
-        }
-
-        function prevCard() {
-          if (isTransitioning) return;
-          isTransitioning = true;
-          let prev = activeIdx - 1;
-          if (prev < 0) prev = totalCards - 1;
-          renderDeck(prev);
-          setTimeout(() => { isTransitioning = false; }, 550);
-        }
-
-        // Mouse Wheel Scroll Listener
-        if (stageArea) {
-          let lastWheelTime = 0;
-          const wheelCooldown = 550;
-
-          stageArea.addEventListener('wheel', function (e) {
-            e.preventDefault();
-            const now = Date.now();
-            if (now - lastWheelTime < wheelCooldown) return;
-            if (Math.abs(e.deltaY) < 15) return;
-
-            lastWheelTime = now;
-            if (e.deltaY > 0) nextCard();
-            else prevCard();
-          }, { passive: false });
-        }
-
-        // Interactive Pointer Drag (Mouse & Touch Drag with Spring Toss)
+        let scrollPos = 0;
+        let baseSpeed = 0.85;
+        let currentSpeed = baseSpeed;
+        let targetSpeed = baseSpeed;
         let isDragging = false;
-        let dragStartY = 0;
-        let dragCurrentDelta = 0;
+        let dragStartX = 0;
+        let dragStartPos = 0;
+        let lastDragX = 0;
+        let dragVel = 0;
+        let activeCardRef = null;
 
-        function startDrag(clientY) {
-          if (isTransitioning) return;
-          isDragging = true;
-          dragStartY = clientY;
-          dragCurrentDelta = 0;
-          stopAutoDeck();
+        function updateOrmawaDimensions() {
+          cardWidth = cards[0].offsetWidth || (window.innerWidth < 768 ? 165 : 230);
+          gap = window.innerWidth < 768 ? 14 : 22;
+          itemStep = cardWidth + gap;
+          singleCycleWidth = uniqueCount * itemStep;
         }
+        window.addEventListener('resize', updateOrmawaDimensions);
+        updateOrmawaDimensions();
 
-        function moveDrag(clientY) {
-          if (!isDragging) return;
-          dragCurrentDelta = clientY - dragStartY;
-          const activeCard = cards[activeIdx];
-          if (activeCard) {
-            const pos = getDeckPositions();
-            const baseSlotY = pos.slotY[0];
-            const currentY = baseSlotY + dragCurrentDelta;
-            activeCard.style.transition = 'none';
-            activeCard.style.transform = `translate3d(0, ${currentY}px, 0) scale(1.0)`;
+        function renderOrmawaCylinder() {
+          if (!isDragging) {
+            currentSpeed += (targetSpeed - currentSpeed) * 0.08;
+            scrollPos += currentSpeed;
+
+            if (Math.abs(dragVel) > 0.05) {
+              scrollPos += dragVel;
+              dragVel *= 0.92;
+            }
           }
+
+          if (scrollPos >= singleCycleWidth) {
+            scrollPos -= singleCycleWidth;
+            if (isDragging) dragStartPos -= singleCycleWidth;
+          } else if (scrollPos < 0) {
+            scrollPos += singleCycleWidth;
+            if (isDragging) dragStartPos += singleCycleWidth;
+          }
+
+          const viewWidth = ormawaViewport.offsetWidth || window.innerWidth;
+          const centerX = viewWidth / 2;
+          const radius = Math.min(2400, Math.max(900, viewWidth * 1.05));
+          const totalWidth = totalCards * itemStep;
+
+          let closestCard = null;
+          let minDistance = Infinity;
+
+          for (let i = 0; i < totalCards; i++) {
+            const card = cards[i];
+            let cardBaseX = (i * itemStep) - scrollPos;
+
+            while (cardBaseX - centerX < -totalWidth / 2) cardBaseX += totalWidth;
+            while (cardBaseX - centerX > totalWidth / 2) cardBaseX -= totalWidth;
+
+            const cardCenter = cardBaseX + cardWidth / 2;
+            const distFromCenter = cardCenter - centerX;
+            const absDist = Math.abs(distFromCenter);
+
+            const angleRad = distFromCenter / radius;
+            const angleDeg = angleRad * (180 / Math.PI);
+
+            const transX = Math.sin(angleRad) * radius + centerX - cardWidth / 2;
+            const transZ = -(1 - Math.cos(angleRad)) * radius * 0.95;
+            const transY = Math.pow(Math.abs(angleRad), 1.8) * 32;
+
+            const scale = Math.max(0.82, 1.0 - Math.abs(angleRad) * 0.16);
+            const zIndex = Math.round(1000 - absDist);
+            const maxVisibleDist = viewWidth * 0.58;
+            const isVisible = absDist < maxVisibleDist;
+            const opacity = isVisible ? Math.max(0, Math.min(1, (maxVisibleDist - absDist) / (viewWidth * 0.22))) : 0;
+
+            card.style.transform = `translate3d(${transX}px, ${transY}px, ${transZ}px) rotateY(${-angleDeg * 1.1}deg) scale(${scale})`;
+            card.style.zIndex = zIndex;
+            card.style.opacity = isVisible ? opacity : 0;
+            card.style.visibility = isVisible && opacity > 0.02 ? 'visible' : 'hidden';
+            card.style.pointerEvents = isVisible && opacity > 0.5 ? 'auto' : 'none';
+
+            if (absDist < minDistance) {
+              minDistance = absDist;
+              closestCard = card;
+            }
+          }
+
+          if (closestCard && closestCard !== activeCardRef) {
+            activeCardRef = closestCard;
+            cards.forEach(c => c.classList.remove('is-active'));
+            closestCard.classList.add('is-active');
+
+            const name = closestCard.getAttribute('data-name');
+            const desc = closestCard.getAttribute('data-desc');
+            const url = closestCard.getAttribute('data-url');
+            const idx = closestCard.getAttribute('data-index');
+            const total = closestCard.getAttribute('data-total');
+
+            if (counterEl && idx && total) counterEl.textContent = `${idx} / ${total}`;
+            if (titleEl && name && titleEl.textContent.trim() !== name.trim()) {
+              titleEl.textContent = name;
+            }
+            if (descEl && desc && descEl.textContent.trim() !== desc.trim()) {
+              descEl.textContent = desc;
+            }
+            if (btnEl && url) btnEl.setAttribute('href', url);
+          }
+
+          requestAnimationFrame(renderOrmawaCylinder);
         }
 
-        function endDrag() {
+        requestAnimationFrame(renderOrmawaCylinder);
+
+        ormawaViewport.addEventListener('mouseenter', () => {
+          targetSpeed = 0.2;
+        });
+        ormawaViewport.addEventListener('mouseleave', () => {
+          if (!isDragging) targetSpeed = baseSpeed;
+        });
+
+        let hasMovedSignificantly = false;
+
+        ormawaViewport.addEventListener('pointerdown', (e) => {
+          isDragging = true;
+          hasMovedSignificantly = false;
+          dragStartX = e.clientX;
+          dragStartPos = scrollPos;
+          lastDragX = e.clientX;
+          dragVel = 0;
+          ormawaViewport.setPointerCapture(e.pointerId);
+        });
+
+        ormawaViewport.addEventListener('pointermove', (e) => {
+          if (!isDragging) return;
+          const delta = e.clientX - lastDragX;
+          if (Math.abs(e.clientX - dragStartX) > 6) {
+            hasMovedSignificantly = true;
+          }
+          dragVel = -delta;
+          lastDragX = e.clientX;
+          scrollPos = dragStartPos - (e.clientX - dragStartX);
+        });
+
+        function endOrmawaDrag() {
           if (!isDragging) return;
           isDragging = false;
-          const activeCard = cards[activeIdx];
-          if (activeCard) {
-            activeCard.style.transition = TRANSITION_ON;
-          }
-
-          if (dragCurrentDelta > 60) {
-            nextCard();
-          } else if (dragCurrentDelta < -60) {
-            prevCard();
-          } else {
-            renderDeck(activeIdx, true);
-          }
-          startAutoDeck();
+          targetSpeed = baseSpeed;
         }
 
-        // Touch Listeners
-        if (stageArea) {
-          stageArea.addEventListener('touchstart', (e) => startDrag(e.touches[0].clientY), { passive: true });
-          stageArea.addEventListener('touchmove', (e) => moveDrag(e.touches[0].clientY), { passive: true });
-          stageArea.addEventListener('touchend', endDrag, { passive: true });
+        ormawaViewport.addEventListener('pointerup', endOrmawaDrag);
+        ormawaViewport.addEventListener('pointercancel', endOrmawaDrag);
 
-          // Mouse Drag Listeners
-          stageArea.addEventListener('mousedown', (e) => {
-            if (e.target.closest('a') || e.target.closest('button')) return;
-            startDrag(e.clientY);
-          });
-          window.addEventListener('mousemove', (e) => moveDrag(e.clientY));
-          window.addEventListener('mouseup', endDrag);
-        }
+        ormawaTrack.addEventListener('click', (e) => {
+          if (hasMovedSignificantly) return;
+          const card = e.target.closest('.uis-cylinder-card');
+          if (!card) return;
+          const url = card.getAttribute('data-url');
 
-        // Klik kartu belakang untuk langsung menjadikannya aktif
-        cards.forEach((card, idx) => {
-          card.addEventListener('click', function (e) {
-            if (e.target.closest('a')) return;
-            if (idx !== activeIdx && !isTransitioning) {
-              isTransitioning = true;
-              renderDeck(idx);
-              setTimeout(() => { isTransitioning = false; }, 550);
+          if (card.classList.contains('is-active')) {
+            if (url && url !== '#' && url.trim() !== '') {
+              window.location.href = url;
             }
-          });
+          } else {
+            const viewWidth = ormawaViewport.offsetWidth || window.innerWidth;
+            const centerX = viewWidth / 2;
+            const rect = card.getBoundingClientRect();
+            const vRect = ormawaViewport.getBoundingClientRect();
+            const cardScreenCenter = rect.left - vRect.left + rect.width / 2;
+            const diff = cardScreenCenter - centerX;
+            dragVel = diff * 0.18;
+          }
         });
-
-        // Tombol Navigasi Panah
-        if (prevBtn) prevBtn.addEventListener('click', prevCard);
-        if (nextBtn) nextBtn.addEventListener('click', nextCard);
-
-        // Tracker Rail Klik Langsung
-        if (railEl) {
-          railEl.addEventListener('click', function (e) {
-            const rect = railEl.getBoundingClientRect();
-            const clickPos = e.clientY - rect.top;
-            const ratio = Math.max(0, Math.min(1, clickPos / rect.height));
-            const target = Math.round(ratio * (totalCards - 1));
-            renderDeck(target);
-          });
-        }
-
-        // Window resize re-render
-        let resizeTimer = null;
-        window.addEventListener('resize', function () {
-          clearTimeout(resizeTimer);
-          resizeTimer = setTimeout(() => {
-            renderDeck(activeIdx, false);
-          }, 100);
-        });
-
-        // Auto Advance halus setiap 6 detik dengan Pause on Hover
-        function startAutoDeck() {
-          stopAutoDeck();
-          autoDeckTimer = setInterval(nextCard, 6000);
-        }
-        function stopAutoDeck() {
-          if (autoDeckTimer) clearInterval(autoDeckTimer);
-        }
-
-        if (stageArea) {
-          stageArea.addEventListener('mouseenter', stopAutoDeck);
-          stageArea.addEventListener('mouseleave', startAutoDeck);
-        }
-
-        // Render Awal
-        renderDeck(0, false);
-        startAutoDeck();
       }
     }
 

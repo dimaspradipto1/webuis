@@ -28,7 +28,7 @@ class DesainGrafisSettingRequest extends FormRequest
             'stat_menunggu' => ['required', 'integer', 'min:0'],
             'guide_title' => ['nullable', 'string', 'max:255'],
             'guide_steps' => ['nullable', 'string'],
-            'guide_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,svg', 'max:5120'],
+            'guide_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp,svg', 'max:20480'],
         ];
     }
 
@@ -36,7 +36,7 @@ class DesainGrafisSettingRequest extends FormRequest
     {
         return [
             'guide_image.image' => 'File gambar panduan harus berupa foto/gambar yang valid.',
-            'guide_image.max' => 'Ukuran gambar panduan maksimal 5 MB.',
+            'guide_image.max' => 'Ukuran gambar panduan maksimal 20 MB.',
         ];
     }
 }

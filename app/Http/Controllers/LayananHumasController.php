@@ -75,7 +75,7 @@ class LayananHumasController extends Controller
             'deskripsi' => ['nullable', 'string'],
             'icon' => ['nullable', 'string', 'max:50'],
             'url' => ['nullable', 'string', 'max:1000'],
-            'file' => ['nullable', 'file', 'max:20480'], // max 20MB
+            'file' => ['nullable', 'file', 'max:102400'], // max 100MB
             'target_blank' => ['nullable'],
             'is_active' => ['nullable'],
 
@@ -99,7 +99,7 @@ class LayananHumasController extends Controller
             'tombol_teks' => ['nullable', 'string', 'max:100'],
         ], [
             'nama.required' => 'Nama layanan wajib diisi.',
-            'file.max' => 'Ukuran file maksimal 20 MB.',
+            'file.max' => 'Ukuran file maksimal 100 MB.',
         ]);
 
         $url = trim($validated['url'] ?? ($validated['link_form'] ?? ''));

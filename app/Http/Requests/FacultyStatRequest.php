@@ -15,8 +15,8 @@ class FacultyStatRequest extends FormRequest
     {
         return [
             'title' => ['required', 'string', 'max:255'],
-            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:3072'],
-            'background_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:5120'],
+            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:20480'],
+            'background_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:20480'],
 
             // Tab 1: Mahasiswa
             'tab_1_label' => ['required', 'string', 'max:50'],

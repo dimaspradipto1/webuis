@@ -23,7 +23,7 @@ class PrestasiRequest extends FormRequest
             'penyelenggara' => ['nullable', 'string', 'max:255'],
             'tahun' => ['nullable', 'string', 'max:10'],
             'deskripsi' => ['nullable', 'string'],
-            'foto' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
+            'foto' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:20480'],
             'is_active' => ['nullable'],
             'urutan' => ['nullable', 'integer'],
         ];
@@ -38,7 +38,7 @@ class PrestasiRequest extends FormRequest
             'tingkat.in' => 'Tingkatan kejuaraan tidak valid.',
             'foto.image' => 'File harus berupa gambar.',
             'foto.mimes' => 'Format foto yang diperbolehkan: JPEG, PNG, JPG, WEBP.',
-            'foto.max' => 'Ukuran foto maksimal 2 MB.',
+            'foto.max' => 'Ukuran foto maksimal 20 MB.',
         ];
     }
 }

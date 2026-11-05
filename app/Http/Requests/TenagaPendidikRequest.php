@@ -24,7 +24,7 @@ class TenagaPendidikRequest extends FormRequest
             'nama' => ['required', 'string', 'max:255'],
             'bidang' => ['nullable', 'string', 'max:255'],
             'keterangan' => ['nullable', 'string', 'max:1000'],
-            'foto' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
+            'foto' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:20480'],
             'icon' => ['nullable', 'string', 'max:100'],
             'link' => ['nullable', 'string', 'max:255'],
             'tombol_teks' => ['nullable', 'string', 'max:100'],
@@ -41,7 +41,7 @@ class TenagaPendidikRequest extends FormRequest
         return [
             'nama.required' => 'Nama kelompok/dosen bidang wajib diisi.',
             'foto.image' => 'File foto harus berupa gambar.',
-            'foto.max' => 'Ukuran foto maksimal 2MB.',
+            'foto.max' => 'Ukuran foto maksimal 20MB.',
             'urutan.integer' => 'Urutan harus berupa angka.',
         ];
     }

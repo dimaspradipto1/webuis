@@ -14,7 +14,7 @@ class ProfilRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'logo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg,webp', 'max:2048'],
+            'logo' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg,webp', 'max:20480'],
             'nama_perusahaan' => ['nullable', 'string', 'max:255'],
             'nama_pemilik' => ['nullable', 'string', 'max:255'],
             'no_telp' => ['nullable', 'string', 'max:20'],
@@ -27,7 +27,7 @@ class ProfilRequest extends FormRequest
         return [
             'logo.image' => 'Logo harus berupa gambar.',
             'logo.mimes' => 'Format logo harus jpeg, png, jpg, gif, svg, atau webp.',
-            'logo.max' => 'Ukuran logo maksimal 2MB.',
+            'logo.max' => 'Ukuran logo maksimal 20MB.',
             'nama_perusahaan.max' => 'Nama perusahaan maksimal 255 karakter.',
             'nama_pemilik.max' => 'Nama pemilik maksimal 255 karakter.',
             'no_telp.max' => 'Nomor telepon maksimal 20 karakter.',

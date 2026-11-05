@@ -149,7 +149,7 @@ class NewsController extends Controller
     public function uploadImage(Request $request): JsonResponse
     {
         $request->validate([
-            'file' => 'required|image|mimes:jpeg,png,jpg,gif,webp,svg|max:2048',
+            'file' => 'required|image|mimes:jpeg,png,jpg,gif,webp,svg|max:20480',
         ]);
 
         if ($request->hasFile('file')) {
@@ -171,11 +171,11 @@ class NewsController extends Controller
     public function importExcel(Request $request): RedirectResponse
     {
         $request->validate([
-            'file_excel' => ['required', 'file', 'mimes:xlsx,xls,csv', 'max:10240'],
+            'file_excel' => ['required', 'file', 'mimes:xlsx,xls,csv', 'max:102400'],
         ], [
             'file_excel.required' => 'Silakan pilih file Excel / CSV yang akan diimpor.',
             'file_excel.mimes' => 'Format file harus berupa .xlsx, .xls, atau .csv.',
-            'file_excel.max' => 'Ukuran file maksimal 10MB.',
+            'file_excel.max' => 'Ukuran file maksimal 100MB.',
         ]);
 
         try {

@@ -24,7 +24,7 @@ class UnduhanRequest extends FormRequest
         return [
             'judul' => ['required', 'string', 'max:255'],
             'kategori' => ['required', 'in:image,video,audio,template'],
-            'file' => ['nullable', 'file', 'max:51200'], // maks 50MB
+            'file' => ['nullable', 'file', 'max:102400'], // maks 100MB
             'file_url' => ['nullable', 'url', 'max:1000'],
             'file_size' => ['nullable', 'string', 'max:50'],
             'deskripsi' => ['nullable', 'string'],
@@ -41,7 +41,7 @@ class UnduhanRequest extends FormRequest
             'kategori.required' => 'Kategori unduhan wajib dipilih.',
             'kategori.in' => 'Pilihan kategori harus salah satu dari: Image, Video, Audio, atau Template.',
             'file.file' => 'Berkas harus berupa file yang valid.',
-            'file.max' => 'Ukuran file maksimal 50 MB.',
+            'file.max' => 'Ukuran file maksimal 100 MB.',
             'file_url.url' => 'Format URL unduhan eksternal tidak valid.',
             'urutan.integer' => 'Urutan harus berupa angka.',
         ];

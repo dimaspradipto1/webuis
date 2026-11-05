@@ -19,7 +19,7 @@ class LayananHumasRequest extends FormRequest
             'deskripsi' => ['nullable', 'string'],
             'icon' => ['nullable', 'string', 'max:50'],
             'url' => ['nullable', 'string', 'max:1000'],
-            'file' => ['nullable', 'file', 'max:20480'],
+            'file' => ['nullable', 'file', 'max:102400'],
             'target_blank' => ['nullable'],
             'is_active' => ['nullable'],
 
@@ -48,7 +48,7 @@ class LayananHumasRequest extends FormRequest
     {
         return [
             'nama.required' => 'Nama layanan wajib diisi.',
-            'file.max' => 'Ukuran file maksimal 20 MB.',
+            'file.max' => 'Ukuran file maksimal 100 MB.',
         ];
     }
 }

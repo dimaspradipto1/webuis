@@ -16,7 +16,7 @@ class SambutanDekanRequest extends FormRequest
         return [
             'nama_dekan' => ['nullable', 'string', 'max:255'],
             'jabatan_dekan' => ['nullable', 'string', 'max:255'],
-            'foto_dekan' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:2048'],
+            'foto_dekan' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:20480'],
             'kutipan_singkat' => ['nullable', 'string'],
             'sambutan_dekan' => ['nullable', 'string'],
         ];
@@ -27,7 +27,7 @@ class SambutanDekanRequest extends FormRequest
         return [
             'foto_dekan.image' => 'File harus berupa gambar.',
             'foto_dekan.mimes' => 'Format gambar yang diperbolehkan: JPEG, PNG, JPG, WEBP.',
-            'foto_dekan.max' => 'Ukuran foto maksimal 2 MB.',
+            'foto_dekan.max' => 'Ukuran foto maksimal 20 MB.',
         ];
     }
 }

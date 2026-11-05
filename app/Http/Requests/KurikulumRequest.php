@@ -21,7 +21,7 @@ class KurikulumRequest extends FormRequest
             'semester' => ['required', 'integer', 'min:1', 'max:8'],
             'sks' => ['required', 'integer', 'min:1', 'max:12'],
             'kategori' => ['required', 'string', 'max:50'],
-            'file_rps' => ['nullable', 'file', 'mimes:pdf,doc,docx', 'max:10240'],
+            'file_rps' => ['nullable', 'file', 'mimes:pdf,doc,docx', 'max:102400'],
             'link_rps' => ['nullable', 'string', 'max:500'],
             'deskripsi' => ['nullable', 'string'],
             'urutan' => ['nullable', 'integer'],
@@ -36,7 +36,7 @@ class KurikulumRequest extends FormRequest
             'nama_mk.required' => 'Nama matakuliah wajib diisi.',
             'semester.required' => 'Semester wajib dipilih (1 - 8).',
             'sks.required' => 'Jumlah SKS wajib diisi.',
-            'file_rps.max' => 'Ukuran file RPS maksimal 10MB.',
+            'file_rps.max' => 'Ukuran file RPS maksimal 100MB.',
             'file_rps.mimes' => 'File RPS harus berformat PDF, DOC, atau DOCX.',
         ];
     }

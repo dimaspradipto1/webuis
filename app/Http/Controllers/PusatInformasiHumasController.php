@@ -61,7 +61,7 @@ class PusatInformasiHumasController extends Controller
     {
         $validated = $request->validate([
             'judul' => ['nullable', 'string', 'max:255'],
-            'gambar' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp,svg', 'max:5120'],
+            'gambar' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp,svg', 'max:20480'],
             'link_drive' => ['nullable', 'string', 'max:1000'],
             'button_text' => ['required', 'string', 'max:50'],
             'button_url' => ['nullable', 'string', 'max:1000'],
@@ -72,7 +72,7 @@ class PusatInformasiHumasController extends Controller
             'button_text.required' => 'Teks tombol wajib diisi (contoh: Lihat / Buka / Akses).',
             'gambar.image' => 'File background harus berupa gambar.',
             'gambar.mimes' => 'Format gambar harus jpeg, png, jpg, webp, atau svg.',
-            'gambar.max' => 'Ukuran file gambar maksimal 5 MB.',
+            'gambar.max' => 'Ukuran file gambar maksimal 20 MB.',
         ]);
 
         $gambarPath = null;
@@ -116,7 +116,7 @@ class PusatInformasiHumasController extends Controller
     {
         $validated = $request->validate([
             'judul' => ['nullable', 'string', 'max:255'],
-            'gambar' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp,svg', 'max:5120'],
+            'gambar' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp,svg', 'max:20480'],
             'link_drive' => ['nullable', 'string', 'max:1000'],
             'button_text' => ['required', 'string', 'max:50'],
             'button_url' => ['nullable', 'string', 'max:1000'],
@@ -127,7 +127,7 @@ class PusatInformasiHumasController extends Controller
             'button_text.required' => 'Teks tombol wajib diisi (contoh: Lihat / Buka / Akses).',
             'gambar.image' => 'File background harus berupa gambar.',
             'gambar.mimes' => 'Format gambar harus jpeg, png, jpg, webp, atau svg.',
-            'gambar.max' => 'Ukuran file gambar maksimal 5 MB.',
+            'gambar.max' => 'Ukuran file gambar maksimal 20 MB.',
         ]);
 
         $buttonUrl = trim($validated['button_url'] ?? '');
