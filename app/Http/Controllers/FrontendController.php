@@ -987,4 +987,56 @@ class FrontendController extends Controller
 
         return view('layouts.frontend.fasilitas-detail', compact('sarana', 'otherSaranas'));
     }
+
+    public function pengumumanAgenda(Request $request)
+    {
+        $selectedTipe = $request->query('tipe', '');
+
+        $allItems = PengumumanAgenda::where('is_active', true)
+            ->orderBy('urutan')
+            ->orderByDesc('id')
+            ->get();
+
+        $items = ! empty($selectedTipe)
+            ? $allItems->where('tipe', $selectedTipe)->values()
+            : $allItems;
+
+        $pengumumans = $allItems->where('tipe', 'pengumuman')->values();
+        $agendas = $allItems->where('tipe', 'agenda')->values();
+
+        return view('layouts.frontend.pengumuman-agenda', compact('items', 'allItems', 'pengumumans', 'agendas', 'selectedTipe'));
+    }
+
+    public function pengumumanAgendaDetail(string $slug)
+    {
+        $item = PengumumanAgenda::where('slug', $slug)
+            ->orWhere(function ($q) use ($slug) {
+                if (is_numeric($slug)) {
+                    $q->where('id', (int) $slug);
+                }
+            })
+            ->firstOrFail();
+
+        if (is_numeric($slug) && ! empty($item->slug)) {
+            return redirect()->route('homepage.pengumuman-agenda.detail', $item->slug, 301);
+        }
+
+        $otherPengumumans = PengumumanAgenda::where('is_active', true)
+            ->where('tipe', 'pengumuman')
+            ->where('id', '!=', $item->id)
+            ->orderBy('urutan')
+            ->orderByDesc('id')
+            ->take(5)
+            ->get();
+
+        $otherAgendas = PengumumanAgenda::where('is_active', true)
+            ->where('tipe', 'agenda')
+            ->where('id', '!=', $item->id)
+            ->orderBy('urutan')
+            ->orderByDesc('id')
+            ->take(5)
+            ->get();
+
+        return view('layouts.frontend.pengumuman-agenda-detail', compact('item', 'otherPengumumans', 'otherAgendas'));
+    }
 }

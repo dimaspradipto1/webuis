@@ -1,80 +1,119 @@
 @extends('layouts.dashboard.template')
 
 @section('content')
-<div class="pagetitle">
-    <h1>Manajemen Pengumuman & Agenda</h1>
-    <nav>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-            <li class="breadcrumb-item">Informasi</li>
-            <li class="breadcrumb-item active">Pengumuman & Agenda</li>
-        </ol>
-    </nav>
+<div class="pagetitle d-flex flex-wrap align-items-center justify-content-between gap-2 mb-4">
+    <div>
+        <h1 class="mb-1">Manajemen Pengumuman & Agenda</h1>
+        <nav>
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+                <li class="breadcrumb-item">Informasi</li>
+                <li class="breadcrumb-item active">Pengumuman & Agenda</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="d-flex flex-wrap align-items-center gap-2">
+        <a href="{{ route('homepage.pengumuman-agenda') }}" target="_blank" class="btn btn-outline-success btn-sm px-3">
+            <i class="bi bi-box-arrow-up-right me-1"></i> Lihat di Website
+        </a>
+        <a href="{{ route('pengumuman-agenda.create', ['tipe' => 'pengumuman']) }}" class="btn btn-success btn-sm px-3">
+            <i class="bi bi-megaphone-fill me-1"></i> + Tambah Pengumuman
+        </a>
+        <a href="{{ route('pengumuman-agenda.create', ['tipe' => 'agenda']) }}" class="btn btn-primary btn-sm px-3">
+            <i class="bi bi-calendar-plus-fill me-1"></i> + Tambah Agenda
+        </a>
+    </div>
 </div>
 
-@if (session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        <i class="bi bi-check-circle-fill me-2"></i>{{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-    </div>
-@endif
+@php
+    $currentTipe = $selectedTipe ?? request('tipe', '');
+    $totalCount = $pengumumans->count() + $agendas->count();
+@endphp
 
-@if ($errors->any())
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        <i class="bi bi-exclamation-triangle-fill me-2"></i>
-        <ul class="mb-0 ps-3">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+<!-- Tab Filter Kategori -->
+<div class="card shadow-sm border-0 mb-4">
+    <div class="card-body py-3 px-4 d-flex flex-wrap align-items-center justify-content-between gap-3">
+        <div class="d-flex flex-wrap align-items-center gap-2">
+            <a href="{{ route('pengumuman-agenda.index') }}"
+               class="btn btn-sm rounded-pill px-3 fw-semibold {{ empty($currentTipe) ? 'btn-primary' : 'btn-outline-secondary' }}">
+                <i class="bi bi-grid-fill me-1"></i> Semua ({{ $totalCount }})
+            </a>
+            <a href="{{ route('pengumuman-agenda.index', ['tipe' => 'pengumuman']) }}"
+               class="btn btn-sm rounded-pill px-3 fw-semibold {{ $currentTipe === 'pengumuman' ? 'btn-success' : 'btn-outline-secondary' }}">
+                <i class="bi bi-megaphone-fill me-1"></i> Pengumuman ({{ $pengumumans->count() }})
+            </a>
+            <a href="{{ route('pengumuman-agenda.index', ['tipe' => 'agenda']) }}"
+               class="btn btn-sm rounded-pill px-3 fw-semibold {{ $currentTipe === 'agenda' ? 'btn-warning text-dark' : 'btn-outline-secondary' }}">
+                <i class="bi bi-calendar4-week me-1"></i> Agenda Akademik ({{ $agendas->count() }})
+            </a>
+        </div>
+        <span class="text-muted small">
+            Klik tombol <strong>"Kelola Detail"</strong> untuk mengedit isi lengkap, foto, atau lampiran PDF.
+        </span>
     </div>
-@endif
+</div>
 
 <div class="row g-4">
+    @if(empty($currentTipe) || $currentTipe === 'pengumuman')
     <!-- ═══════════════════════════════════════════════
          1. DAFTAR PENGUMUMAN
     ═══════════════════════════════════════════════ -->
     <div class="col-12">
-        <div class="card shadow-sm">
-            <div class="card-header d-flex align-items-center justify-content-between py-3">
-                <h5 class="mb-0 fw-semibold">
-                    <i class="bi bi-megaphone-fill me-2 text-success"></i>Daftar Pengumuman
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white d-flex align-items-center justify-content-between py-3">
+                <h5 class="mb-0 fw-bold text-dark">
+                    <i class="bi bi-megaphone-fill me-2 text-success"></i>Daftar Pengumuman Resmi ({{ $pengumumans->count() }})
                 </h5>
-                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#modalAddPengumuman">
+                <a href="{{ route('pengumuman-agenda.create', ['tipe' => 'pengumuman']) }}" class="btn btn-success btn-sm">
                     <i class="bi bi-plus-lg me-1"></i> Tambah Pengumuman
-                </button>
+                </a>
             </div>
             <div class="card-body pt-3">
                 <div class="table-responsive">
                     <table class="table table-hover table-bordered align-middle mb-0">
                         <thead class="table-light">
                             <tr>
-                                <th class="text-center" style="width: 60px;">No</th>
-                                <th>Judul Pengumuman</th>
-                                <th style="width: 180px;">Tanggal</th>
-                                <th style="width: 220px;">Tautan / URL</th>
-                                <th class="text-center" style="width: 90px;">Urutan</th>
-                                <th class="text-center" style="width: 100px;">Status</th>
-                                <th class="text-center" style="width: 110px;">Aksi</th>
+                                <th class="text-center" style="width: 55px;">No</th>
+                                <th>Judul & Ringkasan Pengumuman</th>
+                                <th style="width: 170px;">Tanggal</th>
+                                <th class="text-center" style="width: 120px;">Media / Lampiran</th>
+                                <th class="text-center" style="width: 80px;">Urutan</th>
+                                <th class="text-center" style="width: 95px;">Status</th>
+                                <th class="text-center" style="width: 185px;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($pengumumans as $idx => $item)
                                 <tr>
                                     <td class="text-center">{{ $idx + 1 }}</td>
-                                    <td class="fw-semibold">{{ $item->judul }}</td>
-                                    <td><span class="badge bg-light text-dark border">{{ $item->waktu }}</span></td>
                                     <td>
-                                        @if(!empty($item->url))
-                                            <a href="{{ $item->url }}" target="_blank" class="text-truncate d-inline-block" style="max-width: 200px;">
-                                                {{ $item->url }}
-                                            </a>
-                                        @else
+                                        <div class="fw-bold text-dark">{{ $item->judul }}</div>
+                                        @if(!empty($item->konten))
+                                            <div class="text-muted small mt-1">
+                                                {{ \Illuminate\Support\Str::limit(strip_tags($item->konten), 95) }}
+                                            </div>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <span class="badge bg-light text-dark border px-2 py-1">
+                                            <i class="bi bi-calendar3 me-1 text-success"></i>{{ $item->waktu }}
+                                        </span>
+                                    </td>
+                                    <td class="text-center">
+                                        @php
+                                            $photoCount = is_array($item->galeri) ? count($item->galeri) : (!empty($item->foto) ? 1 : 0);
+                                        @endphp
+                                        @if($photoCount > 0)
+                                            <span class="badge bg-info text-dark me-1"><i class="bi bi-images me-1"></i>{{ $photoCount }} Foto</span>
+                                        @endif
+                                        @if(!empty($item->file_lampiran))
+                                            <span class="badge bg-danger"><i class="bi bi-file-earmark-pdf me-1"></i>Lampiran</span>
+                                        @endif
+                                        @if($photoCount === 0 && empty($item->file_lampiran))
                                             <span class="text-muted small">-</span>
                                         @endif
                                     </td>
-                                    <td class="text-center">{{ $item->urutan }}</td>
+                                    <td class="text-center"><span class="badge bg-secondary">#{{ $item->urutan }}</span></td>
                                     <td class="text-center">
                                         @if($item->is_active)
                                             <span class="badge bg-success">Aktif</span>
@@ -84,20 +123,25 @@
                                     </td>
                                     <td class="text-center">
                                         <div class="d-flex justify-content-center gap-1">
-                                            <button type="button"
-                                                    class="btn btn-sm btn-warning text-white"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#modalEditItem{{ $item->id }}"
-                                                    title="Edit">
-                                                <i class="bi bi-pencil-fill"></i>
-                                            </button>
+                                            <a href="{{ route('pengumuman-agenda.edit', $item->id) }}"
+                                               class="btn btn-sm btn-primary fw-semibold"
+                                               title="Kelola Detail Pengumuman">
+                                                <i class="bi bi-pencil-square me-1"></i> Detail
+                                            </a>
+                                            <a href="{{ route('homepage.pengumuman-agenda.detail', $item->slug ?: $item->id) }}"
+                                               target="_blank"
+                                               class="btn btn-sm btn-outline-success"
+                                               title="Lihat Halaman Detail di Website">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
                                             <form action="{{ route('pengumuman-agenda.destroy', $item->id) }}"
                                                   method="POST"
+                                                  class="m-0"
                                                   onsubmit="return confirm('Yakin ingin menghapus pengumuman ini?')">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
-                                                    <i class="bi bi-trash-fill"></i>
+                                                <button type="submit" class="btn btn-sm btn-outline-danger" title="Hapus">
+                                                    <i class="bi bi-trash"></i>
                                                 </button>
                                             </form>
                                         </div>
@@ -114,54 +158,68 @@
             </div>
         </div>
     </div>
+    @endif
 
+    @if(empty($currentTipe) || $currentTipe === 'agenda')
     <!-- ═══════════════════════════════════════════════
          2. DAFTAR AGENDA
     ═══════════════════════════════════════════════ -->
     <div class="col-12">
-        <div class="card shadow-sm">
-            <div class="card-header d-flex align-items-center justify-content-between py-3">
-                <h5 class="mb-0 fw-semibold">
-                    <i class="bi bi-calendar4-week me-2 text-warning"></i>Daftar Agenda Akademik / Kampus
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-white d-flex align-items-center justify-content-between py-3">
+                <h5 class="mb-0 fw-bold text-dark">
+                    <i class="bi bi-calendar4-week me-2 text-warning"></i>Daftar Agenda Akademik / Kampus ({{ $agendas->count() }})
                 </h5>
-                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modalAddAgenda">
+                <a href="{{ route('pengumuman-agenda.create', ['tipe' => 'agenda']) }}" class="btn btn-primary btn-sm">
                     <i class="bi bi-plus-lg me-1"></i> Tambah Agenda
-                </button>
+                </a>
             </div>
             <div class="card-body pt-3">
                 <div class="table-responsive">
                     <table class="table table-hover table-bordered align-middle mb-0">
                         <thead class="table-light">
                             <tr>
-                                <th class="text-center" style="width: 60px;">No</th>
-                                <th style="width: 240px;">Rentang Tanggal / Waktu</th>
-                                <th>Judul Kegiatan / Agenda</th>
-                                <th style="width: 220px;">Tautan / URL</th>
-                                <th class="text-center" style="width: 90px;">Urutan</th>
-                                <th class="text-center" style="width: 100px;">Status</th>
-                                <th class="text-center" style="width: 110px;">Aksi</th>
+                                <th class="text-center" style="width: 55px;">No</th>
+                                <th style="width: 220px;">Rentang Tanggal / Waktu</th>
+                                <th>Judul & Rincian Kegiatan Agenda</th>
+                                <th class="text-center" style="width: 120px;">Media / Lampiran</th>
+                                <th class="text-center" style="width: 80px;">Urutan</th>
+                                <th class="text-center" style="width: 95px;">Status</th>
+                                <th class="text-center" style="width: 185px;">Aksi</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($agendas as $idx => $item)
                                 <tr>
                                     <td class="text-center">{{ $idx + 1 }}</td>
-                                    <td class="fw-semibold text-dark">{{ $item->waktu }}</td>
-                                    <td>
-                                        <span class="px-3 py-1 rounded-2 fw-semibold d-inline-block" style="background: #f4d348; color: #1a202c;">
-                                            {{ $item->judul }}
-                                        </span>
+                                    <td class="fw-bold text-dark">
+                                        <i class="bi bi-calendar-range text-primary me-1"></i>{{ $item->waktu }}
                                     </td>
                                     <td>
-                                        @if(!empty($item->url))
-                                            <a href="{{ $item->url }}" target="_blank" class="text-truncate d-inline-block" style="max-width: 200px;">
-                                                {{ $item->url }}
-                                            </a>
-                                        @else
+                                        <span class="px-3 py-1 rounded-2 fw-bold d-inline-block mb-1" style="background: #f4d348; color: #1a202c; font-size: 13.5px;">
+                                            {{ $item->judul }}
+                                        </span>
+                                        @if(!empty($item->konten))
+                                            <div class="text-muted small">
+                                                {{ \Illuminate\Support\Str::limit(strip_tags($item->konten), 90) }}
+                                            </div>
+                                        @endif
+                                    </td>
+                                    <td class="text-center">
+                                        @php
+                                            $photoCount = is_array($item->galeri) ? count($item->galeri) : (!empty($item->foto) ? 1 : 0);
+                                        @endphp
+                                        @if($photoCount > 0)
+                                            <span class="badge bg-info text-dark me-1"><i class="bi bi-images me-1"></i>{{ $photoCount }} Foto</span>
+                                        @endif
+                                        @if(!empty($item->file_lampiran))
+                                            <span class="badge bg-danger"><i class="bi bi-file-earmark-pdf me-1"></i>Lampiran</span>
+                                        @endif
+                                        @if($photoCount === 0 && empty($item->file_lampiran))
                                             <span class="text-muted small">-</span>
                                         @endif
                                     </td>
-                                    <td class="text-center">{{ $item->urutan }}</td>
+                                    <td class="text-center"><span class="badge bg-secondary">#{{ $item->urutan }}</span></td>
                                     <td class="text-center">
                                         @if($item->is_active)
                                             <span class="badge bg-success">Aktif</span>
@@ -171,20 +229,25 @@
                                     </td>
                                     <td class="text-center">
                                         <div class="d-flex justify-content-center gap-1">
-                                            <button type="button"
-                                                    class="btn btn-sm btn-warning text-white"
-                                                    data-bs-toggle="modal"
-                                                    data-bs-target="#modalEditItem{{ $item->id }}"
-                                                    title="Edit">
-                                                <i class="bi bi-pencil-fill"></i>
-                                            </button>
+                                            <a href="{{ route('pengumuman-agenda.edit', $item->id) }}"
+                                               class="btn btn-sm btn-primary fw-semibold"
+                                               title="Kelola Detail Agenda">
+                                                <i class="bi bi-pencil-square me-1"></i> Detail
+                                            </a>
+                                            <a href="{{ route('homepage.pengumuman-agenda.detail', $item->slug ?: $item->id) }}"
+                                               target="_blank"
+                                               class="btn btn-sm btn-outline-success"
+                                               title="Lihat Halaman Detail di Website">
+                                                <i class="bi bi-eye"></i>
+                                            </a>
                                             <form action="{{ route('pengumuman-agenda.destroy', $item->id) }}"
                                                   method="POST"
+                                                  class="m-0"
                                                   onsubmit="return confirm('Yakin ingin menghapus agenda ini?')">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger" title="Hapus">
-                                                    <i class="bi bi-trash-fill"></i>
+                                                <button type="submit" class="btn btn-sm btn-outline-danger" title="Hapus">
+                                                    <i class="bi bi-trash"></i>
                                                 </button>
                                             </form>
                                         </div>
@@ -201,159 +264,6 @@
             </div>
         </div>
     </div>
+    @endif
 </div>
-
-<!-- ═══════════════════════════════════════════════
-     MODAL TAMBAH PENGUMUMAN
-═══════════════════════════════════════════════ -->
-<div class="modal fade" id="modalAddPengumuman" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <form action="{{ route('pengumuman-agenda.store') }}" method="POST" class="modal-content">
-            @csrf
-            <input type="hidden" name="tipe" value="pengumuman">
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold"><i class="bi bi-megaphone-fill me-2 text-success"></i>Tambah Pengumuman</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Judul Pengumuman <span class="text-danger">*</span></label>
-                    <textarea name="judul" rows="2" class="form-control" required placeholder="Contoh: Pengumuman Pengisian KRS dan validasi KRS Tahun Akademik 2026/2027 Gasal"></textarea>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Tanggal Pengumuman <span class="text-danger">*</span></label>
-                    <input type="text" name="waktu" class="form-control" required placeholder="Contoh: 15 August 2026">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Tautan / URL (Opsional)</label>
-                    <input type="text" name="url" class="form-control" placeholder="https://... atau kosongkan">
-                </div>
-                <div class="row g-3 align-items-center">
-                    <div class="col-6">
-                        <label class="form-label fw-semibold">Urutan Tampil</label>
-                        <input type="number" name="urutan" class="form-control" value="{{ ($pengumumans->max('urutan') ?? 0) + 1 }}" min="0">
-                    </div>
-                    <div class="col-6 pt-4">
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" name="is_active" id="addPengumumanActive" checked>
-                            <label class="form-check-label fw-semibold" for="addPengumumanActive">Tampilkan (Aktif)</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <button type="submit" class="btn btn-success"><i class="bi bi-save me-1"></i> Simpan Pengumuman</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     MODAL TAMBAH AGENDA
-═══════════════════════════════════════════════ -->
-<div class="modal fade" id="modalAddAgenda" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <form action="{{ route('pengumuman-agenda.store') }}" method="POST" class="modal-content">
-            @csrf
-            <input type="hidden" name="tipe" value="agenda">
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold"><i class="bi bi-calendar4-week me-2 text-warning"></i>Tambah Agenda</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Rentang Tanggal / Waktu <span class="text-danger">*</span></label>
-                    <input type="text" name="waktu" class="form-control" required placeholder="Contoh: 20 - 31 Juli 2026">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Nama Kegiatan / Agenda <span class="text-danger">*</span></label>
-                    <input type="text" name="judul" class="form-control" required placeholder="Contoh: Pendaftaran Semester Antara">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Tautan / URL (Opsional)</label>
-                    <input type="text" name="url" class="form-control" placeholder="https://... atau kosongkan">
-                </div>
-                <div class="row g-3 align-items-center">
-                    <div class="col-6">
-                        <label class="form-label fw-semibold">Urutan Tampil</label>
-                        <input type="number" name="urutan" class="form-control" value="{{ ($agendas->max('urutan') ?? 0) + 1 }}" min="0">
-                    </div>
-                    <div class="col-6 pt-4">
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" name="is_active" id="addAgendaActive" checked>
-                            <label class="form-check-label fw-semibold" for="addAgendaActive">Tampilkan (Aktif)</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <button type="submit" class="btn btn-primary"><i class="bi bi-save me-1"></i> Simpan Agenda</button>
-            </div>
-        </form>
-    </div>
-</div>
-
-<!-- ═══════════════════════════════════════════════
-     MODAL EDIT UNTUK SETIAP ITEM
-═══════════════════════════════════════════════ -->
-@foreach($pengumumans->concat($agendas) as $item)
-<div class="modal fade" id="modalEditItem{{ $item->id }}" tabindex="-1" aria-hidden="true">
-    <div class="modal-dialog">
-        <form action="{{ route('pengumuman-agenda.update', $item->id) }}" method="POST" class="modal-content">
-            @csrf
-            @method('PUT')
-            <div class="modal-header">
-                <h5 class="modal-title fw-bold">
-                    <i class="bi bi-pencil-square me-2 text-warning"></i>Edit {{ $item->tipe === 'agenda' ? 'Agenda' : 'Pengumuman' }}
-                </h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-            </div>
-            <div class="modal-body">
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Kategori Item</label>
-                    <select name="tipe" class="form-select">
-                        <option value="pengumuman" {{ $item->tipe === 'pengumuman' ? 'selected' : '' }}>Pengumuman</option>
-                        <option value="agenda" {{ $item->tipe === 'agenda' ? 'selected' : '' }}>Agenda</option>
-                    </select>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">
-                        {{ $item->tipe === 'agenda' ? 'Rentang Tanggal / Waktu' : 'Tanggal Pengumuman' }} <span class="text-danger">*</span>
-                    </label>
-                    <input type="text" name="waktu" class="form-control" value="{{ $item->waktu }}" required>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">
-                        {{ $item->tipe === 'agenda' ? 'Nama Kegiatan / Agenda' : 'Judul Pengumuman' }} <span class="text-danger">*</span>
-                    </label>
-                    <textarea name="judul" rows="2" class="form-control" required>{{ $item->judul }}</textarea>
-                </div>
-                <div class="mb-3">
-                    <label class="form-label fw-semibold">Tautan / URL (Opsional)</label>
-                    <input type="text" name="url" class="form-control" value="{{ $item->url }}" placeholder="https://... atau kosongkan">
-                </div>
-                <div class="row g-3 align-items-center">
-                    <div class="col-6">
-                        <label class="form-label fw-semibold">Urutan Tampil</label>
-                        <input type="number" name="urutan" class="form-control" value="{{ $item->urutan }}" min="0">
-                    </div>
-                    <div class="col-6 pt-4">
-                        <div class="form-check form-switch">
-                            <input class="form-check-input" type="checkbox" name="is_active" id="editActive{{ $item->id }}" {{ $item->is_active ? 'checked' : '' }}>
-                            <label class="form-check-label fw-semibold" for="editActive{{ $item->id }}">Tampilkan (Aktif)</label>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
-                <button type="submit" class="btn btn-warning text-white"><i class="bi bi-save me-1"></i> Simpan Perubahan</button>
-            </div>
-        </form>
-    </div>
-</div>
-@endforeach
 @endsection
-

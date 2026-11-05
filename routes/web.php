@@ -82,6 +82,8 @@ Route::controller(FrontendController::class)->group(function () {
     Route::get('/berita', 'news')->name('homepage.news');
     Route::get('/berita/kategori/{categorySlug}', 'newsCategory')->name('homepage.news.category');
     Route::get('/berita/{slug}', 'newsDetail')->name('homepage.news.detail');
+    Route::get('/pengumuman-agenda', 'pengumumanAgenda')->name('homepage.pengumuman-agenda');
+    Route::get('/pengumuman-agenda/{slug}', 'pengumumanAgendaDetail')->name('homepage.pengumuman-agenda.detail');
     Route::get('/faq', 'faq')->name('homepage.faq');
     Route::get('/humas', 'humas')->name('homepage.humas');
     Route::get('/unduhan', 'unduhan')->name('homepage.unduhan');
@@ -131,7 +133,7 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::get('news/download-template', [NewsController::class, 'downloadTemplate'])->name('news.download-template');
     Route::post('news/import-excel', [NewsController::class, 'importExcel'])->name('news.import-excel');
     Route::resource('news', NewsController::class);
-    Route::resource('pengumuman-agenda', PengumumanAgendaController::class)->only(['index', 'store', 'update', 'destroy']);
+    Route::resource('pengumuman-agenda', PengumumanAgendaController::class)->except(['show']);
     Route::resource('admin-faq', FaqController::class)
         ->parameters(['admin-faq' => 'faq'])
         ->names('faq');

@@ -974,8 +974,30 @@
       max-width: 94%;
     }
   }
-  .uis-cylinder-card:hover .uis-card-logo {
-    transform: scale(1.06);
+  #organisasi-mahasiswa .uis-card-body {
+    padding: 0;
+  }
+  #organisasi-mahasiswa .uis-card-media {
+    padding: 0;
+    border-radius: 14px;
+    background: transparent;
+  }
+  #organisasi-mahasiswa .uis-card-logo {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 14px;
+    display: block;
+    filter: none;
+  }
+  #organisasi-mahasiswa .mirror-card-fallback-icon {
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    border-radius: 14px;
   }
 </style>
 
@@ -1026,8 +1048,11 @@
             <div class="uis-card-label">{{ $singkat }}</div>
             <div class="uis-card-body">
               <div class="uis-card-media">
-                @if(!empty($ormawa->logo))
-                  <img src="{{ asset('storage/' . $ormawa->logo) }}" alt="{{ $ormawa->nama_organisasi }}" class="uis-card-logo" loading="lazy">
+                @php
+                  $ormawaCardImg = $ormawa->logo ?: $ormawa->foto_kegiatan;
+                @endphp
+                @if(!empty($ormawaCardImg))
+                  <img src="{{ asset('storage/' . $ormawaCardImg) }}" alt="{{ $ormawa->nama_organisasi }}" class="uis-card-logo" loading="lazy">
                 @else
                   <div class="mirror-card-fallback-icon">
                     <i class="bi bi-people-fill"></i>
@@ -1361,8 +1386,30 @@
       max-width: 94%;
     }
   }
-  .uis-cylinder-card:hover .uis-card-logo {
-    transform: scale(1.06);
+  #organisasi-mahasiswa .uis-card-body {
+    padding: 0;
+  }
+  #organisasi-mahasiswa .uis-card-media {
+    padding: 0;
+    border-radius: 14px;
+    background: transparent;
+  }
+  #organisasi-mahasiswa .uis-card-logo {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 14px;
+    display: block;
+    filter: none;
+  }
+  #organisasi-mahasiswa .mirror-card-fallback-icon {
+    width: 100%;
+    height: 100%;
+    background: #ffffff;
+    border-radius: 14px;
   }
 </style>
 
@@ -1540,17 +1587,13 @@
           <div class="announcement-list">
             @if(isset($pengumumans) && $pengumumans->count() > 0)
               @foreach($pengumumans as $item)
-                @if(!empty($item->url))
-                  <a href="{{ $item->url }}" class="announcement-card-box">
-                    <div class="announcement-card-title">{{ $item->judul }}</div>
-                    <div class="announcement-card-date">{{ $item->waktu ?: '-' }}</div>
-                  </a>
-                @else
-                  <div class="announcement-card-box">
-                    <div class="announcement-card-title">{{ $item->judul }}</div>
-                    <div class="announcement-card-date">{{ $item->waktu ?: '-' }}</div>
+                <a href="{{ route('homepage.pengumuman-agenda.detail', $item->slug ?: $item->id) }}" class="announcement-card-box text-decoration-none d-block">
+                  <div class="announcement-card-title">{{ $item->judul }}</div>
+                  <div class="announcement-card-date d-flex align-items-center justify-content-between">
+                    <span>{{ $item->waktu ?: '-' }}</span>
+                    <span class="small fw-semibold" style="color: #046B26; font-size: 11.5px;">Detail <i class="bi bi-arrow-right"></i></span>
                   </div>
-                @endif
+                </a>
               @endforeach
             @elseif(isset($announcements) && $announcements->count() > 0)
               @foreach($announcements as $ann)
@@ -1585,15 +1628,10 @@
               @foreach($agendas as $agenda)
                 <div class="agenda-row mb-3">
                   <div class="agenda-time-text">{{ rtrim($agenda->waktu, ':') }}:</div>
-                  @if(!empty($agenda->url))
-                    <a href="{{ $agenda->url }}" class="agenda-badge-card d-block text-decoration-none">
-                      {{ $agenda->judul }}
-                    </a>
-                  @else
-                    <div class="agenda-badge-card">
-                      {{ $agenda->judul }}
-                    </div>
-                  @endif
+                  <a href="{{ route('homepage.pengumuman-agenda.detail', $agenda->slug ?: $agenda->id) }}" class="agenda-badge-card d-flex align-items-center justify-content-between text-decoration-none">
+                    <span>{{ $agenda->judul }}</span>
+                    <i class="bi bi-chevron-right small ms-2"></i>
+                  </a>
                 </div>
               @endforeach
             @else
@@ -1620,8 +1658,8 @@
             @endif
 
             <div class="mt-3">
-              <a href="{{ route('homepage.news', ['category' => 'Pengumuman & Agenda']) }}" class="btn-agenda-pill">
-                Lihat Seluruh Agenda
+              <a href="{{ route('homepage.pengumuman-agenda') }}" class="btn-agenda-pill">
+                Lihat Seluruh Agenda & Pengumuman
               </a>
             </div>
           </div>
