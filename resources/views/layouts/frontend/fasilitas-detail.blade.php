@@ -178,11 +178,33 @@
       <!-- Kolom Kiri: Foto, Deskripsi Detail, Spesifikasi, Galeri -->
       <div class="col-lg-8" data-aos="fade-up">
 
-        <!-- Foto Utama -->
-        @if(!empty($sarana->foto))
-          <div class="mb-4">
-            <img src="{{ asset('storage/' . $sarana->foto) }}" alt="{{ $sarana->nama }}" class="fasilitas-main-photo">
+        <!-- Foto Utama & Switcher Multi-Foto -->
+        @php
+          $saranaPhotos = is_array($sarana->galeri) ? $sarana->galeri : [];
+          if (!empty($sarana->foto) && !in_array($sarana->foto, $saranaPhotos, true)) {
+              array_unshift($saranaPhotos, $sarana->foto);
+          }
+          $mainSaranaPhoto = $sarana->foto ?: ($saranaPhotos[0] ?? null);
+        @endphp
+        @if(!empty($mainSaranaPhoto))
+          <div class="mb-3 position-relative">
+            <img id="mainSaranaImg" src="{{ asset('storage/' . $mainSaranaPhoto) }}" alt="{{ $sarana->nama }}" class="fasilitas-main-photo">
+            <a id="mainSaranaFullLink" href="{{ asset('storage/' . $mainSaranaPhoto) }}" target="_blank" class="btn btn-sm btn-dark position-absolute bottom-0 end-0 m-3 rounded-pill px-3 shadow" style="font-size: 12px; background: rgba(0,0,0,0.65);">
+              <i class="bi bi-arrows-fullscreen me-1"></i> Ukuran Penuh
+            </a>
           </div>
+          @if(count($saranaPhotos) > 1)
+            <div class="d-flex flex-wrap gap-2 mb-4">
+              @foreach($saranaPhotos as $idx => $sPhoto)
+                <button type="button"
+                        onclick="document.getElementById('mainSaranaImg').src='{{ asset('storage/' . $sPhoto) }}'; document.getElementById('mainSaranaFullLink').href='{{ asset('storage/' . $sPhoto) }}';"
+                        class="p-0 border rounded-3 overflow-hidden bg-white shadow-sm"
+                        style="width: 84px; height: 60px; cursor: pointer;">
+                  <img src="{{ asset('storage/' . $sPhoto) }}" alt="Foto {{ $idx + 1 }}" style="width: 100%; height: 100%; object-fit: cover;">
+                </button>
+              @endforeach
+            </div>
+          @endif
         @else
           <div class="mb-4 position-relative overflow-hidden rounded-4 shadow-sm" style="height: 320px; background: linear-gradient(135deg, #046B26 0%, #034e1c 100%);">
             <img src="{{ asset('frontend/img/gedung-uis.jpg') }}" alt="{{ $sarana->nama }}" class="w-100 h-100" style="object-fit: cover; opacity: 0.32;">

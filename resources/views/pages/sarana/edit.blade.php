@@ -1,15 +1,43 @@
 @extends('layouts.dashboard.template')
 
 @section('content')
-<div class="pagetitle">
-    <h1>Edit Laboratorium & Fasilitas</h1>
-    <nav>
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('sarana.index') }}">Fasilitas & Laboratorium</a></li>
-            <li class="breadcrumb-item active">Edit</li>
-        </ol>
-    </nav>
+<div class="pagetitle d-flex flex-wrap align-items-center justify-content-between gap-2 mb-3">
+    <div>
+        <h1>Edit: {{ $sarana->nama }}</h1>
+        <nav>
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
+                <li class="breadcrumb-item"><a href="{{ route('sarana.index') }}">Laboratorium & Fasilitas</a></li>
+                <li class="breadcrumb-item active">{{ $sarana->nama }}</li>
+            </ol>
+        </nav>
+    </div>
+    <div class="d-flex align-items-center gap-2">
+        <a href="{{ route('sarana.index') }}" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-arrow-left me-1"></i> Kembali ke Daftar
+        </a>
+        @if(!empty($sarana->slug))
+            <a href="{{ route('homepage.fasilitas.detail', $sarana->slug) }}" target="_blank" class="btn btn-outline-success btn-sm">
+                <i class="bi bi-eye me-1"></i> Lihat di Website
+            </a>
+        @endif
+    </div>
+</div>
+
+@php
+    $allSaranaList = \App\Models\Sarana::orderBy('urutan')->get();
+@endphp
+<div class="card shadow-sm border-0 mb-3">
+    <div class="card-body py-2 px-3 d-flex flex-wrap align-items-center gap-2">
+        <span class="small fw-bold text-secondary me-1"><i class="bi bi-arrow-left-right me-1"></i>Pilih Cepat:</span>
+        @foreach($allSaranaList as $navItem)
+            <a href="{{ route('sarana.edit', $navItem->id) }}"
+               class="btn btn-sm rounded-pill {{ $navItem->id === $sarana->id ? 'btn-primary fw-semibold' : 'btn-light border text-dark' }}"
+               style="font-size: 12px;">
+                <i class="bi {{ $navItem->icon ?: 'bi-building' }} me-1"></i>{{ $navItem->nama }}
+            </a>
+        @endforeach
+    </div>
 </div>
 
 <div class="row">
@@ -113,29 +141,68 @@
                             @endif
                         </div>
 
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold small">Foto Utama Ruangan / Gedung</label>
-                                <input type="file" name="foto" class="form-control" accept="image/*">
-                                <div class="form-text small">Maksimal 20 MB (JPG, PNG, WEBP).</div>
-                                @if(!empty($sarana->foto))
-                                    <div class="mt-2">
-                                        <img src="{{ asset('storage/' . $sarana->foto) }}" alt="{{ $sarana->nama }}" class="rounded-2 border" style="height: 75px; object-fit: cover;">
-                                    </div>
-                                @endif
+                        @php
+                            $existingPhotos = is_array($sarana->galeri) ? $sarana->galeri : [];
+                            if (!empty($sarana->foto) && !in_array($sarana->foto, $existingPhotos, true)) {
+                                array_unshift($existingPhotos, $sarana->foto);
+                            }
+                        @endphp
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold small">
+                                Upload Foto Ruangan / Gedung / Galeri <span class="badge bg-primary ms-1">Bisa Pilih Banyak Foto Sekaligus</span>
+                            </label>
+                            <div class="border border-2 border-dashed rounded-3 p-3 text-center bg-white" style="border-color: #cbd5e1 !important;">
+                                <i class="bi bi-images text-primary fs-2 d-block mb-1"></i>
+                                <div class="fw-semibold small text-dark mb-1">Tambah 1 atau Banyak Foto Sekaligus</div>
+                                <div class="text-muted mb-2" style="font-size: 12px;">
+                                    Bisa pilih lebih dari 1 foto dalam satu waktu. Maksimal 20 MB per foto (JPG, PNG, WEBP).
+                                </div>
+                                <input type="file"
+                                       id="multiFotoInput"
+                                       name="foto[]"
+                                       class="form-control form-control-sm mx-auto"
+                                       style="max-width: 420px;"
+                                       accept="image/*"
+                                       multiple
+                                       onchange="handleMultiFiles(this)">
                             </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold small">Tambah Galeri Foto Dokumentasi</label>
-                                <input type="file" name="galeri[]" class="form-control" accept="image/*" multiple>
-                                <div class="form-text small">Maksimal 20 MB per foto.</div>
-                                @if(!empty($sarana->galeri) && is_array($sarana->galeri))
-                                    <div class="d-flex flex-wrap gap-2 mt-2">
-                                        @foreach($sarana->galeri as $gImg)
-                                            <img src="{{ asset('storage/' . $gImg) }}" alt="Galeri" class="rounded-2 border" style="height: 55px; width: 75px; object-fit: cover;">
+                            <div id="multiPreviewGrid" class="row g-2 mt-2 d-none"></div>
+
+                            @if(count($existingPhotos) > 0)
+                                <div class="mt-3">
+                                    <label class="form-label fw-semibold small text-secondary mb-2">
+                                        <i class="bi bi-collection me-1"></i> Foto Tersimpan Saat Ini ({{ count($existingPhotos) }} Foto)
+                                    </label>
+                                    <div class="row g-2">
+                                        @foreach($existingPhotos as $idx => $pImg)
+                                            @php
+                                                $isMain = ($sarana->foto === $pImg) || (empty($sarana->foto) && $idx === 0);
+                                            @endphp
+                                            <div class="col-6 col-sm-4 col-md-3">
+                                                <div class="border rounded-3 p-2 bg-white h-100 d-flex flex-column justify-content-between shadow-sm">
+                                                    <div class="position-relative mb-2">
+                                                        <img src="{{ asset('storage/' . $pImg) }}" alt="Foto" class="rounded-2 w-100" style="height: 85px; object-fit: cover;">
+                                                        @if($isMain)
+                                                            <span class="badge bg-success position-absolute top-0 start-0 m-1" style="font-size: 9.5px;">Sampul Utama</span>
+                                                        @endif
+                                                    </div>
+                                                    <div class="d-flex flex-column gap-1" style="font-size: 11px;">
+                                                        <label class="form-check-label d-flex align-items-center gap-1 text-primary" style="cursor:pointer;">
+                                                            <input type="radio" name="set_main_photo" value="{{ $pImg }}" class="form-check-input m-0" {{ $isMain ? 'checked' : '' }}>
+                                                            <span>Jadikan Sampul</span>
+                                                        </label>
+                                                        <label class="form-check-label d-flex align-items-center gap-1 text-danger" style="cursor:pointer;">
+                                                            <input type="checkbox" name="hapus_galeri[]" value="{{ $pImg }}" class="form-check-input m-0">
+                                                            <span>Hapus Foto</span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         @endforeach
                                     </div>
-                                @endif
-                            </div>
+                                </div>
+                            @endif
                         </div>
 
                         <div class="row g-3 mb-3">
@@ -257,5 +324,50 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('prev-deskripsi').textContent = this.value || 'Deskripsi sarana akan tampil di sini.';
     });
 });
+
+let selectedMultiFiles = new DataTransfer();
+function handleMultiFiles(input) {
+    if (input.files && input.files.length > 0) {
+        Array.from(input.files).forEach(file => selectedMultiFiles.items.add(file));
+        input.files = selectedMultiFiles.files;
+    }
+    renderMultiPreview();
+}
+function removeMultiFile(index) {
+    const dt = new DataTransfer();
+    Array.from(selectedMultiFiles.files).forEach((file, i) => {
+        if (i !== index) dt.items.add(file);
+    });
+    selectedMultiFiles = dt;
+    document.getElementById('multiFotoInput').files = selectedMultiFiles.files;
+    renderMultiPreview();
+}
+function renderMultiPreview() {
+    const grid = document.getElementById('multiPreviewGrid');
+    grid.innerHTML = '';
+    const files = Array.from(selectedMultiFiles.files);
+    if (files.length === 0) {
+        grid.classList.add('d-none');
+        return;
+    }
+    grid.classList.remove('d-none');
+    files.forEach((file, idx) => {
+        const url = URL.createObjectURL(file);
+        const col = document.createElement('div');
+        col.className = 'col-6 col-sm-4 col-md-3';
+        col.innerHTML = `
+            <div class="position-relative border border-primary rounded-3 overflow-hidden bg-white shadow-sm">
+                <img src="${url}" style="width:100%;height:95px;object-fit:cover;">
+                <span class="badge bg-primary position-absolute top-0 start-0 m-1" style="font-size:10px;">
+                    Baru #${idx + 1}
+                </span>
+                <button type="button" onclick="removeMultiFile(${idx})" class="btn btn-danger btn-sm position-absolute top-0 end-0 m-1 p-0 d-flex align-items-center justify-content-center rounded-circle" style="width:22px;height:22px;font-size:12px;" title="Batal pilih">
+                    <i class="bi bi-x"></i>
+                </button>
+            </div>
+        `;
+        grid.appendChild(col);
+    });
+}
 </script>
 @endpush

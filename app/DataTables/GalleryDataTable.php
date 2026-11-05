@@ -25,10 +25,18 @@ class GalleryDataTable extends DataTable
             ->addColumn('DT_RowIndex', '')
             ->addColumn('foto', function ($gallery) {
                 if ($gallery->url) {
-                    return '<img src="'.asset('storage/'.$gallery->url).'"
+                    $count = is_array($gallery->galeri) ? count($gallery->galeri) : 1;
+                    $badge = $count > 1
+                        ? '<span class="badge bg-dark position-absolute bottom-0 end-0 m-1" style="font-size:10px;"><i class="bi bi-images me-1"></i>'.$count.'</span>'
+                        : '';
+
+                    return '<div class="position-relative d-inline-block">'
+                        .'<img src="'.asset('storage/'.$gallery->url).'"
                                  alt="'.e($gallery->judul ?? 'Foto').'"
                                  style="width:70px;height:70px;object-fit:cover;border-radius:8px;border:1px solid #dee2e6"
-                                 loading="lazy">';
+                                 loading="lazy">'
+                        .$badge
+                        .'</div>';
                 }
 
                 return '<span class="text-muted small">Tidak ada foto</span>';
@@ -92,7 +100,7 @@ class GalleryDataTable extends DataTable
      */
     public function query(Gallery $model): QueryBuilder
     {
-        return $model->newQuery()->select(['id', 'judul', 'kategori', 'deskripsi', 'url']);
+        return $model->newQuery()->select(['id', 'judul', 'slug', 'kategori', 'deskripsi', 'url', 'galeri']);
     }
 
     /**

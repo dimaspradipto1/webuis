@@ -203,31 +203,31 @@
 
           @if($isAdmin)
           <!-- 8. Laboratorium & Fasilitas (Di Bawah Menu Informasi) -->
-          @php
-              $sidebarSaranas = \App\Models\Sarana::orderBy('urutan')->get();
-          @endphp
           <li class="nav-item">
               <a class="nav-link {{ Route::is('sarana.*') ? '' : 'collapsed' }}" data-bs-target="#fasilitas-lab-nav" data-bs-toggle="collapse" href="#">
                   <i class="bi bi-cpu"></i><span>Laboratorium & Fasilitas</span><i class="bi bi-chevron-down ms-auto"></i>
               </a>
               <ul id="fasilitas-lab-nav" class="nav-content collapse {{ Route::is('sarana.*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
                   <li>
-                      <a href="{{ route('sarana.index') }}" class="{{ Route::is('sarana.index') ? 'active' : '' }}">
+                      <a href="{{ route('sarana.index') }}" class="{{ Route::is('sarana.index') && !request('kategori') ? 'active' : '' }}">
                           <i class="bi bi-circle"></i><span>Semua Lab & Fasilitas</span>
                       </a>
                   </li>
                   <li>
-                      <a href="{{ route('sarana.create') }}" class="{{ Route::is('sarana.create') ? 'active' : '' }}">
-                          <i class="bi bi-circle"></i><span>+ Tambah Lab / Fasilitas</span>
+                      <a href="{{ route('sarana.index', ['kategori' => 'Laboratorium & Studio']) }}" class="{{ Route::is('sarana.index') && request('kategori') === 'Laboratorium & Studio' ? 'active' : '' }}">
+                          <i class="bi bi-circle"></i><span>Data Laboratorium</span>
                       </a>
                   </li>
-                  @foreach($sidebarSaranas as $navSarana)
                   <li>
-                      <a href="{{ route('sarana.edit', $navSarana->id) }}" class="{{ request()->is('admin/sarana/' . $navSarana->id . '/edit') ? 'active' : '' }}">
-                          <i class="bi bi-circle"></i><span>Detail: {{ \Illuminate\Support\Str::limit($navSarana->nama, 26) }}</span>
+                      <a href="{{ route('sarana.index', ['kategori' => 'Fasilitas Kampus']) }}" class="{{ Route::is('sarana.index') && request('kategori') === 'Fasilitas Kampus' ? 'active' : '' }}">
+                          <i class="bi bi-circle"></i><span>Data Fasilitas Kampus</span>
                       </a>
                   </li>
-                  @endforeach
+                  <li>
+                      <a href="{{ route('sarana.create') }}" class="{{ Route::is('sarana.create') ? 'active' : '' }}">
+                          <i class="bi bi-circle"></i><span>Tambah Lab / Fasilitas</span>
+                      </a>
+                  </li>
               </ul>
           </li>
           @endif

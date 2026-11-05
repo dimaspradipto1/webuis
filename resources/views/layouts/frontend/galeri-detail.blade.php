@@ -51,14 +51,55 @@
       <!-- Kolom Kiri: Foto Utama & Deskripsi Rinci (col-lg-8) -->
       <div class="col-lg-8" data-aos="fade-up">
         
-        <!-- Foto Dokumentasi Utama -->
-        @if(!empty($gallery->url))
-          <div class="mb-4 text-center position-relative rounded-4 overflow-hidden shadow-sm border bg-white" style="background: #000;">
-            <img src="{{ asset('storage/' . $gallery->url) }}" alt="{{ $gallery->judul ?? 'Dokumentasi UIS' }}" class="galeri-img-main img-fluid">
-            <a href="{{ asset('storage/' . $gallery->url) }}" target="_blank" class="btn btn-sm btn-dark position-absolute bottom-0 end-0 m-3 rounded-pill px-3 shadow" style="font-size: 12px; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.2);">
+        <!-- Foto Dokumentasi Utama & Multi-Foto Galeri -->
+        @php
+          $albumPhotos = is_array($gallery->galeri) ? $gallery->galeri : [];
+          if (!empty($gallery->url) && !in_array($gallery->url, $albumPhotos, true)) {
+              array_unshift($albumPhotos, $gallery->url);
+          }
+          $mainPhoto = $gallery->url ?: ($albumPhotos[0] ?? null);
+        @endphp
+
+        @if(!empty($mainPhoto))
+          <div class="mb-3 text-center position-relative rounded-4 overflow-hidden shadow-sm border bg-white" style="background: #000;">
+            <img id="mainGalleryImg" src="{{ asset('storage/' . $mainPhoto) }}" alt="{{ $gallery->judul ?? 'Dokumentasi UIS' }}" class="galeri-img-main img-fluid">
+            <a id="mainGalleryFullLink" href="{{ asset('storage/' . $mainPhoto) }}" target="_blank" class="btn btn-sm btn-dark position-absolute bottom-0 end-0 m-3 rounded-pill px-3 shadow" style="font-size: 12px; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.2);">
               <i class="bi bi-arrows-fullscreen me-1"></i> Buka Ukuran Penuh
             </a>
           </div>
+
+          @if(count($albumPhotos) > 1)
+            <div class="bg-white p-3 rounded-4 shadow-sm border mb-4">
+              <div class="d-flex align-items-center justify-content-between mb-2">
+                <span class="small fw-bold text-dark"><i class="bi bi-images text-success me-1"></i> Koleksi Foto Dokumentasi ({{ count($albumPhotos) }} Foto)</span>
+                <span class="text-muted" style="font-size: 11.5px;">Klik foto untuk memperbesar</span>
+              </div>
+              <div class="row g-2">
+                @foreach($albumPhotos as $idx => $photoPath)
+                  <div class="col-4 col-sm-3 col-md-2">
+                    <button type="button"
+                            onclick="switchGalleryMainPhoto('{{ asset('storage/' . $photoPath) }}', this)"
+                            class="p-0 border-2 rounded-3 overflow-hidden w-100 bg-transparent gallery-thumb-btn {{ $photoPath === $mainPhoto ? 'border-success' : 'border-transparent' }}"
+                            style="height: 68px; cursor: pointer;">
+                      <img src="{{ asset('storage/' . $photoPath) }}" alt="Foto {{ $idx + 1 }}" style="width: 100%; height: 100%; object-fit: cover;">
+                    </button>
+                  </div>
+                @endforeach
+              </div>
+            </div>
+            <script>
+              function switchGalleryMainPhoto(src, btn) {
+                document.getElementById('mainGalleryImg').src = src;
+                document.getElementById('mainGalleryFullLink').href = src;
+                document.querySelectorAll('.gallery-thumb-btn').forEach(el => {
+                  el.classList.remove('border-success');
+                  el.classList.add('border-transparent');
+                });
+                btn.classList.remove('border-transparent');
+                btn.classList.add('border-success');
+              }
+            </script>
+          @endif
         @else
           <div class="p-5 rounded-4 text-center text-white mb-4 shadow-sm" style="background: #046B26;">
             <i class="bi bi-camera-fill" style="font-size: 64px; color: #FED802;"></i>

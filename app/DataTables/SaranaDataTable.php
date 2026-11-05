@@ -104,6 +104,7 @@ class SaranaDataTable extends DataTable
     {
         return $model->newQuery()
             ->select(['id', 'slug', 'kategori', 'icon', 'nama', 'deskripsi', 'urutan', 'is_active'])
+            ->when(request('kategori'), fn ($q, $kat) => $q->where('kategori', $kat))
             ->orderBy('urutan');
     }
 

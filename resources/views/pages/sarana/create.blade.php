@@ -109,17 +109,26 @@
                             <i class="bi bi-file-earmark-richtext me-1"></i> Pengaturan Halaman Detail Laboratorium / Fasilitas
                         </h6>
 
-                        <div class="row g-3 mb-3">
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold small">Foto Utama Ruangan / Gedung</label>
-                                <input type="file" name="foto" class="form-control" accept="image/*">
-                                <div class="form-text small">Maksimal 20 MB (JPG, PNG, WEBP).</div>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold small">
+                                Upload Foto Ruangan / Gedung / Galeri <span class="badge bg-primary ms-1">Bisa Pilih Banyak Foto Sekaligus</span>
+                            </label>
+                            <div class="border border-2 border-dashed rounded-3 p-3 text-center bg-white" style="border-color: #cbd5e1 !important;">
+                                <i class="bi bi-images text-primary fs-2 d-block mb-1"></i>
+                                <div class="fw-semibold small text-dark mb-1">Pilih 1 atau Lebih Foto Sekaligus</div>
+                                <div class="text-muted mb-2" style="font-size: 12px;">
+                                    Foto pertama otomatis menjadi sampul utama, dan seluruh foto akan tampil di galeri halaman detail. Maksimal 20 MB per foto (JPG, PNG, WEBP).
+                                </div>
+                                <input type="file"
+                                       id="multiFotoInput"
+                                       name="foto[]"
+                                       class="form-control form-control-sm mx-auto"
+                                       style="max-width: 420px;"
+                                       accept="image/*"
+                                       multiple
+                                       onchange="handleMultiFiles(this)">
                             </div>
-                            <div class="col-md-6">
-                                <label class="form-label fw-semibold small">Galeri Foto Tambahan (Bisa Pilih Banyak)</label>
-                                <input type="file" name="galeri[]" class="form-control" accept="image/*" multiple>
-                                <div class="form-text small">Maksimal 20 MB per foto.</div>
-                            </div>
+                            <div id="multiPreviewGrid" class="row g-2 mt-2 d-none"></div>
                         </div>
 
                         <div class="row g-3 mb-3">
@@ -246,5 +255,50 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('prev-deskripsi').textContent = this.value || 'Deskripsi sarana akan tampil di sini.';
     });
 });
+
+let selectedMultiFiles = new DataTransfer();
+function handleMultiFiles(input) {
+    if (input.files && input.files.length > 0) {
+        Array.from(input.files).forEach(file => selectedMultiFiles.items.add(file));
+        input.files = selectedMultiFiles.files;
+    }
+    renderMultiPreview();
+}
+function removeMultiFile(index) {
+    const dt = new DataTransfer();
+    Array.from(selectedMultiFiles.files).forEach((file, i) => {
+        if (i !== index) dt.items.add(file);
+    });
+    selectedMultiFiles = dt;
+    document.getElementById('multiFotoInput').files = selectedMultiFiles.files;
+    renderMultiPreview();
+}
+function renderMultiPreview() {
+    const grid = document.getElementById('multiPreviewGrid');
+    grid.innerHTML = '';
+    const files = Array.from(selectedMultiFiles.files);
+    if (files.length === 0) {
+        grid.classList.add('d-none');
+        return;
+    }
+    grid.classList.remove('d-none');
+    files.forEach((file, idx) => {
+        const url = URL.createObjectURL(file);
+        const col = document.createElement('div');
+        col.className = 'col-6 col-sm-4 col-md-3';
+        col.innerHTML = `
+            <div class="position-relative border rounded-3 overflow-hidden bg-white shadow-sm">
+                <img src="${url}" style="width:100%;height:95px;object-fit:cover;">
+                <span class="badge ${idx === 0 ? 'bg-success' : 'bg-dark bg-opacity-75'} position-absolute top-0 start-0 m-1" style="font-size:10px;">
+                    ${idx === 0 ? 'Sampul Utama' : 'Foto #' + (idx + 1)}
+                </span>
+                <button type="button" onclick="removeMultiFile(${idx})" class="btn btn-danger btn-sm position-absolute top-0 end-0 m-1 p-0 d-flex align-items-center justify-content-center rounded-circle" style="width:22px;height:22px;font-size:12px;" title="Batal pilih">
+                    <i class="bi bi-x"></i>
+                </button>
+            </div>
+        `;
+        grid.appendChild(col);
+    });
+}
 </script>
 @endpush

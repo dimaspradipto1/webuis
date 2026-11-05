@@ -28,25 +28,54 @@ class GalleryController extends Controller
     }
 
     /**
-     * Simpan foto baru ke storage dan database.
+     * Simpan foto baru (mendukung multi-upload) ke storage dan database.
      */
     public function store(GalleryRequest $request): RedirectResponse
     {
-        $path = null;
+        $uploadedPaths = [];
 
         if ($request->hasFile('foto')) {
-            // Simpan ke storage/app/public/gallery
-            $path = $request->file('foto')->store('gallery', 'public');
+            $files = is_array($request->file('foto')) ? $request->file('foto') : [$request->file('foto')];
+            foreach ($files as $file) {
+                $uploadedPaths[] = $file->store('gallery', 'public');
+            }
         }
 
-        Gallery::create([
-            'judul' => $request->judul,
-            'kategori' => $request->kategori ?? 'universitas',
-            'deskripsi' => $request->deskripsi,
-            'url' => $path,
-        ]);
+        if ($request->hasFile('galeri')) {
+            foreach ($request->file('galeri') as $file) {
+                $uploadedPaths[] = $file->store('gallery', 'public');
+            }
+        }
 
-        alert()->success('Berhasil!', 'Foto galeri berhasil ditambahkan.');
+        $mode = $request->input('mode_upload', 'album');
+
+        if ($mode === 'terpisah' && count($uploadedPaths) > 1) {
+            foreach ($uploadedPaths as $idx => $path) {
+                $judulItem = $request->judul
+                    ? ($idx === 0 ? $request->judul : $request->judul . ' (' . ($idx + 1) . ')')
+                    : null;
+
+                Gallery::create([
+                    'judul' => $judulItem,
+                    'kategori' => $request->kategori ?? 'universitas',
+                    'deskripsi' => $request->deskripsi,
+                    'url' => $path,
+                    'galeri' => [$path],
+                ]);
+            }
+        } else {
+            $mainPath = $uploadedPaths[0] ?? null;
+
+            Gallery::create([
+                'judul' => $request->judul,
+                'kategori' => $request->kategori ?? 'universitas',
+                'deskripsi' => $request->deskripsi,
+                'url' => $mainPath,
+                'galeri' => ! empty($uploadedPaths) ? $uploadedPaths : null,
+            ]);
+        }
+
+        alert()->success('Berhasil!', count($uploadedPaths) . ' foto galeri berhasil diunggah dan disimpan.');
 
         return redirect()->route('gallery.index');
     }
@@ -60,30 +89,62 @@ class GalleryController extends Controller
     }
 
     /**
-     * Update data galeri.
-     * Jika ada foto baru: hapus foto lama, simpan yang baru.
-     * Jika tidak ada foto baru: tetap pakai foto lama.
+     * Update data galeri (mendukung tambah multi-foto dan hapus foto tertentu).
      */
     public function update(GalleryRequest $request, Gallery $gallery): RedirectResponse
     {
-        $data = [
+        $existingGaleri = is_array($gallery->galeri) ? $gallery->galeri : [];
+        if (empty($existingGaleri) && ! empty($gallery->url)) {
+            $existingGaleri = [$gallery->url];
+        }
+
+        // Hapus foto yang dicentang untuk dihapus
+        $toDelete = $request->input('hapus_galeri', []);
+        if (! empty($toDelete) && is_array($toDelete)) {
+            foreach ($toDelete as $delPath) {
+                if (Storage::disk('public')->exists($delPath)) {
+                    Storage::disk('public')->delete($delPath);
+                }
+                $existingGaleri = array_values(array_filter($existingGaleri, fn ($p) => $p !== $delPath));
+            }
+        }
+
+        // Tambah foto baru dari input foto[] atau galeri[]
+        $newPaths = [];
+        if ($request->hasFile('foto')) {
+            $files = is_array($request->file('foto')) ? $request->file('foto') : [$request->file('foto')];
+            foreach ($files as $file) {
+                $newPaths[] = $file->store('gallery', 'public');
+            }
+        }
+        if ($request->hasFile('galeri')) {
+            foreach ($request->file('galeri') as $file) {
+                $newPaths[] = $file->store('gallery', 'public');
+            }
+        }
+
+        $mergedGaleri = array_values(array_unique(array_merge($existingGaleri, $newPaths)));
+
+        // Tentukan foto sampul utama (url)
+        $mainUrl = $gallery->url;
+        if (! empty($toDelete) && in_array($mainUrl, $toDelete, true)) {
+            $mainUrl = $mergedGaleri[0] ?? null;
+        }
+        if ($request->filled('set_main_photo') && in_array($request->input('set_main_photo'), $mergedGaleri, true)) {
+            $mainUrl = $request->input('set_main_photo');
+        } elseif (empty($mainUrl) && ! empty($mergedGaleri)) {
+            $mainUrl = $mergedGaleri[0];
+        }
+
+        $gallery->update([
             'judul' => $request->judul,
             'kategori' => $request->kategori ?? 'universitas',
             'deskripsi' => $request->deskripsi,
-        ];
+            'url' => $mainUrl,
+            'galeri' => ! empty($mergedGaleri) ? $mergedGaleri : null,
+        ]);
 
-        if ($request->hasFile('foto')) {
-            // Hapus foto lama dari storage jika ada
-            if ($gallery->url && Storage::disk('public')->exists($gallery->url)) {
-                Storage::disk('public')->delete($gallery->url);
-            }
-            // Simpan foto baru
-            $data['url'] = $request->file('foto')->store('gallery', 'public');
-        }
-
-        $gallery->update($data);
-
-        alert()->success('Berhasil!', 'Data galeri berhasil diperbarui.');
+        alert()->success('Berhasil!', 'Data dan foto galeri berhasil diperbarui.');
 
         return redirect()->route('gallery.index');
     }
@@ -93,9 +154,16 @@ class GalleryController extends Controller
      */
     public function destroy(Gallery $gallery): RedirectResponse
     {
-        // Hapus file dari storage
         if ($gallery->url && Storage::disk('public')->exists($gallery->url)) {
             Storage::disk('public')->delete($gallery->url);
+        }
+
+        if (! empty($gallery->galeri) && is_array($gallery->galeri)) {
+            foreach ($gallery->galeri as $gPath) {
+                if ($gPath && Storage::disk('public')->exists($gPath)) {
+                    Storage::disk('public')->delete($gPath);
+                }
+            }
         }
 
         $gallery->delete();

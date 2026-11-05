@@ -15,6 +15,11 @@ class Gallery extends Model
         'kategori',
         'deskripsi',
         'url',
+        'galeri',
+    ];
+
+    protected $casts = [
+        'galeri' => 'array',
     ];
 
     /**
