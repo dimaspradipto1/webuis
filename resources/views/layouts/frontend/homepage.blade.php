@@ -1679,10 +1679,10 @@
   <div class="container">
     <div class="text-center mb-5" data-aos="fade-up">
       <div class="section-label mx-auto">Jejaring Mitra</div>
-      <h2 class="section-title">Mitra Kerjasama <em>Industri & Rumah Sakit</em></h2>
+      <h2 class="section-title">Mitra Kerjasama <em>Industri</em></h2>
       <div class="divider-line centered"></div>
       <p class="section-desc mx-auto">
-        Universitas Ibnu Sina bermitra dengan berbagai sektor industri terkemuka dalam penempatan magang klinis, riset, dan rekrutmen lulusan.
+        Universitas Ibnu Sina bermitra dengan berbagai sektor industri terkemuka dalam penempatan magang, riset, dan rekrutmen lulusan.
       </p>
     </div>
   </div>
