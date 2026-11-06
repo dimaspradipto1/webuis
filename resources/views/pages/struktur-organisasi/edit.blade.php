@@ -39,7 +39,7 @@
 </div>
 
 <div class="row">
-    <div class="col-12 col-xl-10">
+    <div class="col-12">
         @if ($errors->any())
             <div class="alert alert-danger rounded-3">
                 <strong class="d-block mb-1"><i class="bi bi-exclamation-triangle-fill me-1"></i> Periksa kembali inputan Anda:</strong>
@@ -102,29 +102,42 @@
                             <div class="form-text">Gunakan baris baru (Enter 2x) untuk memisahkan antar paragraf atau subjudul.</div>
                         </div>
 
-                        <div class="col-12 mt-3">
+                        {{-- FOTO SAAT INI (FULLWIDTH & UTUH TANPA TERPOTONG) --}}
+                        <div class="col-12 mt-4">
                             @php
                                 $existingPhotos = $pimpinan->all_photos;
                             @endphp
                             @if(count($existingPhotos) > 0)
-                                <label class="form-label fw-bold small d-block mb-2">Foto Saat Ini ({{ count($existingPhotos) }} Foto)</label>
-                                <div class="row g-3 mb-3">
+                                <label class="form-label fw-bold small d-block mb-2">
+                                    <i class="bi bi-images text-success me-1"></i> Foto Saat Ini ({{ count($existingPhotos) }} Foto)
+                                </label>
+                                <div class="row g-3 mb-4">
                                     @foreach($existingPhotos as $idx => $photoPath)
                                         @php
                                             $photoUrl = str_starts_with($photoPath, 'http') ? $photoPath : (str_starts_with($photoPath, 'assets/') ? asset($photoPath) : asset('storage/' . $photoPath));
+                                            $colSize = count($existingPhotos) === 1 ? 'col-12' : 'col-12 col-md-6 col-lg-4';
                                         @endphp
-                                        <div class="col-6 col-md-3">
-                                            <div class="border rounded-3 p-2 bg-light h-100 d-flex flex-column justify-content-between">
-                                                <img src="{{ $photoUrl }}" alt="Foto Pimpinan" class="w-100 rounded-2 mb-2" style="height: 175px; object-fit: cover;">
-                                                <div class="d-flex flex-column gap-1">
-                                                    <div class="form-check">
+                                        <div class="{{ $colSize }}">
+                                            <div class="border rounded-4 p-3 bg-light h-100 d-flex flex-column justify-content-between shadow-xs">
+                                                <div class="text-center bg-white rounded-3 p-3 border mb-3">
+                                                    <img src="{{ $photoUrl }}"
+                                                         alt="Foto Pimpinan"
+                                                         class="img-fluid rounded-3"
+                                                         style="width: 100%; max-height: 520px; height: auto; object-fit: contain;">
+                                                </div>
+                                                <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 px-1">
+                                                    <div class="form-check m-0">
                                                         <input class="form-check-input" type="radio" name="main_photo" id="main_photo_{{ $idx }}" value="{{ $photoPath }}" {{ $idx === 0 ? 'checked' : '' }}>
-                                                        <label class="form-check-label small fw-semibold" for="main_photo_{{ $idx }}">Foto Utama</label>
+                                                        <label class="form-check-label fw-bold text-dark" for="main_photo_{{ $idx }}">
+                                                            Foto Utama
+                                                        </label>
                                                     </div>
                                                     @if(count($existingPhotos) > 1)
-                                                        <div class="form-check">
+                                                        <div class="form-check m-0">
                                                             <input class="form-check-input" type="checkbox" name="delete_photos[]" id="del_photo_{{ $idx }}" value="{{ $photoPath }}">
-                                                            <label class="form-check-label small text-danger" for="del_photo_{{ $idx }}">Hapus Foto</label>
+                                                            <label class="form-check-label small fw-semibold text-danger" for="del_photo_{{ $idx }}">
+                                                                <i class="bi bi-trash me-1"></i>Hapus Foto Ini
+                                                            </label>
                                                         </div>
                                                     @endif
                                                 </div>
@@ -134,10 +147,39 @@
                                 </div>
                             @endif
 
-                            <label class="form-label fw-bold small">Ganti / Tambah Foto Baru (Bisa Pilih Lebih dari 1 Foto)</label>
-                            <input type="file" name="foto[]" id="multiPhotoInput" class="form-control" accept="image/jpeg,image/png,image/webp" multiple>
-                            <div class="form-text">Maksimal 20 MB per foto (PNG, JPG, WEBP).</div>
-                            <div id="photoPreviewGrid" class="row g-3 mt-2 d-none"></div>
+                            {{-- AREA UPLOAD FOTO LAPANG FULLWIDTH (MAKSIMAL 20 MB) --}}
+                            <label class="form-label fw-bold small d-block mb-2">
+                                <i class="bi bi-cloud-arrow-up-fill text-success me-1"></i> Ganti / Tambah Foto Baru (Kapasitas Lapang Maks. 20 MB per Foto)
+                            </label>
+                            <div id="dropzoneBox"
+                                 class="w-100 text-center p-4 p-md-5 rounded-4 position-relative"
+                                 style="border: 2px dashed #046B26; background: #f4faf6; cursor: pointer; transition: all 0.2s ease;"
+                                 onclick="document.getElementById('multiPhotoInput').click()">
+                                <input type="file"
+                                       name="foto[]"
+                                       id="multiPhotoInput"
+                                       class="d-none"
+                                       accept="image/jpeg,image/png,image/webp"
+                                       multiple
+                                       onclick="event.stopPropagation()">
+                                <div class="mx-auto mb-3 rounded-circle d-inline-flex align-items-center justify-content-center"
+                                     style="width: 68px; height: 68px; background: #e3f3e8; color: #046B26; font-size: 30px;">
+                                    <i class="bi bi-cloud-arrow-up-fill"></i>
+                                </div>
+                                <h6 class="fw-bold text-dark mb-1" style="font-size: 16px;">
+                                    Klik di Sini atau Tarik & Lepas Foto Pimpinan
+                                </h6>
+                                <p class="text-muted small mb-3">
+                                    Mendukung pemilihan banyak foto sekaligus (Multi-Upload). Gambar akan ditampilkan penuh (fullwidth) tanpa terpotong.
+                                </p>
+                                <div class="d-inline-flex align-items-center gap-2 px-3 py-1.5 rounded-pill fw-semibold small"
+                                     style="background: #046B26; color: #ffffff;">
+                                    <i class="bi bi-check-circle-fill text-warning"></i>
+                                    <span>Kapasitas Lapang: Maksimal 20 MB / Foto (PNG, JPG, WEBP)</span>
+                                </div>
+                            </div>
+
+                            <div id="photoPreviewGrid" class="row g-3 mt-3 d-none"></div>
                         </div>
                     </div>
                 </div>
@@ -159,13 +201,49 @@
 document.addEventListener('DOMContentLoaded', function () {
     const fileInput = document.getElementById('multiPhotoInput');
     const previewGrid = document.getElementById('photoPreviewGrid');
+    const dropzoneBox = document.getElementById('dropzoneBox');
+    const MAX_BYTES = 20 * 1024 * 1024; // 20 MB
     let selectedFiles = new DataTransfer();
+
+    function addFiles(filesList) {
+        Array.from(filesList).forEach(file => {
+            if (file.size > MAX_BYTES) {
+                alert('Ukuran file "' + file.name + '" melebihi batas maksimal 20 MB.');
+                return;
+            }
+            selectedFiles.items.add(file);
+        });
+        fileInput.files = selectedFiles.files;
+        renderPreviews();
+    }
 
     if (fileInput && previewGrid) {
         fileInput.addEventListener('change', function () {
-            Array.from(this.files).forEach(file => selectedFiles.items.add(file));
-            this.files = selectedFiles.files;
-            renderPreviews();
+            addFiles(this.files);
+        });
+    }
+
+    if (dropzoneBox) {
+        ['dragenter', 'dragover'].forEach(evt => {
+            dropzoneBox.addEventListener(evt, function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                this.style.background = '#e4f4ea';
+                this.style.borderColor = '#024d1a';
+            });
+        });
+        ['dragleave', 'drop'].forEach(evt => {
+            dropzoneBox.addEventListener(evt, function (e) {
+                e.preventDefault();
+                e.stopPropagation();
+                this.style.background = '#f4faf6';
+                this.style.borderColor = '#046B26';
+            });
+        });
+        dropzoneBox.addEventListener('drop', function (e) {
+            if (e.dataTransfer && e.dataTransfer.files.length > 0) {
+                addFiles(e.dataTransfer.files);
+            }
         });
     }
 
@@ -177,17 +255,26 @@ document.addEventListener('DOMContentLoaded', function () {
         }
         previewGrid.classList.remove('d-none');
 
+        const count = selectedFiles.files.length;
+        const colClass = count === 1 ? 'col-12' : 'col-12 col-md-6 col-lg-4';
+
         Array.from(selectedFiles.files).forEach((file, idx) => {
             const url = URL.createObjectURL(file);
+            const sizeMb = (file.size / (1024 * 1024)).toFixed(2);
             const col = document.createElement('div');
-            col.className = 'col-6 col-md-3';
+            col.className = colClass;
             col.innerHTML = `
-                <div class="border rounded-3 p-2 position-relative bg-white shadow-xs">
-                    <img src="${url}" class="w-100 rounded-2" style="height: 150px; object-fit: cover;">
+                <div class="border rounded-4 p-3 position-relative bg-white shadow-sm h-100">
+                    <div class="text-center bg-light rounded-3 p-3 border mb-2">
+                        <img src="${url}" class="img-fluid rounded-2" style="width: 100%; max-height: 480px; height: auto; object-fit: contain;">
+                    </div>
                     <div class="d-flex justify-content-between align-items-center mt-2">
-                        <span class="badge bg-success" style="font-size: 10px;">Foto Baru #${idx + 1}</span>
-                        <button type="button" class="btn btn-sm btn-outline-danger py-0 px-1" data-remove-idx="${idx}">
-                            <i class="bi bi-x-lg"></i>
+                        <div>
+                            <span class="badge bg-success me-1">Foto Baru #${idx + 1}</span>
+                            <span class="text-muted small">${sizeMb} MB</span>
+                        </div>
+                        <button type="button" class="btn btn-sm btn-outline-danger rounded-3 px-2" data-remove-idx="${idx}">
+                            <i class="bi bi-trash me-1"></i>Batal
                         </button>
                     </div>
                 </div>
@@ -211,4 +298,3 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 </script>
 @endpush
-

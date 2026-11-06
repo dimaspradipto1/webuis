@@ -76,12 +76,12 @@
                         <div class="col-xl-3 col-lg-4 col-md-6">
                             <div class="border rounded-4 p-3 h-100 d-flex flex-column justify-content-between bg-white shadow-xs text-center">
                                 <div>
-                                    <div class="position-relative d-inline-block mb-2">
+                                    <div class="position-relative d-block mb-3 bg-light rounded-3 p-2 border">
                                         <img src="{{ $pimpinan->foto_url }}"
                                              alt="{{ $pimpinan->nama }}"
-                                             class="rounded-3 border shadow-xs"
-                                             style="width: 130px; height: 170px; object-fit: cover;">
-                                        <span class="position-absolute top-0 end-0 translate-middle-y badge rounded-pill {{ $pimpinan->is_active ? 'bg-success' : 'bg-secondary' }}" style="font-size: 10px;">
+                                             class="img-fluid rounded-3"
+                                             style="width: 100%; max-height: 290px; height: auto; object-fit: contain;">
+                                        <span class="position-absolute top-0 end-0 m-2 badge rounded-pill {{ $pimpinan->is_active ? 'bg-success' : 'bg-secondary' }}" style="font-size: 10px;">
                                             {{ $pimpinan->is_active ? 'Aktif' : 'Nonaktif' }}
                                         </span>
                                     </div>

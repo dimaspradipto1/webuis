@@ -39,7 +39,7 @@
 </div>
 
 <div class="row">
-    <div class="col-12 col-xl-10">
+    <div class="col-12">
         @if ($errors->any())
             <div class="alert alert-danger rounded-3">
                 <strong class="d-block mb-1"><i class="bi bi-exclamation-triangle-fill me-1"></i> Periksa kembali inputan Anda:</strong>
@@ -183,18 +183,21 @@
                                 @foreach($existingPhotos as $idx => $photoPath)
                                     @php
                                         $photoUrl = str_starts_with($photoPath, 'http') ? $photoPath : (str_starts_with($photoPath, 'assets/') ? asset($photoPath) : asset('storage/' . $photoPath));
+                                        $colSize = count($existingPhotos) === 1 ? 'col-12' : 'col-12 col-md-6 col-lg-4';
                                     @endphp
-                                    <div class="col-6 col-md-3">
-                                        <div class="border rounded-3 p-2 bg-light h-100 d-flex flex-column justify-content-between">
-                                            <img src="{{ $photoUrl }}" alt="Foto Prodi" class="w-100 rounded-2 mb-2" style="height: 115px; object-fit: cover;">
-                                            <div class="d-flex flex-column gap-1">
-                                                <div class="form-check">
+                                    <div class="{{ $colSize }}">
+                                        <div class="border rounded-4 p-3 bg-light h-100 d-flex flex-column justify-content-between">
+                                            <div class="text-center bg-white rounded-3 p-3 border mb-3">
+                                                <img src="{{ $photoUrl }}" alt="Foto Prodi" class="img-fluid rounded-2" style="width: 100%; max-height: 460px; height: auto; object-fit: contain;">
+                                            </div>
+                                            <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 px-1">
+                                                <div class="form-check m-0">
                                                     <input class="form-check-input" type="radio" name="main_photo" id="main_photo_{{ $idx }}" value="{{ $photoPath }}" {{ $idx === 0 ? 'checked' : '' }}>
-                                                    <label class="form-check-label small fw-semibold" for="main_photo_{{ $idx }}">Jadikan Sampul</label>
+                                                    <label class="form-check-label fw-bold" for="main_photo_{{ $idx }}">Foto Utama</label>
                                                 </div>
-                                                <div class="form-check">
+                                                <div class="form-check m-0">
                                                     <input class="form-check-input" type="checkbox" name="delete_photos[]" id="del_photo_{{ $idx }}" value="{{ $photoPath }}">
-                                                    <label class="form-check-label small text-danger" for="del_photo_{{ $idx }}">Hapus Foto Ini</label>
+                                                    <label class="form-check-label small fw-semibold text-danger" for="del_photo_{{ $idx }}"><i class="bi bi-trash me-1"></i>Hapus Foto Ini</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -204,11 +207,23 @@
                         </div>
                     @endif
 
-                    <label class="form-label fw-bold small">Tambah Foto Baru (Bisa pilih lebih dari 1 foto sekaligus)</label>
-                    <input type="file" name="foto[]" id="multiPhotoInput" class="form-control" accept="image/jpeg,image/png,image/webp" multiple>
-                    <div class="form-text">Maksimal 20 MB per foto (JPG, PNG, WEBP).</div>
+                    <label class="form-label fw-bold small d-block mb-2">
+                        <i class="bi bi-cloud-arrow-up-fill text-success me-1"></i> Tambah Foto Baru (Kapasitas Lapang Maks. 20 MB per Foto)
+                    </label>
+                    <div class="w-100 text-center p-4 p-md-5 rounded-4 position-relative"
+                         style="border: 2px dashed #046B26; background: #f4faf6; cursor: pointer;"
+                         onclick="document.getElementById('multiPhotoInput').click()">
+                        <input type="file" name="foto[]" id="multiPhotoInput" class="d-none" accept="image/jpeg,image/png,image/webp" multiple onclick="event.stopPropagation()">
+                        <div class="mx-auto mb-2 rounded-circle d-inline-flex align-items-center justify-content-center"
+                             style="width: 60px; height: 60px; background: #e3f3e8; color: #046B26; font-size: 26px;">
+                            <i class="bi bi-cloud-arrow-up-fill"></i>
+                        </div>
+                        <h6 class="fw-bold text-dark mb-1">Klik di Sini untuk Memilih Foto Dokumentasi / Banner Prodi</h6>
+                        <p class="text-muted small mb-2">Bisa pilih lebih dari 1 foto sekaligus. Gambar ditampilkan penuh (fullwidth).</p>
+                        <span class="badge rounded-pill px-3 py-1.5" style="background: #046B26;">Kapasitas Lapang: Maksimal 20 MB / Foto (JPG, PNG, WEBP)</span>
+                    </div>
 
-                    <div id="photoPreviewGrid" class="row g-3 mt-2 d-none"></div>
+                    <div id="photoPreviewGrid" class="row g-3 mt-3 d-none"></div>
                 </div>
 
                 <div class="card-footer bg-light py-3 px-4 d-flex justify-content-between align-items-center" style="border-radius: 0 0 16px 16px;">
