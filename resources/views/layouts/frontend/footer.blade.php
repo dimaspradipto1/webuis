@@ -41,7 +41,7 @@
         <ul class="footer-links">
           <li><a href="{{ route('homepage.visi-misi') }}"><i class="bi bi-chevron-right"></i> Visi & Misi</a></li>
           <li><a href="{{ route('homepage.sambutan-rektor') }}"><i class="bi bi-chevron-right"></i> Sambutan Rektor</a></li>
-          <li><a href="{{ route('homepage.struktur-organisasi') }}"><i class="bi bi-chevron-right"></i> Struktur Organisasi</a></li>
+          <li><a href="{{ route('homepage.struktur-organisasi') }}"><i class="bi bi-chevron-right"></i> Profil dan Struktur Pimpinan</a></li>
           <li><a href="{{ route('homepage.testimoni') }}"><i class="bi bi-chevron-right"></i> Alumni & Testimoni</a></li>
           <li><a href="{{ route('homepage.faq') }}"><i class="bi bi-chevron-right"></i> Tanya Jawab (FAQ)</a></li>
         </ul>

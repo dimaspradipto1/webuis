@@ -30,8 +30,10 @@ use App\Models\Partner;
 use App\Models\PendampinganAcaraSetting;
 use App\Models\PengumumanAgenda;
 use App\Models\PermintaanRilisSetting;
+use App\Models\PimpinanManajemen;
 use App\Models\PmbSetting;
 use App\Models\Prestasi;
+use App\Models\ProfilPimpinan;
 use App\Models\ProgramStudi;
 use App\Models\PusatInformasiHumas;
 use App\Models\PusatInformasiHumasSetting;
@@ -447,8 +449,48 @@ class FrontendController extends Controller
     public function strukturOrganisasi()
     {
         $struktur = StrukturOrganisasi::first();
+        $pimpinans = ProfilPimpinan::where('is_active', true)
+            ->orderBy('baris')
+            ->orderBy('urutan')
+            ->orderBy('id')
+            ->get();
+        $pimpinansByBaris = $pimpinans->groupBy('baris');
 
-        return view('layouts.frontend.struktur-organisasi', compact('struktur'));
+        $manajemensAll = PimpinanManajemen::where('is_active', true)
+            ->orderBy('no_urut')
+            ->orderBy('id')
+            ->get()
+            ->groupBy('kategori');
+
+        $kategoriTabs = ['Rektorat', 'FEB', 'FST', 'FIKES'];
+
+        return view('layouts.frontend.struktur-organisasi', compact(
+            'struktur',
+            'pimpinans',
+            'pimpinansByBaris',
+            'manajemensAll',
+            'kategoriTabs'
+        ));
+    }
+
+    public function pimpinanDetail($slug)
+    {
+        $pimpinan = ProfilPimpinan::where(function ($q) use ($slug) {
+            $q->where('slug', $slug)
+                ->orWhere('id', $slug);
+        })->firstOrFail();
+
+        if (is_numeric($slug) && ! empty($pimpinan->slug)) {
+            return redirect()->route('homepage.pimpinan.detail', $pimpinan->slug, 301);
+        }
+
+        $otherPimpinans = ProfilPimpinan::where('is_active', true)
+            ->where('id', '!=', $pimpinan->id)
+            ->orderBy('baris')
+            ->orderBy('urutan')
+            ->get();
+
+        return view('layouts.frontend.pimpinan-detail', compact('pimpinan', 'otherPimpinans'));
     }
 
     public function kontak()

@@ -59,6 +59,9 @@ Route::controller(FrontendController::class)->group(function () {
     Route::get('/visi-misi', 'visiMisi')->name('homepage.visi-misi');
     Route::get('/sejarah', 'sejarah')->name('homepage.sejarah');
     Route::get('/organisasi', 'strukturOrganisasi')->name('homepage.struktur-organisasi');
+    Route::get('/organisasi/{slug}', 'pimpinanDetail')->name('homepage.pimpinan.detail');
+    Route::get('/profil-pimpinan', 'strukturOrganisasi')->name('homepage.profil-pimpinan');
+    Route::get('/profil-pimpinan/{slug}', 'pimpinanDetail');
     Route::get('/kurikulum', 'kurikulum')->name('homepage.kurikulum');
     Route::get('/kalender-akademik', 'kalenderAkademik')->name('homepage.kalender-akademik');
     Route::get('/pedoman-akademik', 'pedomanAkademik')->name('homepage.pedoman-akademik');
@@ -223,6 +226,11 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::resource('admin-topbar', TopbarController::class)
         ->parameters(['admin-topbar' => 'topbar'])
         ->names('topbar');
+    Route::post('struktur-organisasi/bagan', [StrukturOrganisasiController::class, 'storeBagan'])->name('struktur-organisasi.bagan.store');
+    Route::delete('struktur-organisasi/bagan/{id}', [StrukturOrganisasiController::class, 'destroyBagan'])->name('struktur-organisasi.bagan.destroy');
+    Route::post('struktur-organisasi/manajemen', [StrukturOrganisasiController::class, 'storeManajemen'])->name('struktur-organisasi.manajemen.store');
+    Route::put('struktur-organisasi/manajemen/{manajemen}', [StrukturOrganisasiController::class, 'updateManajemen'])->name('struktur-organisasi.manajemen.update');
+    Route::delete('struktur-organisasi/manajemen/{manajemen}', [StrukturOrganisasiController::class, 'destroyManajemen'])->name('struktur-organisasi.manajemen.destroy');
     Route::resource('struktur-organisasi', StrukturOrganisasiController::class);
     Route::resource('partner', PartnerController::class);
     Route::resource('visimisi', VisiMisiController::class);

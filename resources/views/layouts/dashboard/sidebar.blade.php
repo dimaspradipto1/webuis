@@ -88,7 +88,7 @@
               </li>
               <li>
                 <a href="{{ route('struktur-organisasi.index') }}" class="{{ Route::is('struktur-organisasi.*') ? 'active' : '' }}">
-                  <i class="bi bi-circle"></i><span>Struktur Organisasi</span>
+                  <i class="bi bi-circle"></i><span>Profil dan Struktur Pimpinan</span>
                 </a>
               </li>
               <li>
