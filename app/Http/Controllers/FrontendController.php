@@ -134,7 +134,7 @@ class FrontendController extends Controller
 
         if (! $facultyStat) {
             $facultyStat = (object) [
-                'title' => 'FIKES UIS Dalam Angka',
+                'title' => 'UIS Dalam Angka',
                 'jumlah_prodi' => 0,
                 'total_mahasiswa' => 0,
                 'total_dosen' => 0,

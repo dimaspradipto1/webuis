@@ -265,7 +265,7 @@
     {{-- Heading --}}
     <div class="text-center mb-4" data-aos="fade-up">
       <h2 class="uis-stat-heading">
-        {{ $facultyStat->title ?? 'Universitas Ibnu Sina' }}
+        {{ trim(preg_replace('/\bFIKES\b\s*/i', '', $facultyStat->title ?? 'UIS Dalam Angka')) ?: 'UIS Dalam Angka' }}
       </h2>
     </div>
 

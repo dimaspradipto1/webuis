@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('faculty_stats', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->default('FIKES UIS Dalam Angka');
+            $table->string('title')->default('UIS Dalam Angka');
             $table->string('image')->nullable()->comment('Path gambar gedung/kampus (opsional)');
             $table->unsignedSmallInteger('jumlah_prodi')->default(0)->comment('Jumlah Program Studi');
             $table->unsignedInteger('total_mahasiswa')->default(0)->comment('Total Mahasiswa Aktif');

@@ -67,6 +67,16 @@ class FacultyStat extends Model
     ];
 
     /**
+     * Pastikan kata FIKES tidak tampil pada judul statistik universitas.
+     */
+    public function getTitleAttribute(?string $value): string
+    {
+        $cleaned = trim((string) preg_replace('/\bFIKES\b\s*/i', '', $value ?? ''));
+
+        return $cleaned !== '' ? $cleaned : 'UIS Dalam Angka';
+    }
+
+    /**
      * Dapatkan background image url
      */
     public function getBgImageUrlAttribute(): string
