@@ -116,36 +116,34 @@
 
                         {{-- Tanggal Publish (Timestamp) --}}
                         <div class="col-md-6">
-                            <div class="d-flex justify-content-between align-items-center mb-1">
-                                <label for="published_at" class="form-label fw-semibold mb-0">
-                                    <i class="bi bi-calendar-event me-1 text-primary"></i> Edit Timestamp Waktu Publish <span class="text-muted small fw-normal">(Opsional)</span>
-                                </label>
-                                <div class="d-flex gap-1">
-                                    <button type="button" class="btn btn-outline-primary btn-sm py-0 px-2" style="font-size: 11px;" onclick="setNowTimestamp('published_at')">
-                                        <i class="bi bi-clock"></i> Waktu Sekarang
-                                    </button>
-                                    <button type="button" class="btn btn-outline-secondary btn-sm py-0 px-2" style="font-size: 11px;" onclick="document.getElementById('published_at').value = ''">
-                                        <i class="bi bi-x-circle"></i> Kosongkan
-                                    </button>
-                                </div>
-                            </div>
+                            <label for="published_at" class="form-label fw-semibold">
+                                Edit Timestamp Waktu Publish <span class="text-muted small fw-normal">(Opsional)</span>
+                            </label>
                             @php
                                 $currentPublishDate = old('published_at');
                                 if ($currentPublishDate === null && ($news->published_at || $news->created_at)) {
                                     $currentPublishDate = ($news->published_at ?? $news->created_at)->format('Y-m-d\TH:i:s');
                                 }
                             @endphp
-                            <input type="datetime-local"
-                                   id="published_at"
-                                   name="published_at"
-                                   step="1"
-                                   class="form-control @error('published_at') is-invalid @enderror"
-                                   value="{{ $currentPublishDate }}">
+                            <div class="input-group">
+                                <input type="datetime-local"
+                                       id="published_at"
+                                       name="published_at"
+                                       step="1"
+                                       class="form-control @error('published_at') is-invalid @enderror"
+                                       value="{{ $currentPublishDate }}">
+                                <button type="button" class="btn btn-outline-success btn-sm px-3 text-nowrap fw-medium" onclick="setNowTimestamp('published_at')">
+                                    Waktu Sekarang
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary btn-sm px-3 text-nowrap fw-medium" onclick="document.getElementById('published_at').value = ''">
+                                    Kosongkan
+                                </button>
+                            </div>
                             <div class="form-text text-muted small">
-                                <i class="bi bi-info-circle me-1"></i> Jika <strong>tidak diisi (dikosongkan)</strong> maka otomatis memakai <strong>waktu sekarang</strong> saat disimpan. Jika <strong>diisi</strong> maka waktu yang diisi yang dipakai.
+                                Jika <strong>tidak diisi (dikosongkan)</strong> maka otomatis memakai <strong>waktu sekarang</strong> saat disimpan. Jika <strong>diisi</strong> maka waktu yang diisi yang dipakai.
                             </div>
                             @error('published_at')
-                                <div class="invalid-feedback">{{ $message }}</div>
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror
                         </div>
                     </div>
