@@ -104,7 +104,9 @@
 <!-- ═══════════════════════════════════════════════
      MAIN CONTENT
 ═══════════════════════════════════════════════ -->
+<div id="uis-realtime-content">
 @yield('content')
+</div>
 
 <!-- ═══════════════════════════════════════════════
      FOOTER
@@ -290,6 +292,95 @@
 <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit" defer></script>
 
 @stack('scripts')
+
+<script>
+  (function () {
+    let currentHash = null;
+    let isUpdating = false;
+    const stateUrl = '{{ route("homepage.realtime-state") }}';
+
+    async function refreshFrontendContent() {
+      if (isUpdating) return;
+      isUpdating = true;
+      try {
+        const res = await fetch(window.location.href, {
+          method: 'GET',
+          cache: 'no-store',
+          headers: {
+            'X-Realtime-Sync': '1',
+            'Cache-Control': 'no-cache'
+          }
+        });
+        if (!res.ok) return;
+        const html = await res.text();
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+        const newContent = doc.getElementById('uis-realtime-content');
+        const currentContent = document.getElementById('uis-realtime-content');
+
+        if (newContent && currentContent) {
+          const scrollY = window.scrollY;
+          currentContent.innerHTML = newContent.innerHTML;
+          if (doc.title) {
+            document.title = doc.title;
+          }
+          if (typeof AOS !== 'undefined') {
+            AOS.refreshHard();
+          }
+          window.scrollTo({ top: scrollY, behavior: 'instant' });
+        }
+      } catch (e) {
+        // Ignore network errors during background sync
+      } finally {
+        isUpdating = false;
+      }
+    }
+
+    async function checkServerVersion() {
+      if (document.hidden) return;
+      try {
+        const res = await fetch(stateUrl + '?_t=' + Date.now(), { cache: 'no-store' });
+        if (!res.ok) return;
+        const data = await res.json();
+        if (data && data.hash) {
+          if (currentHash === null) {
+            currentHash = data.hash;
+          } else if (currentHash !== data.hash) {
+            currentHash = data.hash;
+            await refreshFrontendContent();
+          }
+        }
+      } catch (e) {}
+    }
+
+    // 1. Instant cross-tab sync via BroadcastChannel & localStorage
+    if (typeof BroadcastChannel !== 'undefined') {
+      try {
+        const bc = new BroadcastChannel('uis_realtime_channel');
+        bc.onmessage = function (ev) {
+          if (ev.data && ev.data.type === 'content_updated') {
+            checkServerVersion().then(() => refreshFrontendContent());
+          }
+        };
+      } catch (e) {}
+    }
+
+    window.addEventListener('storage', function (ev) {
+      if (ev.key === 'uis_realtime_updated_at' && ev.newValue) {
+        checkServerVersion().then(() => refreshFrontendContent());
+      }
+    });
+
+    // 2. Background polling & visibility wakeup for cross-device / cross-browser realtime sync
+    checkServerVersion();
+    setInterval(checkServerVersion, 4000);
+    document.addEventListener('visibilitychange', function () {
+      if (!document.hidden) {
+        checkServerVersion();
+      }
+    });
+  })();
+</script>
 
 </body>
 </html>

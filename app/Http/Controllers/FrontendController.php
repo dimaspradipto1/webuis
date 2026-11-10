@@ -80,9 +80,14 @@ class FrontendController extends Controller
                     ->orWhere('category', 'like', "%{$search}%");
             });
         }
-        $latestNews = $newsQuery->latest()->paginate(10, ['*'], 'page_berita')->withQueryString();
+        $latestNews = $newsQuery
+            ->orderByDesc('published_at')
+            ->orderByDesc('updated_at')
+            ->orderByDesc('id')
+            ->paginate(10, ['*'], 'page_berita')
+            ->withQueryString();
 
-        if ($request->ajax()) {
+        if ($request->ajax() && ! $request->hasHeader('X-Realtime-Sync')) {
             $html = view('layouts.frontend.partials.homepage-news-grid', compact('latestNews', 'search'))->render();
 
             return response()->json([
@@ -97,7 +102,9 @@ class FrontendController extends Controller
                 $q->where('category', 'like', '%Pengumuman%')
                     ->orWhere('title', 'like', '%Pengumuman%');
             })
-            ->latest()
+            ->orderByDesc('published_at')
+            ->orderByDesc('updated_at')
+            ->orderByDesc('id')
             ->take(5)
             ->get();
         $pengumumans = PengumumanAgenda::where('tipe', 'pengumuman')
@@ -786,19 +793,25 @@ class FrontendController extends Controller
         if (empty($search) && empty($categorySlug)) {
             $featured = News::where('status', 'published')
                 ->where('is_featured', true)
-                ->latest()
+                ->orderByDesc('published_at')
+                ->orderByDesc('updated_at')
+                ->orderByDesc('id')
                 ->first();
 
             if (! $featured) {
                 $featured = News::where('status', 'published')
-                    ->latest()
+                    ->orderByDesc('published_at')
+                    ->orderByDesc('updated_at')
+                    ->orderByDesc('id')
                     ->first();
             }
         }
 
         $newsList = $query
             ->when($featured, fn ($q) => $q->where('id', '!=', $featured->id))
-            ->latest()
+            ->orderByDesc('published_at')
+            ->orderByDesc('updated_at')
+            ->orderByDesc('id')
             ->paginate(10)
             ->withPath($categorySlug ? url('/berita/kategori/'.$categorySlug) : url('/berita'));
 
@@ -1110,5 +1123,46 @@ class FrontendController extends Controller
             ->get();
 
         return view('layouts.frontend.pengumuman-agenda-detail', compact('item', 'otherPengumumans', 'otherAgendas'));
+    }
+
+    public function realtimeState()
+    {
+        $tables = [
+            'news',
+            'banners',
+            'faculty_stats',
+            'program_studis',
+            'profil_pimpinans',
+            'pimpinan_manajemens',
+            'pengumuman_agendas',
+            'galleries',
+            'partners',
+            'prestasis',
+            'saranas',
+            'layanans',
+            'abouts',
+            'sambutan_dekans',
+            'visi_misis',
+            'milestones',
+            'faqs',
+            'testimonials',
+            'organisasi_mahasiswas',
+        ];
+
+        $parts = [];
+        foreach ($tables as $table) {
+            try {
+                $row = DB::table($table)
+                    ->selectRaw('COUNT(*) as c, MAX(updated_at) as u')
+                    ->first();
+                $parts[] = $table.':'.($row->c ?? 0).':'.($row->u ?? '');
+            } catch (\Throwable $e) {
+                // Ignore if table doesn't have updated_at
+            }
+        }
+
+        return response()->json([
+            'hash' => md5(implode('|', $parts)),
+        ])->header('Cache-Control', 'no-store, no-cache, must-revalidate, max-age=0');
     }
 }

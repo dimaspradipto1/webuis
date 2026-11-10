@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AkademikController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BackupController;
 use App\Http\Controllers\BahasaSettingController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\ContactController;
@@ -53,6 +54,7 @@ use Illuminate\Support\Facades\Route;
 */
 Route::controller(FrontendController::class)->group(function () {
     Route::get('/', 'homepage')->name('homepage');
+    Route::get('/realtime-state', 'realtimeState')->name('homepage.realtime-state');
     Route::get('/tentang', 'tentang')->name('homepage.tentang');
     Route::get('/sambutan-rektor', 'sambutanDekan')->name('homepage.sambutan-rektor');
     Route::get('/sambutan-dekan', fn () => redirect()->route('homepage.sambutan-rektor', [], 301))->name('homepage.sambutan-dekan');
@@ -245,4 +247,13 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::post('admin-bahasa/{id}/toggle', [BahasaSettingController::class, 'toggle'])->name('bahasa.toggle');
     Route::post('admin-bahasa/{id}/set-default', [BahasaSettingController::class, 'setDefault'])->name('bahasa.set-default');
     Route::delete('admin-bahasa/{id}', [BahasaSettingController::class, 'destroy'])->name('bahasa.destroy');
+
+    // Backup Database & Storage
+    Route::prefix('admin-backup')->name('backup.')->group(function () {
+        Route::get('/', [BackupController::class, 'index'])->name('index');
+        Route::get('/export-database', [BackupController::class, 'exportDatabase'])->name('export-database');
+        Route::post('/import-database', [BackupController::class, 'importDatabase'])->name('import-database');
+        Route::get('/export-storage', [BackupController::class, 'exportStorage'])->name('export-storage');
+        Route::post('/import-storage', [BackupController::class, 'importStorage'])->name('import-storage');
+    });
 });

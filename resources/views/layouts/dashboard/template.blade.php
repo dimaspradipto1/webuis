@@ -409,13 +409,40 @@
                     }
                 });
             }
+
+            // Broadcast realtime ke tab frontend ketika admin selesai menyimpan perubahan
+            function broadcastRealtimeUpdate() {
+                try {
+                    const nowTs = Date.now().toString();
+                    localStorage.setItem('uis_realtime_updated_at', nowTs);
+                    if (typeof BroadcastChannel !== 'undefined') {
+                        const bc = new BroadcastChannel('uis_realtime_channel');
+                        bc.postMessage({ type: 'content_updated', timestamp: nowTs });
+                        bc.close();
+                    }
+                } catch (e) {}
+            }
+
+            @if (session('success') || session('status') || session('sweetalert.alerted'))
+                broadcastRealtimeUpdate();
+            @endif
+
+            try {
+                if (sessionStorage.getItem('uis_admin_form_submitted') === '1') {
+                    sessionStorage.removeItem('uis_admin_form_submitted');
+                    broadcastRealtimeUpdate();
+                }
+            } catch (e) {}
         });
 
-        // Trigger TinyMCE save on form submit so data is always synchronized
+        // Trigger TinyMCE save & tandai form submit agar frontend di-trigger realtime setelah redirect
         $(document).on('submit', 'form', function () {
             if (typeof tinymce !== 'undefined') {
                 tinymce.triggerSave();
             }
+            try {
+                sessionStorage.setItem('uis_admin_form_submitted', '1');
+            } catch (e) {}
         });
 
         // Validasi client-side global: Maksimal 20 MB untuk upload file gambar di semua form
