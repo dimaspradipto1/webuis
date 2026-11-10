@@ -136,7 +136,7 @@
                                     <div class="mb-2">
                                         <label for="gambar" class="form-label fw-semibold small text-dark">Upload Gambar Baru</label>
                                         <input type="file" id="gambar" name="gambar" class="form-control @error('gambar') is-invalid @enderror" accept="image/*">
-                                        <div class="form-text small">Format: JPEG, PNG, JPG, WEBP (Maks. 2MB)</div>
+                                        <div class="form-text small">Format: JPEG, PNG, JPG, WEBP (Maks. 20 MB)</div>
                                     </div>
 
                                     @if($item->gambar)

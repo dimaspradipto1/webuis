@@ -140,7 +140,7 @@
                                    name="foto"
                                    class="form-control @error('foto') is-invalid @enderror"
                                    accept="image/*">
-                            <div class="form-text">Jika diisi, foto ini akan menggantikan icon default. Format: JPG, PNG, WEBP (Maks. 2MB).</div>
+                            <div class="form-text">Jika diisi, foto ini akan menggantikan icon default. Format: JPG, PNG, WEBP (Maks. 20 MB).</div>
                             @error('foto')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

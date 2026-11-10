@@ -76,7 +76,7 @@
                                onchange="previewBanner(this)">
                         <div class="form-text">
                             <i class="bi bi-info-circle me-1"></i>
-                            Format: JPG, JPEG, PNG, WebP. Maksimal: 2 MB. Resolusi disarankan: 1920 × 780 px.
+                            Format: JPG, JPEG, PNG, WebP. Maksimal: 20 MB. Resolusi disarankan: 1920 × 780 px.
                         </div>
                         @error('foto')
                             <div class="invalid-feedback">{{ $message }}</div>

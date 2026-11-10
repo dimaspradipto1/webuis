@@ -117,7 +117,7 @@
                                class="form-control @error('logo') is-invalid @enderror"
                                accept="image/*"
                                onchange="previewLogo(this)">
-                        <div class="form-text">Format: JPG, JPEG, PNG, GIF, SVG, WebP. Maks: 2 MB.</div>
+                        <div class="form-text">Format: JPG, JPEG, PNG, GIF, SVG, WebP. Maks: 20 MB.</div>
                         @error('logo')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror

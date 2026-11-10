@@ -116,7 +116,7 @@
                         <input type="file" id="gambar_preview" name="gambar_preview"
                                class="form-control @error('gambar_preview') is-invalid @enderror"
                                accept="image/jpeg,image/png,image/webp,image/svg+xml">
-                        <div class="form-text">Jika diunggah, thumbnail gambar akan menggantikan gradient background. Maks 5MB.</div>
+                        <div class="form-text">Jika diunggah, thumbnail gambar akan menggantikan gradient background. Maks 20 MB.</div>
                         @error('gambar_preview')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror

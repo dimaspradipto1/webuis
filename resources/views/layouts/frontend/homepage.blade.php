@@ -210,7 +210,7 @@
     font-size: clamp(1.8rem, 3.6vw, 2.5rem);
     font-weight: 800;
     letter-spacing: -0.5px;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.9), 0 4px 18px rgba(0,0,0,0.7), 0 0 30px rgba(0,0,0,0.4);
+    text-shadow: none;
   }
   .uis-stat-tab-btn {
     background: #edf2f7;
@@ -222,7 +222,7 @@
     border-radius: 3px;
     transition: all 0.25s ease;
     cursor: pointer;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+    box-shadow: none;
   }
   .uis-stat-tab-btn:hover {
     background: #e2e8f0;
@@ -232,7 +232,7 @@
   .uis-stat-tab-btn.active {
     background: #00875a;
     color: #ffffff;
-    box-shadow: 0 6px 16px rgba(0, 135, 90, 0.55);
+    box-shadow: none;
     transform: translateY(-1px);
   }
   .uis-stat-number {
@@ -242,7 +242,7 @@
     line-height: 1.1;
     letter-spacing: -0.5px;
     font-family: 'Poppins', 'Plus Jakarta Sans', sans-serif;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.9), 0 6px 20px rgba(0,0,0,0.7), 0 0 35px rgba(0,0,0,0.5);
+    text-shadow: none;
     margin-bottom: 8px;
   }
   .uis-stat-label {
@@ -250,7 +250,7 @@
     font-size: 15px;
     font-weight: 700;
     letter-spacing: 0.2px;
-    text-shadow: 0 2px 6px rgba(0,0,0,0.9), 0 4px 14px rgba(0,0,0,0.7);
+    text-shadow: none;
   }
 </style>
 

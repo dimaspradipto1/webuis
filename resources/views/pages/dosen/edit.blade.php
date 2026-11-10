@@ -105,7 +105,7 @@
                             <span class="small text-muted">Foto profil saat ini</span>
                         </div>
                     @endif
-                    <small class="text-muted d-block mt-1">Kosongkan jika tidak ingin mengubah foto. Format: JPG, PNG, WEBP (Maks. 2MB).</small>
+                    <small class="text-muted d-block mt-1">Kosongkan jika tidak ingin mengubah foto. Format: JPG, PNG, WEBP (Maks. 20 MB).</small>
                     @error('foto')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

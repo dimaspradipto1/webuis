@@ -61,7 +61,7 @@
                         <div class="mb-4 p-3 rounded-3" style="background: #f8fafc; border: 1px solid #e2e8f0;">
                             <label class="form-label fw-bold text-dark d-flex align-items-center justify-content-between">
                                 <span><i class="bi bi-card-image text-primary me-1"></i> Gambar Background Hero Homepage Humas</span>
-                                <span class="badge bg-secondary" style="font-size: 11px;">Rekomendasi: 1920x800px (Maks 5 MB)</span>
+                                <span class="badge bg-secondary" style="font-size: 11px;">Rekomendasi: 1920x800px (Maks 20 MB)</span>
                             </label>
 
                             <div class="row g-3 align-items-center">

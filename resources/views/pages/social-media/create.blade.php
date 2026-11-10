@@ -88,7 +88,7 @@
                                accept="image/png,image/webp,image/svg+xml"
                                required>
                         <div class="form-text mt-1">
-                            Format file yang didukung: <strong>PNG (disarankan transparan)</strong>, WebP, SVG. Maks 2MB.
+                            Format file yang didukung: <strong>PNG (disarankan transparan)</strong>, WebP, SVG. Maks 20 MB.
                         </div>
                         @error('logo')
                             <div class="invalid-feedback d-block">{{ $message }}</div>

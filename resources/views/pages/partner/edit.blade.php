@@ -73,7 +73,7 @@
                                onchange="previewLogo(this)">
                         <div class="form-text">
                             <i class="bi bi-info-circle me-1"></i>
-                            Kosongkan jika tidak ingin mengganti logo. Format: JPG, PNG, WebP, SVG. Maks: 2 MB.
+                            Kosongkan jika tidak ingin mengganti logo. Format: JPG, PNG, WebP, SVG. Maks: 20 MB.
                         </div>
                         @error('logo')
                             <div class="invalid-feedback">{{ $message }}</div>

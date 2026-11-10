@@ -198,7 +198,7 @@
                                    class="form-control @error('foto') is-invalid @enderror"
                                    accept="image/*"
                                    onchange="previewFoto(event)">
-                            <div class="form-text">Pilih foto baru jika ingin mengganti foto sebelumnya. (Maks 2MB).</div>
+                            <div class="form-text">Pilih foto baru jika ingin mengganti foto sebelumnya. (Maks 20 MB).</div>
                             @error('foto')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

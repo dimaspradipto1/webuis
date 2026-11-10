@@ -90,7 +90,7 @@
                                name="background_image"
                                class="form-control @error('background_image') is-invalid @enderror"
                                accept="image/jpg,image/jpeg,image/png,image/webp">
-                        <div class="form-text">Format: JPG, PNG, WEBP (Rekomendasi Landscape 1920x600 px / Maks 5MB).</div>
+                        <div class="form-text">Format: JPG, PNG, WEBP (Rekomendasi Landscape 1920x600 px / Maks 20 MB).</div>
                         @error('background_image')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror

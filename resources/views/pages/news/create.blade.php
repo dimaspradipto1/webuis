@@ -183,7 +183,7 @@
                                class="form-control @error('thumbnail') is-invalid @enderror"
                                accept="image/*"
                                onchange="previewThumbnail(this)">
-                        <div class="form-text text-muted">Format: JPG, JPEG, PNG, WebP. Maks: 2 MB. Boleh dikosongkan jika belum memiliki gambar.</div>
+                        <div class="form-text text-muted">Format: JPG, JPEG, PNG, WebP. Maks: 20 MB. Boleh dikosongkan jika belum memiliki gambar.</div>
                         @error('thumbnail')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -216,7 +216,7 @@
                                multiple
                                accept="image/*"
                                onchange="previewGallery(this)">
-                        <div class="form-text text-muted">Format: JPG, JPEG, PNG, WebP. Maks: 2 MB per gambar.</div>
+                        <div class="form-text text-muted">Format: JPG, JPEG, PNG, WebP. Maks: 20 MB per gambar.</div>
                         @error('gallery')
                             <div class="invalid-feedback d-block">{{ $message }}</div>
                         @enderror

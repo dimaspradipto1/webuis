@@ -117,7 +117,7 @@
                                accept="image/png,image/jpeg,image/svg+xml,image/webp"
                                onchange="previewImage(this)">
                         <div class="form-text">
-                            Format disarankan: <strong>PNG Transparan / SVG Putih / Monochrome</strong> (Rasio 1:1, Max 2MB).
+                            Format disarankan: <strong>PNG Transparan / SVG Putih / Monochrome</strong> (Rasio 1:1, Max 20 MB).
                         </div>
                         @error('logo')
                             <div class="invalid-feedback">{{ $message }}</div>

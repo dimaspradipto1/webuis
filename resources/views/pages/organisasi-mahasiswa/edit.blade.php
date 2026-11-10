@@ -83,7 +83,7 @@
                         </div>
                     @endif
                     <input type="file" name="logo" id="logo" class="form-control @error('logo') is-invalid @enderror" accept="image/*">
-                    <small class="text-muted">Biarkan kosong jika tidak ingin mengubah logo. Format: JPG, PNG, WEBP, SVG (Maks. 2MB).</small>
+                    <small class="text-muted">Biarkan kosong jika tidak ingin mengubah logo. Format: JPG, PNG, WEBP, SVG (Maks. 20 MB).</small>
                     @error('logo')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -97,7 +97,7 @@
                         </div>
                     @endif
                     <input type="file" name="foto_kegiatan" id="foto_kegiatan" class="form-control @error('foto_kegiatan') is-invalid @enderror" accept="image/*">
-                    <small class="text-muted">Biarkan kosong jika tidak ingin mengubah foto kegiatan. Format: JPG, PNG, WEBP (Maks. 2MB).</small>
+                    <small class="text-muted">Biarkan kosong jika tidak ingin mengubah foto kegiatan. Format: JPG, PNG, WEBP (Maks. 20 MB).</small>
                     @error('foto_kegiatan')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

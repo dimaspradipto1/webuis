@@ -83,7 +83,7 @@
                                    class="form-control @error('gambar') is-invalid @enderror"
                                    accept="image/*">
                             <div class="form-text text-muted small">
-                                Kosongkan jika tidak ingin mengubah file gambar yang sudah ada. Maks 5 MB.
+                                Kosongkan jika tidak ingin mengubah file gambar yang sudah ada. Maks 20 MB.
                             </div>
                             @error('gambar')
                                 <div class="invalid-feedback">{{ $message }}</div>

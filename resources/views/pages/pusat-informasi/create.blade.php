@@ -64,7 +64,7 @@
                                    class="form-control @error('gambar') is-invalid @enderror"
                                    accept="image/*">
                             <div class="form-text text-muted small">
-                                Format: JPG, PNG, WebP, SVG. Maks 5 MB. Rekomendasi rasio vertikal/persegi (misal 600×750 px).
+                                Format: JPG, PNG, WebP, SVG. Maks 20 MB. Rekomendasi rasio vertikal/persegi (misal 600×750 px).
                             </div>
                             @error('gambar')
                                 <div class="invalid-feedback">{{ $message }}</div>

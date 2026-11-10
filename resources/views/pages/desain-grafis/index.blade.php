@@ -183,7 +183,7 @@
                         </h6>
                         <div class="row g-3">
                             <div class="col-12">
-                                <label for="guide_image" class="form-label fw-semibold">Upload File Gambar Panduan <span class="text-muted">(JPG, PNG, WEBP, SVG maks 5MB)</span></label>
+                                <label for="guide_image" class="form-label fw-semibold">Upload File Gambar Panduan <span class="text-muted">(JPG, PNG, WEBP, SVG Maks 20 MB)</span></label>
                                 <input type="file" id="guide_image" name="guide_image" class="form-control"
                                        accept="image/jpeg,image/png,image/webp,image/svg+xml">
                                 <div class="form-text">Unggah file gambar lengkap infografis langkah penggunaan templat desain. Gambar ini akan tampil penuh dan rapi di bagian bawah halaman publik.</div>

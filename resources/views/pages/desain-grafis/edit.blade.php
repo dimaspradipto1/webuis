@@ -122,7 +122,7 @@
                         <input type="file" id="gambar_preview" name="gambar_preview"
                                class="form-control @error('gambar_preview') is-invalid @enderror"
                                accept="image/jpeg,image/png,image/webp,image/svg+xml">
-                        <div class="form-text">Biarkan kosong jika tidak ingin mengubah thumbnail. Maks 5MB.</div>
+                        <div class="form-text">Biarkan kosong jika tidak ingin mengubah thumbnail. Maks 20 MB.</div>
                         @error('gambar_preview')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror

@@ -146,7 +146,7 @@
                                    name="foto"
                                    class="form-control @error('foto') is-invalid @enderror"
                                    accept="image/*">
-                            <div class="form-text">Upload foto baru untuk mengganti foto saat ini. Format: JPG, PNG, WEBP (Maks. 2MB).</div>
+                            <div class="form-text">Upload foto baru untuk mengganti foto saat ini. Format: JPG, PNG, WEBP (Maks. 20 MB).</div>
                             @error('foto')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror

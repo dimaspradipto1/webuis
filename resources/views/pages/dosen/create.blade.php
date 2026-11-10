@@ -98,7 +98,7 @@
                 <div class="col-md-5">
                     <label for="foto" class="form-label fw-semibold text-dark">Foto Profil Dosen <span class="text-muted fw-normal">(Opsional)</span></label>
                     <input type="file" name="foto" id="foto" class="form-control @error('foto') is-invalid @enderror" accept="image/*">
-                    <small class="text-muted">Format: JPG, PNG, WEBP (Maks. 2MB)</small>
+                    <small class="text-muted">Format: JPG, PNG, WEBP (Maks. 20 MB)</small>
                     @error('foto')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

@@ -83,7 +83,7 @@
 
                         <input type="file" id="foto_dekan" name="foto_dekan" class="form-control @error('foto_dekan') is-invalid @enderror" accept="image/jpeg,image/png,image/jpg,image/webp">
                         <div class="form-text small text-muted mt-1">
-                            <i class="bi bi-info-circle me-1"></i> Format: <strong>JPG, PNG, WEBP</strong>. Maksimal 2MB. Disarankan orientasi Potret (3:4) dengan latar belakang rapi.
+                            <i class="bi bi-info-circle me-1"></i> Format: <strong>JPG, PNG, WEBP</strong>. Maksimal 20 MB. Disarankan orientasi Potret (3:4) dengan latar belakang rapi.
                         </div>
                         @error('foto_dekan')
                             <div class="invalid-feedback">{{ $message }}</div>

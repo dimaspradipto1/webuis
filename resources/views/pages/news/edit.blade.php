@@ -209,7 +209,7 @@
                                        accept="image/*"
                                        onchange="previewThumbnail(this)">
                                 <div class="form-text text-muted">
-                                    Kosongkan jika tidak ingin mengganti. Format: JPG, JPEG, PNG, WebP. Maks: 2 MB.
+                                    Kosongkan jika tidak ingin mengganti. Format: JPG, JPEG, PNG, WebP. Maks: 20 MB.
                                 </div>
                                 @error('thumbnail')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -276,7 +276,7 @@
                                    multiple
                                    accept="image/*"
                                    onchange="previewGallery(this)">
-                            <div class="form-text text-muted">Bisa memilih lebih dari 1 file sekaligus (JPG, PNG, WebP. Maks 2 MB).</div>
+                            <div class="form-text text-muted">Bisa memilih lebih dari 1 file sekaligus (JPG, PNG, WebP. Maks: 20 MB per gambar).</div>
                             @error('gallery')
                                 <div class="invalid-feedback d-block">{{ $message }}</div>
                             @enderror

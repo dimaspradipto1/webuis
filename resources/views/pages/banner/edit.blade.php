@@ -83,7 +83,7 @@
                                onchange="previewBanner(this)">
                         <div class="form-text">
                             <i class="bi bi-info-circle me-1"></i>
-                            Kosongkan jika tidak ingin mengganti gambar. Format: JPG, JPEG, PNG, WebP. Maksimal: 2 MB.
+                            Kosongkan jika tidak ingin mengganti gambar. Format: JPG, JPEG, PNG, WebP. Maksimal: 20 MB.
                             Resolusi disarankan: 1920 × 780 px.
                         </div>
                         @error('foto')
