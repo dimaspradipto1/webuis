@@ -39,6 +39,11 @@ class NewsDataTable extends DataTable
             ->addColumn('title', function ($news) {
                 return e($news->title);
             })
+            ->addColumn('category', function ($news) {
+                $cat = $news->category ?: 'Berita Universitas';
+
+                return '<span class="badge bg-light text-dark border fw-medium">'.e($cat).'</span>';
+            })
             ->addColumn('author', function ($news) {
                 return $news->user ? e($news->user->name) : '<span class="text-muted fst-italic">Anonim</span>';
             })
@@ -84,7 +89,7 @@ class NewsDataTable extends DataTable
                 return $btn;
             })
             ->setRowId('DT_RowIndex')
-            ->rawColumns(['thumbnail', 'published_at', 'status', 'action']);
+            ->rawColumns(['thumbnail', 'category', 'published_at', 'status', 'action']);
     }
 
     /**
@@ -96,7 +101,7 @@ class NewsDataTable extends DataTable
     {
         $query = $model->newQuery()
             ->with('user')
-            ->select(['id', 'user_id', 'thumbnail', 'title', 'status', 'published_at', 'created_at']);
+            ->select(['id', 'user_id', 'thumbnail', 'title', 'category', 'status', 'published_at', 'created_at']);
 
         // Jika role penulis (dan bukan admin), hanya tampilkan berita miliknya sendiri. Admin menampilkan semua.
         if (Auth::check() && Auth::user()->hasExactRole('penulis') && ! Auth::user()->isAdmin()) {
@@ -148,6 +153,11 @@ class NewsDataTable extends DataTable
 
             Column::make('title')
                 ->title('Judul Berita'),
+
+            Column::make('category')
+                ->title('Kategori')
+                ->width('15%')
+                ->addClass('text-center'),
 
             Column::computed('author')
                 ->title('Penulis'),
