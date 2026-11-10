@@ -61,6 +61,7 @@ class NewsController extends Controller
             'category' => $request->category,
             'is_featured' => $request->boolean('is_featured'),
             'published_at' => $publishedAt,
+            'created_at' => $publishedAt,
         ]);
 
         return redirect()
@@ -106,7 +107,7 @@ class NewsController extends Controller
 
         $publishedAt = $request->filled('published_at')
             ? Carbon::parse($request->published_at)
-            : ($news->published_at ?? $news->created_at ?? now());
+            : now();
 
         $news->update([
             'thumbnail' => $thumbnailPath,
@@ -118,6 +119,7 @@ class NewsController extends Controller
             'category' => $request->category,
             'is_featured' => $request->boolean('is_featured'),
             'published_at' => $publishedAt,
+            'created_at' => $publishedAt,
         ]);
 
         return redirect()

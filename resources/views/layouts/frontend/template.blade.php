@@ -65,6 +65,31 @@
 
   <!-- Master Unified Frontend CSS -->
   <link rel="stylesheet" href="{{ asset('frontend/css/style.css') }}?v={{ file_exists(public_path('frontend/css/style.css')) ? filemtime(public_path('frontend/css/style.css')) : time() }}">
+  <style>
+    figure.image {
+      display: table;
+      margin: 1.25rem auto;
+      max-width: 100%;
+      text-align: center;
+    }
+    figure.image img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto;
+      border-radius: 8px;
+    }
+    figure.image figcaption {
+      display: table-caption;
+      caption-side: bottom;
+      padding: 8px 12px 0;
+      font-size: 0.875rem;
+      color: #64748b;
+      font-style: italic;
+      text-align: center;
+      line-height: 1.5;
+    }
+  </style>
 
   @stack('styles')
 </head>

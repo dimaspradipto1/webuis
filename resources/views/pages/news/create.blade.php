@@ -113,18 +113,29 @@
                             @enderror
                         </div>
 
-                        {{-- Tanggal Publish --}}
+                        {{-- Tanggal Publish (Timestamp) --}}
                         <div class="col-md-6">
-                            <label for="published_at" class="form-label fw-semibold">
-                                <i class="bi bi-calendar-event me-1 text-primary"></i> Tanggal & Waktu Publish
-                            </label>
+                            <div class="d-flex justify-content-between align-items-center mb-1">
+                                <label for="published_at" class="form-label fw-semibold mb-0">
+                                    <i class="bi bi-calendar-event me-1 text-primary"></i> Timestamp Waktu Publish <span class="text-muted small fw-normal">(Opsional)</span>
+                                </label>
+                                <div class="d-flex gap-1">
+                                    <button type="button" class="btn btn-outline-primary btn-sm py-0 px-2" style="font-size: 11px;" onclick="setNowTimestamp('published_at')">
+                                        <i class="bi bi-clock"></i> Waktu Sekarang
+                                    </button>
+                                    <button type="button" class="btn btn-outline-secondary btn-sm py-0 px-2" style="font-size: 11px;" onclick="document.getElementById('published_at').value = ''">
+                                        <i class="bi bi-x-circle"></i> Kosongkan
+                                    </button>
+                                </div>
+                            </div>
                             <input type="datetime-local"
                                    id="published_at"
                                    name="published_at"
+                                   step="1"
                                    class="form-control @error('published_at') is-invalid @enderror"
                                    value="{{ old('published_at') }}">
                             <div class="form-text text-muted small">
-                                <i class="bi bi-info-circle me-1"></i> Boleh dikosongkan. Jika tidak diisi otomatis menggunakan waktu saat ini (<code>now()</code>).
+                                <i class="bi bi-info-circle me-1"></i> Jika <strong>tidak diisi (dikosongkan)</strong> maka otomatis memakai <strong>waktu sekarang</strong> saat disimpan. Jika <strong>diisi</strong> maka waktu yang diisi yang dipakai.
                             </div>
                             @error('published_at')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -256,6 +267,12 @@
 
 @push('scripts')
 <script>
+    function setNowTimestamp(inputId) {
+        const now = new Date();
+        const pad = (n) => String(n).padStart(2, '0');
+        const formatted = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
+        document.getElementById(inputId).value = formatted;
+    }
 
     function previewThumbnail(input) {
         const wrap = document.getElementById('thumbnailPreviewWrap');

@@ -46,7 +46,7 @@
       </div>
       <h1 class="article-title-main">{{ $news->title }}</h1>
       <div class="d-flex flex-wrap align-items-center gap-3 text-white-50 small mb-3">
-        <span><i class="bi bi-calendar3 me-1" style="color:var(--uis-orange);"></i> {{ $news->created_at->translatedFormat('d F Y') }}</span>
+        <span><i class="bi bi-calendar3 me-1" style="color:var(--uis-orange);"></i> {{ ($news->published_at ?? $news->created_at)->translatedFormat('d F Y • H:i') }} WIB</span>
         <span>•</span>
         <span><i class="bi bi-person me-1" style="color:var(--uis-orange);"></i> {{ $news->user?->name ?? 'Redaksi Universitas Ibnu Sina' }}</span>
         <span>•</span>

@@ -280,11 +280,47 @@
                             height: 380,
                             menubar: false,
                             plugins: 'advlist autolink lists link image charmap preview anchor searchreplace visualblocks code fullscreen insertdatetime media table wordcount',
-                            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table link image | removeformat | code fullscreen',
-                            content_style: 'body { font-family: Plus Jakarta Sans, Arial, sans-serif; font-size: 14px; line-height: 1.6; } img { max-width: 100%; height: auto; }',
+                            toolbar: 'undo redo | blocks fontfamily fontsize | bold italic underline strikethrough | forecolor backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | table link image togglecaption | removeformat | code fullscreen',
+                            content_style: 'body { font-family: Plus Jakarta Sans, Arial, sans-serif; font-size: 14px; line-height: 1.6; } img { max-width: 100%; height: auto; border-radius: 6px; } figure.image { display: table; margin: 1rem auto; text-align: center; max-width: 100%; } figure.image img { display: block; margin: 0 auto; } figure.image figcaption { display: table-caption; caption-side: bottom; padding: 6px 10px 2px; font-size: 12.5px; color: #64748b; font-style: italic; text-align: center; background: #f8fafc; border-radius: 0 0 6px 6px; }',
                             image_title: true,
+                            image_caption: true,
                             automatic_uploads: true,
                             file_picker_types: 'image',
+                            setup: function (editor) {
+                                editor.ui.registry.addButton('togglecaption', {
+                                    text: 'Judul Gambar',
+                                    icon: 'image',
+                                    tooltip: 'Tambah / Edit Judul di Bawah Gambar (Caption)',
+                                    onAction: function () {
+                                        const node = editor.selection.getNode();
+                                        const figure = node.closest ? node.closest('figure.image') : null;
+                                        if (figure) {
+                                            let figcap = figure.querySelector('figcaption');
+                                            if (!figcap) {
+                                                figcap = editor.dom.create('figcaption', {}, 'Tulis keterangan/judul gambar di sini...');
+                                                figure.appendChild(figcap);
+                                            }
+                                            editor.selection.select(figcap, true);
+                                            editor.selection.collapse(false);
+                                        } else if (node.nodeName === 'IMG') {
+                                            const imgHtml = node.outerHTML;
+                                            const figureHtml = '<figure class="image">' + imgHtml + '<figcaption>Tulis keterangan/judul gambar di sini...</figcaption></figure>';
+                                            editor.dom.replace(editor.dom.createFragment(figureHtml), node);
+                                        } else {
+                                            editor.execCommand('mceImage');
+                                        }
+                                    }
+                                });
+
+                                editor.ui.registry.addContextToolbar('imagecaptionbar', {
+                                    predicate: function (node) {
+                                        return node.nodeName === 'IMG' || (node.nodeName === 'FIGURE' && node.classList.contains('image'));
+                                    },
+                                    items: 'alignleft aligncenter alignright | togglecaption image',
+                                    position: 'node',
+                                    scope: 'node'
+                                });
+                            },
                             images_upload_handler: function (blobInfo, progress) {
                                 return new Promise((resolve, reject) => {
                                     if (blobInfo.blob().size > 20 * 1024 * 1024) {
