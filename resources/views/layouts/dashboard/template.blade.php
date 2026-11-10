@@ -287,8 +287,8 @@
                             file_picker_types: 'image',
                             images_upload_handler: function (blobInfo, progress) {
                                 return new Promise((resolve, reject) => {
-                                    if (blobInfo.blob().size > 2 * 1024 * 1024) {
-                                        reject('Ukuran file gambar maksimal 2 MB.');
+                                    if (blobInfo.blob().size > 20 * 1024 * 1024) {
+                                        reject('Ukuran file gambar maksimal 20 MB.');
                                         return;
                                     }
 
@@ -340,16 +340,16 @@
                                     const file = e.target.files[0];
                                     if (!file) return;
 
-                                    if (file.size > 2 * 1024 * 1024) {
+                                    if (file.size > 20 * 1024 * 1024) {
                                         if (typeof Swal !== 'undefined') {
                                             Swal.fire({
                                                 icon: 'error',
                                                 title: 'Ukuran Gambar Terlalu Besar',
-                                                text: 'Ukuran file gambar "' + file.name + '" melebihi batas maksimal 2 MB.',
+                                                text: 'Ukuran file gambar "' + file.name + '" melebihi batas maksimal 20 MB.',
                                                 confirmButtonColor: '#046B26'
                                             });
                                         } else {
-                                            alert('Ukuran file gambar maksimal 2 MB.');
+                                            alert('Ukuran file gambar maksimal 20 MB.');
                                         }
                                         return;
                                     }
@@ -382,14 +382,14 @@
             }
         });
 
-        // Validasi client-side global: Maksimal 2 MB untuk upload file gambar di semua form
+        // Validasi client-side global: Maksimal 20 MB untuk upload file gambar di semua form
         $(document).on('change', 'input[type="file"]', function () {
             const files = this.files;
             if (!files || files.length === 0) return;
 
             const acceptAttr = (this.getAttribute('accept') || '').toLowerCase();
             const isImageInput = acceptAttr.includes('image') || acceptAttr.includes('png') || acceptAttr.includes('jpg') || acceptAttr.includes('jpeg') || acceptAttr.includes('webp') || acceptAttr.includes('svg');
-            const maxBytes = 2 * 1024 * 1024; // 2 MB
+            const maxBytes = 20 * 1024 * 1024; // 20 MB
 
             for (let i = 0; i < files.length; i++) {
                 const file = files[i];
@@ -401,7 +401,7 @@
                         Swal.fire({
                             icon: 'error',
                             title: 'Ukuran File Terlalu Besar',
-                            html: `File <strong>${file.name}</strong> berukuran <strong>${fileSizeMB} MB</strong>.<br>Maksimal ukuran file gambar yang diperbolehkan adalah <strong>2 MB</strong>.`,
+                            html: `File <strong>${file.name}</strong> berukuran <strong>${fileSizeMB} MB</strong>.<br>Maksimal ukuran file gambar yang diperbolehkan adalah <strong>20 MB</strong>.`,
                             confirmButtonColor: '#046B26',
                             customClass: {
                                 popup: 'rounded-4 shadow-lg border-0',
@@ -409,7 +409,7 @@
                             }
                         });
                     } else {
-                        alert(`File "${file.name}" berukuran ${fileSizeMB} MB. Maksimal ukuran gambar adalah 2 MB.`);
+                        alert(`File "${file.name}" berukuran ${fileSizeMB} MB. Maksimal ukuran gambar adalah 20 MB.`);
                     }
 
                     // Reset input file
