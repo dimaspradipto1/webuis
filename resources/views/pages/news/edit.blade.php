@@ -201,7 +201,10 @@
                                              class="img-thumbnail rounded shadow-sm"
                                              style="max-height: 140px; object-fit: cover;">
                                     @else
-                                        <span class="badge bg-secondary">Tidak ada thumbnail</span>
+                                        <div class="d-flex align-items-center justify-content-center rounded border shadow-sm"
+                                             style="width: 180px; height: 120px; background-color: #e2e8f0; color: #64748b;">
+                                            <i class="bi bi-image" style="font-size: 2.5rem; line-height: 1;"></i>
+                                        </div>
                                     @endif
                                 </div>
                             </div>

@@ -198,13 +198,20 @@
                         @enderror
 
                         {{-- Preview Thumbnail --}}
-                        <div id="thumbnailPreviewWrap" class="mt-3 d-none">
+                        <div class="mt-3">
                             <p class="small text-muted mb-1 fw-semibold">Preview Thumbnail:</p>
-                            <img id="thumbnailPreview"
-                                 src=""
-                                 alt="Preview Thumbnail"
-                                 class="img-thumbnail rounded"
-                                 style="max-height: 180px; object-fit: cover;">
+                            <div id="thumbnailDefaultPlaceholder"
+                                 class="d-flex align-items-center justify-content-center rounded border shadow-sm"
+                                 style="width: 180px; height: 120px; background-color: #e2e8f0; color: #64748b;">
+                                <i class="bi bi-image" style="font-size: 2.5rem; line-height: 1;"></i>
+                            </div>
+                            <div id="thumbnailPreviewWrap" class="d-none">
+                                <img id="thumbnailPreview"
+                                     src=""
+                                     alt="Preview Thumbnail"
+                                     class="img-thumbnail rounded"
+                                     style="max-height: 180px; object-fit: cover;">
+                            </div>
                         </div>
                     </div>
 
@@ -274,16 +281,19 @@
 
     function previewThumbnail(input) {
         const wrap = document.getElementById('thumbnailPreviewWrap');
+        const placeholder = document.getElementById('thumbnailDefaultPlaceholder');
         const img = document.getElementById('thumbnailPreview');
         if (input.files && input.files[0]) {
             const reader = new FileReader();
             reader.onload = function(e) {
                 img.src = e.target.result;
                 wrap.classList.remove('d-none');
+                if (placeholder) placeholder.classList.add('d-none');
             };
             reader.readAsDataURL(input.files[0]);
         } else {
             wrap.classList.add('d-none');
+            if (placeholder) placeholder.classList.remove('d-none');
         }
     }
 

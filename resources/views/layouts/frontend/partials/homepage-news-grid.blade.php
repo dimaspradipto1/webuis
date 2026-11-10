@@ -22,8 +22,8 @@
             @if(!empty($news->thumbnail))
               <img src="{{ asset('storage/' . $news->thumbnail) }}" alt="{{ $news->title }}" class="news-mini-img" loading="lazy">
             @else
-              <div class="news-mini-fallback">
-                <i class="bi bi-newspaper"></i>
+              <div class="news-mini-fallback" style="background-color: #e2e8f0; color: #64748b;">
+                <i class="bi bi-image"></i>
               </div>
             @endif
           </div>

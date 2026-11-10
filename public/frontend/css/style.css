@@ -3571,9 +3571,9 @@ section {
 
     justify-content: center;
 
-    background: var(--uis-purple-light, #eaf6ee);
+    background: #e2e8f0;
 
-    color: var(--uis-purple, #046b26);
+    color: #64748b;
 
     font-size: 24px;
 }

@@ -77,6 +77,10 @@
           {{-- Thumbnail Utama --}}
           @if($news->thumbnail)
             <img src="{{ asset('storage/' . $news->thumbnail) }}" alt="{{ $news->title }}" class="article-main-thumb">
+          @else
+            <div class="article-main-thumb d-flex align-items-center justify-content-center rounded-4 mb-4" style="height: 320px; background-color: #e2e8f0; color: #64748b;">
+              <i class="bi bi-image" style="font-size: 4rem;"></i>
+            </div>
           @endif
 
           {{-- Isi Berita --}}
@@ -162,7 +166,7 @@
                   @if($related->thumbnail)
                     <img src="{{ asset('storage/' . $related->thumbnail) }}" alt="{{ $related->title }}" class="related-thumb">
                   @else
-                    <div class="related-thumb bg-light border d-flex align-items-center justify-content-center text-muted">
+                    <div class="related-thumb border d-flex align-items-center justify-content-center" style="background-color: #e2e8f0; color: #64748b;">
                       <i class="bi bi-image"></i>
                     </div>
                   @endif

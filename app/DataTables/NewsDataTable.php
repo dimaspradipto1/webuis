@@ -31,7 +31,10 @@ class NewsDataTable extends DataTable
                                  loading="lazy">';
                 }
 
-                return '<span class="text-muted small">Tidak ada</span>';
+                return '<div class="d-inline-flex align-items-center justify-content-center"
+                             style="width:70px;height:45px;border-radius:4px;border:1px solid #cbd5e1;background-color:#e2e8f0;color:#64748b;">
+                            <i class="bi bi-image" style="font-size:1.25rem;line-height:1;"></i>
+                        </div>';
             })
             ->addColumn('title', function ($news) {
                 return e($news->title);
