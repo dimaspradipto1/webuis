@@ -158,7 +158,7 @@
         </h1>
         @if(!empty($sarana->deskripsi))
           <p class="mb-0 text-white-50" style="font-size: 15px; max-width: 780px;">
-            {{ $sarana->deskripsi }}
+            {{ trim(html_entity_decode(strip_tags($sarana->deskripsi), ENT_QUOTES | ENT_HTML5, 'UTF-8')) }}
           </p>
         @endif
       </div>
@@ -226,7 +226,7 @@
             </div>
           @elseif(!empty($sarana->deskripsi))
             <p style="line-height: 1.85; font-size: 15.5px; color: #334155;">
-              {{ $sarana->deskripsi }}
+              {{ trim(html_entity_decode(strip_tags($sarana->deskripsi), ENT_QUOTES | ENT_HTML5, 'UTF-8')) }}
             </p>
           @else
             <p class="text-muted">

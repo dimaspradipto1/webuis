@@ -52,12 +52,12 @@
           @if($visiPoin->count())
             @foreach($visiPoin as $v)
               <p class="value-desc" style="font-size:15.5px; line-height:1.9; text-align: justify;">
-                {{ $v->isi }}
+                {{ trim(html_entity_decode(strip_tags($v->isi ?? ''), ENT_QUOTES | ENT_HTML5, 'UTF-8')) }}
               </p>
             @endforeach
           @else
             <p class="value-desc" style="font-size:15.5px; line-height:1.9; text-align: justify;">
-              {{ $about->visi ?? 'Menjadi Universitas Unggul, Bermartabat, Bereputasi Nasional dan Internasional serta berjiwa Entrepreneur berbasis Imtaq tahun 2029.' }}
+              {{ trim(html_entity_decode(strip_tags($about->visi ?? 'Menjadi Universitas Unggul, Bermartabat, Bereputasi Nasional dan Internasional serta berjiwa Entrepreneur berbasis Imtaq tahun 2029.'), ENT_QUOTES | ENT_HTML5, 'UTF-8')) }}
             </p>
           @endif
         </div>
@@ -84,7 +84,7 @@
           @endphp
           <ul class="value-desc" style="font-size:15px; line-height:1.8; padding-left: 20px; text-align: justify; margin: 0;">
             @foreach($misiPoin as $poin)
-              <li class="mb-3">{{ $poin }}</li>
+              <li class="mb-3">{{ trim(html_entity_decode(strip_tags($poin ?? ''), ENT_QUOTES | ENT_HTML5, 'UTF-8')) }}</li>
             @endforeach
           </ul>
         </div>

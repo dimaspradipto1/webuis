@@ -115,7 +115,7 @@
                 </div>
                 <h4 class="fasilitas-title">{{ $sarana->nama }}</h4>
                 <p class="fasilitas-desc mb-0">
-                  {{ $sarana->deskripsi ?: 'Fasilitas yang mendukung kegiatan akademik dan riset mahasiswa.' }}
+                  {{ trim(html_entity_decode(strip_tags($sarana->deskripsi ?? ''), ENT_QUOTES | ENT_HTML5, 'UTF-8')) ?: 'Fasilitas yang mendukung kegiatan akademik dan riset mahasiswa.' }}
                 </p>
               </div>
 

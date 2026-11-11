@@ -117,12 +117,12 @@
                     </div>
 
                     <div class="mb-3">
-                        <label for="deskripsi" class="form-label fw-semibold">Ringkasan Singkat (Tampil di Kartu Beranda)</label>
-                        <textarea id="deskripsi"
+                        <label for="ringkasan_deskripsi" class="form-label fw-semibold">Ringkasan Singkat (Tampil di Kartu Beranda)</label>
+                        <textarea id="ringkasan_deskripsi"
                                   name="deskripsi"
                                   class="form-control @error('deskripsi') is-invalid @enderror"
                                   rows="3"
-                                  placeholder="Tuliskan ringkasan singkat 1-2 kalimat yang tampil di kartu beranda...">{{ old('deskripsi', $sarana->deskripsi) }}</textarea>
+                                  placeholder="Tuliskan ringkasan singkat 1-2 kalimat yang tampil di kartu beranda...">{{ old('deskripsi', trim(html_entity_decode(strip_tags($sarana->deskripsi ?? ''), ENT_QUOTES | ENT_HTML5, 'UTF-8'))) }}</textarea>
                         @error('deskripsi')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -316,7 +316,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('prev-nama').textContent = this.value || 'Nama Sarana';
     });
 
-    document.getElementById('deskripsi').addEventListener('input', function () {
+    document.getElementById('ringkasan_deskripsi').addEventListener('input', function () {
         document.getElementById('prev-deskripsi').textContent = this.value || 'Deskripsi sarana akan tampil di sini.';
     });
 });

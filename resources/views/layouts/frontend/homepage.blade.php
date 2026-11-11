@@ -699,7 +699,7 @@
                 <div>
                   <div class="fasilitas-icon"><i class="bi {{ $sarana->icon ?? 'bi-building' }}"></i></div>
                   <h4 class="fasilitas-title">{{ $sarana->nama }}</h4>
-                  <p class="fasilitas-desc mb-3">{{ $sarana->deskripsi ?: 'Fasilitas yang mendukung kegiatan akademik dan riset mahasiswa.' }}</p>
+                  <p class="fasilitas-desc mb-3">{{ trim(html_entity_decode(strip_tags($sarana->deskripsi ?? ''), ENT_QUOTES | ENT_HTML5, 'UTF-8')) ?: 'Fasilitas yang mendukung kegiatan akademik dan riset mahasiswa.' }}</p>
                 </div>
                 <div class="pt-2 mt-auto">
                   <span class="d-inline-flex align-items-center gap-1 fw-bold" style="font-size: 13px; color: inherit; opacity: 0.9;">
@@ -1790,7 +1790,7 @@
                 </h2>
                 <div id="collapseH{{ $faq->id ?? $index }}" class="accordion-collapse collapse {{ $index === 0 ? 'show' : '' }}" data-bs-parent="#homeFaqAccordion">
                   <div class="accordion-body">
-                    {{ $faq->answer ?? $faq->jawaban }}
+                    {{ trim(html_entity_decode(strip_tags($faq->answer ?? $faq->jawaban ?? ''), ENT_QUOTES | ENT_HTML5, 'UTF-8')) }}
                   </div>
                 </div>
               </div>

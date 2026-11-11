@@ -103,7 +103,7 @@
                         <span class="badge bg-light text-secondary border ms-1" style="font-size: 10px;">{{ $course->kategori }}</span>
                       @endif
                       @if(!empty($course->deskripsi))
-                        <small class="text-muted d-block mt-1" style="font-size: 11.5px;">{{ $course->deskripsi }}</small>
+                        <small class="text-muted d-block mt-1" style="font-size: 11.5px;">{{ trim(html_entity_decode(strip_tags($course->deskripsi), ENT_QUOTES | ENT_HTML5, 'UTF-8')) }}</small>
                       @endif
                     </td>
                     <td class="text-center fw-bold">{{ $course->semester_romawi }}</td>

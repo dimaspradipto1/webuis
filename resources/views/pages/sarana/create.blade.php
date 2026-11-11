@@ -92,8 +92,8 @@
 
                     {{-- Deskripsi Singkat (Kartu Beranda) --}}
                     <div class="mb-3">
-                        <label for="deskripsi" class="form-label fw-semibold">Ringkasan Singkat (Tampil di Kartu Beranda)</label>
-                        <textarea id="deskripsi"
+                        <label for="ringkasan_deskripsi" class="form-label fw-semibold">Ringkasan Singkat (Tampil di Kartu Beranda)</label>
+                        <textarea id="ringkasan_deskripsi"
                                   name="deskripsi"
                                   class="form-control @error('deskripsi') is-invalid @enderror"
                                   rows="3"
@@ -247,7 +247,7 @@ document.addEventListener('DOMContentLoaded', function () {
         document.getElementById('prev-nama').textContent = this.value || 'Nama Sarana';
     });
     // Live preview deskripsi
-    document.getElementById('deskripsi').addEventListener('input', function () {
+    document.getElementById('ringkasan_deskripsi').addEventListener('input', function () {
         document.getElementById('prev-deskripsi').textContent = this.value || 'Deskripsi sarana akan tampil di sini.';
     });
 });

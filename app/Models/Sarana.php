@@ -36,6 +36,9 @@ class Sarana extends Model
     protected static function booted(): void
     {
         static::saving(function (Sarana $sarana) {
+            if (! empty($sarana->deskripsi)) {
+                $sarana->deskripsi = trim(html_entity_decode(strip_tags($sarana->deskripsi), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+            }
             if (empty($sarana->slug) || $sarana->isDirty('nama')) {
                 $baseSlug = Str::slug($sarana->nama) ?: 'fasilitas';
                 $slug = $baseSlug;
