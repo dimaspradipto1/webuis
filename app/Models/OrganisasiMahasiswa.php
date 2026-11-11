@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasVirtualSlug;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class OrganisasiMahasiswa extends Model
 {
+    use HasVirtualSlug;
     protected $table = 'organisasi_mahasiswas';
 
     protected $fillable = [

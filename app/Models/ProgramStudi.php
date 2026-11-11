@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasVirtualSlug;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class ProgramStudi extends Model
 {
-    use HasFactory;
+    use HasFactory, HasVirtualSlug;
 
     protected $table = 'program_studis';
 

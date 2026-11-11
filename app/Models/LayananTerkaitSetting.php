@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class LayananTerkaitSetting extends Model
 {
+    use \App\Models\Concerns\HasVirtualSlug;
+
     use HasFactory;
 
     protected $table = 'layanan_terkait_settings';

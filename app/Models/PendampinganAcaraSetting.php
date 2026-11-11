@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class PendampinganAcaraSetting extends Model
 {
+    use \App\Models\Concerns\HasVirtualSlug;
+
     use HasFactory;
 
     protected $table = 'pendampingan_acara_settings';

@@ -2,17 +2,18 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasVirtualSlug;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 
 class Sarana extends Model
 {
+    use HasVirtualSlug;
+
     protected $table = 'saranas';
 
     protected $fillable = [
         'icon',
         'nama',
-        'slug',
         'kategori',
         'deskripsi',
         'foto',
@@ -38,15 +39,6 @@ class Sarana extends Model
         static::saving(function (Sarana $sarana) {
             if (! empty($sarana->deskripsi)) {
                 $sarana->deskripsi = trim(html_entity_decode(strip_tags($sarana->deskripsi), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
-            }
-            if (empty($sarana->slug) || $sarana->isDirty('nama')) {
-                $baseSlug = Str::slug($sarana->nama) ?: 'fasilitas';
-                $slug = $baseSlug;
-                $counter = 1;
-                while (static::where('slug', $slug)->where('id', '!=', $sarana->id ?? 0)->exists()) {
-                    $slug = $baseSlug.'-'.$counter++;
-                }
-                $sarana->slug = $slug;
             }
         });
     }

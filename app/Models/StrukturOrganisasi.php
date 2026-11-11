@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class StrukturOrganisasi extends Model
 {
+    use \App\Models\Concerns\HasVirtualSlug;
+
     protected $table = 'struktur_organisasis';
 
     protected $fillable = [

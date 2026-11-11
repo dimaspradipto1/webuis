@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Dosen extends Model
 {
+    use \App\Models\Concerns\HasVirtualSlug;
+
     protected $table = 'dosens';
 
     protected $fillable = [

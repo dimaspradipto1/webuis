@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class EmagazineHumas extends Model
 {
+    use \App\Models\Concerns\HasVirtualSlug;
+
     use HasFactory;
 
     protected $table = 'emagazine_humas';

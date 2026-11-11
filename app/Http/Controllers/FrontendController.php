@@ -314,7 +314,7 @@ class FrontendController extends Controller
             return $this->layananDetail($slug);
         }
 
-        if (is_numeric($slug) && ! empty($prodi->slug)) {
+        if (is_numeric($slug) && ! request()->attributes->get('_virtual_slug_decoded') && ! empty($prodi->slug)) {
             return redirect()->route('homepage.program-studi.detail', $prodi->slug, 301);
         }
 
@@ -338,7 +338,7 @@ class FrontendController extends Controller
             ->firstOrFail();
 
         // Redirect numeric ID to slug if available
-        if (is_numeric($slug) && ! empty($layanan->slug)) {
+        if (is_numeric($slug) && ! request()->attributes->get('_virtual_slug_decoded') && ! empty($layanan->slug)) {
             return redirect()->route('homepage.layanan.detail', $layanan->slug, 301);
         }
 
@@ -403,7 +403,7 @@ class FrontendController extends Controller
             ->firstOrFail();
 
         // Redirect numeric ID to slug if available
-        if (is_numeric($slug) && ! empty($gallery->slug)) {
+        if (is_numeric($slug) && ! request()->attributes->get('_virtual_slug_decoded') && ! empty($gallery->slug)) {
             return redirect()->route('homepage.galeri.detail', $gallery->slug, 301);
         }
 
@@ -493,7 +493,7 @@ class FrontendController extends Controller
                 ->orWhere('id', $slug);
         })->firstOrFail();
 
-        if (is_numeric($slug) && ! empty($pimpinan->slug)) {
+        if (is_numeric($slug) && ! request()->attributes->get('_virtual_slug_decoded') && ! empty($pimpinan->slug)) {
             return redirect()->route('homepage.pimpinan.detail', $pimpinan->slug, 301);
         }
 
@@ -849,7 +849,7 @@ class FrontendController extends Controller
             ->firstOrFail();
 
         // Redirect numeric ID to slug if available
-        if (is_numeric($slug) && ! empty($news->slug)) {
+        if (is_numeric($slug) && ! request()->attributes->get('_virtual_slug_decoded') && ! empty($news->slug)) {
             return redirect()->route('homepage.news.detail', $news->slug, 301);
         }
 
@@ -904,7 +904,7 @@ class FrontendController extends Controller
             })
             ->firstOrFail();
 
-        if (is_numeric($slug) && ! empty($prestasi->slug)) {
+        if (is_numeric($slug) && ! request()->attributes->get('_virtual_slug_decoded') && ! empty($prestasi->slug)) {
             return redirect()->route('homepage.prestasi.detail', $prestasi->slug, 301);
         }
 
@@ -1068,7 +1068,7 @@ class FrontendController extends Controller
             })
             ->firstOrFail();
 
-        if (is_numeric($slug) && ! empty($sarana->slug)) {
+        if (is_numeric($slug) && ! request()->attributes->get('_virtual_slug_decoded') && ! empty($sarana->slug)) {
             return redirect()->route('homepage.fasilitas.detail', $sarana->slug, 301);
         }
 
@@ -1108,7 +1108,7 @@ class FrontendController extends Controller
             })
             ->firstOrFail();
 
-        if (is_numeric($slug) && ! empty($item->slug)) {
+        if (is_numeric($slug) && ! request()->attributes->get('_virtual_slug_decoded') && ! empty($item->slug)) {
             return redirect()->route('homepage.pengumuman-agenda.detail', $item->slug, 301);
         }
 

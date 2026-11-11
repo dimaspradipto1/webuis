@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Kurikulum extends Model
 {
+    use \App\Models\Concerns\HasVirtualSlug;
+
     protected $table = 'kurikulums';
 
     protected $fillable = [

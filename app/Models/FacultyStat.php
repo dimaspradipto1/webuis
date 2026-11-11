@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class FacultyStat extends Model
 {
+    use \App\Models\Concerns\HasVirtualSlug;
+
     protected $table = 'faculty_stats';
 
     protected $fillable = [

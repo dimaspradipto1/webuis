@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class SambutanDekan extends Model
 {
+    use \App\Models\Concerns\HasVirtualSlug;
+
     protected $table = 'sambutan_dekans';
 
     protected $fillable = [

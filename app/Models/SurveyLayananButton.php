@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class SurveyLayananButton extends Model
 {
+    use \App\Models\Concerns\HasVirtualSlug;
+
     use HasFactory;
 
     protected $table = 'survey_layanan_buttons';

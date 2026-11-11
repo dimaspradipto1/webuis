@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Profil extends Model
 {
+    use \App\Models\Concerns\HasVirtualSlug;
+
     protected $table = 'profils';
 
     protected $fillable = [

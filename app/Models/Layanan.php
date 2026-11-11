@@ -2,17 +2,18 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasVirtualSlug;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Str;
 
 class Layanan extends Model
 {
+    use HasVirtualSlug;
+
     protected $table = 'layanans';
 
     protected $fillable = [
         'icon',
         'judul',
-        'slug',
         'dasar_hukum',
         'link',
         'deskripsi',
@@ -24,15 +25,4 @@ class Layanan extends Model
     protected $casts = [
         'aktif' => 'boolean',
     ];
-
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::saving(function ($layanan) {
-            if (empty($layanan->slug) && ! empty($layanan->judul)) {
-                $layanan->slug = Str::slug($layanan->judul);
-            }
-        });
-    }
 }

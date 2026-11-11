@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class BahasaSetting extends Model
 {
+    use \App\Models\Concerns\HasVirtualSlug;
+
     use HasFactory;
 
     protected $table = 'bahasa_settings';

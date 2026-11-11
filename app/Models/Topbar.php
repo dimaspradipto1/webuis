@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Topbar extends Model
 {
+    use \App\Models\Concerns\HasVirtualSlug;
+
     protected $table = 'topbars';
 
     protected $fillable = [

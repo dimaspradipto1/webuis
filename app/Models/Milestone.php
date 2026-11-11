@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Milestone extends Model
 {
+    use \App\Models\Concerns\HasVirtualSlug;
+
     protected $table = 'milestones';
 
     protected $fillable = [

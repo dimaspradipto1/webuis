@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrganisasiMahasiswaSetting extends Model
 {
+    use \App\Models\Concerns\HasVirtualSlug;
+
     use HasFactory;
 
     protected $table = 'organisasi_mahasiswa_settings';

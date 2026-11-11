@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class TemplateDokumen extends Model
 {
+    use \App\Models\Concerns\HasVirtualSlug;
+
     use HasFactory;
 
     protected $table = 'template_dokumens';

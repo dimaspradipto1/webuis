@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class About extends Model
 {
+    use \App\Models\Concerns\HasVirtualSlug;
+
     protected $table = 'abouts';
 
     protected $fillable = [
