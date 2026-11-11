@@ -119,7 +119,7 @@
 
           @if(!empty($gallery->deskripsi))
             <div class="article-content" style="line-height: 1.85; font-size: 15.5px; color: #334155;">
-              {!! nl2br(e($gallery->deskripsi)) !!}
+              {!! nl2br(e(trim(html_entity_decode(strip_tags($gallery->deskripsi), ENT_QUOTES | ENT_HTML5, 'UTF-8')))) !!}
             </div>
           @else
             <p class="text-muted mb-0">

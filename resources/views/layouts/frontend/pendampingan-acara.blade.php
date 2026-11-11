@@ -375,11 +375,11 @@
             </div>
           @else
             <p class="event-desc-lead">
-              {!! nl2br(e($setting->paragraf_1 ?? 'Kami hadir untuk mendukung kesuksesan acara dan kegiatan Anda melalui layanan konsultasi yang profesional, terstruktur, dan sesuai dengan Standar Operasional Prosedur (SOP) Universitas Ibnu Sina.')) !!}
+              {!! nl2br(e(trim(html_entity_decode(strip_tags($setting->paragraf_1 ?? 'Kami hadir untuk mendukung kesuksesan acara dan kegiatan Anda melalui layanan konsultasi yang profesional, terstruktur, dan sesuai dengan Standar Operasional Prosedur (SOP) Universitas Ibnu Sina.'), ENT_QUOTES | ENT_HTML5, 'UTF-8')))) !!}
             </p>
 
             <p class="fw-bold text-dark mb-3" style="font-size: 15px;">
-              {!! nl2br(e($setting->paragraf_2 ?? 'Apakah Anda sedang merencanakan seminar, workshop, kegiatan sosial, atau event lainnya? Tim kami siap membantu dalam hal:')) !!}
+              {!! nl2br(e(trim(html_entity_decode(strip_tags($setting->paragraf_2 ?? 'Apakah Anda sedang merencanakan seminar, workshop, kegiatan sosial, atau event lainnya? Tim kami siap membantu dalam hal:'), ENT_QUOTES | ENT_HTML5, 'UTF-8')))) !!}
             </p>
 
             {{-- Grid Poin Lingkup Bantuan (Visual Cards) --}}

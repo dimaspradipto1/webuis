@@ -271,7 +271,7 @@
     <script>
         document.addEventListener('DOMContentLoaded', function () {
             if (typeof tinymce !== 'undefined') {
-                const selector = 'textarea.tinymce-editor, textarea.tinymce, textarea#content, textarea#deskripsi, textarea#sambutan_dekan, textarea#answer, textarea#jawaban, textarea#sejarah, textarea#visi, textarea#misi, textarea#deskripsi_profil_1, textarea#deskripsi_profil_2';
+                const selector = 'textarea.tinymce-editor, textarea.tinymce, textarea#content, textarea#sambutan_dekan, textarea#sejarah, textarea#deskripsi_profil_1, textarea#deskripsi_profil_2';
                 
                 document.querySelectorAll(selector).forEach(function (el) {
                     if (!tinymce.get(el.id || el)) {

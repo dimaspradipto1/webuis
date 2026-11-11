@@ -132,7 +132,7 @@
       <div class="divider-line-gold"></div>
 
       <p class="text-muted mx-auto mb-0" style="max-width: 860px; font-size: 15px; line-height: 1.75;">
-        {!! nl2br(e($setting->deskripsi_seksi ?? 'Kami menyediakan Templat untuk Desain, Ms. Power Point, Ms. Word dan berbagai format lainnya. Guna menyeragamkan tampilan desain di lingkungan Universitas Ibnu Sina. Berdasarkan Peraturan Rektor tentang STANDAR KOMUNIKASI MEREK UNIVERSITAS IBNU SINA')) !!}
+        {!! nl2br(e(trim(html_entity_decode(strip_tags($setting->deskripsi_seksi ?? 'Kami menyediakan Templat untuk Desain, Ms. Power Point, Ms. Word dan berbagai format lainnya. Guna menyeragamkan tampilan desain di lingkungan Universitas Ibnu Sina. Berdasarkan Peraturan Rektor tentang STANDAR KOMUNIKASI MEREK UNIVERSITAS IBNU SINA'), ENT_QUOTES | ENT_HTML5, 'UTF-8')))) !!}
       </p>
     </div>
 
