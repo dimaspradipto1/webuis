@@ -121,7 +121,13 @@ class FrontendController extends Controller
         $galleries = Gallery::where(function ($q) {
             $q->where('kategori', 'universitas')->orWhereNull('kategori');
         })->latest()->take(6)->get();
-        $prestasis = Prestasi::where('is_active', true)->orderBy('urutan')->latest('id')->take(6)->get();
+        $prestasis = News::where('status', 'published')
+            ->where('category', 'Prestasi Mahasiswa')
+            ->orderByDesc('published_at')
+            ->orderByDesc('updated_at')
+            ->orderByDesc('id')
+            ->take(6)
+            ->get();
         $organisasis = OrganisasiMahasiswa::where('is_active', true)->orderBy('urutan')->get();
         $organisasiSetting = OrganisasiMahasiswaSetting::first();
         $about = About::first();
@@ -782,6 +788,8 @@ class FrontendController extends Controller
                     $selectedCat = 'Berita Universitas';
                 } elseif (str_contains($categorySlug, 'humas')) {
                     $selectedCat = 'Berita Humas';
+                } elseif (str_contains($categorySlug, 'prestasi')) {
+                    $selectedCat = 'Prestasi Mahasiswa';
                 } else {
                     $selectedCat = str_replace('-', ' ', $categorySlug);
                 }
@@ -865,49 +873,47 @@ class FrontendController extends Controller
     public function prestasi(Request $request)
     {
         $search = $request->query('q');
-        $selectedTingkat = $request->query('tingkat');
-        $selectedProdi = $request->query('prodi');
 
-        $query = Prestasi::where('is_active', true);
+        $query = News::where('status', 'published')
+            ->where('category', 'Prestasi Mahasiswa');
 
         if (! empty($search)) {
             $query->where(function ($q) use ($search) {
-                $q->where('judul_prestasi', 'like', "%{$search}%")
-                    ->orWhere('nama_mahasiswa', 'like', "%{$search}%")
-                    ->orWhere('penyelenggara', 'like', "%{$search}%")
-                    ->orWhere('peringkat', 'like', "%{$search}%")
-                    ->orWhere('deskripsi', 'like', "%{$search}%");
+                $q->where('title', 'like', "%{$search}%")
+                    ->orWhere('description', 'like', "%{$search}%")
+                    ->orWhere('content', 'like', "%{$search}%");
             });
         }
 
-        if (! empty($selectedTingkat)) {
-            $query->where('tingkat', $selectedTingkat);
-        }
+        $prestasiList = $query
+            ->orderByDesc('published_at')
+            ->orderByDesc('updated_at')
+            ->orderByDesc('id')
+            ->paginate(9)
+            ->withQueryString();
 
-        if (! empty($selectedProdi)) {
-            $query->where('prodi', $selectedProdi);
-        }
-
-        $prestasiList = $query->orderBy('urutan')->latest('id')->paginate(9)->withQueryString();
-
-        $tingkatList = ['Internasional', 'Nasional', 'Provinsi / Wilayah', 'Universitas'];
-
-        return view('layouts.frontend.prestasi', compact('prestasiList', 'search', 'selectedTingkat', 'selectedProdi', 'tingkatList'));
+        return view('layouts.frontend.prestasi', compact('prestasiList', 'search'));
     }
 
     public function prestasiDetail($slug)
     {
-        $prestasi = Prestasi::where('is_active', true)
+        $prestasi = News::where('status', 'published')
             ->where(function ($q) use ($slug) {
                 $q->where('slug', $slug)
                     ->orWhere('id', $slug);
             })
             ->firstOrFail();
 
-        $otherPrestasis = Prestasi::where('is_active', true)
+        if (is_numeric($slug) && ! empty($prestasi->slug)) {
+            return redirect()->route('homepage.prestasi.detail', $prestasi->slug, 301);
+        }
+
+        $otherPrestasis = News::where('status', 'published')
+            ->where('category', 'Prestasi Mahasiswa')
             ->where('id', '!=', $prestasi->id)
-            ->orderBy('urutan')
-            ->latest('id')
+            ->orderByDesc('published_at')
+            ->orderByDesc('updated_at')
+            ->orderByDesc('id')
             ->take(5)
             ->get();
 

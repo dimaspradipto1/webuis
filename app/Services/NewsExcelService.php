@@ -146,7 +146,7 @@ class NewsExcelService
         $guideData = [
             ['No', 'Nama Kolom', 'Keterangan & Aturan Pengisian'],
             ['1', 'Judul Berita *', 'WAJIB diisi. Maksimal 250 karakter. Judul berita yang informatif dan menarik.'],
-            ['2', 'Kategori *', 'WAJIB diisi salah satu dari: "Berita Universitas", "Berita Humas", "Akademik & Kemahasiswaan", "Teknologi & Rekayasa", "Bisnis & Manajemen", "K3 & Lingkungan Industri", "Penelitian & Riset", "Pengabdian Masyarakat", "Kerjasama Industri", atau "Pengumuman & Agenda".'],
+            ['2', 'Kategori *', 'WAJIB diisi salah satu dari: "Berita Universitas", "Berita Humas", "Prestasi Mahasiswa", "Akademik & Kemahasiswaan", "Teknologi & Rekayasa", "Bisnis & Manajemen", "K3 & Lingkungan Industri", "Penelitian & Riset", "Pengabdian Masyarakat", "Kerjasama Industri", atau "Pengumuman & Agenda".'],
             ['3', 'Status *', 'WAJIB diisi. Pilihan: "published" (langsung tampil ke publik) atau "draft" (disimpan sebagai draf).'],
             ['4', 'Artikel Unggulan', 'Pilihan: "Ya" (ditampilkan di banner sorotan utama) atau "Tidak". Default: Tidak.'],
             ['5', 'Deskripsi Singkat *', 'WAJIB diisi ringkasan/kutipan berita (maks 1000 karakter). Jika kosong, sistem otomatis mengambil cuplikan dari Konten Berita.'],

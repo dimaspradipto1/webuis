@@ -99,6 +99,7 @@
                                     required>
                                 <option value="Berita Universitas"          {{ $cat == 'Berita Universitas' ? 'selected' : '' }}>Berita Universitas</option>
                                 <option value="Berita Humas"                {{ $cat == 'Berita Humas' ? 'selected' : '' }}>Berita Humas</option>
+                                <option value="Prestasi Mahasiswa"          {{ $cat == 'Prestasi Mahasiswa' ? 'selected' : '' }}>Prestasi Mahasiswa</option>
                                 <option value="Akademik & Kemahasiswaan"    {{ $cat == 'Akademik & Kemahasiswaan' ? 'selected' : '' }}>Akademik & Kemahasiswaan</option>
                                 <option value="Teknologi & Rekayasa"        {{ $cat == 'Teknologi & Rekayasa' ? 'selected' : '' }}>Teknologi & Rekayasa</option>
                                 <option value="Bisnis & Manajemen"          {{ $cat == 'Bisnis & Manajemen' ? 'selected' : '' }}>Bisnis & Manajemen</option>

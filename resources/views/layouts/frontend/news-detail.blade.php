@@ -190,11 +190,14 @@
               $allCategories = [
                 'Berita Universitas'      => 'bi-newspaper',
                 'Berita Humas'            => 'bi-megaphone-fill',
-                'Akademik & Mahasiswa'    => 'bi-mortarboard',
-                'K3 & Keselamatan Kerja'  => 'bi-shield-check',
-                'Kesehatan Lingkungan'    => 'bi-tree',
+                'Prestasi Mahasiswa'      => 'bi-trophy-fill',
+                'Akademik & Kemahasiswaan'=> 'bi-mortarboard',
+                'Teknologi & Rekayasa'    => 'bi-cpu',
+                'Bisnis & Manajemen'      => 'bi-briefcase',
+                'K3 & Lingkungan Industri'=> 'bi-shield-check',
                 'Penelitian & Riset'      => 'bi-journal-medical',
                 'Pengabdian Masyarakat'   => 'bi-people',
+                'Kerjasama Industri'      => 'bi-building',
                 'Pengumuman & Agenda'     => 'bi-megaphone',
               ];
               $counts = isset($categories) ? $categories->pluck('total', 'category')->toArray() : [];

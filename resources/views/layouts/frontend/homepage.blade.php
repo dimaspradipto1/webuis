@@ -746,64 +746,43 @@
       <div class="row g-4 mb-5">
         @foreach($prestasis as $index => $prestasi)
           @php
-            $tingkatBadge = match($prestasi->tingkat) {
-                'Internasional' => 'bg-danger text-white',
-                'Nasional'      => 'bg-success text-white',
-                'Provinsi / Wilayah' => 'bg-warning text-dark',
-                default         => 'bg-secondary text-white',
-            };
+            $prestasiTitle = $prestasi->title ?? $prestasi->judul_prestasi ?? 'Prestasi Mahasiswa';
+            $prestasiThumb = $prestasi->thumbnail ?? $prestasi->foto ?? null;
+            $prestasiDesc  = $prestasi->description ?? $prestasi->content ?? $prestasi->deskripsi ?? '';
+            $prestasiDate  = ($prestasi->published_at ?? $prestasi->created_at)?->format('d M Y');
           @endphp
           <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ ($index + 1) * 100 }}">
             <div class="prestasi-card">
               <div class="prestasi-img-wrap">
-                @if(!empty($prestasi->foto))
-                  <img src="{{ asset('storage/' . $prestasi->foto) }}" alt="{{ $prestasi->judul_prestasi }}" class="prestasi-img">
+                @if(!empty($prestasiThumb))
+                  <img src="{{ asset('storage/' . $prestasiThumb) }}" alt="{{ $prestasiTitle }}" class="prestasi-img">
                 @else
-                  <div class="d-flex align-items-center justify-content-center h-100 text-white flex-column gap-2" style="background: #046B26;">
-                    <i class="bi bi-trophy-fill" style="font-size: 44px; color: #FED802;"></i>
-                    <span class="small fw-semibold text-white-50">Universitas Ibnu Sina Achievement</span>
+                  <div class="d-flex align-items-center justify-content-center h-100 flex-column gap-2" style="background: #e2e8f0; color: #64748b;">
+                    <i class="bi bi-image" style="font-size: 44px;"></i>
                   </div>
                 @endif
-                <span class="prestasi-tingkat-badge badge {{ $tingkatBadge }}">
-                  <i class="bi bi-globe me-1"></i>{{ $prestasi->tingkat }}
+                <span class="prestasi-tingkat-badge badge bg-success text-white">
+                  <i class="bi bi-trophy-fill me-1 text-warning"></i>{{ $prestasi->category ?? 'Prestasi Mahasiswa' }}
                 </span>
-                @if(!empty($prestasi->peringkat))
-                  <span class="prestasi-rank-badge">
-                    <i class="bi bi-award-fill me-1"></i>{{ $prestasi->peringkat }}
-                  </span>
-                @endif
               </div>
 
               <div class="p-4 d-flex flex-column justify-content-between flex-grow-1">
                 <div>
-                  <h4 class="fw-bold mb-2 text-dark" style="font-size: 16.5px; line-height: 1.45;">
-                    <a href="{{ route('homepage.prestasi.detail', $prestasi->slug ?? $prestasi->id) }}" class="text-dark text-decoration-none">
-                      {{ $prestasi->judul_prestasi }}
-                    </a>
-                  </h4>
-
-                  <div class="d-flex align-items-center gap-2 mb-3 mt-3">
-                    <div class="rounded-circle d-flex align-items-center justify-content-center text-white flex-shrink-0" style="width: 32px; height: 32px; background: #046B26; font-size: 13px;">
-                      <i class="bi bi-person-fill"></i>
-                    </div>
-                    <div>
-                      <div class="fw-semibold text-dark small" style="font-size: 13px;">{{ $prestasi->nama_mahasiswa }}</div>
-                      @if($prestasi->prodi)
-                        <div class="text-muted" style="font-size: 11px;">{{ $prestasi->prodi }}</div>
-                      @endif
-                    </div>
-                  </div>
-
-                  @if(!empty($prestasi->penyelenggara) || !empty($prestasi->tahun))
-                    <div class="d-flex align-items-center justify-content-between text-muted small py-2 px-3 rounded-3 mb-3" style="background: #f8f9fa; font-size: 11.5px;">
-                      <span class="text-truncate me-2"><i class="bi bi-building me-1 text-warning"></i>{{ $prestasi->penyelenggara ?? 'Penyelenggara Nasional' }}</span>
-                      <span class="fw-bold text-dark flex-shrink-0">{{ $prestasi->tahun ?? '' }}</span>
+                  @if($prestasiDate)
+                    <div class="text-muted small mb-2" style="font-size: 12px;">
+                      <i class="bi bi-calendar3 me-1"></i>{{ $prestasiDate }}
                     </div>
                   @endif
 
-                  @if(!empty($prestasi->deskripsi))
-                    <div class="text-muted small" style="font-size: 12.5px; line-height: 1.6;">
-                      {!! Str::limit(strip_tags($prestasi->deskripsi), 110) !!}
+                  <h4 class="fw-bold mb-2 text-dark" style="font-size: 16.5px; line-height: 1.45;">
+                    <a href="{{ route('homepage.prestasi.detail', $prestasi->slug ?? $prestasi->id) }}" class="text-dark text-decoration-none">
+                      {{ $prestasiTitle }}
+                    </a>
+                  </h4>
+
+                  @if(!empty($prestasiDesc))
+                    <div class="text-muted small mt-2" style="font-size: 12.5px; line-height: 1.6;">
+                      {{ Str::limit(trim(preg_replace('/\s+/', ' ', html_entity_decode(strip_tags($prestasiDesc)))), 115) }}
                     </div>
                   @endif
                 </div>
