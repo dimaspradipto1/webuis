@@ -263,13 +263,29 @@
   }
 </style>
 
+@php
+  $featureLink = function ($card) {
+      $judul = strtolower(trim((string) ($card->judul ?? '')));
+
+      if ($judul !== '' && str_contains($judul, 'program studi')) {
+          return route('homepage.program-studi');
+      }
+
+      if (empty($card->id)) {
+          return '#';
+      }
+
+      return route('homepage.feature.detail', $card);
+  };
+@endphp
+
 <section class="uis-pillars-section" id="keunggulan-beranda">
   <div class="container">
     <div class="row g-4">
       @foreach($pillarCards as $card)
         <div class="col-12 col-sm-6 col-xl-3" data-aos="fade-up" data-aos-delay="{{ $loop->index * 70 }}">
-          @if(!empty($card->id))
-          <a class="uis-pillar-link" href="{{ route('homepage.feature.detail', $card) }}" aria-label="Lihat detail {{ $card->judul }}">
+          @if(!empty($card->id) || (!empty($card->judul) && str_contains(strtolower($card->judul), 'program studi')))
+          <a class="uis-pillar-link" href="{{ $featureLink($card) }}" aria-label="Lihat detail {{ $card->judul }}">
           @endif
           <div class="uis-pillar-card {{ $loop->first ? 'is-primary' : '' }}">
             <div>
@@ -286,7 +302,7 @@
               </span>
             </div>
           </div>
-          @if(!empty($card->id))
+          @if(!empty($card->id) || (!empty($card->judul) && str_contains(strtolower($card->judul), 'program studi')))
           </a>
           @endif
         </div>
