@@ -35,6 +35,7 @@ class FeatureController extends Controller
             'icon' => Feature::packIconAndBadge($request->icon, $request->badge),
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
+            'detail' => $request->detail,
             'urutan' => $request->urutan ?? 0,
         ]);
 
@@ -60,6 +61,7 @@ class FeatureController extends Controller
             'icon' => Feature::packIconAndBadge($request->icon, $request->badge),
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
+            'detail' => $request->detail,
             'urutan' => $request->urutan ?? 0,
         ]);
 

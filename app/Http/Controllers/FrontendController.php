@@ -189,6 +189,11 @@ class FrontendController extends Controller
         ));
     }
 
+    public function featureDetail(Feature $feature)
+    {
+        return view('layouts.frontend.feature-detail', compact('feature'));
+    }
+
     public function kurikulum(Request $request)
     {
         $prodis = Layanan::where('aktif', true)->orderBy('urutan')->get();

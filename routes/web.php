@@ -92,6 +92,7 @@ Route::controller(FrontendController::class)->group(function () {
     Route::get('/berita/{slug}', 'newsDetail')->name('homepage.news.detail');
     Route::get('/pengumuman-agenda', 'pengumumanAgenda')->name('homepage.pengumuman-agenda');
     Route::get('/pengumuman-agenda/{slug}', 'pengumumanAgendaDetail')->name('homepage.pengumuman-agenda.detail');
+    Route::get('/keunggulan/{feature}', 'featureDetail')->name('homepage.feature.detail');
     Route::get('/faq', 'faq')->name('homepage.faq');
     Route::get('/humas', 'humas')->name('homepage.humas');
     Route::get('/unduhan', 'unduhan')->name('homepage.unduhan');

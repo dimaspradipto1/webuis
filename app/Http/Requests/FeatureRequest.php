@@ -18,6 +18,7 @@ class FeatureRequest extends FormRequest
             'badge' => ['nullable', 'string', 'max:80'],
             'judul' => ['required', 'string', 'max:255'],
             'deskripsi' => ['required', 'string'],
+            'detail' => ['nullable', 'string', 'max:20000'],
             'urutan' => ['nullable', 'integer', 'min:0'],
         ];
     }

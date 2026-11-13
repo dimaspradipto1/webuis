@@ -14,6 +14,7 @@ class Feature extends Model
         'icon',
         'judul',
         'deskripsi',
+        'detail',
         'urutan',
     ];
 

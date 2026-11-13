@@ -137,6 +137,17 @@
     box-shadow: 0 6px 22px rgba(15, 23, 42, 0.03);
     transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   }
+  .uis-pillar-link {
+    display: block;
+    height: 100%;
+    color: inherit;
+    text-decoration: none;
+  }
+  .uis-pillar-link:focus-visible {
+    outline: 3px solid #facc15;
+    outline-offset: 4px;
+    border-radius: 22px;
+  }
   .uis-pillar-card::after {
     content: "";
     position: absolute;
@@ -257,6 +268,9 @@
     <div class="row g-4">
       @foreach($pillarCards as $card)
         <div class="col-12 col-sm-6 col-xl-3" data-aos="fade-up" data-aos-delay="{{ $loop->index * 70 }}">
+          @if(!empty($card->id))
+          <a class="uis-pillar-link" href="{{ route('homepage.feature.detail', $card) }}" aria-label="Lihat detail {{ $card->judul }}">
+          @endif
           <div class="uis-pillar-card {{ $loop->first ? 'is-primary' : '' }}">
             <div>
               <div class="uis-pillar-icon">
@@ -272,6 +286,9 @@
               </span>
             </div>
           </div>
+          @if(!empty($card->id))
+          </a>
+          @endif
         </div>
       @endforeach
     </div>

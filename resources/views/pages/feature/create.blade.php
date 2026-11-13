@@ -117,6 +117,20 @@
                         @enderror
                     </div>
 
+                    <div class="mb-3">
+                        <label for="detail" class="form-label fw-semibold">Konten Halaman Detail</label>
+                        <textarea id="detail"
+                                  name="detail"
+                                  class="form-control @error('detail') is-invalid @enderror"
+                                  rows="7"
+                                  maxlength="20000"
+                                  placeholder="Informasi lengkap yang akan ditampilkan saat kartu dibuka">{{ old('detail') }}</textarea>
+                        <div class="form-text">Opsional. Konten ini tampil di halaman khusus kartu dan mendukung teks biasa.</div>
+                        @error('detail')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
                     {{-- Urutan --}}
                     <div class="mb-4 col-sm-4">
                         <label for="urutan" class="form-label fw-semibold">
