@@ -37,6 +37,12 @@
     position: relative;
     z-index: 1;
   }
+  .kerjasama-hero .kerjasama-breadcrumb,
+  .kerjasama-hero .kerjasama-breadcrumb a,
+  .kerjasama-hero .kerjasama-breadcrumb span {
+    font-size: 12px;
+    line-height: 1.4;
+  }
   .kerjasama-eyebrow {
     display: inline-flex;
     align-items: center;
@@ -282,7 +288,7 @@
 
 <section class="kerjasama-hero">
   <div class="container">
-    <nav class="small mb-4" aria-label="Breadcrumb">
+    <nav class="kerjasama-breadcrumb mb-4" aria-label="Breadcrumb">
       <a href="{{ route('homepage') }}" class="text-white-50 text-decoration-none">Beranda</a>
       <span class="mx-2 text-white-50">/</span>
       <span class="text-white">Mitra & Kerjasama</span>
