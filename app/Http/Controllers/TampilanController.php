@@ -35,6 +35,10 @@ class TampilanController extends Controller
             'nav_accent' => self::HEX,
             'pmb_bg' => self::HEX,
             'pmb_text' => self::HEX,
+            'lang_visible' => ['required', 'boolean'],
+            'lang_bg' => self::HEX,
+            'lang_text' => self::HEX,
+            'lang_border' => self::HEX,
         ], [
             'judul.required' => 'Judul utama header wajib diisi.',
             'logo.mimes' => 'Logo harus berformat PNG, JPG, WEBP, atau SVG.',
@@ -44,6 +48,7 @@ class TampilanController extends Controller
 
         $values = collect($validated)->except('logo')->map(fn ($v) => is_string($v) ? trim($v) : $v)->all();
         $values['subjudul'] = $values['subjudul'] ?? '';
+        $values['lang_visible'] = $request->boolean('lang_visible');
 
         if ($request->hasFile('logo')) {
             $old = TampilanConfig::all()['header']['logo'] ?? null;
@@ -121,4 +126,3 @@ class TampilanController extends Controller
         return redirect()->route('tampilan.index', ['tab' => $group]);
     }
 }
-

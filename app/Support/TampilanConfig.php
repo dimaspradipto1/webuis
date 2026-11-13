@@ -44,33 +44,33 @@ class TampilanConfig
         return [
             'hijau-uis' => [
                 'label' => 'Hijau Khas UIS (Default)',
-                'header' => ['nav_bg' => '#046b26', 'nav_text' => '#ffffff', 'nav_accent' => '#fed802', 'pmb_bg' => '#ffffff', 'pmb_text' => '#046b26'],
+                'header' => ['nav_bg' => '#046b26', 'nav_text' => '#ffffff', 'nav_accent' => '#fed802', 'pmb_bg' => '#ffffff', 'pmb_text' => '#046b26', 'lang_visible' => true, 'lang_bg' => '#2e743b', 'lang_text' => '#ffffff', 'lang_border' => '#d6bd36'],
                 'footer' => ['footer_bg' => '#023814', 'footer_text' => '#e2efe6', 'footer_heading' => '#ffffff', 'footer_accent' => '#fed802'],
             ],
             'kuning-uis' => [
-                'label' => 'Kuning Khas UIS',
-                'header' => ['nav_bg' => '#fed802', 'nav_text' => '#111111', 'nav_accent' => '#046b26', 'pmb_bg' => '#046b26', 'pmb_text' => '#ffffff'],
-                'footer' => ['footer_bg' => '#111111', 'footer_text' => '#d4d4d4', 'footer_heading' => '#ffffff', 'footer_accent' => '#fed802'],
+                'label' => 'Kuning UIS Elegan',
+                'header' => ['nav_bg' => '#f6df68', 'nav_text' => '#174b2b', 'nav_accent' => '#14532d', 'pmb_bg' => '#14532d', 'pmb_text' => '#ffffff', 'lang_visible' => true, 'lang_bg' => '#fff3b0', 'lang_text' => '#174b2b', 'lang_border' => '#14532d'],
+                'footer' => ['footer_bg' => '#174b2b', 'footer_text' => '#e5eee7', 'footer_heading' => '#ffffff', 'footer_accent' => '#f6df68'],
             ],
             'hitam-elegan' => [
-                'label' => 'Hitam Elegan (Dark Modern)',
-                'header' => ['nav_bg' => '#0f172a', 'nav_text' => '#ffffff', 'nav_accent' => '#fbbf24', 'pmb_bg' => '#fbbf24', 'pmb_text' => '#0f172a'],
-                'footer' => ['footer_bg' => '#020617', 'footer_text' => '#cbd5e1', 'footer_heading' => '#ffffff', 'footer_accent' => '#fbbf24'],
+                'label' => 'Hijau Premium & Emas',
+                'header' => ['nav_bg' => '#174b2b', 'nav_text' => '#ffffff', 'nav_accent' => '#e7c65a', 'pmb_bg' => '#e7c65a', 'pmb_text' => '#174b2b', 'lang_visible' => true, 'lang_bg' => '#245b36', 'lang_text' => '#ffffff', 'lang_border' => '#e7c65a'],
+                'footer' => ['footer_bg' => '#103922', 'footer_text' => '#e2ece4', 'footer_heading' => '#ffffff', 'footer_accent' => '#e7c65a'],
             ],
             'putih-bersih' => [
-                'label' => 'Putih Bersih (Clean Light)',
-                'header' => ['nav_bg' => '#ffffff', 'nav_text' => '#0f172a', 'nav_accent' => '#046b26', 'pmb_bg' => '#046b26', 'pmb_text' => '#ffffff'],
-                'footer' => ['footer_bg' => '#f8fafc', 'footer_text' => '#475569', 'footer_heading' => '#0f172a', 'footer_accent' => '#046b26'],
+                'label' => 'Putih Bersih UIS',
+                'header' => ['nav_bg' => '#f7faf7', 'nav_text' => '#174b2b', 'nav_accent' => '#c7a928', 'pmb_bg' => '#174b2b', 'pmb_text' => '#ffffff', 'lang_visible' => true, 'lang_bg' => '#edf4ee', 'lang_text' => '#174b2b', 'lang_border' => '#c7a928'],
+                'footer' => ['footer_bg' => '#edf4ee', 'footer_text' => '#365342', 'footer_heading' => '#174b2b', 'footer_accent' => '#b89b22'],
             ],
             'biru-teknologi' => [
-                'label' => 'Biru Teknologi (Tech Slate)',
-                'header' => ['nav_bg' => '#1e3a8a', 'nav_text' => '#ffffff', 'nav_accent' => '#facc15', 'pmb_bg' => '#ffffff', 'pmb_text' => '#1e3a8a'],
-                'footer' => ['footer_bg' => '#172554', 'footer_text' => '#cbd5e1', 'footer_heading' => '#ffffff', 'footer_accent' => '#facc15'],
+                'label' => 'Hijau Tua & Kuning Lembut',
+                'header' => ['nav_bg' => '#123f31', 'nav_text' => '#ffffff', 'nav_accent' => '#e8d36b', 'pmb_bg' => '#ffffff', 'pmb_text' => '#123f31', 'lang_visible' => true, 'lang_bg' => '#205443', 'lang_text' => '#ffffff', 'lang_border' => '#e8d36b'],
+                'footer' => ['footer_bg' => '#0d3025', 'footer_text' => '#dce9e2', 'footer_heading' => '#ffffff', 'footer_accent' => '#e8d36b'],
             ],
             'hijau-zamrud' => [
-                'label' => 'Hijau Zamrud (Emerald)',
-                'header' => ['nav_bg' => '#065f46', 'nav_text' => '#ffffff', 'nav_accent' => '#6ee7b7', 'pmb_bg' => '#ffffff', 'pmb_text' => '#065f46'],
-                'footer' => ['footer_bg' => '#022c22', 'footer_text' => '#d1fae5', 'footer_heading' => '#ffffff', 'footer_accent' => '#6ee7b7'],
+                'label' => 'Zamrud & Kuning UIS',
+                'header' => ['nav_bg' => '#08634d', 'nav_text' => '#ffffff', 'nav_accent' => '#f2d45c', 'pmb_bg' => '#ffffff', 'pmb_text' => '#08634d', 'lang_visible' => true, 'lang_bg' => '#18745d', 'lang_text' => '#ffffff', 'lang_border' => '#f2d45c'],
+                'footer' => ['footer_bg' => '#064536', 'footer_text' => '#e0eee8', 'footer_heading' => '#ffffff', 'footer_accent' => '#f2d45c'],
             ],
         ];
     }
@@ -89,6 +89,7 @@ class TampilanConfig
                 'logo' => null,
                 'judul' => 'UNIVERSITAS IBNU SINA',
                 'subjudul' => '',
+                'lang_visible' => true,
             ], $preset['header']),
             'footer' => array_merge([
                 'deskripsi' => 'Universitas Ibnu Sina (UIS) Batam — Kampusnya Profesional Muda. Berkomitmen menyelenggarakan pendidikan tinggi unggul, bermartabat, bereputasi nasional dan internasional serta berjiwa entrepreneur berbasis Imtaq.',
@@ -198,4 +199,3 @@ class TampilanConfig
         return (0.299 * $r + 0.587 * $g + 0.114 * $b) > 160;
     }
 }
-

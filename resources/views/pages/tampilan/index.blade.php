@@ -45,6 +45,7 @@
   .pv-menu { display: flex; gap: 4px; margin: 0 auto; flex-wrap: wrap; justify-content: center; }
   .pv-menu span { color: var(--pv-nav-text); font-size: 12px; font-weight: 700; padding: 6px 10px; border-radius: 7px; }
   .pv-menu span.active { color: var(--pv-nav-active); background: var(--pv-nav-accent-soft); }
+  .pv-lang { background: var(--pv-lang-bg); color: var(--pv-lang-text); border: 1px solid var(--pv-lang-border); border-radius: 999px; padding: 6px 10px; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; font-size: 10px; font-weight: 700; }
   .pv-pmb { background: var(--pv-pmb-bg); color: var(--pv-pmb-text); font-size: 12px; font-weight: 800; padding: 7px 14px; border-radius: 8px; white-space: nowrap; }
   .pv-login { color: var(--pv-nav-text); border: 1px solid var(--pv-nav-text-soft); font-size: 12px; font-weight: 700; padding: 6px 12px; border-radius: 8px; white-space: nowrap; }
 
@@ -142,6 +143,7 @@
                 <div class="pv-menu">
                     <span class="active">Beranda</span><span>Profil <i class="bi bi-chevron-down" style="font-size:9px"></i></span><span>Fakultas <i class="bi bi-chevron-down" style="font-size:9px"></i></span><span>Kemahasiswaan</span><span>Informasi</span><span>Humas</span><span>Kontak</span>
                 </div>
+                <span class="pv-lang" id="pvLang"><i class="bi bi-translate"></i> Bahasa Indonesia <i class="bi bi-chevron-down"></i></span>
                 <span class="pv-pmb"><i class="bi bi-pencil-square me-1"></i>PMB</span>
                 <span class="pv-login"><i class="bi bi-box-arrow-in-right me-1"></i>Login</span>
             </div>
@@ -197,7 +199,7 @@
                             <div class="d-flex flex-wrap gap-2">
                                 @foreach($presets as $key => $preset)
                                     <button type="button" class="tp-preset" data-preset="{{ $key }}" data-group="header">
-                                        <span class="sw" style="background: {{ $preset['header']['nav_bg'] }}"></span>{{ $preset['label'] }}
+                                        <span class="sw" style="background: linear-gradient(135deg, {{ $preset['header']['nav_bg'] }} 50%, {{ $preset['header']['nav_accent'] }} 50%)"></span>{{ $preset['label'] }}
                                     </button>
                                 @endforeach
                             </div>
@@ -213,6 +215,33 @@
                                 @foreach($headerColors as $field => [$label, $hint])
                                     <div class="col-md-6">
                                         <label class="form-label fw-semibold small mb-1">{{ $label }}</label>
+                                        <div class="tp-color">
+                                            <input type="color" value="{{ old($field, $h->$field) }}" data-color-for="{{ $field }}">
+                                            <input type="text" name="{{ $field }}" id="{{ $field }}" class="form-control form-control-sm" value="{{ old($field, $h->$field) }}" maxlength="7" data-color-text>
+                                        </div>
+                                        <div class="form-text" style="font-size:11px">{{ $hint }}</div>
+                                    </div>
+                                @endforeach
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card tp-card mt-4">
+                        <div class="card-body pt-4">
+                            <h5 class="card-title"><i class="bi bi-translate text-success me-2"></i>Tombol Pemilih Bahasa</h5>
+                            <div class="tp-sub mb-3">Atur tampilan tombol bahasa pada navbar website.</div>
+                            <div class="form-check form-switch mb-3">
+                                <input type="hidden" name="lang_visible" value="0">
+                                <input class="form-check-input" type="checkbox" role="switch" id="lang_visible" name="lang_visible" value="1" {{ old('lang_visible', $h->lang_visible ?? true) ? 'checked' : '' }}>
+                                <label class="form-check-label fw-semibold small" for="lang_visible">Tampilkan tombol pemilih bahasa</label>
+                            </div>
+                            <div class="row g-3">
+                                @foreach([
+                                    'lang_bg' => ['Warna Latar Tombol', 'Warna dasar tombol bahasa'],
+                                    'lang_text' => ['Warna Teks Tombol', 'Warna nama bahasa dan ikon'],
+                                    'lang_border' => ['Warna Garis & Hover', 'Warna bingkai dan efek hover'],
+                                ] as $field => [$label, $hint])
+                                    <div class="col-md-6">
+                                        <label class="form-label fw-semibold small mb-1" for="{{ $field }}">{{ $label }}</label>
                                         <div class="tp-color">
                                             <input type="color" value="{{ old($field, $h->$field) }}" data-color-for="{{ $field }}">
                                             <input type="text" name="{{ $field }}" id="{{ $field }}" class="form-control form-control-sm" value="{{ old($field, $h->$field) }}" maxlength="7" data-color-text>
@@ -284,7 +313,7 @@
                             <div class="d-flex flex-wrap gap-2">
                                 @foreach($presets as $key => $preset)
                                     <button type="button" class="tp-preset" data-preset="{{ $key }}" data-group="footer">
-                                        <span class="sw" style="background: {{ $preset['footer']['footer_bg'] }}"></span>{{ $preset['label'] }}
+                                        <span class="sw" style="background: linear-gradient(135deg, {{ $preset['footer']['footer_bg'] }} 50%, {{ $preset['footer']['footer_accent'] }} 50%)"></span>{{ $preset['label'] }}
                                     </button>
                                 @endforeach
                             </div>
@@ -450,6 +479,12 @@
             hp.style.setProperty('--pv-nav-active', isLight(navBg) ? navText : accent);
             hp.style.setProperty('--pv-pmb-bg', val('pmb_bg') || '#ffffff');
             hp.style.setProperty('--pv-pmb-text', val('pmb_text') || '#046b26');
+            hp.style.setProperty('--pv-lang-bg', val('lang_bg') || '#2e743b');
+            hp.style.setProperty('--pv-lang-text', val('lang_text') || '#ffffff');
+            hp.style.setProperty('--pv-lang-border', val('lang_border') || '#d6bd36');
+            const langToggle = document.getElementById('lang_visible');
+            const langPreview = document.getElementById('pvLang');
+            if (langPreview && langToggle) langPreview.hidden = !langToggle.checked;
         }
         const fp = document.getElementById('pvFooter');
         const fBg = val('footer_bg'), fText = val('footer_text'), fHead = val('footer_heading'), fAcc = val('footer_accent');
@@ -487,10 +522,20 @@
         btn.addEventListener('click', () => {
             const p = presets[btn.dataset.preset];
             if (!p) return;
-            Object.entries(p[btn.dataset.group]).forEach(([field, hex]) => setColor(field, hex));
+            Object.entries(p[btn.dataset.group]).forEach(([field, value]) => {
+                if (field === 'lang_visible') {
+                    const toggle = document.getElementById('lang_visible');
+                    if (toggle) toggle.checked = Boolean(value);
+                    return;
+                }
+                setColor(field, value);
+            });
             renderPreview();
         });
     });
+
+    const langToggle = document.getElementById('lang_visible');
+    if (langToggle) langToggle.addEventListener('change', renderPreview);
 
     // Teks brand & footer
     const bindText = (inputId, targetId, hideWhenEmpty) => {
@@ -575,4 +620,3 @@
 })();
 </script>
 @endpush
-

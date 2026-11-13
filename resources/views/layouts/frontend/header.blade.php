@@ -155,7 +155,7 @@
         </li>
 
         <!-- Pilih Bahasa Dropdown (Di Samping Menu Kontak) -->
-        @if(isset($bahasaList) && $bahasaList->count() > 0)
+        @if(($tampilan->header->lang_visible ?? true) && isset($bahasaList) && $bahasaList->count() > 0)
         <li class="nav-item dropdown uis-lang-nav-item">
           <a class="nav-link nav-link-custom dropdown-toggle uis-lang-toggle" 
              href="#" 

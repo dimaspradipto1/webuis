@@ -6,6 +6,9 @@
   $navAccent = $th->nav_accent ?? '#fed802';
   $pmbBg = $th->pmb_bg ?? '#ffffff';
   $pmbText = $th->pmb_text ?? '#046b26';
+  $langBg = $th->lang_bg ?? '#2e743b';
+  $langText = $th->lang_text ?? '#ffffff';
+  $langBorder = $th->lang_border ?? '#d6bd36';
   $fBg = $tf->footer_bg ?? '#023814';
   $fText = $tf->footer_text ?? '#e2efe6';
   $fHead = $tf->footer_heading ?? '#ffffff';
@@ -24,12 +27,12 @@
     .navbar-main .nav-link-custom:hover,
     .navbar-main .nav-link-custom.active,
     .navbar-main .show > .nav-link-custom { color: {{ $navIsLight ? $navText : $navAccent }} !important; background: {{ $navAccent }}2e !important; }
-    .navbar-main .uis-lang-toggle { color: {{ $navText }} !important; border-color: {{ $navAccent }}66 !important; background: {{ $navText }}14 !important; }
-    .navbar-main .uis-lang-toggle:hover,
-    .navbar-main .show > .uis-lang-toggle { background: {{ $navAccent }} !important; border-color: {{ $navAccent }} !important; color: {{ $navBg }} !important; }
     .navbar-main .btn-portal-nav { color: {{ $navText }} !important; border-color: {{ $navText }}59 !important; background: {{ $navText }}1f !important; }
     .navbar-main .btn-portal-nav:hover { color: {{ $navAccent }} !important; border-color: {{ $navAccent }} !important; }
   }
+  .navbar-main .uis-lang-toggle { color: {{ $langText }} !important; border: 1px solid {{ $langBorder }} !important; background: {{ $langBg }} !important; border-radius: 999px; padding: 6px 12px !important; transition: background-color .2s ease, color .2s ease, border-color .2s ease; }
+  .navbar-main .uis-lang-toggle:hover,
+  .navbar-main .show > .uis-lang-toggle { background: {{ $langBorder }} !important; border-color: {{ $langBorder }} !important; color: {{ $navBg }} !important; }
   .navbar-main .btn-pmb-nav,
   .navbar-main .btn-pmb-nav i { background: {{ $pmbBg }} !important; color: {{ $pmbText }} !important; border-color: {{ $pmbBg }} !important; }
   .navbar-main .btn-pmb-nav:hover,
@@ -53,4 +56,3 @@
   .footer-main .footer-social a:hover { background: {{ $fAccent }} !important; border-color: {{ $fAccent }} !important; color: {{ $fBg }} !important; }
   .footer-main .footer-divider { background: {{ $fText }}2e !important; }
 </style>
-
