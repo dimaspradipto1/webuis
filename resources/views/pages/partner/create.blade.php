@@ -48,6 +48,9 @@
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
+                    <div class="alert alert-light border small">
+                        Setelah mitra disimpan, tambahkan perjanjian MOU, MOA, atau IA melalui tombol <strong>Dokumen</strong> pada daftar mitra.
+                    </div>
 
                     <div class="mb-3">
                         <label for="logo" class="form-label fw-semibold">

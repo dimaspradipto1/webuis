@@ -54,4 +54,20 @@ class FeatureDetailTest extends TestCase
             ->assertSee('Program Beasiswa')
             ->assertSee('Detail program beasiswa.');
     }
+
+    public function test_kerjasama_feature_card_links_to_the_partnership_page(): void
+    {
+        FacultyStat::create(['is_active' => true]);
+        Feature::create([
+            'icon' => Feature::packIconAndBadge('bi-people', 'MOU AKTIF'),
+            'judul' => 'Kerjasama',
+            'deskripsi' => 'Mitra industri dan institusi nasional & internasional',
+            'detail' => 'Informasi mitra dan program kerjasama.',
+            'urutan' => 2,
+        ]);
+
+        $this->get(route('homepage'))
+            ->assertOk()
+            ->assertSee('href="'.route('homepage.kerjasama').'" aria-label="Lihat detail Kerjasama"', false);
+    }
 }

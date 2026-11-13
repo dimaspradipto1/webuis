@@ -38,7 +38,12 @@ class PartnerDataTable extends DataTable
                     : '<span class="badge bg-danger"><i class="bi bi-x-circle me-1"></i>Nonaktif</span>';
             })
             ->addColumn('action', function ($partner) {
-                $btn = '<div class="d-flex justify-content-center align-items-center" style="gap:5px">';
+                $btn = '<div class="d-flex justify-content-center align-items-center flex-wrap" style="gap:5px">';
+                $btn .= '<a href="'.route('partner.agreements.index', $partner->id).'"
+                            class="btn btn-sm btn-outline-success"
+                            title="Kelola dokumen MOU, MOA, dan IA">
+                            <i class="bi bi-file-earmark-text me-1"></i>Dokumen
+                         </a>';
                 $btn .= '<a href="'.route('partner.edit', $partner->id).'"
                             class="btn btn-sm btn-warning text-white"
                             style="width:30px;height:30px;display:flex;align-items:center;justify-content:center"
@@ -99,7 +104,7 @@ class PartnerDataTable extends DataTable
             Column::make('nama')->title('Nama Partner'),
             Column::make('urutan')->title('Urutan')->width('8%')->addClass('text-center'),
             Column::make('aktif')->title('Status')->width('10%')->addClass('text-center'),
-            Column::computed('action')->title('Aksi')->exportable(false)->printable(false)->width('10%')->addClass('text-center'),
+            Column::computed('action')->title('Aksi')->exportable(false)->printable(false)->width('20%')->addClass('text-center'),
         ];
     }
 

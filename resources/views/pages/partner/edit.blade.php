@@ -2,7 +2,12 @@
 
 @section('content')
 <div class="pagetitle">
-    <h1>Edit Partner</h1>
+    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
+        <h1>Edit Partner</h1>
+        <a href="{{ route('partner.agreements.index', $partner) }}" class="btn btn-outline-success btn-sm">
+            <i class="bi bi-file-earmark-check me-1"></i>Kelola MOU / MOA / IA
+        </a>
+    </div>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>

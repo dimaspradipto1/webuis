@@ -66,11 +66,16 @@ class PartnerController extends Controller
 
     public function destroy(Partner $partner): RedirectResponse
     {
-        if ($partner->logo && Storage::disk('public')->exists($partner->logo)) {
-            Storage::disk('public')->delete($partner->logo);
-        }
+        $logoPath = $partner->logo;
+        $agreementPaths = $partner->agreements()->pluck('file_path')->filter()->all();
 
         $partner->delete();
+
+        foreach (array_filter(array_merge([$logoPath], $agreementPaths)) as $path) {
+            if (Storage::disk('public')->exists($path)) {
+                Storage::disk('public')->delete($path);
+            }
+        }
 
         alert()->success('Berhasil!', 'Partner berhasil dihapus.');
 

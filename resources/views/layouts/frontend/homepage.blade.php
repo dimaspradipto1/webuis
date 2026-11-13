@@ -264,6 +264,10 @@
           return route('homepage.program-studi');
       }
 
+      if ($judul !== '' && (str_contains($judul, 'kerjasama') || str_contains($judul, 'mitra'))) {
+          return route('homepage.kerjasama');
+      }
+
       if (empty($card->id)) {
           return '#';
       }
@@ -276,8 +280,15 @@
   <div class="container">
     <div class="row g-4">
       @foreach($pillarCards as $card)
+        @php
+          $cardTitle = strtolower(trim((string) ($card->judul ?? '')));
+          $hasCustomLink = str_contains($cardTitle, 'program studi')
+              || str_contains($cardTitle, 'kerjasama')
+              || str_contains($cardTitle, 'mitra');
+          $isCardLinked = !empty($card->id) || $hasCustomLink;
+        @endphp
         <div class="col-12 col-sm-6 col-xl-4" data-aos="fade-up" data-aos-delay="{{ $loop->index * 70 }}">
-          @if(!empty($card->id) || (!empty($card->judul) && str_contains(strtolower($card->judul), 'program studi')))
+          @if($isCardLinked)
           <a class="uis-pillar-link" href="{{ $featureLink($card) }}" aria-label="Lihat detail {{ $card->judul }}">
           @endif
           <div class="uis-pillar-card {{ $loop->first ? 'is-primary' : '' }}">
@@ -295,7 +306,7 @@
               </span>
             </div>
           </div>
-          @if(!empty($card->id) || (!empty($card->judul) && str_contains(strtolower($card->judul), 'program studi')))
+          @if($isCardLinked)
           </a>
           @endif
         </div>
@@ -1896,6 +1907,9 @@
       <p class="section-desc mx-auto">
         Universitas Ibnu Sina bermitra dengan berbagai sektor industri terkemuka dalam penempatan magang, riset, dan rekrutmen lulusan.
       </p>
+      <a href="{{ route('homepage.kerjasama') }}" class="btn btn-outline-success rounded-pill px-4 fw-semibold mt-3">
+        Jelajahi Mitra & Dokumen Kerjasama <i class="bi bi-arrow-right ms-1"></i>
+      </a>
     </div>
   </div>
 

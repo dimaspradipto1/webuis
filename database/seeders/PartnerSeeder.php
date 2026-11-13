@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Partner;
+use App\Models\PartnerAgreement;
 use Illuminate\Database\Seeder;
 
 class PartnerSeeder extends Seeder
@@ -12,7 +13,8 @@ class PartnerSeeder extends Seeder
      */
     public function run(): void
     {
-        Partner::truncate();
+        PartnerAgreement::query()->delete();
+        Partner::query()->delete();
 
         for ($index = 1; $index <= 10; $index++) {
             Partner::create([

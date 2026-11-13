@@ -27,6 +27,7 @@ use App\Models\NilaiPerusahaan;
 use App\Models\OrganisasiMahasiswa;
 use App\Models\OrganisasiMahasiswaSetting;
 use App\Models\Partner;
+use App\Models\PartnerAgreement;
 use App\Models\PendampinganAcaraSetting;
 use App\Models\PengumumanAgenda;
 use App\Models\PermintaanRilisSetting;
@@ -65,7 +66,10 @@ class FrontendController extends Controller
         $triDharmas = TriDharma::where('is_active', true)->orderBy('urutan')->get();
         $tenagaPendidiks = TenagaPendidik::with('layanan')->where('is_active', true)->orderBy('urutan')->get();
         $layanans = Layanan::where('aktif', true)->orderBy('urutan')->get();
-        $partners = Partner::where('aktif', true)->orderBy('urutan')->get();
+        $partners = Partner::where('aktif', true)
+            ->where('nama', '!=', '#')
+            ->orderBy('urutan')
+            ->get();
         $visiMisis = VisiMisi::orderBy('urutan')->get()->groupBy('tipe');
         $nilaiPerusahaans = NilaiPerusahaan::orderBy('urutan')->get();
         $testimonials = Testimonial::where('aktif', true)->orderByDesc('id')->get();
@@ -192,6 +196,33 @@ class FrontendController extends Controller
     public function featureDetail(Feature $feature)
     {
         return view('layouts.frontend.feature-detail', compact('feature'));
+    }
+
+    public function kerjasama()
+    {
+        $partners = Partner::where('aktif', true)
+            ->where('nama', '!=', '#')
+            ->withCount(['agreements' => fn ($query) => $query->where('aktif', true)])
+            ->orderBy('urutan')
+            ->get();
+
+        $agreements = PartnerAgreement::with('partner')
+            ->where('aktif', true)
+            ->whereHas('partner', fn ($query) => $query->where('aktif', true)->where('nama', '!=', '#'))
+            ->orderBy('urutan')
+            ->orderByDesc('tanggal_mulai')
+            ->get();
+
+        $agreementsByType = $agreements->groupBy('jenis');
+        $agreementCounts = $agreements->countBy('jenis');
+        $agreementTypes = PartnerAgreement::TYPES;
+
+        return view('layouts.frontend.kerjasama', compact(
+            'partners',
+            'agreementsByType',
+            'agreementCounts',
+            'agreementTypes'
+        ));
     }
 
     public function kurikulum(Request $request)

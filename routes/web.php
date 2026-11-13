@@ -26,6 +26,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\NilaiPerusahaanController;
 use App\Http\Controllers\OrganisasiMahasiswaController;
 use App\Http\Controllers\PartnerController;
+use App\Http\Controllers\PartnerAgreementController;
 use App\Http\Controllers\PengumumanAgendaController;
 use App\Http\Controllers\PmbSettingController;
 use App\Http\Controllers\PrestasiController;
@@ -70,6 +71,7 @@ Route::controller(FrontendController::class)->group(function () {
     Route::get('/sistem-akademik', 'sistemAkademik')->name('homepage.sistem-akademik');
     Route::get('/program-studi', 'programStudi')->name('homepage.program-studi');
     Route::get('/program-studi/{slug}', 'programStudiDetail')->name('homepage.program-studi.detail');
+    Route::get('/kerjasama', 'kerjasama')->name('homepage.kerjasama');
     Route::get('/layanan', 'programStudi')->name('homepage.layanan');
     Route::get('/layanan/{slug}', 'programStudiDetail')->name('homepage.layanan.detail');
     Route::get('/fasilitas', 'fasilitas')->name('homepage.fasilitas');
@@ -236,6 +238,12 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::delete('struktur-organisasi/manajemen/{manajemen}', [StrukturOrganisasiController::class, 'destroyManajemen'])->name('struktur-organisasi.manajemen.destroy');
     Route::resource('struktur-organisasi', StrukturOrganisasiController::class);
     Route::resource('partner', PartnerController::class);
+    Route::get('partner/{partner}/agreements', [PartnerAgreementController::class, 'index'])->name('partner.agreements.index');
+    Route::get('partner/{partner}/agreements/create', [PartnerAgreementController::class, 'create'])->name('partner.agreements.create');
+    Route::post('partner/{partner}/agreements', [PartnerAgreementController::class, 'store'])->name('partner.agreements.store');
+    Route::get('partner/{partner}/agreements/{agreement}/edit', [PartnerAgreementController::class, 'edit'])->name('partner.agreements.edit');
+    Route::put('partner/{partner}/agreements/{agreement}', [PartnerAgreementController::class, 'update'])->name('partner.agreements.update');
+    Route::delete('partner/{partner}/agreements/{agreement}', [PartnerAgreementController::class, 'destroy'])->name('partner.agreements.destroy');
     Route::resource('visimisi', VisiMisiController::class);
     Route::resource('nilaiperusahaan', NilaiPerusahaanController::class);
     Route::resource('faculty-stat', FacultyStatController::class);
