@@ -625,22 +625,22 @@
 </style>
 
 @php
-  $heroBgUrl = $heroHumas?->background_image_url;
+  $heroBgUrl = $heroHumas?->background_image_url ?: asset('frontend/img/gedung-uis.jpg');
   $heroJudul = $heroHumas?->judul ?: 'Selamat Datang';
-  $heroSubjudul = $heroHumas?->subjudul ?: 'di Biro Hubungan Masyarakat dan Protokoler Universitas Islam Riau';
+  $heroSubjudul = $heroHumas?->subjudul ?: 'di Biro Hubungan Masyarakat dan Protokoler Universitas Ibnu Sina';
   $heroBadge = $heroHumas?->badge_text ?: 'Layanan';
-  $pillText1 = $heroHumas?->pill_text_1 ?: 'Twibbon & Logo PKKMB UIR 2026';
+  $pillText1 = $heroHumas?->pill_text_1 ?: 'Informasi Khusus PMB TA 2026/2027';
   $pillUrl1 = $heroHumas?->pill_url_1 ?: route('homepage.unduhan', ['kategori' => 'image']);
   $pillText2 = $heroHumas?->pill_text_2 ?: 'Panduan Penggunaan Logo & Merek';
   $pillUrl2 = $heroHumas?->pill_url_2 ?: route('homepage.unduhan', ['kategori' => 'template']);
-  $pillText3 = $heroHumas?->pill_text_3 ?: 'Logo UIR';
+  $pillText3 = $heroHumas?->pill_text_3 ?: 'Logo UIS';
   $pillUrl3 = $heroHumas?->pill_url_3 ?: route('homepage.unduhan', ['kategori' => 'image']);
 @endphp
 
 <!-- ══════════════════════════════════════════════════════
-     1. HERO BANNER HUMAS UIR
+     1. HERO BANNER HUMAS UIS
 ══════════════════════════════════════════════════════ -->
-<section class="humas-hero-section text-center" style="@if(!empty($heroBgUrl)) background: linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.20) 50%, rgba(0, 0, 0, 0.55) 100%), url('{{ $heroBgUrl }}') center/cover no-repeat; @else background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%); @endif">
+<section class="humas-hero-section text-center" style="background: linear-gradient(180deg, rgba(0, 0, 0, 0.45) 0%, rgba(0, 0, 0, 0.20) 50%, rgba(0, 0, 0, 0.55) 100%), url('{{ $heroBgUrl }}') center/cover no-repeat;">
   <div class="container position-relative">
     <div data-aos="fade-down" data-aos-duration="700">
       <h1 class="humas-hero-title">{{ $heroJudul }}</h1>

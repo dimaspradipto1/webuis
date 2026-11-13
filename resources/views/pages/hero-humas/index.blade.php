@@ -82,7 +82,7 @@
                                         </div>
                                     </div>
 
-                                    @if($hero->background_image)
+                                    @if($hero->background_image && $hero->background_image !== 'frontend/img/gedung-uis.jpg')
                                         <div class="form-check mt-2 text-start">
                                             <input class="form-check-input" type="checkbox" name="hapus_background" value="1" id="hapus_background">
                                             <label class="form-check-label text-danger small fw-semibold" for="hapus_background">

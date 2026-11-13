@@ -14,25 +14,10 @@ class PartnerSeeder extends Seeder
     {
         Partner::truncate();
 
-        $partners = [
-            'RSUD Umum Daerah' => null,
-            'RSUP Dr. Cipto Mangunkusumo' => null,
-            'RS Siloam Hospitals' => null,
-            'RS Awal Bros' => null,
-            'RS Hermina Group' => null,
-            'Kimia Farma Apotek' => null,
-            'Kalbe Farma' => null,
-            'Dinas Kesehatan Provinsi' => null,
-            'Palang Merah Indonesia' => null,
-            'Puskesmas Pembina' => null,
-        ];
-
-        $index = 0;
-        foreach ($partners as $nama => $logo) {
-            $index++;
+        for ($index = 1; $index <= 10; $index++) {
             Partner::create([
-                'nama' => $nama,
-                'logo' => $logo,
+                'nama' => '#',
+                'logo' => null,
                 'urutan' => $index,
                 'aktif' => true,
             ]);

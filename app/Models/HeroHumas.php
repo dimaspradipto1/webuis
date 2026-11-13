@@ -32,9 +32,9 @@ class HeroHumas extends Model
     ];
 
     /**
-     * Get background image URL
+     * Get background image URL (default: frontend/img/gedung-uis.jpg)
      */
-    public function getBackgroundImageUrlAttribute(): ?string
+    public function getBackgroundImageUrlAttribute(): string
     {
         if ($this->background_image) {
             if (str_starts_with($this->background_image, 'http://') || str_starts_with($this->background_image, 'https://')) {
@@ -43,10 +43,11 @@ class HeroHumas extends Model
             if (str_starts_with($this->background_image, 'assets/') || str_starts_with($this->background_image, 'frontend/')) {
                 return asset($this->background_image);
             }
-
-            return asset('storage/'.$this->background_image);
+            if (file_exists(public_path('storage/'.$this->background_image))) {
+                return asset('storage/'.$this->background_image);
+            }
         }
 
-        return null;
+        return asset('frontend/img/gedung-uis.jpg');
     }
 }
