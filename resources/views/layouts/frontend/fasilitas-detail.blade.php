@@ -110,10 +110,15 @@
     color: #046B26;
   }
   .galeri-thumb-card {
+    display: block;
+    width: 100%;
     border-radius: 14px;
     overflow: hidden;
     height: 190px;
     border: 1px solid #e2e8f0;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
   }
   .galeri-thumb-card img {
     width: 100%;
@@ -264,13 +269,31 @@
             <div class="row g-3">
               @foreach($sarana->galeri as $fotoGaleri)
                 <div class="col-sm-6 col-md-4">
-                  <a href="{{ asset('storage/' . $fotoGaleri) }}" target="_blank" class="d-block galeri-thumb-card">
+                  <button type="button"
+                          class="galeri-thumb-card"
+                          data-sarana-photo="{{ asset('storage/' . $fotoGaleri) }}"
+                          aria-label="Tampilkan foto galeri {{ $sarana->nama }}">
                     <img src="{{ asset('storage/' . $fotoGaleri) }}" alt="Galeri {{ $sarana->nama }}">
-                  </a>
+                  </button>
                 </div>
               @endforeach
             </div>
           </div>
+          <script>
+            document.querySelectorAll('.galeri-thumb-card').forEach(button => {
+              button.addEventListener('click', () => {
+                const mainImage = document.getElementById('mainSaranaImg');
+                const fullSizeLink = document.getElementById('mainSaranaFullLink');
+                const photo = button.dataset.saranaPhoto;
+
+                if (mainImage && fullSizeLink && photo) {
+                  mainImage.src = photo;
+                  fullSizeLink.href = photo;
+                  mainImage.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+              });
+            });
+          </script>
         @endif
 
         <div class="d-flex flex-wrap justify-content-between align-items-center gap-3">
