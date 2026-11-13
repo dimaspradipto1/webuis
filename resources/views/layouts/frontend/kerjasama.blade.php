@@ -8,71 +8,46 @@
   .kerjasama-hero {
     position: relative;
     overflow: hidden;
-    padding: 64px 0 74px;
+    padding: 28px 0 30px;
     color: #fff;
     background: linear-gradient(125deg, #073b1b 0%, #0b5626 58%, #138044 100%);
   }
   .kerjasama-hero::before,
   .kerjasama-hero::after {
-    position: absolute;
-    content: "";
-    border: 1px solid rgba(255, 255, 255, .1);
-    border-radius: 50%;
-    pointer-events: none;
-  }
-  .kerjasama-hero::before {
-    width: 430px;
-    height: 430px;
-    top: -245px;
-    right: -80px;
-    box-shadow: 0 0 0 40px rgba(255, 255, 255, .025), 0 0 0 90px rgba(255, 255, 255, .02);
-  }
-  .kerjasama-hero::after {
-    width: 270px;
-    height: 270px;
-    bottom: -205px;
-    left: 8%;
+    display: none;
   }
   .kerjasama-hero .container {
     position: relative;
     z-index: 1;
   }
-  .kerjasama-hero .kerjasama-breadcrumb,
-  .kerjasama-hero .kerjasama-breadcrumb a,
-  .kerjasama-hero .kerjasama-breadcrumb span {
+  .kerjasama-hero .kerjasama-breadcrumb {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    margin: 0;
+    color: rgba(255, 255, 255, .65);
     font-size: 12px;
     line-height: 1.4;
   }
-  .kerjasama-eyebrow {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 14px;
-    border: 1px solid rgba(255, 255, 255, .25);
-    border-radius: 999px;
+  .kerjasama-breadcrumb a {
+    color: rgba(255, 255, 255, .65);
+    text-decoration: none;
+  }
+  .kerjasama-breadcrumb a:hover,
+  .kerjasama-breadcrumb .active {
     color: #ffdf4d;
-    background: rgba(255, 255, 255, .08);
-    font-size: 12px;
-    font-weight: 800;
-    letter-spacing: .12em;
-    text-transform: uppercase;
   }
   .kerjasama-hero h1 {
-    max-width: 760px;
-    margin: 20px 0 14px;
+    margin: 0 0 10px;
     color: #fff;
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: clamp(2.2rem, 5vw, 3.8rem);
-    font-weight: 800;
-    letter-spacing: -.045em;
-    line-height: 1.12;
+    font-size: clamp(1.7rem, 2.5vw, 2rem);
+    font-weight: 700;
+    letter-spacing: -.025em;
+    line-height: 1.25;
   }
-  .kerjasama-hero p {
-    max-width: 690px;
-    margin: 0;
-    color: rgba(255, 255, 255, .78);
-    font-size: 1.05rem;
-    line-height: 1.8;
+  .kerjasama-hero h1 span {
+    color: #ffdf4d;
   }
   .kerjasama-stats {
     position: relative;
@@ -268,7 +243,7 @@
   }
   @media (max-width: 575.98px) {
     .kerjasama-hero {
-      padding: 48px 0 60px;
+      padding: 24px 0 26px;
     }
     .kerjasama-section {
       padding: 54px 0;
@@ -288,17 +263,12 @@
 
 <section class="kerjasama-hero">
   <div class="container">
-    <nav class="kerjasama-breadcrumb mb-4" aria-label="Breadcrumb">
-      <a href="{{ route('homepage') }}" class="text-white-50 text-decoration-none">Beranda</a>
-      <span class="mx-2 text-white-50">/</span>
-      <span class="text-white">Mitra & Kerjasama</span>
+    <h1>Mitra <span>Kerjasama</span></h1>
+    <nav class="kerjasama-breadcrumb" aria-label="Breadcrumb">
+      <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
+      <span>/</span>
+      <span class="active">Mitra & Kerjasama</span>
     </nav>
-    <span class="kerjasama-eyebrow"><i class="bi bi-diagram-3"></i> Jejaring Kolaborasi UIS</span>
-    <h1>Mitra Strategis, Kolaborasi Berdampak</h1>
-    <p>
-      Universitas Ibnu Sina membangun kemitraan yang saling menguatkan dengan dunia usaha,
-      pemerintah, dan institusi pendidikan melalui program kolaborasi yang terukur dan berkelanjutan.
-    </p>
   </div>
 </section>
 
