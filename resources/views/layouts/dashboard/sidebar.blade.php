@@ -373,9 +373,16 @@
           </li>
 
           <li class="nav-item">
-              <a class="nav-link {{ Route::is('user.*') ? '' : 'collapsed' }}" href="{{ route('user.index') }}">
+              <a class="nav-link {{ Route::is('user.*') && !Route::is('user.my-profile') ? '' : 'collapsed' }}" href="{{ route('user.index') }}">
                   <i class="bi bi-people"></i>
                   <span>Manajemen Pengguna</span>
+              </a>
+          </li>
+
+          <li class="nav-item">
+              <a class="nav-link {{ Route::is('wa-admin.*') ? '' : 'collapsed' }}" href="{{ route('wa-admin.index') }}">
+                  <i class="bi bi-whatsapp"></i>
+                  <span>Pengaturan WA Admin</span>
               </a>
           </li>
 

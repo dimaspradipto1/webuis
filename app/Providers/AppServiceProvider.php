@@ -66,13 +66,16 @@ class AppServiceProvider extends ServiceProvider
             $navProdis = Layanan::where('aktif', true)->orderBy('urutan')->get();
             $navPublikasis = Publikasi::where('aktif', true)->orderBy('urutan')->get();
             $topbarSetting = Topbar::where('is_active', true)->latest('id')->first();
+            $waAdminSetting = \App\Support\WaAdminConfig::get();
 
-            $cleanWa = '';
-            $waSource = $topbarSetting?->telepon ?? $contact?->no_wa ?? '';
-            if (! empty($waSource)) {
-                $cleanWa = preg_replace('/[^0-9]/', '', $waSource);
-                if (strpos($cleanWa, '08') === 0) {
-                    $cleanWa = '628'.substr($cleanWa, 2);
+            $cleanWa = $waAdminSetting->clean_wa ?? '';
+            if (empty($cleanWa)) {
+                $waSource = $topbarSetting?->telepon ?? $contact?->no_wa ?? '';
+                if (! empty($waSource)) {
+                    $cleanWa = preg_replace('/[^0-9]/', '', $waSource);
+                    if (strpos($cleanWa, '08') === 0) {
+                        $cleanWa = '628'.substr($cleanWa, 2);
+                    }
                 }
             }
 
@@ -87,6 +90,7 @@ class AppServiceProvider extends ServiceProvider
             $view->with([
                 'contact' => $contact,
                 'cleanWa' => $cleanWa,
+                'waAdminSetting' => $waAdminSetting,
                 'pmbSetting' => $pmbSetting,
                 'navProdis' => $navProdis,
                 'navPublikasis' => $navPublikasis,

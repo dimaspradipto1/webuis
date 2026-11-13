@@ -248,6 +248,10 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::post('admin-bahasa/{id}/set-default', [BahasaSettingController::class, 'setDefault'])->name('bahasa.set-default');
     Route::delete('admin-bahasa/{id}', [BahasaSettingController::class, 'destroy'])->name('bahasa.destroy');
 
+    // Pengaturan WA Admin
+    Route::get('admin-wa-setting', [\App\Http\Controllers\WaAdminController::class, 'index'])->name('wa-admin.index');
+    Route::put('admin-wa-setting', [\App\Http\Controllers\WaAdminController::class, 'update'])->name('wa-admin.update');
+
     // Backup Database & Storage
     Route::prefix('admin-backup')->name('backup.')->group(function () {
         Route::get('/', [BackupController::class, 'index'])->name('index');

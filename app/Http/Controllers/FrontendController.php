@@ -1153,6 +1153,8 @@ class FrontendController extends Controller
             'faqs',
             'testimonials',
             'organisasi_mahasiswas',
+            'features',
+            'contacts',
         ];
 
         $parts = [];
@@ -1165,6 +1167,14 @@ class FrontendController extends Controller
             } catch (\Throwable $e) {
                 // Ignore if table doesn't have updated_at
             }
+        }
+
+        try {
+            $waPath = storage_path('app/public/settings/wa_admin.json');
+            if (file_exists($waPath)) {
+                $parts[] = 'wa_admin:' . filemtime($waPath);
+            }
+        } catch (\Throwable $e) {
         }
 
         return response()->json([

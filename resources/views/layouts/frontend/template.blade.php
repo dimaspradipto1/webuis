@@ -126,6 +126,59 @@
       box-shadow: 0 14px 30px rgba(15, 23, 42, 0.08) !important;
       border-color: rgba(4, 107, 38, 0.28) !important;
     }
+
+    /* Floating WhatsApp Admin Button (Bottom-Right) */
+    .uis-wa-float-btn {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 1000;
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      height: 44px;
+      padding: 0 16px 0 10px;
+      border-radius: 12px;
+      background: #046B26;
+      color: #ffffff !important;
+      border: 1px solid #FED802;
+      box-shadow: 0 8px 22px rgba(4, 107, 38, 0.28);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+    }
+    .uis-wa-float-btn:hover {
+      background: #03521d;
+      color: #FED802 !important;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 26px rgba(4, 107, 38, 0.36);
+    }
+    .uis-wa-float-icon {
+      width: 26px;
+      height: 26px;
+      border-radius: 8px;
+      background: #25D366;
+      color: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 15px;
+      flex-shrink: 0;
+    }
+    @media (max-width: 576px) {
+      .uis-wa-float-btn {
+        bottom: 18px;
+        right: 18px;
+        padding: 0 13px 0 9px;
+        font-size: 12.5px;
+      }
+      .back-to-top {
+        bottom: 72px !important;
+        right: 18px !important;
+      }
+    }
   </style>
 
   @stack('styles')
@@ -151,9 +204,23 @@
 @include('layouts.frontend.footer')
 
 <!-- Back to Top -->
-<a href="#" class="back-to-top" id="backToTop">
+<a href="#" class="back-to-top" id="backToTop" title="Kembali ke Atas">
   <i class="bi bi-chevron-up"></i>
 </a>
+
+<!-- Chat WhatsApp Admin -->
+<div id="uis-wa-float-container">
+@if(($waAdminSetting->is_active ?? true) && !empty($waAdminSetting->clean_wa))
+<a href="{{ $waAdminSetting->wa_url }}"
+   target="_blank"
+   rel="noopener noreferrer"
+   class="uis-wa-float-btn"
+   title="{{ $waAdminSetting->nama_admin ?? 'Chat WA Admin' }}">
+  <span class="uis-wa-float-icon"><i class="bi bi-whatsapp"></i></span>
+  <span>{{ $waAdminSetting->label_tombol ?? 'Chat WA Admin' }}</span>
+</a>
+@endif
+</div>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -380,6 +447,11 @@
         if (newContent && currentContent) {
           const scrollY = window.scrollY;
           currentContent.innerHTML = newContent.innerHTML;
+          const newWa = doc.getElementById('uis-wa-float-container');
+          const curWa = document.getElementById('uis-wa-float-container');
+          if (newWa && curWa) {
+            curWa.innerHTML = newWa.innerHTML;
+          }
           if (doc.title) {
             document.title = doc.title;
           }
