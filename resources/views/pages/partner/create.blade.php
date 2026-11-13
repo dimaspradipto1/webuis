@@ -2,11 +2,11 @@
 
 @section('content')
 <div class="pagetitle">
-    <h1>Tambah Partner</h1>
+    <h1>Tambah Mitra Kerjasama</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('partner.index') }}">Partner</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('partner.index') }}">Mitra Kerjasama</a></li>
             <li class="breadcrumb-item active">Tambah</li>
         </ol>
     </nav>
@@ -17,7 +17,7 @@
         <div class="card shadow-sm">
             <div class="card-header py-3">
                 <h5 class="mb-0 fw-semibold">
-                    <i class="bi bi-building-add me-2 text-primary"></i>Form Tambah Partner
+                    <i class="bi bi-building-add me-2 text-primary"></i>Form Tambah Mitra Kerjasama
                 </h5>
             </div>
             <div class="card-body pt-4">
@@ -39,7 +39,7 @@
                     @csrf
 
                     <div class="mb-3">
-                        <label for="nama" class="form-label fw-semibold">Nama Partner <span class="text-danger">*</span></label>
+                        <label for="nama" class="form-label fw-semibold">Nama Mitra Kerjasama <span class="text-danger">*</span></label>
                         <input type="text" id="nama" name="nama"
                                class="form-control @error('nama') is-invalid @enderror"
                                value="{{ old('nama') }}"

@@ -52,7 +52,7 @@ class PartnerDataTable extends DataTable
                          </a>';
                 $btn .= '<form action="'.route('partner.destroy', $partner->id).'"
                               method="POST" class="m-0"
-                              onsubmit="return confirm(\'Yakin ingin menghapus partner ini?\')">'
+                              onsubmit="return confirm(\'Yakin ingin menghapus mitra kerjasama ini?\')">'
                         .csrf_field().method_field('DELETE')
                         .'<button type="submit"
                                    class="btn btn-sm btn-danger"
@@ -101,7 +101,7 @@ class PartnerDataTable extends DataTable
         return [
             Column::make('DT_RowIndex')->title('No')->width('5%')->addClass('text-center')->searchable(false)->orderable(false),
             Column::computed('logo')->title('Logo')->width('15%')->addClass('text-center')->exportable(false)->printable(false),
-            Column::make('nama')->title('Nama Partner'),
+            Column::make('nama')->title('Nama Mitra Kerjasama'),
             Column::make('urutan')->title('Urutan')->width('8%')->addClass('text-center'),
             Column::make('aktif')->title('Status')->width('10%')->addClass('text-center'),
             Column::computed('action')->title('Aksi')->exportable(false)->printable(false)->width('20%')->addClass('text-center'),
@@ -110,6 +110,6 @@ class PartnerDataTable extends DataTable
 
     protected function filename(): string
     {
-        return 'Partner_'.date('YmdHis');
+        return 'Mitra_Kerjasama_'.date('YmdHis');
     }
 }

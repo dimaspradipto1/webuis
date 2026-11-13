@@ -32,7 +32,7 @@ class PartnerController extends Controller
             'aktif' => $request->has('aktif') ? true : false,
         ]);
 
-        alert()->success('Berhasil!', 'Partner berhasil ditambahkan.');
+        alert()->success('Berhasil!', 'Mitra kerjasama berhasil ditambahkan.');
 
         return redirect()->route('partner.index');
     }
@@ -59,7 +59,7 @@ class PartnerController extends Controller
 
         $partner->update($data);
 
-        alert()->success('Berhasil!', 'Partner berhasil diperbarui.');
+        alert()->success('Berhasil!', 'Mitra kerjasama berhasil diperbarui.');
 
         return redirect()->route('partner.index');
     }
@@ -77,7 +77,7 @@ class PartnerController extends Controller
             }
         }
 
-        alert()->success('Berhasil!', 'Partner berhasil dihapus.');
+        alert()->success('Berhasil!', 'Mitra kerjasama berhasil dihapus.');
 
         return redirect()->route('partner.index');
     }

@@ -3,7 +3,7 @@
 @section('content')
 <div class="pagetitle">
     <div class="d-flex flex-wrap justify-content-between align-items-center gap-2">
-        <h1>Edit Partner</h1>
+        <h1>Edit Mitra Kerjasama</h1>
         <a href="{{ route('partner.agreements.index', $partner) }}" class="btn btn-outline-success btn-sm">
             <i class="bi bi-file-earmark-check me-1"></i>Kelola MOU / MOA / IA
         </a>
@@ -11,7 +11,7 @@
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('partner.index') }}">Partner</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('partner.index') }}">Mitra Kerjasama</a></li>
             <li class="breadcrumb-item active">Edit</li>
         </ol>
     </nav>
@@ -22,7 +22,7 @@
         <div class="card shadow-sm">
             <div class="card-header py-3">
                 <h5 class="mb-0 fw-semibold">
-                    <i class="bi bi-pencil-square me-2 text-warning"></i>Edit Partner
+                    <i class="bi bi-pencil-square me-2 text-warning"></i>Edit Mitra Kerjasama
                 </h5>
             </div>
             <div class="card-body pt-4">
@@ -45,7 +45,7 @@
                     @method('PUT')
 
                     <div class="mb-3">
-                        <label for="nama" class="form-label fw-semibold">Nama Partner <span class="text-danger">*</span></label>
+                        <label for="nama" class="form-label fw-semibold">Nama Mitra Kerjasama <span class="text-danger">*</span></label>
                         <input type="text" id="nama" name="nama"
                                class="form-control @error('nama') is-invalid @enderror"
                                value="{{ old('nama', $partner->nama) }}">

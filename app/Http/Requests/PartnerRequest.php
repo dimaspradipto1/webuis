@@ -31,7 +31,7 @@ class PartnerRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'nama.required' => 'Nama partner wajib diisi.',
+            'nama.required' => 'Nama mitra kerjasama wajib diisi.',
             'nama.max' => 'Nama maksimal 255 karakter.',
             'logo.image' => 'File harus berupa gambar.',
             'logo.mimes' => 'Format gambar harus jpeg, png, jpg, webp, atau svg.',
