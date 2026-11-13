@@ -736,7 +736,9 @@ a {
 .navbar-main {
     background: var(--uis-green, #046b26);
 
-    padding: 10px 0;
+    padding: 18px 0;
+
+    min-height: 88px;
 
     position: -webkit-sticky;
 
@@ -752,7 +754,7 @@ a {
 
     z-index: 1050;
 
-    border-bottom: 3px solid var(--uis-yellow, #fed802);
+    border-bottom: 3.5px solid var(--uis-yellow, #fed802);
 
     box-shadow: 0 4px 18px rgba(0, 0, 0, 0.12);
 }
@@ -774,9 +776,9 @@ a {
 }
 
 .brand-logo-img {
-    height: 46px;
+    height: 54px;
 
-    max-height: 46px;
+    max-height: 54px;
 
     width: auto;
 
@@ -788,7 +790,7 @@ a {
 .brand-title-main {
     font-family: "Plus Jakarta Sans", sans-serif;
 
-    font-size: 15px;
+    font-size: 16px;
 
     font-weight: 800;
 
@@ -806,14 +808,20 @@ a {
 }
 
 @media (max-width: 576px) {
-    .brand-logo-img {
-        height: 38px;
+    .navbar-main {
+        padding: 14px 0;
 
-        max-height: 38px;
+        min-height: 74px;
+    }
+
+    .brand-logo-img {
+        height: 44px;
+
+        max-height: 44px;
     }
 
     .brand-title-main {
-        font-size: 12.5px;
+        font-size: 13.5px;
 
         letter-spacing: 0.3px;
     }
@@ -822,13 +830,13 @@ a {
 .nav-link-custom {
     font-family: "Plus Jakarta Sans", sans-serif;
 
-    font-size: 13px;
+    font-size: 13.5px;
 
     font-weight: 700;
 
     color: #ffffff !important;
 
-    padding: 7px 10px !important;
+    padding: 9px 12px !important;
 
     border-radius: 8px;
 
@@ -1008,13 +1016,13 @@ a {
 
     border: 1px solid rgba(254, 216, 2, 0.35) !important;
 
-    border-radius: 20px !important;
+    border-radius: 22px !important;
 
-    padding: 6px 14px !important;
+    padding: 8px 16px !important;
 
     font-weight: 700 !important;
 
-    font-size: 13px !important;
+    font-size: 13.5px !important;
 
     color: #ffffff !important;
 
@@ -1370,11 +1378,11 @@ body > .skiptranslate {
 
     font-weight: 800;
 
-    font-size: 12.5px;
+    font-size: 13px;
 
-    padding: 8px 15px;
+    padding: 9px 17px;
 
-    border-radius: 8px;
+    border-radius: 9px;
 
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 
@@ -1422,11 +1430,11 @@ body > .skiptranslate {
 
     font-weight: 700;
 
-    font-size: 12.5px;
+    font-size: 13px;
 
-    padding: 8px 14px;
+    padding: 9px 16px;
 
-    border-radius: 8px;
+    border-radius: 9px;
 
     border: 1px solid rgba(255, 255, 255, 0.35);
 
