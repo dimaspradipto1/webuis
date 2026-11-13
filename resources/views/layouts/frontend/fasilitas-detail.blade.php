@@ -188,18 +188,6 @@
               <i class="bi bi-arrows-fullscreen me-1"></i> Ukuran Penuh
             </a>
           </div>
-          @if(count($saranaPhotos) > 1)
-            <div class="d-flex flex-wrap gap-2 mb-4">
-              @foreach($saranaPhotos as $idx => $sPhoto)
-                <button type="button"
-                        onclick="document.getElementById('mainSaranaImg').src='{{ asset('storage/' . $sPhoto) }}'; document.getElementById('mainSaranaFullLink').href='{{ asset('storage/' . $sPhoto) }}';"
-                        class="p-0 border rounded-3 overflow-hidden bg-white shadow-sm"
-                        style="width: 84px; height: 60px; cursor: pointer;">
-                  <img src="{{ asset('storage/' . $sPhoto) }}" alt="Foto {{ $idx + 1 }}" style="width: 100%; height: 100%; object-fit: cover;">
-                </button>
-              @endforeach
-            </div>
-          @endif
         @else
           <div class="mb-4 position-relative overflow-hidden rounded-4 shadow-sm" style="height: 320px; background: linear-gradient(135deg, #046B26 0%, #034e1c 100%);">
             <img src="{{ asset('frontend/img/gedung-uis.jpg') }}" alt="{{ $sarana->nama }}" class="w-100 h-100" style="object-fit: cover; opacity: 0.32;">
