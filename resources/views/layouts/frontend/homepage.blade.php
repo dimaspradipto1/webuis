@@ -276,7 +276,7 @@
   <div class="container">
     <div class="row g-4">
       @foreach($pillarCards as $card)
-        <div class="col-12 col-sm-6 col-xl-3" data-aos="fade-up" data-aos-delay="{{ $loop->index * 70 }}">
+        <div class="col-12 col-sm-6 col-xl-4" data-aos="fade-up" data-aos-delay="{{ $loop->index * 70 }}">
           @if(!empty($card->id) || (!empty($card->judul) && str_contains(strtolower($card->judul), 'program studi')))
           <a class="uis-pillar-link" href="{{ $featureLink($card) }}" aria-label="Lihat detail {{ $card->judul }}">
           @endif
