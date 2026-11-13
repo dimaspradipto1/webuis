@@ -4,6 +4,15 @@
 @section('meta_description', 'Portal Resmi Universitas Ibnu Sina (UIS) Batam — Mewujudkan Perguruan Tinggi Terkemuka Berdaya Saing Global, Inovatif, dan Berakhlak Mulia.')
 
 @section('content')
+{{-- Tata letak beranda (urutan & visibilitas section diatur dari Admin > Warna Header, Footer & Layout) --}}
+<style id="uis-home-layout-style">
+  #uisHomeLayout { display: flex; flex-direction: column; }
+  #uisHomeLayout > section { width: 100%; }
+@foreach(($tampilan->layout ?? []) as $sectionKey => $sectionRow)
+  #uisHomeLayout > section#{{ $sectionKey }} { order: {{ (int) $sectionRow['order'] }};{{ empty($sectionRow['visible']) ? ' display: none !important;' : '' }} }
+@endforeach
+</style>
+<div id="uisHomeLayout">
 @php
   $cleanWa = $cleanWa ?? '';
   if (empty($cleanWa) && !empty($contact?->no_wa)) {
@@ -17,7 +26,7 @@
 <!-- ═══════════════════════════════════════════════
      1. HERO BANNER (FULL IMAGE PROMOTION)
 ═══════════════════════════════════════════════ -->
-<section class="hero-slider-section p-0">
+<section class="hero-slider-section p-0" id="hero-banner">
   <div id="heroCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="4500" data-bs-pause="false" data-bs-wrap="true" data-bs-touch="true">
     
     @php
@@ -1985,6 +1994,7 @@
   </div>
 </section>
 
+</div>{{-- /#uisHomeLayout --}}
 @endsection
 
 @push('scripts')

@@ -5,8 +5,13 @@
   <div class="container-fluid px-lg-4 px-xl-5">
     <!-- Logo UIS -->
     <a class="navbar-brand navbar-brand-custom me-2 me-xl-3" href="{{ route('homepage') }}">
-      <img src="{{ asset('assets/img/logouis.png') }}" alt="Logo Universitas Ibnu Sina" class="brand-logo-img">
-      <span class="brand-title-main ms-2">UNIVERSITAS IBNU SINA</span>
+      <img src="{{ $tampilan->header->logo_url ?? asset('assets/img/logouis.png') }}" alt="Logo {{ $tampilan->header->judul ?? 'Universitas Ibnu Sina' }}" class="brand-logo-img">
+      <span class="d-flex flex-column justify-content-center ms-2">
+        <span class="brand-title-main">{{ $tampilan->header->judul ?? 'UNIVERSITAS IBNU SINA' }}</span>
+        @if(!empty($tampilan->header->subjudul))
+          <span class="brand-subtitle">{{ $tampilan->header->subjudul }}</span>
+        @endif
+      </span>
     </a>
 
     <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-controls="navMain" aria-expanded="false" aria-label="Toggle navigation">

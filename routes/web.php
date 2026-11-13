@@ -248,6 +248,15 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::post('admin-bahasa/{id}/set-default', [BahasaSettingController::class, 'setDefault'])->name('bahasa.set-default');
     Route::delete('admin-bahasa/{id}', [BahasaSettingController::class, 'destroy'])->name('bahasa.destroy');
 
+    // Warna Header, Footer & Tata Letak Beranda
+    Route::get('admin-tampilan', [\App\Http\Controllers\TampilanController::class, 'index'])->name('tampilan.index');
+    Route::put('admin-tampilan/header', [\App\Http\Controllers\TampilanController::class, 'updateHeader'])->name('tampilan.update-header');
+    Route::put('admin-tampilan/footer', [\App\Http\Controllers\TampilanController::class, 'updateFooter'])->name('tampilan.update-footer');
+    Route::put('admin-tampilan/layout', [\App\Http\Controllers\TampilanController::class, 'updateLayout'])->name('tampilan.update-layout');
+    Route::post('admin-tampilan/reset/{group}', [\App\Http\Controllers\TampilanController::class, 'reset'])
+        ->whereIn('group', ['header', 'footer', 'layout'])
+        ->name('tampilan.reset');
+
     // Pengaturan WA Admin
     Route::get('admin-wa-setting', [\App\Http\Controllers\WaAdminController::class, 'index'])->name('wa-admin.index');
     Route::put('admin-wa-setting', [\App\Http\Controllers\WaAdminController::class, 'update'])->name('wa-admin.update');

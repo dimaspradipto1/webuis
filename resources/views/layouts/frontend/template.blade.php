@@ -181,6 +181,8 @@
     }
   </style>
 
+  @include('layouts.frontend.partials.theme-style')
+
   @stack('styles')
 </head>
 
@@ -451,6 +453,21 @@
           const curWa = document.getElementById('uis-wa-float-container');
           if (newWa && curWa) {
             curWa.innerHTML = newWa.innerHTML;
+          }
+          const newTheme = doc.getElementById('uis-theme-vars');
+          const curTheme = document.getElementById('uis-theme-vars');
+          if (newTheme && curTheme) {
+            curTheme.textContent = newTheme.textContent;
+          }
+          const newBrand = doc.querySelector('.navbar-main .navbar-brand-custom');
+          const curBrand = document.querySelector('.navbar-main .navbar-brand-custom');
+          if (newBrand && curBrand) {
+            curBrand.innerHTML = newBrand.innerHTML;
+          }
+          const newFooter = doc.querySelector('footer.footer-main');
+          const curFooter = document.querySelector('footer.footer-main');
+          if (newFooter && curFooter) {
+            curFooter.innerHTML = newFooter.innerHTML;
           }
           if (doc.title) {
             document.title = doc.title;

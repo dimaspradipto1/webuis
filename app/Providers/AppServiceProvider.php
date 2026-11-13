@@ -91,6 +91,7 @@ class AppServiceProvider extends ServiceProvider
                 'contact' => $contact,
                 'cleanWa' => $cleanWa,
                 'waAdminSetting' => $waAdminSetting,
+                'tampilan' => \App\Support\TampilanConfig::get(),
                 'pmbSetting' => $pmbSetting,
                 'navProdis' => $navProdis,
                 'navPublikasis' => $navPublikasis,

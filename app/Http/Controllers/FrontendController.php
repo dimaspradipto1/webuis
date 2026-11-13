@@ -1169,6 +1169,8 @@ class FrontendController extends Controller
             }
         }
 
+        $parts[] = 'tampilan:'.(\App\Support\TampilanConfig::lastModified() ?? 0);
+
         try {
             $waPath = storage_path('app/public/settings/wa_admin.json');
             if (file_exists($waPath)) {

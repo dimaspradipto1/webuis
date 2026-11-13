@@ -19,6 +19,16 @@
           @endphp
 
           @if($isAdmin)
+          <!-- 1b. Warna Header, Footer & Tata Letak Beranda -->
+          <li class="nav-item">
+              <a class="nav-link {{ Route::is('tampilan.*') ? '' : 'collapsed' }}" href="{{ route('tampilan.index') }}">
+                  <i class="bi bi-palette"></i>
+                  <span>Warna Header, Footer & Layout</span>
+              </a>
+          </li>
+          @endif
+
+          @if($isAdmin)
           <!-- 2. Konten Beranda / Landing Page (Urutan Sesuai Tampilan Beranda dari Atas ke Bawah) -->
           <li class="nav-item">
               <a class="nav-link {{ Route::is('banner.*') || Route::is('faculty-stat.*') || Route::is('feature.*') || Route::is('pmb-setting.*') || Route::is('sarana.*') || Route::is('layanan-terkait.*') || (Route::is('social-media.*') && request('kategori') !== 'humas') ? '' : 'collapsed' }}" data-bs-target="#beranda-nav" data-bs-toggle="collapse" href="#">

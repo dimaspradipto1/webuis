@@ -7,11 +7,16 @@
       <!-- Brand -->
       <div class="col-lg-4">
         <a href="{{ route('homepage') }}" class="footer-logo mb-3 d-inline-flex align-items-center gap-2 text-decoration-none">
-          <img src="{{ asset('assets/img/logouis.png') }}" alt="Logo Universitas Ibnu Sina" style="height: 48px; width: auto; object-fit: contain;">
-          <span style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 16px; color: #ffffff; letter-spacing: 0.5px;">UNIVERSITAS IBNU SINA</span>
+          <img src="{{ $tampilan->header->logo_url ?? asset('assets/img/logouis.png') }}" alt="Logo {{ $tampilan->header->judul ?? 'Universitas Ibnu Sina' }}" style="height: 48px; width: auto; object-fit: contain;">
+          <span class="d-flex flex-column">
+            <span class="footer-brand-title" style="font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 16px; color: #ffffff; letter-spacing: 0.5px;">{{ $tampilan->header->judul ?? 'UNIVERSITAS IBNU SINA' }}</span>
+            @if(!empty($tampilan->header->subjudul))
+              <span class="footer-desc mb-0" style="font-size: 12px; line-height: 1.3;">{{ $tampilan->header->subjudul }}</span>
+            @endif
+          </span>
         </a>
         <p class="footer-desc">
-          Universitas Ibnu Sina (UIS) Batam — Kampusnya Profesional Muda. Berkomitmen menyelenggarakan pendidikan tinggi unggul, bermartabat, bereputasi nasional dan internasional serta berjiwa entrepreneur berbasis Imtaq.
+          {{ $tampilan->footer->deskripsi ?? 'Universitas Ibnu Sina (UIS) Batam — Kampusnya Profesional Muda.' }}
         </p>
         <div class="footer-social">
           <a href="https://www.instagram.com/universitasibnusina/" target="_blank" rel="noopener"><i class="bi bi-instagram"></i></a>
@@ -75,7 +80,7 @@
           <div class="footer-contact-icon"><i class="bi bi-clock"></i></div>
           <div class="footer-contact-text">
             <strong>Jam Operasional</strong>
-            Senin – Sabtu: 08.00 – 17.00 WIB
+            {{ $tampilan->footer->jam_operasional ?? 'Senin – Sabtu: 08.00 – 17.00 WIB' }}
           </div>
         </div>
       </div>
@@ -84,11 +89,11 @@
     <div class="footer-divider"></div>
 
     <div class="d-flex flex-column flex-md-row align-items-center justify-content-between gap-3 footer-bottom">
-      <span>© {{ date('Y') }} Universitas Ibnu Sina (UIS). All rights reserved.</span>
+      <span>© {{ date('Y') }} {{ $tampilan->footer->copyright ?? 'Universitas Ibnu Sina (UIS). All rights reserved.' }}</span>
       <div class="d-flex gap-3">
         <a href="#">Kebijakan Privasi</a>
-        <a href="#">Syarat & Ketentuan</a>
-        <a href="{{ route('login') }}" style="color:var(--uis-yellow);">Portal Admin</a>
+        <a href="#">Syarat &amp; Ketentuan</a>
+        <a href="{{ route('login') }}" class="footer-admin-link" style="color:var(--uis-yellow);">Portal Admin</a>
       </div>
     </div>
   </div>
