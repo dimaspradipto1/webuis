@@ -32,7 +32,7 @@
                   </li>
                   <li>
                       <a href="{{ route('feature.index') }}" class="{{ Route::is('feature.*') ? 'active' : '' }}">
-                          <i class="bi bi-circle"></i><span>Kartu Keunggulan Beranda</span>
+                          <i class="bi bi-circle"></i><span>Keunggulan Beranda</span>
                       </a>
                   </li>
                   <li>

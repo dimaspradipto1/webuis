@@ -2,11 +2,11 @@
 
 @section('content')
 <div class="pagetitle">
-    <h1>Tambah Kartu Keunggulan Beranda</h1>
+    <h1>Tambah Keunggulan Beranda</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('feature.index') }}">Kartu Keunggulan Beranda</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('feature.index') }}">Keunggulan Beranda</a></li>
             <li class="breadcrumb-item active">Tambah</li>
         </ol>
     </nav>
@@ -17,7 +17,7 @@
         <div class="card shadow-sm">
             <div class="card-header py-3">
                 <h5 class="mb-0 fw-semibold">
-                    <i class="bi bi-plus-circle-fill me-2 text-success"></i>Form Tambah Kartu Keunggulan Beranda
+                    <i class="bi bi-plus-circle-fill me-2 text-success"></i>Form Tambah Keunggulan Beranda
                 </h5>
             </div>
             <div class="card-body pt-4">

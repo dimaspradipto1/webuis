@@ -21,7 +21,7 @@ class TampilanConfig
     {
         return [
             'hero-banner' => ['label' => 'Banner Hero (Slider)', 'icon' => 'bi-images'],
-            'keunggulan-beranda' => ['label' => 'Kartu Keunggulan Beranda', 'icon' => 'bi-layers'],
+            'keunggulan-beranda' => ['label' => 'Keunggulan Beranda', 'icon' => 'bi-layers'],
             'profil-singkat' => ['label' => 'Profil Universitas & Video', 'icon' => 'bi-building'],
             'statistik-fakultas' => ['label' => 'Statistik Universitas', 'icon' => 'bi-bar-chart-line'],
             'keunggulan' => ['label' => 'Keunggulan Universitas', 'icon' => 'bi-patch-check'],
