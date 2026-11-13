@@ -22,22 +22,16 @@ class FeatureSeeder extends Seeder
                 'urutan' => 1,
             ],
             [
-                'icon' => Feature::packIconAndBadge('bi-house-door', 'AKTIF 2024'),
-                'judul' => 'Kampus Berdampak',
-                'deskripsi' => 'Mendorong inovasi dan kontribusi nyata bagi masyarakat',
-                'urutan' => 2,
-            ],
-            [
                 'icon' => Feature::packIconAndBadge('bi-people', 'MOU AKTIF'),
                 'judul' => 'Kerjasama',
                 'deskripsi' => 'Mitra industri dan institusi nasional & internasional',
-                'urutan' => 3,
+                'urutan' => 2,
             ],
             [
                 'icon' => Feature::packIconAndBadge('bi-award', 'BUKA 2025'),
                 'judul' => 'Program Beasiswa',
                 'deskripsi' => 'Jalur beasiswa prestasi, ekonomi, dan afirmasi daerah',
-                'urutan' => 4,
+                'urutan' => 3,
             ],
         ];
 

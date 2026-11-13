@@ -18,7 +18,7 @@
             <h5 class="mb-0 fw-semibold">
                 <i class="bi bi-layers-fill me-2 text-success"></i>Pengaturan Keunggulan Beranda
             </h5>
-            <small class="text-muted">Menampilkan kartu informasi utama tepat di bawah Banner Hero halaman Beranda (Program Studi, Kampus Berdampak, Kerjasama, Program Beasiswa).</small>
+            <small class="text-muted">Menampilkan kartu informasi utama tepat di bawah Banner Hero halaman Beranda (Program Studi, Kerjasama, Program Beasiswa).</small>
         </div>
         <a href="{{ route('feature.create') }}" class="btn btn-success btn-sm">
             <i class="bi bi-plus-lg me-1"></i> Tambah Kartu

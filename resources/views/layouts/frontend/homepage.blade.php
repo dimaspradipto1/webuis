@@ -95,25 +95,18 @@
               'urutan' => 1,
           ],
           (object) [
-              'icon' => 'bi-house-door',
-              'judul' => 'Kampus Berdampak',
-              'deskripsi' => 'Mendorong inovasi dan kontribusi nyata bagi masyarakat',
-              'badge' => 'AKTIF 2024',
-              'urutan' => 2,
-          ],
-          (object) [
               'icon' => 'bi-people',
               'judul' => 'Kerjasama',
               'deskripsi' => 'Mitra industri dan institusi nasional & internasional',
               'badge' => 'MOU AKTIF',
-              'urutan' => 3,
+              'urutan' => 2,
           ],
           (object) [
               'icon' => 'bi-award',
               'judul' => 'Program Beasiswa',
               'deskripsi' => 'Jalur beasiswa prestasi, ekonomi, dan afirmasi daerah',
               'badge' => 'BUKA 2025',
-              'urutan' => 4,
+              'urutan' => 3,
           ],
       ]);
 @endphp
