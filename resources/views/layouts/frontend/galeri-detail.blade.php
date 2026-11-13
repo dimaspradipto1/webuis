@@ -68,38 +68,6 @@
             </a>
           </div>
 
-          @if(count($albumPhotos) > 1)
-            <div class="bg-white p-3 rounded-4 shadow-sm border mb-4">
-              <div class="d-flex align-items-center justify-content-between mb-2">
-                <span class="small fw-bold text-dark"><i class="bi bi-images text-success me-1"></i> Koleksi Foto Dokumentasi ({{ count($albumPhotos) }} Foto)</span>
-                <span class="text-muted" style="font-size: 11.5px;">Klik foto untuk memperbesar</span>
-              </div>
-              <div class="row g-2">
-                @foreach($albumPhotos as $idx => $photoPath)
-                  <div class="col-4 col-sm-3 col-md-2">
-                    <button type="button"
-                            onclick="switchGalleryMainPhoto('{{ asset('storage/' . $photoPath) }}', this)"
-                            class="p-0 border-2 rounded-3 overflow-hidden w-100 bg-transparent gallery-thumb-btn {{ $photoPath === $mainPhoto ? 'border-success' : 'border-transparent' }}"
-                            style="height: 68px; cursor: pointer;">
-                      <img src="{{ asset('storage/' . $photoPath) }}" alt="Foto {{ $idx + 1 }}" style="width: 100%; height: 100%; object-fit: cover;">
-                    </button>
-                  </div>
-                @endforeach
-              </div>
-            </div>
-            <script>
-              function switchGalleryMainPhoto(src, btn) {
-                document.getElementById('mainGalleryImg').src = src;
-                document.getElementById('mainGalleryFullLink').href = src;
-                document.querySelectorAll('.gallery-thumb-btn').forEach(el => {
-                  el.classList.remove('border-success');
-                  el.classList.add('border-transparent');
-                });
-                btn.classList.remove('border-transparent');
-                btn.classList.add('border-success');
-              }
-            </script>
-          @endif
         @else
           <div class="p-5 rounded-4 text-center text-white mb-4 shadow-sm" style="background: #046B26;">
             <i class="bi bi-camera-fill" style="font-size: 64px; color: #FED802;"></i>
