@@ -72,137 +72,202 @@
 </section>
 
 <!-- ═══════════════════════════════════════════════
-     1b. QUICK-JOIN UIS CONVERSION RIBBON (ANIMATED CTA BAR)
+     2. KARTU KEUNGGULAN BERANDA (HIGHLIGHT PILLARS)
 ═══════════════════════════════════════════════ -->
 @php
-  $heroJoinLink = $pmbSetting->tombol_link_1 ?? route('homepage.kontak');
-  if (!str_starts_with($heroJoinLink, 'http') && !str_starts_with($heroJoinLink, '/')) {
-      $heroJoinLink = '/' . $heroJoinLink;
-  }
-  $heroWaLink = $pmbSetting->tombol_link_2 ?? '';
-  if (empty($heroWaLink) && !empty($cleanWa)) {
-      $heroWaLink = "https://wa.me/{$cleanWa}?text=" . urlencode("Halo Admin PMB Universitas Ibnu Sina, saya tertarik bergabung di UIS dan ingin konsultasi pendaftaran mahasiswa baru");
-  }
+  $pillarCards = (isset($features) && $features->count() > 0)
+      ? $features
+      : collect([
+          (object) [
+              'icon' => 'bi-layers',
+              'judul' => 'Program Studi',
+              'deskripsi' => 'Terakreditasi BAN-PT dengan kurikulum berbasis industri',
+              'badge' => 'TERAKREDITASI',
+              'urutan' => 1,
+          ],
+          (object) [
+              'icon' => 'bi-house-door',
+              'judul' => 'Kampus Berdampak',
+              'deskripsi' => 'Mendorong inovasi dan kontribusi nyata bagi masyarakat',
+              'badge' => 'AKTIF 2024',
+              'urutan' => 2,
+          ],
+          (object) [
+              'icon' => 'bi-people',
+              'judul' => 'Kerjasama',
+              'deskripsi' => 'Mitra industri dan institusi nasional & internasional',
+              'badge' => 'MOU AKTIF',
+              'urutan' => 3,
+          ],
+          (object) [
+              'icon' => 'bi-award',
+              'judul' => 'Program Beasiswa',
+              'deskripsi' => 'Jalur beasiswa prestasi, ekonomi, dan afirmasi daerah',
+              'badge' => 'BUKA 2025',
+              'urutan' => 4,
+          ],
+      ]);
 @endphp
 <style>
-  .uis-quick-join-section {
-    position: relative;
-    z-index: 15;
-    margin-top: -28px;
-    margin-bottom: 12px;
+  .uis-pillars-section {
+    background: #ffffff;
+    padding: 44px 0 18px;
   }
-  .uis-quick-join-bar {
-    background: linear-gradient(135deg, #022b11 0%, #046B26 60%, #03541d 100%);
-    border-radius: 22px;
-    padding: 22px 28px;
-    box-shadow: 0 20px 45px rgba(3, 46, 18, 0.24);
-    border: 1.5px solid rgba(254, 216, 2, 0.42);
+  .uis-pillar-card {
     position: relative;
     overflow: hidden;
-    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+    height: 100%;
+    min-height: 292px;
+    border-radius: 22px;
+    padding: 32px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: #ffffff;
+    border: 1.5px solid #dbeee1;
+    box-shadow: 0 6px 22px rgba(15, 23, 42, 0.03);
+    transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
   }
-  .uis-quick-join-bar:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 26px 55px rgba(3, 46, 18, 0.32);
-  }
-  .uis-quick-join-bar::before {
+  .uis-pillar-card::after {
     content: "";
     position: absolute;
-    width: 240px;
-    height: 240px;
+    top: -26px;
+    right: -26px;
+    width: 132px;
+    height: 132px;
     border-radius: 50%;
-    background: radial-gradient(circle, rgba(254, 216, 2, 0.18) 0%, transparent 70%);
-    top: -110px;
-    right: -60px;
+    background: #ecf8f0;
     pointer-events: none;
-    animation: uisGlowFloat 6s ease-in-out infinite alternate;
+    transition: transform 0.3s ease;
   }
-  @keyframes uisGlowFloat {
-    0% { transform: translate(0, 0) scale(1); }
-    100% { transform: translate(-24px, 16px) scale(1.15); }
+  .uis-pillar-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 14px 32px rgba(10, 84, 36, 0.08);
+    border-color: #b7e1c5;
   }
-  .uis-live-dot {
-    width: 9px;
-    height: 9px;
-    border-radius: 50%;
-    background: #FED802;
-    display: inline-block;
-    box-shadow: 0 0 0 0 rgba(254, 216, 2, 0.8);
-    animation: uisLivePulse 1.8s infinite;
+  .uis-pillar-card:hover::after {
+    transform: scale(1.06);
   }
-  @keyframes uisLivePulse {
-    0% { box-shadow: 0 0 0 0 rgba(254, 216, 2, 0.8); }
-    70% { box-shadow: 0 0 0 9px rgba(254, 216, 2, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(254, 216, 2, 0); }
+  .uis-pillar-card.is-primary {
+    background: #0b5626;
+    border-color: #0b5626;
+    box-shadow: 0 14px 32px rgba(11, 86, 38, 0.18);
   }
-  .uis-join-feature-pill {
+  .uis-pillar-card.is-primary::after {
+    background: rgba(255, 255, 255, 0.06);
+  }
+  .uis-pillar-icon {
+    position: relative;
+    z-index: 1;
+    width: 52px;
+    height: 52px;
+    border-radius: 14px;
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    background: rgba(255, 255, 255, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.18);
+    justify-content: center;
+    background: #eef8f1;
+    color: #0f6830;
+    font-size: 22px;
+    margin-bottom: 26px;
+  }
+  .uis-pillar-card.is-primary .uis-pillar-icon {
+    background: rgba(255, 255, 255, 0.13);
     color: #ffffff;
-    font-size: 12px;
-    font-weight: 600;
-    padding: 5px 12px;
+  }
+  .uis-pillar-title {
+    position: relative;
+    z-index: 1;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: #111827;
+    margin-bottom: 12px;
+    line-height: 1.3;
+  }
+  .uis-pillar-card.is-primary .uis-pillar-title {
+    color: #ffffff;
+  }
+  .uis-pillar-desc {
+    position: relative;
+    z-index: 1;
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: #64748b;
+    margin-bottom: 26px;
+  }
+  .uis-pillar-card.is-primary .uis-pillar-desc {
+    color: rgba(255, 255, 255, 0.82);
+  }
+  .uis-pillar-badge {
+    position: relative;
+    z-index: 1;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    width: fit-content;
+    padding: 8px 16px;
     border-radius: 999px;
-    backdrop-filter: blur(4px);
-    transition: all 0.25s ease;
+    background: #eef8f1;
+    border: 1px solid #d2ebd9;
+    color: #0f6830;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
   }
-  .uis-join-feature-pill:hover {
-    background: rgba(254, 216, 2, 0.2);
-    border-color: #FED802;
-    transform: translateY(-2px);
+  .uis-pillar-badge-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #16a34a;
+    flex-shrink: 0;
   }
-  @media (max-width: 768px) {
-    .uis-quick-join-section {
-      margin-top: 12px;
+  .uis-pillar-card.is-primary .uis-pillar-badge {
+    background: rgba(255, 255, 255, 0.11);
+    border-color: rgba(255, 255, 255, 0.22);
+    color: #facc15;
+  }
+  .uis-pillar-card.is-primary .uis-pillar-badge-dot {
+    background: #facc15;
+  }
+  @media (max-width: 767.98px) {
+    .uis-pillars-section {
+      padding: 28px 0 10px;
     }
-    .uis-quick-join-bar {
-      padding: 18px 18px;
-      border-radius: 18px;
+    .uis-pillar-card {
+      min-height: 245px;
+      padding: 24px 22px;
     }
   }
 </style>
 
-<div class="container uis-quick-join-section" data-aos="fade-up" data-aos-duration="750">
-  <div class="uis-quick-join-bar">
-    <div class="row align-items-center g-3">
-      <div class="col-lg-7">
-        <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-2" style="background: rgba(254, 216, 2, 0.16); border: 1px solid rgba(254, 216, 2, 0.45); color: #FED802; font-size: 11.5px; font-weight: 800; letter-spacing: 0.4px;">
-          <span class="uis-live-dot"></span>
-          <span>PENDAFTARAN MAHASISWA BARU T.A. 2026/2027 DIBUKA</span>
+<section class="uis-pillars-section" id="keunggulan-beranda">
+  <div class="container">
+    <div class="row g-4">
+      @foreach($pillarCards as $card)
+        <div class="col-12 col-sm-6 col-xl-3" data-aos="fade-up" data-aos-delay="{{ $loop->index * 70 }}">
+          <div class="uis-pillar-card {{ $loop->first ? 'is-primary' : '' }}">
+            <div>
+              <div class="uis-pillar-icon">
+                <i class="bi {{ $card->icon ?: 'bi-layers' }}"></i>
+              </div>
+              <h3 class="uis-pillar-title">{{ $card->judul }}</h3>
+              <p class="uis-pillar-desc">{{ trim(html_entity_decode(strip_tags($card->deskripsi), ENT_QUOTES, 'UTF-8')) }}</p>
+            </div>
+            <div>
+              <span class="uis-pillar-badge">
+                <span class="uis-pillar-badge-dot"></span>
+                <span>{{ $card->badge ?? 'AKTIF' }}</span>
+              </span>
+            </div>
+          </div>
         </div>
-        <h3 class="text-white fw-bold mb-2" style="font-size: clamp(1.2rem, 2.3vw, 1.55rem); line-height: 1.3;">
-          Saatnya Bergabung Menjadi <span style="color: #FED802;">Profesional Muda</span> Universitas Ibnu Sina!
-        </h3>
-        <div class="d-flex flex-wrap gap-2 mt-2">
-          <span class="uis-join-feature-pill"><i class="bi bi-patch-check-fill text-warning"></i> Kampus Terakreditasi</span>
-          <span class="uis-join-feature-pill"><i class="bi bi-clock-history text-warning"></i> Kelas Reguler & Karyawan</span>
-          <span class="uis-join-feature-pill"><i class="bi bi-award-fill text-warning"></i> Beasiswa & KIP-Kuliah</span>
-        </div>
-      </div>
-      <div class="col-lg-5 text-lg-end">
-        <div class="d-flex flex-wrap justify-content-lg-end gap-2">
-          <a href="{{ $heroJoinLink }}" target="{{ str_starts_with($heroJoinLink, 'http') ? '_blank' : '_self' }}" class="btn uis-join-cta-btn fw-bold rounded-pill px-4 py-2 d-inline-flex align-items-center gap-2" style="background: #FED802; color: #032e12; font-size: 14px; border: 2px solid #FED802;">
-            <i class="bi bi-rocket-takeoff-fill"></i>
-            <span>Daftar Sekarang</span>
-          </a>
-          <a href="{{ route('homepage.program-studi') }}" class="btn uis-join-cta-btn fw-bold rounded-pill px-3 py-2 d-inline-flex align-items-center gap-2 text-white" style="background: rgba(255,255,255,0.12); border: 1.5px solid rgba(255,255,255,0.35); font-size: 13.5px;">
-            <i class="bi bi-mortarboard-fill text-warning"></i>
-            <span>Pilih Prodi</span>
-          </a>
-          @if(!empty($heroWaLink))
-            <a href="{{ $heroWaLink }}" target="_blank" rel="noopener" class="btn uis-join-cta-btn fw-bold rounded-pill px-3 py-2 d-inline-flex align-items-center gap-1 text-white" style="background: #16a34a; border: 1.5px solid rgba(255,255,255,0.25); font-size: 13.5px;" title="Chat WhatsApp PMB UIS">
-              <i class="bi bi-whatsapp"></i>
-              <span class="d-none d-sm-inline">Tanya PMB</span>
-            </a>
-          @endif
-        </div>
-      </div>
+      @endforeach
     </div>
   </div>
-</div>
+</section>
 
 <!-- ═══════════════════════════════════════════════
      3. PROFIL SINGKAT Universitas Ibnu Sina & SAMBUTAN REKTOR
