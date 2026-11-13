@@ -11,7 +11,7 @@ use Illuminate\View\View;
 class FeatureController extends Controller
 {
     /**
-     * Tampilkan daftar keunggulan via DataTables.
+     * Tampilkan daftar kartu keunggulan beranda via DataTables.
      */
     public function index(FeatureDataTable $dataTables)
     {
@@ -19,7 +19,7 @@ class FeatureController extends Controller
     }
 
     /**
-     * Tampilkan form tambah keunggulan.
+     * Tampilkan form tambah kartu keunggulan beranda.
      */
     public function create(): View
     {
@@ -27,24 +27,24 @@ class FeatureController extends Controller
     }
 
     /**
-     * Simpan data keunggulan baru.
+     * Simpan data kartu keunggulan baru.
      */
     public function store(FeatureRequest $request): RedirectResponse
     {
         Feature::create([
-            'icon' => $request->icon,
+            'icon' => Feature::packIconAndBadge($request->icon, $request->badge),
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
             'urutan' => $request->urutan ?? 0,
         ]);
 
-        alert()->success('Berhasil!', 'Keunggulan berhasil ditambahkan.');
+        alert()->success('Berhasil!', 'Kartu keunggulan beranda berhasil ditambahkan.');
 
         return redirect()->route('feature.index');
     }
 
     /**
-     * Tampilkan form edit keunggulan.
+     * Tampilkan form edit kartu keunggulan beranda.
      */
     public function edit(Feature $feature): View
     {
@@ -52,30 +52,30 @@ class FeatureController extends Controller
     }
 
     /**
-     * Update data keunggulan.
+     * Update data kartu keunggulan beranda.
      */
     public function update(FeatureRequest $request, Feature $feature): RedirectResponse
     {
         $feature->update([
-            'icon' => $request->icon,
+            'icon' => Feature::packIconAndBadge($request->icon, $request->badge),
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
             'urutan' => $request->urutan ?? 0,
         ]);
 
-        alert()->success('Berhasil!', 'Keunggulan berhasil diperbarui.');
+        alert()->success('Berhasil!', 'Kartu keunggulan beranda berhasil diperbarui.');
 
         return redirect()->route('feature.index');
     }
 
     /**
-     * Hapus data keunggulan.
+     * Hapus data kartu keunggulan beranda.
      */
     public function destroy(Feature $feature): RedirectResponse
     {
         $feature->delete();
 
-        alert()->success('Berhasil!', 'Keunggulan berhasil dihapus.');
+        alert()->success('Berhasil!', 'Kartu keunggulan beranda berhasil dihapus.');
 
         return redirect()->route('feature.index');
     }

@@ -14,7 +14,8 @@ class FeatureRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'icon' => ['required', 'string', 'max:255'],
+            'icon' => ['required', 'string', 'max:120'],
+            'badge' => ['nullable', 'string', 'max:80'],
             'judul' => ['required', 'string', 'max:255'],
             'deskripsi' => ['required', 'string'],
             'urutan' => ['nullable', 'integer', 'min:0'],
@@ -24,10 +25,11 @@ class FeatureRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'icon.required' => 'Icon wajib diisi (contoh: bi-grid-3x3-gap-fill).',
-            'judul.required' => 'Judul keunggulan wajib diisi.',
+            'icon.required' => 'Icon wajib diisi (contoh: bi-layers).',
+            'badge.max' => 'Label badge maksimal 80 karakter.',
+            'judul.required' => 'Judul kartu wajib diisi.',
             'judul.max' => 'Judul maksimal 255 karakter.',
-            'deskripsi.required' => 'Deskripsi keunggulan wajib diisi.',
+            'deskripsi.required' => 'Deskripsi wajib diisi.',
             'urutan.integer' => 'Urutan harus berupa angka.',
             'urutan.min' => 'Urutan minimal 0.',
         ];

@@ -16,27 +16,27 @@ class FeatureSeeder extends Seeder
 
         $features = [
             [
-                'icon' => 'bi-patch-check-fill',
-                'judul' => 'Akreditasi Unggul',
-                'deskripsi' => 'Program studi telah terakreditasi oleh LAM-PTKes dan BAN-PT dengan jaminan mutu pendidikan tinggi kesehatan berstandar nasional.',
+                'icon' => Feature::packIconAndBadge('bi-layers', 'TERAKREDITASI'),
+                'judul' => 'Program Studi',
+                'deskripsi' => 'Terakreditasi BAN-PT dengan kurikulum berbasis industri',
                 'urutan' => 1,
             ],
             [
-                'icon' => 'bi-hospital-fill',
-                'judul' => 'Laboratorium Terpadu Modern',
-                'deskripsi' => 'Dilengkapi laboratorium klinik, simulasi keperawatan, kebidanan, dan farmasi dengan alat praktikum medis terkini.',
+                'icon' => Feature::packIconAndBadge('bi-house-door', 'AKTIF 2024'),
+                'judul' => 'Kampus Berdampak',
+                'deskripsi' => 'Mendorong inovasi dan kontribusi nyata bagi masyarakat',
                 'urutan' => 2,
             ],
             [
-                'icon' => 'bi-mortarboard-fill',
-                'judul' => 'Dosen Ahli & Berpengalaman',
-                'deskripsi' => 'Tenaga pengajar berkualifikasi magister dan doktor bidang kesehatan yang aktif dalam riset, publikasi, dan praktik klinis.',
+                'icon' => Feature::packIconAndBadge('bi-people', 'MOU AKTIF'),
+                'judul' => 'Kerjasama',
+                'deskripsi' => 'Mitra industri dan institusi nasional & internasional',
                 'urutan' => 3,
             ],
             [
-                'icon' => 'bi-diagram-3-fill',
-                'judul' => 'Jejaring Rumah Sakit Luas',
-                'deskripsi' => 'Kemitraan strategis dengan rumah sakit umum, rumah sakit swasta, dan dinas kesehatan untuk praktik klinik dan karir alumni.',
+                'icon' => Feature::packIconAndBadge('bi-award', 'BUKA 2025'),
+                'judul' => 'Program Beasiswa',
+                'deskripsi' => 'Jalur beasiswa prestasi, ekonomi, dan afirmasi daerah',
                 'urutan' => 4,
             ],
         ];

@@ -24,11 +24,16 @@ class FeatureDataTable extends DataTable
             ->addIndexColumn()
             ->addColumn('DT_RowIndex', '')
             ->addColumn('icon_preview', function ($feature) {
-                return '<div style="font-size:24px;color:var(--terracotta);"><i class="bi '.e($feature->icon).'"></i></div>'
-                     .'<span class="text-muted small">'.e($feature->icon).'</span>';
+                return '<div class="d-inline-flex align-items-center justify-content-center rounded-3 mb-1" style="width:40px;height:40px;background:#eef8f1;color:#046B26;font-size:20px;">'
+                     .'<i class="bi '.e($feature->icon).'"></i></div>'
+                     .'<div class="text-muted" style="font-size:11px;">'.e($feature->icon).'</div>';
             })
             ->addColumn('judul', function ($feature) {
-                return '<span class="fw-semibold">'.e($feature->judul).'</span>';
+                $highlight = (int) $feature->urutan === 1
+                    ? '<span class="badge bg-success-subtle text-success border border-success-subtle ms-2" style="font-size:10px;">Kartu Utama (Hijau)</span>'
+                    : '';
+
+                return '<span class="fw-semibold text-dark">'.e($feature->judul).'</span>'.$highlight;
             })
             ->addColumn('deskripsi', function ($feature) {
                 if (! $feature->deskripsi) {
@@ -36,7 +41,13 @@ class FeatureDataTable extends DataTable
                 }
                 $clean = trim(html_entity_decode(strip_tags($feature->deskripsi), ENT_QUOTES, 'UTF-8'));
 
-                return '<span title="'.e($clean).'">'.e(Str::limit($clean, 60)).'</span>';
+                return '<span title="'.e($clean).'">'.e(Str::limit($clean, 75)).'</span>';
+            })
+            ->addColumn('badge_label', function ($feature) {
+                return '<span class="d-inline-flex align-items-center gap-1 px-2 py-1 rounded-pill fw-bold" style="background:#eef8f1;color:#046B26;border:1px solid #cce8d4;font-size:11px;letter-spacing:0.4px;">'
+                     .'<span style="width:6px;height:6px;border-radius:50%;background:#16a34a;display:inline-block;"></span> '
+                     .e($feature->badge)
+                     .'</span>';
             })
             ->addColumn('urutan', function ($feature) {
                 return '<span class="badge bg-secondary">'.$feature->urutan.'</span>';
@@ -44,7 +55,6 @@ class FeatureDataTable extends DataTable
             ->addColumn('action', function ($feature) {
                 $btn = '<div class="d-flex justify-content-center align-items-center" style="gap:5px">';
 
-                // Tombol Edit
                 $btn .= '<a href="'.route('feature.edit', $feature->id).'"
                             class="btn btn-sm btn-warning text-white"
                             style="width:30px;height:30px;display:flex;align-items:center;justify-content:center"
@@ -52,10 +62,9 @@ class FeatureDataTable extends DataTable
                             <i class="bi bi-pencil-fill" style="font-size:12px"></i>
                          </a>';
 
-                // Tombol Hapus
                 $btn .= '<form action="'.route('feature.destroy', $feature->id).'"
                               method="POST" class="m-0"
-                              onsubmit="return confirm(\'Yakin ingin menghapus keunggulan ini?\')">'
+                              onsubmit="return confirm(\'Yakin ingin menghapus kartu keunggulan ini?\')">'
                         .csrf_field().method_field('DELETE')
                         .'<button type="submit"
                                    class="btn btn-sm btn-danger"
@@ -70,7 +79,7 @@ class FeatureDataTable extends DataTable
                 return $btn;
             })
             ->setRowId('DT_RowIndex')
-            ->rawColumns(['icon_preview', 'judul', 'deskripsi', 'urutan', 'action']);
+            ->rawColumns(['icon_preview', 'judul', 'deskripsi', 'badge_label', 'urutan', 'action']);
     }
 
     /**
@@ -94,7 +103,7 @@ class FeatureDataTable extends DataTable
             ->setTableId('feature-table')
             ->columns($this->getColumns())
             ->minifiedAjax()
-            ->orderBy(4) // order by urutan
+            ->orderBy(5)
             ->selectStyleSingle()
             ->buttons([
                 Button::make('excel'),
@@ -120,16 +129,21 @@ class FeatureDataTable extends DataTable
 
             Column::computed('icon_preview')
                 ->title('Icon')
-                ->width('15%')
+                ->width('12%')
                 ->addClass('text-center')
                 ->exportable(false)
                 ->printable(false),
 
             Column::make('judul')
-                ->title('Judul'),
+                ->title('Judul Kartu'),
 
             Column::make('deskripsi')
                 ->title('Deskripsi'),
+
+            Column::computed('badge_label')
+                ->title('Label Badge')
+                ->width('15%')
+                ->addClass('text-center'),
 
             Column::make('urutan')
                 ->title('Urutan')
@@ -150,6 +164,6 @@ class FeatureDataTable extends DataTable
      */
     protected function filename(): string
     {
-        return 'Feature_'.date('YmdHis');
+        return 'Feature_' . date('YmdHis');
     }
 }
