@@ -179,6 +179,82 @@
         right: 18px !important;
       }
     }
+
+    /* ═══════════════════════════════════════════════════════════════
+       RESPONSIVE OPTIMIZATION FOR 14-INCH LAPTOPS (1200px - 1440px)
+       & COMMON 768p VIEWPORTS (1366x768 / 1280x720 / 150% SCALING)
+    ═══════════════════════════════════════════════════════════════ */
+    @media (min-width: 1200px) and (max-width: 1440px) {
+      .navbar-main {
+        min-height: 68px !important;
+        padding: 8px 0 !important;
+      }
+      .navbar-main .container-fluid {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+      }
+      .navbar-brand-custom {
+        margin-right: 6px !important;
+      }
+      .brand-logo-img {
+        height: 40px !important;
+        max-height: 40px !important;
+      }
+      .brand-title-main {
+        font-size: 13px !important;
+        letter-spacing: 0.2px !important;
+      }
+      .brand-subtitle {
+        font-size: 9.5px !important;
+        margin-top: 1px !important;
+      }
+      .navbar-nav {
+        gap: 2px !important;
+      }
+      .nav-link-custom {
+        font-size: 12px !important;
+        padding: 6px 7px !important;
+        border-radius: 6px !important;
+        gap: 2px !important;
+      }
+      .nav-link-custom .bi-chevron-down {
+        font-size: 8px !important;
+        margin-left: 1px !important;
+      }
+      .uis-lang-toggle {
+        padding: 5px 8px !important;
+        font-size: 11.5px !important;
+      }
+      .btn-pmb-nav,
+      .btn-portal-nav {
+        padding: 6px 11px !important;
+        font-size: 12px !important;
+        border-radius: 7px !important;
+        gap: 4px !important;
+      }
+      .btn-pmb-nav span,
+      .btn-portal-nav span {
+        font-size: 12px !important;
+      }
+      .section-heading h2,
+      .kerjasama-section-heading h2 {
+        font-size: clamp(1.4rem, 1.8vw, 1.75rem) !important;
+      }
+      .container {
+        max-width: 1240px;
+      }
+      .py-5 {
+        padding-top: 2.25rem !important;
+        padding-bottom: 2.25rem !important;
+      }
+    }
+
+    @media (max-height: 800px) and (min-width: 992px) {
+      .hero-section,
+      .homepage-hero-wrapper {
+        min-height: 460px !important;
+      }
+    }
   </style>
 
   @include('layouts.frontend.partials.theme-style')

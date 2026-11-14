@@ -2,7 +2,7 @@
      NAVBAR HEADER UTAMA — UNIVERSITAS IBNU SINA (UIS)
 ═══════════════════════════════════════════════ -->
 <nav class="navbar navbar-expand-xl navbar-main sticky-top">
-  <div class="container-fluid px-lg-4 px-xl-5">
+  <div class="container-fluid px-lg-3 px-xl-3 px-xxl-4">
     <!-- Logo UIS -->
     <a class="navbar-brand navbar-brand-custom me-2 me-xl-3" href="{{ route('homepage') }}">
       <img src="{{ $tampilan->header->logo_url ?? asset('assets/img/logouis.png') }}" alt="Logo {{ $tampilan->header->judul ?? 'Universitas Ibnu Sina' }}" class="brand-logo-img">

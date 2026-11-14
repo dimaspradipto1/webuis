@@ -141,6 +141,91 @@
         .back-to-top:hover {
             background: #FED802;
         }
+
+        /* ═══════════════════════════════════════════════════════════════
+           RESPONSIVE RATIO OPTIMIZATION FOR 14-INCH LAPTOPS (1200px - 1440px)
+           AND 768p VIEWPORTS (1366x768 / 1280x720 / 125%-150% SCALING)
+        ═══════════════════════════════════════════════════════════════ */
+        @media (min-width: 1200px) and (max-width: 1440px) {
+            .sidebar {
+                width: 250px !important;
+                padding: 16px 10px !important;
+            }
+            #main,
+            #footer {
+                margin-left: 250px !important;
+                padding: 18px 20px !important;
+            }
+            .toggle-sidebar #main,
+            .toggle-sidebar #footer {
+                margin-left: 0 !important;
+            }
+            .toggle-sidebar .sidebar {
+                left: -250px !important;
+            }
+            .header {
+                height: 56px !important;
+            }
+            .header .logo img {
+                max-height: 28px !important;
+            }
+            .header .logo span {
+                font-size: 17px !important;
+            }
+            .sidebar-nav .nav-link {
+                font-size: 13px !important;
+                padding: 8px 12px !important;
+            }
+            .sidebar-nav .nav-link i {
+                font-size: 15px !important;
+                margin-right: 8px !important;
+            }
+            .sidebar-nav .nav-content a {
+                font-size: 12.5px !important;
+                padding: 6px 0 6px 30px !important;
+            }
+            .sidebar-nav .nav-heading {
+                font-size: 10px !important;
+                padding: 8px 12px 4px !important;
+            }
+            .pagetitle h1 {
+                font-size: 20px !important;
+            }
+            .card-header {
+                padding: 10px 16px !important;
+            }
+            .card-body {
+                padding: 14px 16px !important;
+            }
+            .table {
+                font-size: 13px !important;
+            }
+            .table th,
+            .table td {
+                padding: 7px 10px !important;
+            }
+            .form-control,
+            .form-select {
+                font-size: 13px !important;
+                padding: 6px 12px !important;
+            }
+            .btn {
+                font-size: 13px !important;
+            }
+        }
+
+        @media (max-height: 800px) and (min-width: 992px) {
+            #main {
+                margin-top: 56px !important;
+                padding-top: 14px !important;
+            }
+            .pagetitle {
+                margin-bottom: 8px !important;
+            }
+            .card {
+                margin-bottom: 16px !important;
+            }
+        }
     </style>
 </head>
 
