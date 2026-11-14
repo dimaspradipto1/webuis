@@ -58,6 +58,88 @@
     background: rgba(4, 107, 38, 0.8) !important;
     transition: all 0.25s ease;
   }
+
+  /* Fullscreen Image Lightbox */
+  .image-lightbox-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(3, 18, 9, 0.95);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    z-index: 999999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+  }
+  .image-lightbox-overlay.show {
+    opacity: 1;
+  }
+  .lightbox-close-btn {
+    position: fixed;
+    top: 24px;
+    right: 28px;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.18);
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    color: #ffffff;
+    font-size: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    z-index: 1000000;
+  }
+  .lightbox-close-btn:hover {
+    background: #e11d48;
+    border-color: #e11d48;
+    color: #ffffff;
+    transform: scale(1.1) rotate(90deg);
+  }
+  .lightbox-content-wrap {
+    max-width: 96vw;
+    max-height: 94vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+  }
+  .lightbox-img {
+    max-width: 96vw;
+    max-height: 85vh;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.85);
+  }
+  .lightbox-caption {
+    margin-top: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 800px;
+    gap: 12px;
+  }
+  .lightbox-badge {
+    background: rgba(4, 107, 38, 0.85);
+    color: #FED802;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 14px;
+    border-radius: 30px;
+    border: 1px solid rgba(254, 216, 2, 0.35);
+  }
 </style>
 
 <!-- ═══════════════════════════════════════════════
@@ -283,14 +365,19 @@
   </div>
 </section>
 
-<!-- Modal Lightbox Galeri Foto -->
-<div class="modal fade" id="imageModal" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-lg">
-    <div class="modal-content bg-transparent border-0">
-      <div class="modal-body p-0 text-center position-relative">
-        <button type="button" class="btn-close btn-close-white position-absolute top-0 end-0 m-3" data-bs-dismiss="modal" aria-label="Close"></button>
-        <img id="modalImg" src="" class="img-fluid rounded shadow-lg" style="max-height:85vh; object-fit:contain;">
-      </div>
+<!-- Lightbox Fullscreen Modal -->
+<div id="imageLightboxModal" class="image-lightbox-overlay" onclick="closeImageLightbox(event)" style="display: none;">
+  <button type="button" class="lightbox-close-btn" onclick="forceCloseLightbox()" title="Tutup (ESC)">
+    <i class="bi bi-x-lg"></i>
+  </button>
+
+  <div class="lightbox-content-wrap" onclick="event.stopPropagation()">
+    <img id="lightboxImg" src="" alt="Ukuran Penuh" class="lightbox-img">
+    <div class="lightbox-caption">
+      <span class="lightbox-badge"><i class="bi bi-arrows-fullscreen me-1"></i> Tampilan Resolusi Penuh</span>
+      <button type="button" class="btn btn-sm btn-outline-light rounded-pill px-3 py-1" onclick="forceCloseLightbox()">
+        <i class="bi bi-x-circle me-1"></i> Tutup Preview
+      </button>
     </div>
   </div>
 </div>
@@ -342,10 +429,43 @@
 
   function showImageModal(src) {
     if (!src) return;
-    document.getElementById('modalImg').src = src;
-    var myModal = new bootstrap.Modal(document.getElementById('imageModal'));
-    myModal.show();
+    const overlay = document.getElementById('imageLightboxModal');
+    const img = document.getElementById('lightboxImg');
+    if (!overlay || !img) return;
+
+    img.src = src;
+    overlay.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+
+    setTimeout(() => {
+      overlay.classList.add('show');
+    }, 10);
   }
+
+  function forceCloseLightbox() {
+    const overlay = document.getElementById('imageLightboxModal');
+    if (!overlay) return;
+
+    overlay.classList.remove('show');
+    setTimeout(() => {
+      overlay.style.display = 'none';
+      document.body.style.overflow = '';
+      const img = document.getElementById('lightboxImg');
+      if (img) img.src = '';
+    }, 200);
+  }
+
+  function closeImageLightbox(e) {
+    if (e.target.id === 'imageLightboxModal') {
+      forceCloseLightbox();
+    }
+  }
+
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      forceCloseLightbox();
+    }
+  });
 
   function copyCurrentUrl() {
     navigator.clipboard.writeText(window.location.href);
