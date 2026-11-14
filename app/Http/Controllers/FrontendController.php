@@ -122,7 +122,7 @@ class FrontendController extends Controller
             ->orderByDesc('id')
             ->get();
         $faqs = Faq::take(6)->get();
-        $galleries = Gallery::where(function ($q) {
+        $galleries = Gallery::with('news')->where(function ($q) {
             $q->where('kategori', 'universitas')->orWhereNull('kategori');
         })->latest()->take(6)->get();
         $prestasis = News::where('status', 'published')
@@ -408,7 +408,7 @@ class FrontendController extends Controller
 
         $kategori = $kategori ?? $request->query('kategori');
 
-        $query = Gallery::query();
+        $query = Gallery::with('news');
         if ($kategori === 'humas') {
             $query->where('kategori', 'humas');
         } else {
@@ -445,9 +445,12 @@ class FrontendController extends Controller
             return redirect()->route('homepage.galeri.universitas', [], 301);
         }
 
-        $gallery = Gallery::where(function ($q) use ($slug) {
+        $gallery = Gallery::with('news')->where(function ($q) use ($slug) {
             $q->where('slug', $slug)
-                ->orWhere('id', $slug);
+                ->orWhere('id', $slug)
+                ->orWhereHas('news', function ($nq) use ($slug) {
+                    $nq->where('slug', $slug)->orWhere('id', $slug);
+                });
         })
             ->firstOrFail();
 
@@ -456,7 +459,7 @@ class FrontendController extends Controller
             return redirect()->route('homepage.galeri.detail', $gallery->slug, 301);
         }
 
-        $otherGalleries = Gallery::where('id', '!=', $gallery->id)
+        $otherGalleries = Gallery::with('news')->where('id', '!=', $gallery->id)
             ->when(! empty($gallery->kategori), fn ($q) => $q->where('kategori', $gallery->kategori))
             ->latest('id')
             ->take(6)

@@ -1371,8 +1371,17 @@
                     <i class="bi bi-camera-fill fs-1 text-white-50"></i>
                   </div>
                 @endif
+                @php
+                  $pCount = is_array($gal->galeri) ? count($gal->galeri) : (!empty($gal->url) ? 1 : 0);
+                  $catName = $gal->kategori_berita ?: ($gal->news->category ?? ($gal->kategori ?: 'Dokumentasi'));
+                @endphp
+                @if($pCount > 1)
+                  <span class="badge position-absolute top-0 end-0 m-3 rounded-pill px-2 py-1 shadow-sm" style="background: rgba(2, 56, 20, 0.88); backdrop-filter: blur(4px); color: #FED802; font-size: 11px; font-weight: 700; border: 1px solid rgba(254, 216, 2, 0.4); z-index: 2;">
+                    <i class="bi bi-images me-1"></i> {{ $pCount }} Foto
+                  </span>
+                @endif
                 <div class="gallery-card-overlay">
-                  <span class="gallery-tag"><i class="bi bi-tag-fill me-1"></i>Dokumentasi</span>
+                  <span class="gallery-tag"><i class="bi bi-tag-fill me-1"></i>{{ strtoupper($catName) }}</span>
                   <h5 class="gallery-card-title">{{ $gal->judul }}</h5>
                   @if(!empty($gal->deskripsi))
                     <p class="gallery-card-desc mb-0">{!! Str::limit(strip_tags($gal->deskripsi), 90) !!}</p>

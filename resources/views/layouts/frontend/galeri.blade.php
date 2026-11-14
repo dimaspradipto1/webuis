@@ -88,27 +88,33 @@
       <div class="row g-4">
         @foreach($galleries as $item)
           <div class="col-md-6 col-lg-4" data-aos="fade-up">
-            <a href="{{ route('homepage.galeri.detail', $item->slug ?? $item->id) }}" class="text-decoration-none d-block">
-              <div class="galeri-item-card">
+            <a href="{{ route('homepage.galeri.detail', $item->slug ?? $item->id) }}" class="gallery-card-item d-block text-decoration-none">
+              <div class="gallery-img-container">
                 @if(!empty($item->url))
-                  <img src="{{ asset('storage/' . $item->url) }}" alt="{{ $item->judul ?? 'Dokumentasi UIS' }}" class="galeri-img-wrap">
+                  <img src="{{ asset('storage/' . $item->url) }}" alt="{{ $item->judul ?? 'Dokumentasi UIS' }}" class="gallery-card-img" loading="lazy">
                 @else
-                  <div class="d-flex align-items-center justify-content-center text-white" style="height: 220px; background: #032e12;">
+                  <div class="gallery-fallback-box">
                     <i class="bi bi-camera-fill fs-1 text-white-50"></i>
                   </div>
                 @endif
-                @if(!empty($item->judul))
-                  <div class="galeri-caption">
-                    <h6 class="text-dark mb-1 fw-bold" style="font-size: 15px; color: #1e293b !important;">{{ $item->judul }}</h6>
-                    @if(!empty($item->deskripsi))
-                      <small class="text-muted d-block" style="font-size: 13px; line-height: 1.5; color: #64748b !important;">{!! Str::limit(strip_tags($item->deskripsi), 90) !!}</small>
-                    @endif
-                    <div class="mt-2 text-primary fw-bold small d-flex align-items-center gap-1" style="font-size: 12.5px; color: var(--uis-purple) !important;">
-                      <span>Lihat Detail</span>
-                      <i class="bi bi-arrow-right"></i>
-                    </div>
-                  </div>
+
+                @php
+                  $pCount = is_array($item->galeri) ? count($item->galeri) : (!empty($item->url) ? 1 : 0);
+                  $catName = $item->kategori_berita ?: ($item->news->category ?? ($item->kategori ?: 'Dokumentasi'));
+                @endphp
+                @if($pCount > 1)
+                  <span class="badge position-absolute top-0 end-0 m-3 rounded-pill px-2 py-1 shadow-sm" style="background: rgba(2, 56, 20, 0.88); backdrop-filter: blur(4px); color: #FED802; font-size: 11px; font-weight: 700; border: 1px solid rgba(254, 216, 2, 0.4); z-index: 2;">
+                    <i class="bi bi-images me-1"></i> {{ $pCount }} Foto
+                  </span>
                 @endif
+
+                <div class="gallery-card-overlay">
+                  <span class="gallery-tag"><i class="bi bi-tag-fill me-1"></i>{{ strtoupper($catName) }}</span>
+                  <h5 class="gallery-card-title">{{ $item->judul }}</h5>
+                  @if(!empty($item->deskripsi))
+                    <p class="gallery-card-desc mb-0">{!! Str::limit(strip_tags($item->deskripsi), 90) !!}</p>
+                  @endif
+                </div>
               </div>
             </a>
           </div>

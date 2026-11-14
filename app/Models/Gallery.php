@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Concerns\HasVirtualSlug;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Gallery extends Model
 {
@@ -12,8 +13,10 @@ class Gallery extends Model
     protected $table = 'galleries';
 
     protected $fillable = [
+        'news_id',
         'judul',
         'kategori',
+        'kategori_berita',
         'deskripsi',
         'url',
         'galeri',
@@ -22,6 +25,11 @@ class Gallery extends Model
     protected $casts = [
         'galeri' => 'array',
     ];
+
+    public function news(): BelongsTo
+    {
+        return $this->belongsTo(News::class, 'news_id');
+    }
 
     protected static function booted(): void
     {
