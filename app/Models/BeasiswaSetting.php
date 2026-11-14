@@ -19,6 +19,10 @@ class BeasiswaSetting extends Model
         'tentang_deskripsi',
         'gambar',
         'link_daftar',
+        'tombol_daftar_teks',
+        'tombol_wa_teks',
+        'link_wa',
+        'show_wa',
         'is_active',
         'stats',
         'keunggulan_list',
@@ -30,6 +34,7 @@ class BeasiswaSetting extends Model
 
     protected $casts = [
         'is_active' => 'boolean',
+        'show_wa' => 'boolean',
         'stats' => 'array',
         'keunggulan_list' => 'array',
         'jalur_list' => 'array',

@@ -189,27 +189,93 @@
                             @enderror
                         </div>
 
-                        <div class="col-md-8">
-                            <label for="link_daftar" class="form-label fw-semibold">
-                                Tautan Khusus Pendaftaran Beasiswa
-                                <span class="badge bg-secondary fw-normal ms-1" style="font-size:10px">Opsional</span>
-                            </label>
-                            <input type="text" id="link_daftar" name="link_daftar"
-                                   class="form-control @error('link_daftar') is-invalid @enderror"
-                                   value="{{ old('link_daftar', $beasiswa->link_daftar) }}"
-                                   placeholder="Contoh: https://pmb.uis.ac.id/beasiswa atau kosongkan">
-                            <div class="form-text">Bila dikosongkan, tombol otomatis mengarah ke portal PMB yang aktif.</div>
-                            @error('link_daftar')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
+                        {{-- PENGATURAN DUA TOMBOL AKSI HERO --}}
+                        <div class="col-12 mt-4 pt-2 border-top">
+                            <h6 class="fw-bold text-success mb-2">
+                                <i class="bi bi-hand-index-thumb me-1"></i>Pengaturan Dua Tombol Aksi Hero (Callout Card)
+                            </h6>
+                            <small class="text-muted d-block mb-3">Atur teks tombol dan tautan untuk tombol kuning (Pendaftaran) dan tombol hijau (Konsultasi WhatsApp).</small>
+
+                            {{-- TOMBOL 1: PENDAFTARAN (KUNING) --}}
+                            <div class="card border p-3 mb-3 bg-light rounded-3">
+                                <div class="d-flex align-items-center gap-2 mb-2">
+                                    <span class="badge bg-warning text-dark fw-bold px-2 py-1">Tombol 1 (Kuning)</span>
+                                    <span class="fw-semibold small text-dark">Tombol Pendaftaran Jalur Beasiswa</span>
+                                </div>
+                                <div class="row g-2">
+                                    <div class="col-md-5">
+                                        <label for="tombol_daftar_teks" class="form-label small fw-semibold mb-1">Teks Tombol</label>
+                                        <input type="text" id="tombol_daftar_teks" name="tombol_daftar_teks"
+                                               class="form-control form-control-sm @error('tombol_daftar_teks') is-invalid @enderror"
+                                               value="{{ old('tombol_daftar_teks', $beasiswa->tombol_daftar_teks ?? 'Daftar Jalur Beasiswa') }}"
+                                               placeholder="Contoh: Daftar Jalur Beasiswa">
+                                        @error('tombol_daftar_teks')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-7">
+                                        <label for="link_daftar" class="form-label small fw-semibold mb-1">
+                                            Tautan Khusus Pendaftaran <span class="badge bg-secondary fw-normal ms-1" style="font-size:9.5px">Opsional</span>
+                                        </label>
+                                        <input type="text" id="link_daftar" name="link_daftar"
+                                               class="form-control form-control-sm @error('link_daftar') is-invalid @enderror"
+                                               value="{{ old('link_daftar', $beasiswa->link_daftar) }}"
+                                               placeholder="Contoh: https://pmb.uis.ac.id atau kosongkan">
+                                        <small class="text-muted" style="font-size:11px">Kosongkan untuk otomatis mengarah ke portal PMB yang aktif.</small>
+                                        @error('link_daftar')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
+
+                            {{-- TOMBOL 2: KONSULTASI WHATSAPP (HIJAU) --}}
+                            <div class="card border p-3 bg-light rounded-3">
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <div class="d-flex align-items-center gap-2">
+                                        <span class="badge bg-success text-white fw-bold px-2 py-1">Tombol 2 (Hijau)</span>
+                                        <span class="fw-semibold small text-dark">Tombol Konsultasi via WhatsApp</span>
+                                    </div>
+                                    <div class="form-check form-switch mb-0">
+                                        <input class="form-check-input" type="checkbox" id="show_wa" name="show_wa" value="1"
+                                               {{ old('show_wa', $beasiswa->show_wa ?? true) ? 'checked' : '' }}>
+                                        <label class="form-check-label small fw-semibold" for="show_wa">Tampilkan Tombol</label>
+                                    </div>
+                                </div>
+                                <div class="row g-2">
+                                    <div class="col-md-5">
+                                        <label for="tombol_wa_teks" class="form-label small fw-semibold mb-1">Teks Tombol</label>
+                                        <input type="text" id="tombol_wa_teks" name="tombol_wa_teks"
+                                               class="form-control form-control-sm @error('tombol_wa_teks') is-invalid @enderror"
+                                               value="{{ old('tombol_wa_teks', $beasiswa->tombol_wa_teks ?? 'Konsultasi via WhatsApp') }}"
+                                               placeholder="Contoh: Konsultasi via WhatsApp">
+                                        @error('tombol_wa_teks')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                    <div class="col-md-7">
+                                        <label for="link_wa" class="form-label small fw-semibold mb-1">
+                                            Nomor WhatsApp / Tautan Khusus <span class="badge bg-secondary fw-normal ms-1" style="font-size:9.5px">Opsional</span>
+                                        </label>
+                                        <input type="text" id="link_wa" name="link_wa"
+                                               class="form-control form-control-sm @error('link_wa') is-invalid @enderror"
+                                               value="{{ old('link_wa', $beasiswa->link_wa) }}"
+                                               placeholder="Contoh: 08123456789 atau https://wa.me/628123456789">
+                                        <small class="text-muted" style="font-size:11px">Kosongkan untuk otomatis menggunakan WhatsApp Admin Humas UIS.</small>
+                                        @error('link_wa')
+                                            <div class="invalid-feedback">{{ $message }}</div>
+                                        @enderror
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
-                        <div class="col-md-4 d-flex align-items-center pt-md-3">
-                            <div class="form-check form-switch p-2 border rounded bg-light w-100">
+                        <div class="col-md-12 pt-2">
+                            <div class="form-check form-switch p-2 border rounded bg-light">
                                 <input class="form-check-input ms-0 me-2" type="checkbox" id="is_active" name="is_active" value="1"
                                        {{ old('is_active', $beasiswa->is_active) ? 'checked' : '' }}>
                                 <label class="form-check-label fw-semibold" for="is_active">
-                                    Aktifkan Status Buka Beasiswa
+                                    Aktifkan Status Buka Beasiswa di Halaman Utama
                                 </label>
                             </div>
                         </div>

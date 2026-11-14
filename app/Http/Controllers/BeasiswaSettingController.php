@@ -48,6 +48,10 @@ class BeasiswaSettingController extends Controller
             'tentang_deskripsi' => 'nullable|string|max:10000',
             'gambar' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:10240',
             'link_daftar' => 'nullable|string|max:500',
+            'tombol_daftar_teks' => 'nullable|string|max:100',
+            'tombol_wa_teks' => 'nullable|string|max:100',
+            'link_wa' => 'nullable|string|max:500',
+            'show_wa' => 'nullable|boolean',
             'is_active' => 'nullable|boolean',
             'stats' => 'nullable|array',
             'stats.*.icon' => 'nullable|string|max:100',
@@ -79,6 +83,9 @@ class BeasiswaSettingController extends Controller
         ]);
 
         $validated['is_active'] = $request->has('is_active');
+        $validated['show_wa'] = $request->has('show_wa');
+        $validated['tombol_daftar_teks'] = $request->filled('tombol_daftar_teks') ? $request->input('tombol_daftar_teks') : 'Daftar Jalur Beasiswa';
+        $validated['tombol_wa_teks'] = $request->filled('tombol_wa_teks') ? $request->input('tombol_wa_teks') : 'Konsultasi via WhatsApp';
 
         $beasiswa = BeasiswaSetting::first() ?? new BeasiswaSetting();
 

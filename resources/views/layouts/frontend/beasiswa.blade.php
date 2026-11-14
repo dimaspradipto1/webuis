@@ -465,11 +465,17 @@
         <div class="col-lg-4 text-center text-lg-end">
           <div class="d-flex flex-column gap-2 justify-content-center">
             <a href="{{ $pmbLink }}" target="_blank" class="btn btn-warning px-3 py-2 fw-bold text-dark shadow-sm rounded-pill" style="background: var(--uis-yellow); border-color: var(--uis-yellow); font-size: 13.5px;">
-              <i class="bi bi-pencil-square me-2"></i>Daftar Jalur Beasiswa
+              <i class="bi bi-pencil-square me-2"></i>{{ $beasiswaSetting->tombol_daftar_teks ?: 'Daftar Jalur Beasiswa' }}
             </a>
-            @if(($waAdminSetting->is_active ?? true) && !empty($waAdminSetting->clean_wa))
-            <a href="{{ $waAdminSetting->wa_url }}" target="_blank" class="btn btn-outline-success px-3 py-2 fw-semibold rounded-pill" style="font-size: 13px;">
-              <i class="bi bi-whatsapp me-2"></i>Konsultasi via WhatsApp
+            @php
+              $customWa = !empty($beasiswaSetting->link_wa) 
+                  ? (str_starts_with($beasiswaSetting->link_wa, 'http') ? $beasiswaSetting->link_wa : ('https://wa.me/' . preg_replace('/[^0-9]/', '', $beasiswaSetting->link_wa)))
+                  : ($waAdminSetting->wa_url ?? '');
+              $showWa = $beasiswaSetting->show_wa ?? true;
+            @endphp
+            @if($showWa && !empty($customWa))
+            <a href="{{ $customWa }}" target="_blank" class="btn btn-outline-success px-3 py-2 fw-semibold rounded-pill" style="font-size: 13px;">
+              <i class="bi bi-whatsapp me-2"></i>{{ $beasiswaSetting->tombol_wa_teks ?: 'Konsultasi via WhatsApp' }}
             </a>
             @endif
           </div>
