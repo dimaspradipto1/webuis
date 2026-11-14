@@ -192,7 +192,7 @@
         Downloads Dokumen <em>Humas</em>
       </h1>
       <div class="breadcrumb-custom">
-        <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Home page</a>
+        <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
         <span>/</span>
         <a href="{{ route('homepage.humas') }}">Humas & Protokoler</a>
         <span>/</span>

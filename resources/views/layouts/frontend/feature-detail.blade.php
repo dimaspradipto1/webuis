@@ -42,9 +42,13 @@
 @section('content')
 <section class="feature-detail-hero">
   <div class="container">
-    <a href="{{ route('homepage') }}#keunggulan-beranda" class="text-white text-decoration-none small">
-      <i class="bi bi-arrow-left me-1"></i>Kembali ke Beranda
-    </a>
+    <div class="breadcrumb-custom mb-3">
+      <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
+      <span>/</span>
+      <a href="{{ route('homepage') }}#keunggulan-beranda">Keunggulan UIS</a>
+      <span>/</span>
+      <span class="active">{{ Str::limit($feature->judul, 40) }}</span>
+    </div>
     <div class="mt-4">
       <div class="feature-detail-icon mb-3"><i class="bi {{ $feature->icon ?: 'bi-layers' }}"></i></div>
       <h1 class="fw-bold mb-3">{{ $feature->judul }}</h1>

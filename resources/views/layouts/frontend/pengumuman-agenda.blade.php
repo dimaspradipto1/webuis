@@ -6,8 +6,9 @@
 @section('content')
 <style>
   .pa-page-hero {
-    background: linear-gradient(135deg, #034e1c 0%, #046B26 60%, #068932 100%);
-    padding: 64px 0 54px;
+    background: #046b26 !important;
+    border-bottom: 3px solid #fed802 !important;
+    padding: 30px 0 24px;
     color: #fff;
   }
   .pa-filter-tab {

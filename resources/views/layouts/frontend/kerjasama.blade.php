@@ -8,9 +8,10 @@
   .kerjasama-hero {
     position: relative;
     overflow: hidden;
-    padding: 28px 0 30px;
+    padding: 26px 0 22px;
     color: #fff;
-    background: linear-gradient(125deg, #073b1b 0%, #0b5626 58%, #138044 100%);
+    background: #046b26 !important;
+    border-bottom: 3px solid #fed802 !important;
   }
   .kerjasama-hero .container {
     position: relative;
@@ -261,11 +262,11 @@
 {{-- HERO --}}
 <section class="kerjasama-hero">
   <div class="container">
-    <nav class="kerjasama-breadcrumb" aria-label="breadcrumb">
-      <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill"></i> Beranda</a>
+    <div class="breadcrumb-custom mb-3" aria-label="breadcrumb">
+      <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
       <span>/</span>
       <span class="active">Mitra & Kerjasama</span>
-    </nav>
+    </div>
     <div class="mt-3">
       <h1>Mitra <span>Kerjasama</span></h1>
     </div>

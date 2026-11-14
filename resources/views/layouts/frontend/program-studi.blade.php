@@ -8,10 +8,11 @@
 <style>
   .uis-prodi-hero {
     background: linear-gradient(135deg, #062b16 0%, #0b4f26 55%, #116a34 100%);
-    padding: 84px 0 68px;
+    padding: 60px 0 45px;
     position: relative;
     overflow: hidden;
     color: #ffffff;
+    border-bottom: 3px solid #fed802 !important;
   }
   .uis-prodi-hero::before {
     content: "";
@@ -244,9 +245,9 @@
         Program Studi <span style="color: #f4c430;">Pilihan Anda</span>
       </h1>
       <div class="breadcrumb-custom justify-content-center">
-        <a href="{{ route('homepage') }}" class="text-white-50 text-decoration-none"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
-        <span class="text-white-50 mx-2">/</span>
-        <span class="text-warning fw-semibold">Program Studi</span>
+        <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
+        <span>/</span>
+        <span class="active">Program Studi</span>
       </div>
     </div>
   </div>

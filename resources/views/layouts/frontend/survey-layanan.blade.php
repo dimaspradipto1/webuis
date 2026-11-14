@@ -118,16 +118,16 @@
 
 <div class="survey-page pb-5">
 
-  {{-- HERO BANNER (Konsisten dengan Layanan Humas Lainnya) --}}
-  <div style="background: linear-gradient(135deg, #032e12 0%, #044b1c 60%, #064e3b 100%); color: #ffffff; padding: 50px 0 42px 0; position: relative;">
+  {{-- HERO BANNER (Konsisten dengan Standar Hero UIS) --}}
+  <div style="background: #046b26; border-bottom: 3px solid #fed802; color: #ffffff; padding: 32px 0 28px 0; position: relative;">
     <div class="container text-center position-relative" style="z-index: 1;">
-      <nav aria-label="breadcrumb" class="mb-3">
-        <ol class="breadcrumb justify-content-center mb-0" style="font-size: 13px;">
-          <li class="breadcrumb-item"><a href="{{ route('homepage') }}" class="text-white-50 text-decoration-none">Beranda</a></li>
-          <li class="breadcrumb-item"><a href="{{ route('homepage.humas') }}" class="text-white-50 text-decoration-none">Humas</a></li>
-          <li class="breadcrumb-item active text-warning fw-semibold" aria-current="page">{{ $setting->judul_hero ?? 'Survey Layanan' }}</li>
-        </ol>
-      </nav>
+      <div class="breadcrumb-custom justify-content-center mb-3">
+        <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
+        <span>/</span>
+        <a href="{{ route('homepage.humas') }}">Humas</a>
+        <span>/</span>
+        <span class="active">{{ $setting->judul_hero ?? 'Survey Layanan' }}</span>
+      </div>
 
       <h1 class="fw-bold mb-2 text-white" style="font-size: 32px; letter-spacing: -0.5px;">
         {{ $setting->judul_hero ?? 'Survey Layanan' }}

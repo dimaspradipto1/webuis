@@ -8,10 +8,11 @@
 <style>
   .prodi-detail-hero {
     background: linear-gradient(135deg, #062b16 0%, #0b4f26 55%, #116a34 100%);
-    padding: 76px 0 60px;
+    padding: 55px 0 45px;
     color: #ffffff;
     position: relative;
     overflow: hidden;
+    border-bottom: 3px solid #fed802 !important;
   }
   .prodi-detail-hero::before {
     content: "";
@@ -162,11 +163,11 @@
 <div class="prodi-detail-hero">
   <div class="container position-relative" style="z-index: 2;">
     <div class="breadcrumb-custom mb-3">
-      <a href="{{ route('homepage') }}" class="text-white-50 text-decoration-none"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
-      <span class="text-white-50 mx-2">/</span>
-      <a href="{{ route('homepage.program-studi') }}" class="text-white-50 text-decoration-none">Program Studi</a>
-      <span class="text-white-50 mx-2">/</span>
-      <span class="text-warning fw-semibold">{{ $prodi->nama }}</span>
+      <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
+      <span>/</span>
+      <a href="{{ route('homepage.program-studi') }}">Program Studi</a>
+      <span>/</span>
+      <span class="active">{{ $prodi->nama }}</span>
     </div>
 
     <div class="d-flex flex-wrap gap-2 mb-3">

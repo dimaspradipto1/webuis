@@ -195,6 +195,19 @@
 @endpush
 
 @section('content')
+<!-- Hero Banner & Breadcrumb Standar UIS -->
+<div class="page-hero-banner">
+  <div class="container">
+    <div class="breadcrumb-custom">
+      <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
+      <span>/</span>
+      <a href="{{ route('homepage.tentang') }}">Profil</a>
+      <span>/</span>
+      <span class="active">Profil Pimpinan & Struktur</span>
+    </div>
+  </div>
+</div>
+
 <section class="pimpinan-page-section">
   <div class="container">
 

@@ -122,20 +122,26 @@
       : [];
 @endphp
 
+<!-- Hero Banner & Breadcrumb Standar UIS -->
+<div class="page-hero-banner">
+  <div class="container">
+    <div class="breadcrumb-custom">
+      <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
+      <span>/</span>
+      <a href="{{ route('homepage.struktur-organisasi') }}">Profil Pimpinan & Struktur</a>
+      <span>/</span>
+      <span class="active">{{ $pimpinan->nama }}</span>
+    </div>
+  </div>
+</div>
+
 <section class="pimpinan-detail-section">
   <div class="container">
 
-    {{-- Top Back Link / Breadcrumb --}}
-    <div class="pimpinan-breadcrumb-bar d-flex align-items-center justify-content-between flex-wrap gap-2">
-      <div>
-        <a href="{{ route('homepage.struktur-organisasi') }}">
-          <i class="bi bi-arrow-left me-1"></i> Profil Pimpinan dan Struktur
-        </a>
-        <span class="text-muted mx-2">/</span>
-        <span class="text-secondary">{{ $pimpinan->nama }}</span>
-      </div>
+    {{-- Top Action Link --}}
+    <div class="d-flex align-items-center justify-content-end mb-4">
       <a href="{{ route('homepage.struktur-organisasi') }}" class="btn btn-sm btn-outline-success rounded-pill px-3">
-        <i class="bi bi-grid me-1"></i> Lihat Semua Pimpinan
+        <i class="bi bi-arrow-left me-1"></i> Kembali ke Daftar Pimpinan
       </a>
     </div>
 

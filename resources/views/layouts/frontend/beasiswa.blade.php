@@ -34,9 +34,6 @@
     font-size: clamp(22px, 2.5vw, 28px) !important;
     margin-bottom: 4px !important;
   }
-  .breadcrumb-custom {
-    font-size: 12.5px !important;
-  }
 
   /* Callout Card Status */
   .beasiswa-callout-card {
