@@ -17,102 +17,54 @@
     --uis-yellow-hover: #e5c302;
   }
 
-  /* Hero Section */
-  .beasiswa-hero {
-    background: linear-gradient(135deg, #023814 0%, #046B26 60%, #088a33 100%);
-    padding: 72px 0 60px;
-    color: #ffffff;
-    position: relative;
-    overflow: hidden;
-  }
-  .beasiswa-hero::before {
-    content: '';
-    position: absolute;
-    top: -50%;
-    right: -20%;
-    width: 600px;
-    height: 600px;
-    background: radial-gradient(circle, rgba(254, 216, 2, 0.12) 0%, transparent 70%);
-    border-radius: 50%;
-    pointer-events: none;
-  }
-  .beasiswa-breadcrumb {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    margin: 0 0 16px;
-    color: rgba(255, 255, 255, 0.65);
-    font-size: 12px;
-    line-height: 1.4;
-  }
-  .beasiswa-breadcrumb a {
-    color: rgba(255, 255, 255, 0.65);
-    text-decoration: none;
-    transition: color 0.2s ease;
-  }
-  .beasiswa-breadcrumb a:hover,
-  .beasiswa-breadcrumb .active {
-    color: var(--uis-yellow, #FED802);
-  }
-  .beasiswa-hero-title {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: clamp(2rem, 3.2vw, 2.85rem);
-    font-weight: 800;
-    line-height: 1.25;
-    letter-spacing: -0.02em;
-    margin-bottom: 16px;
-  }
-  .beasiswa-hero-title span {
-    color: var(--uis-yellow);
-  }
-  .beasiswa-hero-desc {
-    font-size: clamp(15px, 1.4vw, 17px);
-    color: rgba(255, 255, 255, 0.88);
-    max-width: 780px;
-    line-height: 1.7;
+  /* Callout Card Status */
+  .beasiswa-callout-card {
+    background: #ffffff;
+    border: 1px solid #e3ebe5;
+    border-radius: 20px;
+    padding: clamp(22px, 3.5vw, 32px);
+    box-shadow: 0 8px 24px rgba(4, 107, 38, 0.05);
+    border-left: 5px solid var(--uis-green);
+    margin-top: 32px;
     margin-bottom: 28px;
   }
   .beasiswa-badge-status {
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    background: rgba(254, 216, 2, 0.2);
-    border: 1px solid var(--uis-yellow);
-    color: #ffffff;
-    padding: 6px 16px;
+    background: #eaf6ee;
+    border: 1px solid #cce8d4;
+    color: var(--uis-green);
+    padding: 5px 14px;
     border-radius: 999px;
     font-weight: 700;
-    font-size: 13px;
-    margin-bottom: 20px;
+    font-size: 12px;
     letter-spacing: 0.3px;
   }
   .beasiswa-pulse-dot {
-    width: 9px;
-    height: 9px;
-    background-color: var(--uis-yellow);
+    width: 8px;
+    height: 8px;
+    background-color: var(--uis-green);
     border-radius: 50%;
-    box-shadow: 0 0 0 0 rgba(254, 216, 2, 0.7);
+    box-shadow: 0 0 0 0 rgba(4, 107, 38, 0.7);
     animation: beasiswaPulse 1.8s infinite;
   }
   @keyframes beasiswaPulse {
-    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(254, 216, 2, 0.7); }
-    70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(254, 216, 2, 0); }
-    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(254, 216, 2, 0); }
+    0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(4, 107, 38, 0.7); }
+    70% { transform: scale(1); box-shadow: 0 0 0 7px rgba(4, 107, 38, 0); }
+    100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(4, 107, 38, 0); }
   }
 
   /* Stats Cards Grid */
   .beasiswa-stats-row {
-    margin-top: -36px;
-    position: relative;
-    z-index: 10;
-    margin-bottom: 50px;
+    margin-bottom: 44px;
   }
   .beasiswa-stat-box {
     background: #ffffff;
     border: 1px solid #e2ebe4;
     border-radius: 16px;
-    padding: 22px 20px;
-    box-shadow: 0 10px 30px rgba(4, 107, 38, 0.08);
+    padding: 20px 18px;
+    box-shadow: 0 6px 20px rgba(4, 107, 38, 0.05);
     transition: transform 0.25s ease, box-shadow 0.25s ease;
     height: 100%;
     display: flex;
@@ -120,33 +72,33 @@
     gap: 16px;
   }
   .beasiswa-stat-box:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 16px 36px rgba(4, 107, 38, 0.12);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(4, 107, 38, 0.1);
     border-color: #cce3d2;
   }
   .beasiswa-stat-icon {
-    width: 52px;
-    height: 52px;
-    border-radius: 14px;
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
     background: #eaf6ee;
     color: var(--uis-green);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 24px;
+    font-size: 22px;
     flex-shrink: 0;
   }
   .beasiswa-stat-value {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: 800;
     color: #12351f;
     line-height: 1.1;
   }
   .beasiswa-stat-label {
-    font-size: 13px;
+    font-size: 12.5px;
     color: #64748b;
-    margin-top: 4px;
+    margin-top: 3px;
     font-weight: 500;
   }
 
@@ -157,54 +109,54 @@
     border-radius: 24px;
     padding: clamp(24px, 4vw, 44px);
     box-shadow: 0 8px 30px rgba(12, 47, 25, 0.05);
-    margin-bottom: 54px;
+    margin-bottom: 48px;
   }
   .beasiswa-section-tag {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 6px 14px;
+    padding: 5px 12px;
     border-radius: 999px;
-    font-size: 12px;
+    font-size: 11.5px;
     font-weight: 700;
     color: var(--uis-green);
     background: #eaf6ee;
     border: 1px solid #d4ebdc;
     letter-spacing: 0.5px;
-    margin-bottom: 14px;
+    margin-bottom: 12px;
     text-transform: uppercase;
   }
   .beasiswa-section-heading {
     font-family: 'Plus Jakarta Sans', sans-serif;
-    font-size: clamp(1.6rem, 2.3vw, 2.15rem);
+    font-size: clamp(1.5rem, 2.2vw, 1.95rem);
     font-weight: 800;
     color: #12351f;
     line-height: 1.3;
-    margin-bottom: 18px;
+    margin-bottom: 16px;
     letter-spacing: -0.02em;
   }
   .beasiswa-desc-lead {
-    font-size: 16px;
+    font-size: 15px;
     line-height: 1.8;
     color: #334155;
-    margin-bottom: 22px;
+    margin-bottom: 20px;
   }
   .beasiswa-feature-list {
     list-style: none;
     padding: 0;
-    margin: 0 0 24px;
+    margin: 0 0 20px;
   }
   .beasiswa-feature-list li {
     display: flex;
     align-items: flex-start;
     gap: 12px;
-    margin-bottom: 12px;
-    font-size: 14.5px;
+    margin-bottom: 10px;
+    font-size: 14px;
     color: #334155;
   }
   .beasiswa-feature-list i {
     color: var(--uis-green);
-    font-size: 18px;
+    font-size: 17px;
     margin-top: 1px;
     flex-shrink: 0;
   }
@@ -214,9 +166,9 @@
     position: relative;
     border-radius: 20px;
     overflow: hidden;
-    box-shadow: 0 16px 40px rgba(4, 107, 38, 0.18);
+    box-shadow: 0 14px 36px rgba(4, 107, 38, 0.16);
     height: 100%;
-    min-height: 380px;
+    min-height: 360px;
     background: #046B26;
   }
   .beasiswa-img-box img {
@@ -254,7 +206,7 @@
   }
   .beasiswa-img-caption p {
     color: rgba(255, 255, 255, 0.85);
-    font-size: 13px;
+    font-size: 12.5px;
     margin-bottom: 0;
   }
 
@@ -263,19 +215,19 @@
     background: #f8faf9;
     border: 1.5px solid #d4ebdc;
     border-radius: 18px;
-    padding: 20px 24px;
-    margin-bottom: 28px;
-    box-shadow: 0 6px 20px rgba(4, 107, 38, 0.04);
+    padding: 18px 22px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 16px rgba(4, 107, 38, 0.04);
   }
   .beasiswa-select-control {
     border: 2px solid #046B26;
     border-radius: 12px;
-    padding: 12px 18px;
-    font-size: 15px;
+    padding: 11px 16px;
+    font-size: 14.5px;
     font-weight: 700;
     color: #12351f;
     background-color: #ffffff;
-    box-shadow: 0 4px 12px rgba(4, 107, 38, 0.06);
+    box-shadow: 0 3px 10px rgba(4, 107, 38, 0.06);
     transition: all 0.2s ease;
     cursor: pointer;
   }
@@ -288,24 +240,24 @@
   .beasiswa-accordion .accordion-item {
     border: 1.5px solid #e2ebe4;
     border-radius: 18px !important;
-    margin-bottom: 18px;
+    margin-bottom: 16px;
     overflow: hidden;
     background: #ffffff;
-    box-shadow: 0 6px 22px rgba(12, 47, 25, 0.04);
+    box-shadow: 0 4px 18px rgba(12, 47, 25, 0.04);
     transition: all 0.25s ease;
   }
   .beasiswa-accordion .accordion-item:hover,
   .beasiswa-accordion .accordion-item.is-highlighted {
     border-color: #046B26;
-    box-shadow: 0 12px 32px rgba(4, 107, 38, 0.12);
+    box-shadow: 0 10px 28px rgba(4, 107, 38, 0.1);
   }
   .beasiswa-accordion .accordion-button {
-    padding: 22px 24px;
+    padding: 20px 22px;
     background: #ffffff;
     color: #12351f;
     font-family: 'Plus Jakarta Sans', sans-serif;
     font-weight: 700;
-    font-size: 17px;
+    font-size: 16.5px;
     border: none;
     box-shadow: none !important;
     gap: 16px;
@@ -315,13 +267,9 @@
     color: var(--uis-green);
     border-bottom: 1.5px solid #d4ebdc;
   }
-  .beasiswa-accordion .accordion-button::after {
-    background-size: 16px;
-    filter: hue-rotate(90deg);
-  }
   .beasiswa-acc-icon {
-    width: 44px;
-    height: 44px;
+    width: 42px;
+    height: 42px;
     border-radius: 12px;
     background: #edf7f0;
     color: var(--uis-green);
@@ -339,7 +287,7 @@
   .beasiswa-pill-tag {
     font-size: 11px;
     font-weight: 700;
-    padding: 4px 10px;
+    padding: 3px 9px;
     border-radius: 999px;
     letter-spacing: 0.3px;
     background: #fdf5d3;
@@ -347,7 +295,7 @@
     border: 1px solid #fae69e;
   }
   .beasiswa-accordion .accordion-body {
-    padding: 26px 28px;
+    padding: 24px 26px;
     background: #ffffff;
   }
 
@@ -355,20 +303,20 @@
   .beasiswa-detail-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    gap: 20px;
-    margin-top: 20px;
+    gap: 18px;
+    margin-top: 18px;
   }
   .beasiswa-detail-box {
     background: #f8faf9;
     border: 1px solid #e3ebe5;
     border-radius: 14px;
-    padding: 18px 20px;
+    padding: 16px 18px;
   }
   .beasiswa-detail-box h6 {
     font-weight: 700;
-    font-size: 14px;
+    font-size: 13.5px;
     color: var(--uis-green);
-    margin-bottom: 12px;
+    margin-bottom: 10px;
     display: flex;
     align-items: center;
     gap: 8px;
@@ -376,7 +324,7 @@
   .beasiswa-detail-box ul {
     margin: 0;
     padding-left: 18px;
-    font-size: 13.5px;
+    font-size: 13px;
     color: #334155;
     line-height: 1.7;
   }
@@ -384,37 +332,37 @@
   /* Steps Timeline */
   .beasiswa-step-box {
     text-align: center;
-    padding: 24px 18px;
+    padding: 22px 16px;
     background: #ffffff;
     border-radius: 18px;
     border: 1px solid #e2ebe4;
-    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.03);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
     height: 100%;
     position: relative;
   }
   .beasiswa-step-num {
-    width: 48px;
-    height: 48px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     background: var(--uis-green);
     color: #ffffff;
     font-weight: 800;
-    font-size: 20px;
+    font-size: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 0 auto 16px;
-    box-shadow: 0 6px 16px rgba(4, 107, 38, 0.25);
+    margin: 0 auto 14px;
+    box-shadow: 0 5px 14px rgba(4, 107, 38, 0.22);
     border: 3px solid var(--uis-yellow);
   }
   .beasiswa-step-box h5 {
-    font-size: 15.5px;
+    font-size: 15px;
     font-weight: 700;
     color: #12351f;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
   .beasiswa-step-box p {
-    font-size: 13px;
+    font-size: 12.5px;
     color: #64748b;
     margin: 0;
     line-height: 1.6;
@@ -424,68 +372,72 @@
   .beasiswa-cta-banner {
     background: linear-gradient(135deg, #023814 0%, #046B26 65%, #088a33 100%);
     border-radius: 24px;
-    padding: clamp(32px, 5vw, 56px);
+    padding: clamp(30px, 4.5vw, 50px);
     color: #ffffff;
-    box-shadow: 0 16px 44px rgba(4, 107, 38, 0.2);
+    box-shadow: 0 14px 40px rgba(4, 107, 38, 0.18);
     border: 2px solid var(--uis-yellow);
     position: relative;
     overflow: hidden;
-    margin-top: 60px;
-  }
-  .beasiswa-cta-banner::after {
-    content: '';
-    position: absolute;
-    bottom: -40px;
-    right: -40px;
-    width: 200px;
-    height: 200px;
-    background: radial-gradient(circle, rgba(254, 216, 2, 0.2) 0%, transparent 70%);
-    border-radius: 50%;
+    margin-top: 48px;
   }
 </style>
 @endpush
 
 @section('content')
-{{-- HERO SECTION --}}
-<section class="beasiswa-hero">
+<!-- ═══════════════════════════════════════════════
+     HEADER HERO BANNER & BREADCRUMB (SESUAI ACUAN TENTANG UIS)
+═══════════════════════════════════════════════ -->
+<div class="about-hero">
   <div class="container">
-    <nav class="beasiswa-breadcrumb" aria-label="breadcrumb">
-      <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill"></i> Beranda</a>
-      <span>/</span>
-      <span class="active">Program Beasiswa</span>
-    </nav>
+    <div class="about-hero-content" data-aos="fade-up" data-aos-duration="800">
+      <h1 class="about-hero-title">
+        Program <em>Beasiswa</em>
+      </h1>
+      <div class="breadcrumb-custom">
+        <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
+        <span>/</span>
+        <span class="active">Program Beasiswa</span>
+      </div>
+    </div>
+  </div>
+</div>
 
-    <div class="row align-items-center">
-      <div class="col-lg-9">
+{{-- STATUS PENDAFTARAN & AJAKAN BEASISWA --}}
+<section class="container">
+  <div class="beasiswa-callout-card" data-aos="fade-up">
+    <div class="row align-items-center g-4">
+      <div class="col-lg-8">
         @if(!empty($beasiswaSetting->hero_badge ?? 'PENDAFTARAN BEASISWA T.A. 2026/2027 TELAH DIBUKA'))
-        <div class="beasiswa-badge-status">
+        <div class="beasiswa-badge-status mb-3">
           <span class="beasiswa-pulse-dot"></span>
           <span>{{ $beasiswaSetting->hero_badge ?? 'PENDAFTARAN BEASISWA T.A. 2026/2027 TELAH DIBUKA' }}</span>
         </div>
         @endif
 
-        <h1 class="beasiswa-hero-title">
+        <h2 class="fw-bold text-dark mb-2" style="font-size: clamp(1.4rem, 2vw, 1.85rem); letter-spacing: -0.02em;">
           {{ $beasiswaSetting->hero_judul ?? 'Raih Impian & Masa Depan Bersama Program Beasiswa Universitas Ibnu Sina' }}
-        </h1>
+        </h2>
 
-        <p class="beasiswa-hero-desc">
+        <p class="text-secondary mb-0" style="font-size: 14.5px; line-height: 1.75;">
           {{ $beasiswaSetting->hero_deskripsi ?? "Universitas Ibnu Sina (UIS) Batam berkomitmen memberikan akses pendidikan tinggi bermutu melalui berbagai skema beasiswa penuh (100% Bebas SPP) maupun beasiswa potongan biaya pendidikan bagi calon mahasiswa berprestasi, tahfidz Al-Qur'an, dan mitra industri." }}
         </p>
+      </div>
 
-        <div class="d-flex flex-wrap gap-3">
-          @php
-            $defaultPmb = $pmbSetting->tombol_link_1 ?? route('homepage.kontak');
-            if (!str_starts_with($defaultPmb, 'http') && !str_starts_with($defaultPmb, '/')) {
-                $defaultPmb = '/' . $defaultPmb;
-            }
-            $pmbLink = !empty($beasiswaSetting->link_daftar) ? $beasiswaSetting->link_daftar : $defaultPmb;
-          @endphp
+      <div class="col-lg-4 text-center text-lg-end">
+        @php
+          $defaultPmb = $pmbSetting->tombol_link_1 ?? route('homepage.kontak');
+          if (!str_starts_with($defaultPmb, 'http') && !str_starts_with($defaultPmb, '/')) {
+              $defaultPmb = '/' . $defaultPmb;
+          }
+          $pmbLink = !empty($beasiswaSetting->link_daftar) ? $beasiswaSetting->link_daftar : $defaultPmb;
+        @endphp
+        <div class="d-flex flex-column gap-2 justify-content-center">
           <a href="{{ $pmbLink }}" target="_blank" class="btn btn-warning px-4 py-3 fw-bold text-dark shadow-sm rounded-pill" style="background: var(--uis-yellow); border-color: var(--uis-yellow);">
-            <i class="bi bi-pencil-square me-2"></i>Daftar Jalur Beasiswa Sekarang
+            <i class="bi bi-pencil-square me-2"></i>Daftar Jalur Beasiswa
           </a>
           @if(($waAdminSetting->is_active ?? true) && !empty($waAdminSetting->clean_wa))
-          <a href="{{ $waAdminSetting->wa_url }}" target="_blank" class="btn btn-outline-light px-4 py-3 fw-semibold rounded-pill">
-            <i class="bi bi-whatsapp me-2 text-success"></i>Konsultasi via WhatsApp
+          <a href="{{ $waAdminSetting->wa_url }}" target="_blank" class="btn btn-outline-success px-4 py-3 fw-semibold rounded-pill">
+            <i class="bi bi-whatsapp me-2"></i>Konsultasi via WhatsApp
           </a>
           @endif
         </div>
