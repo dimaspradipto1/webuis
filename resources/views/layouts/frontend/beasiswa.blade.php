@@ -457,25 +457,28 @@
 
     <div class="row align-items-center">
       <div class="col-lg-9">
+        @if(!empty($beasiswaSetting->hero_badge ?? 'PENDAFTARAN BEASISWA T.A. 2026/2027 TELAH DIBUKA'))
         <div class="beasiswa-badge-status">
           <span class="beasiswa-pulse-dot"></span>
-          <span>PENDAFTARAN BEASISWA T.A. 2026/2027 TELAH DIBUKA</span>
+          <span>{{ $beasiswaSetting->hero_badge ?? 'PENDAFTARAN BEASISWA T.A. 2026/2027 TELAH DIBUKA' }}</span>
         </div>
+        @endif
 
         <h1 class="beasiswa-hero-title">
-          Raih Impian & Masa Depan Bersama <span>Program Beasiswa</span> Universitas Ibnu Sina
+          {{ $beasiswaSetting->hero_judul ?? 'Raih Impian & Masa Depan Bersama Program Beasiswa Universitas Ibnu Sina' }}
         </h1>
 
         <p class="beasiswa-hero-desc">
-          Universitas Ibnu Sina (UIS) Batam berkomitmen memberikan akses pendidikan tinggi bermutu melalui berbagai skema beasiswa penuh (100% Bebas SPP) maupun beasiswa potongan biaya pendidikan bagi calon mahasiswa berprestasi, tahfidz Al-Qur'an, dan mitra industri.
+          {{ $beasiswaSetting->hero_deskripsi ?? "Universitas Ibnu Sina (UIS) Batam berkomitmen memberikan akses pendidikan tinggi bermutu melalui berbagai skema beasiswa penuh (100% Bebas SPP) maupun beasiswa potongan biaya pendidikan bagi calon mahasiswa berprestasi, tahfidz Al-Qur'an, dan mitra industri." }}
         </p>
 
         <div class="d-flex flex-wrap gap-3">
           @php
-            $pmbLink = $pmbSetting->tombol_link_1 ?? route('homepage.kontak');
-            if (!str_starts_with($pmbLink, 'http') && !str_starts_with($pmbLink, '/')) {
-                $pmbLink = '/' . $pmbLink;
+            $defaultPmb = $pmbSetting->tombol_link_1 ?? route('homepage.kontak');
+            if (!str_starts_with($defaultPmb, 'http') && !str_starts_with($defaultPmb, '/')) {
+                $defaultPmb = '/' . $defaultPmb;
             }
+            $pmbLink = !empty($beasiswaSetting->link_daftar) ? $beasiswaSetting->link_daftar : $defaultPmb;
           @endphp
           <a href="{{ $pmbLink }}" target="_blank" class="btn btn-warning px-4 py-3 fw-bold text-dark shadow-sm rounded-pill" style="background: var(--uis-yellow); border-color: var(--uis-yellow);">
             <i class="bi bi-pencil-square me-2"></i>Daftar Jalur Beasiswa Sekarang
@@ -539,13 +542,17 @@
     <div class="row g-4 g-lg-5 align-items-center">
       <div class="col-lg-6">
         <span class="beasiswa-section-tag"><i class="bi bi-info-circle-fill"></i> Tentang Program Beasiswa UIS</span>
-        <h2 class="beasiswa-section-heading">Membuka Akses Pendidikan Tinggi Unggul Tanpa Kendala Biaya</h2>
-        <p class="beasiswa-desc-lead">
-          Sebagai institusi pendidikan tinggi terkemuka di Kota Batam yang berlandaskan nilai-nilai <strong>Iman, Ilmu, dan Amal</strong>, Universitas Ibnu Sina meyakini bahwa keterbatasan finansial tidak boleh menjadi penghalang bagi putra-putri bangsa untuk meraih gelar Sarjana (S1) maupun Magister (S2).
-        </p>
-        <p class="text-secondary" style="font-size: 14.5px; line-height: 1.8;">
-          Program Beasiswa UIS dirancang secara komprehensif bersama Kementerian Pendidikan, Pemerintah Daerah, Yayasan Pendidikan Ibnu Sina Batam (YAPISNA), serta asosiasi industri multinasional. Mahasiswa penerima beasiswa tidak hanya mendapatkan bantuan pembiayaan, namun juga bimbingan intensif untuk kesiapan karir profesional dan technopreneurship global.
-        </p>
+        <h2 class="beasiswa-section-heading">{{ $beasiswaSetting->tentang_judul ?? 'Membuka Akses Pendidikan Tinggi Unggul Tanpa Kendala Biaya' }}</h2>
+        @if(!empty($beasiswaSetting->tentang_deskripsi))
+          <div class="beasiswa-desc-lead" style="white-space: pre-line;">{!! nl2br(e($beasiswaSetting->tentang_deskripsi)) !!}</div>
+        @else
+          <p class="beasiswa-desc-lead">
+            Sebagai institusi pendidikan tinggi terkemuka di Kota Batam yang berlandaskan nilai-nilai <strong>Iman, Ilmu, dan Amal</strong>, Universitas Ibnu Sina meyakini bahwa keterbatasan finansial tidak boleh menjadi penghalang bagi putra-putri bangsa untuk meraih gelar Sarjana (S1) maupun Magister (S2).
+          </p>
+          <p class="text-secondary" style="font-size: 14.5px; line-height: 1.8;">
+            Program Beasiswa UIS dirancang secara komprehensif bersama Kementerian Pendidikan, Pemerintah Daerah, Yayasan Pendidikan Ibnu Sina Batam (YAPISNA), serta asosiasi industri multinasional. Mahasiswa penerima beasiswa tidak hanya mendapatkan bantuan pembiayaan, namun juga bimbingan intensif untuk kesiapan karir profesional dan technopreneurship global.
+          </p>
+        @endif
 
         <ul class="beasiswa-feature-list mt-3">
           <li><i class="bi bi-check-circle-fill"></i> <strong>Pembebasan Biaya Kuliah:</strong> Subsidi SPP/UKT hingga 100% bebas biaya sampai lulus.</li>
@@ -556,7 +563,12 @@
 
       <div class="col-lg-6">
         <div class="beasiswa-img-box">
-          <img src="{{ asset('storage/hero-humas/OwjSPkWxjRYVTkK9HyY1BvnXg8pFas3SNLMnFYTI.jpg') }}"
+          @php
+            $showcaseImg = !empty($beasiswaSetting->gambar) 
+                ? asset('storage/' . $beasiswaSetting->gambar)
+                : asset('storage/hero-humas/OwjSPkWxjRYVTkK9HyY1BvnXg8pFas3SNLMnFYTI.jpg');
+          @endphp
+          <img src="{{ $showcaseImg }}"
                onerror="this.onerror=null; this.src='{{ asset('assets/img/logouis.png') }}';"
                alt="Gedung Kampus Universitas Ibnu Sina Batam">
           <div class="beasiswa-img-overlay">

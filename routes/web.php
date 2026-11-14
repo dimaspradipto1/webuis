@@ -159,6 +159,8 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::put('sambutan-dekan-admin', [SambutanDekanController::class, 'update'])->name('sambutan-dekan.update');
     Route::get('pmb-setting-admin', [PmbSettingController::class, 'index'])->name('pmb-setting.index');
     Route::put('pmb-setting-admin', [PmbSettingController::class, 'update'])->name('pmb-setting.update');
+    Route::get('admin-program-beasiswa', [BeasiswaSettingController::class, 'index'])->name('beasiswa.admin');
+    Route::put('admin-program-beasiswa', [BeasiswaSettingController::class, 'update'])->name('beasiswa.admin.update');
     Route::get('admin-hero-humas', [HeroHumasController::class, 'index'])->name('hero-humas.index');
     Route::put('admin-hero-humas', [HeroHumasController::class, 'update'])->name('hero-humas.update');
     Route::resource('admin-unduhan', UnduhanController::class)
