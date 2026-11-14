@@ -10,9 +10,14 @@
         background-color: #f8fafc;
         border: 1px solid #e2e8f0;
         border-radius: 10px;
-        padding: 10px 18px;
+        padding: 10px 14px;
         font-weight: 600;
         transition: all 0.2s ease;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        width: 100%;
     }
     #beasiswaTabs .nav-link:hover {
         background-color: #eaf6ee;
@@ -48,15 +53,29 @@
         box-shadow: 0 0 0 0.2rem rgba(4, 107, 38, 0.15) !important;
     }
 
-    /* Accordion Admin Header Styling */
-    .jalur-card-item .accordion-button:not(.collapsed) {
-        background-color: #eaf6ee !important;
-        color: #046B26 !important;
-        box-shadow: none !important;
+    /* Badge Jalur Sejajar Rapi */
+    .jalur-badge-label {
+        width: 230px !important;
+        text-align: center !important;
+        display: inline-block !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        padding: 6px 12px !important;
+        font-size: 11.5px !important;
+        border-radius: 6px !important;
+        letter-spacing: 0.2px !important;
     }
-    .jalur-card-item .accordion-button:focus {
-        border-color: #046B26 !important;
-        box-shadow: 0 0 0 0.2rem rgba(4, 107, 38, 0.15) !important;
+    @media (max-width: 991px) {
+        .jalur-badge-label {
+            width: 170px !important;
+        }
+    }
+    @media (max-width: 576px) {
+        .jalur-badge-label {
+            width: 130px !important;
+            font-size: 10.5px !important;
+        }
     }
 </style>
 @endpush
@@ -93,38 +112,38 @@
     {{-- NAV TABS KONTROL KONTEN BEASISWA --}}
     <div class="card shadow-sm border-0 mb-4">
         <div class="card-header bg-white border-bottom p-2 p-md-3">
-            <ul class="nav nav-pills flex-column flex-sm-row gap-2" id="beasiswaTabs" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active fw-semibold text-start text-sm-center" id="tab-hero-btn" data-bs-toggle="pill" data-bs-target="#tab-hero" type="button" role="tab">
+            <div class="row g-2 nav-pills" id="beasiswaTabs" role="tablist">
+                <div class="col-6">
+                    <button class="nav-link active text-center" id="tab-hero-btn" data-bs-toggle="pill" data-bs-target="#tab-hero" type="button" role="tab">
                         <i class="bi bi-megaphone me-1 text-success"></i> 1. Hero & Pembuka
                     </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link fw-semibold text-start text-sm-center" id="tab-tentang-btn" data-bs-toggle="pill" data-bs-target="#tab-tentang" type="button" role="tab">
+                </div>
+                <div class="col-6">
+                    <button class="nav-link text-center" id="tab-tentang-btn" data-bs-toggle="pill" data-bs-target="#tab-tentang" type="button" role="tab">
                         <i class="bi bi-info-circle me-1 text-success"></i> 2. Tentang & Keunggulan
                     </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link fw-semibold text-start text-sm-center" id="tab-stats-btn" data-bs-toggle="pill" data-bs-target="#tab-stats" type="button" role="tab">
+                </div>
+                <div class="col-6">
+                    <button class="nav-link text-center" id="tab-stats-btn" data-bs-toggle="pill" data-bs-target="#tab-stats" type="button" role="tab">
                         <i class="bi bi-bar-chart-fill me-1 text-success"></i> 3. Statistik (4 Kotak)
                     </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link fw-semibold text-start text-sm-center" id="tab-jalur-btn" data-bs-toggle="pill" data-bs-target="#tab-jalur" type="button" role="tab">
+                </div>
+                <div class="col-6">
+                    <button class="nav-link text-center" id="tab-jalur-btn" data-bs-toggle="pill" data-bs-target="#tab-jalur" type="button" role="tab">
                         <i class="bi bi-grid-fill me-1 text-success"></i> 4. Jalur Beasiswa
                     </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link fw-semibold text-start text-sm-center" id="tab-alur-faq-btn" data-bs-toggle="pill" data-bs-target="#tab-alur-faq" type="button" role="tab">
+                </div>
+                <div class="col-6">
+                    <button class="nav-link text-center" id="tab-alur-faq-btn" data-bs-toggle="pill" data-bs-target="#tab-alur-faq" type="button" role="tab">
                         <i class="bi bi-signpost-split me-1 text-success"></i> 5. Alur & FAQ
                     </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link fw-semibold text-start text-sm-center" id="tab-cta-btn" data-bs-toggle="pill" data-bs-target="#tab-cta" type="button" role="tab">
+                </div>
+                <div class="col-6">
+                    <button class="nav-link text-center" id="tab-cta-btn" data-bs-toggle="pill" data-bs-target="#tab-cta" type="button" role="tab">
                         <i class="bi bi-star-fill me-1 text-success"></i> 6. Banner Ajakan (CTA)
                     </button>
-                </li>
-            </ul>
+                </div>
+            </div>
         </div>
 
         <div class="card-body p-3 p-md-4">
@@ -226,20 +245,30 @@
                             @enderror
 
                             <div class="mt-4">
-                                <label class="form-label fw-semibold text-dark">
-                                    <i class="bi bi-check2-circle text-success me-1"></i>3 Poin Keunggulan Utama (List Checkmark)
-                                </label>
+                                <div class="d-flex align-items-center justify-content-between mb-2">
+                                    <label class="form-label fw-semibold text-dark mb-0">
+                                        <i class="bi bi-check2-circle text-success me-1"></i>Poin Keunggulan Utama (List Checkmark)
+                                    </label>
+                                    <button type="button" class="btn btn-sm btn-outline-success" onclick="tambahKeunggulanBaru()">
+                                        <i class="bi bi-plus-circle me-1"></i> Tambah Poin
+                                    </button>
+                                </div>
                                 @php
                                     $keunggulanData = old('keunggulan_list', $beasiswa->effective_keunggulan);
                                 @endphp
-                                @for($i = 0; $i < 3; $i++)
-                                    <div class="input-group mb-2">
-                                        <span class="input-group-text bg-light text-success fw-bold"><i class="bi bi-check-circle-fill"></i></span>
-                                        <input type="text" name="keunggulan_list[]" class="form-control"
-                                               value="{{ $keunggulanData[$i] ?? '' }}"
-                                               placeholder="Poin keunggulan {{ $i + 1 }} (Contoh: Pembebasan Biaya Kuliah: Subsidi hingga 100%)">
-                                    </div>
-                                @endfor
+                                <div id="keunggulanContainer">
+                                    @foreach($keunggulanData as $kIdx => $kVal)
+                                        <div class="input-group mb-2 keunggulan-item-row" id="keunggulanRow_{{ $kIdx }}">
+                                            <span class="input-group-text bg-light text-success fw-bold"><i class="bi bi-check-circle-fill"></i></span>
+                                            <input type="text" name="keunggulan_list[]" class="form-control"
+                                                   value="{{ $kVal }}"
+                                                   placeholder="Contoh: Pembebasan Biaya Kuliah: Subsidi hingga 100%">
+                                            <button type="button" class="btn btn-outline-danger" title="Hapus Poin Ini" onclick="hapusKeunggulanRow('keunggulanRow_{{ $kIdx }}')">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        </div>
+                                    @endforeach
+                                </div>
                                 <small class="text-muted">Poin-poin ini tampil di bawah teks deskripsi tentang beasiswa.</small>
                             </div>
                         </div>
@@ -333,16 +362,37 @@
 
                     <div class="accordion" id="adminJalurAccordion">
                         @foreach($jalurData as $jIdx => $jalur)
-                            <div class="accordion-item mb-3 border shadow-none rounded-3 overflow-hidden jalur-card-item" id="adminJalurCard_{{ $jIdx }}">
-                                <div class="accordion-header d-flex align-items-center bg-light" id="headingAdminJalur_{{ $jIdx }}">
-                                    <button class="accordion-button {{ $jIdx > 0 ? 'collapsed' : '' }} py-2 px-3 bg-light fw-bold text-dark flex-grow-1 border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAdminJalur_{{ $jIdx }}">
-                                        <span class="badge bg-success me-2 jalur-badge-num">{{ $jIdx + 1 }}</span>
-                                        <span class="me-2 jalur-title-header text-truncate" style="max-width: 500px;">{{ $jalur['judul'] ?? 'Jalur Beasiswa' }}</span>
-                                        <span class="badge bg-warning text-dark ms-auto me-2 jalur-badge-label">{{ $jalur['badge'] ?? 'Beasiswa' }}</span>
-                                    </button>
-                                    <button type="button" class="btn btn-sm btn-outline-danger me-2 py-1 px-2 flex-shrink-0" title="Hapus Jalur Beasiswa Ini" onclick="hapusJalurCard('adminJalurCard_{{ $jIdx }}'); event.stopPropagation();">
-                                        <i class="bi bi-trash me-1"></i> Hapus
-                                    </button>
+                            <div class="accordion-item mb-2 border shadow-none rounded-3 overflow-hidden jalur-card-item" id="adminJalurCard_{{ $jIdx }}">
+                                <div class="accordion-header bg-light d-flex align-items-center justify-content-between p-2 px-3 border-bottom" id="headingAdminJalur_{{ $jIdx }}">
+                                    <!-- Bagian Kiri: Nomor & Judul (Klik untuk toggle) -->
+                                    <div class="d-flex align-items-center flex-grow-1 overflow-hidden me-3" 
+                                         role="button" 
+                                         data-bs-toggle="collapse" 
+                                         data-bs-target="#collapseAdminJalur_{{ $jIdx }}" 
+                                         style="cursor: pointer; min-width: 0;"
+                                         title="Klik untuk membuka/menutup formulir jalur ini">
+                                        <span class="badge bg-success me-2 jalur-badge-num flex-shrink-0">{{ $jIdx + 1 }}</span>
+                                        <span class="fw-bold text-dark jalur-title-header text-truncate">{{ $jalur['judul'] ?? 'Jalur Beasiswa' }}</span>
+                                    </div>
+
+                                    <!-- Bagian Kanan: Badge Kuning Lurus Sejajar, Tombol Hapus, dan Icon Panah -->
+                                    <div class="d-flex align-items-center gap-2 flex-shrink-0 ms-auto">
+                                        <span class="badge bg-warning text-dark fw-bold jalur-badge-label">
+                                            {{ $jalur['badge'] ?? 'Beasiswa' }}
+                                        </span>
+                                        <button type="button" class="btn btn-sm btn-outline-danger py-1 px-2" 
+                                                title="Hapus Jalur Beasiswa Ini" 
+                                                onclick="hapusJalurCard('adminJalurCard_{{ $jIdx }}')">
+                                            <i class="bi bi-trash"></i> Hapus
+                                        </button>
+                                        <button class="btn btn-sm btn-light border py-1 px-2 text-secondary" 
+                                                type="button" 
+                                                data-bs-toggle="collapse" 
+                                                data-bs-target="#collapseAdminJalur_{{ $jIdx }}" 
+                                                title="Buka / Tutup">
+                                            <i class="bi bi-chevron-down"></i>
+                                        </button>
+                                    </div>
                                 </div>
                                 <div id="collapseAdminJalur_{{ $jIdx }}" class="accordion-collapse collapse {{ $jIdx == 0 ? 'show' : '' }}" data-bs-parent="#adminJalurAccordion">
                                     <div class="accordion-body bg-white p-3 p-md-4">
@@ -569,6 +619,28 @@
         }
     }
 
+    function hapusKeunggulanRow(rowId) {
+        const row = document.getElementById(rowId);
+        if (row) {
+            row.remove();
+        }
+    }
+
+    let nextKeunggulanIdx = 200;
+    function tambahKeunggulanBaru() {
+        const idx = nextKeunggulanIdx++;
+        const template = `
+            <div class="input-group mb-2 keunggulan-item-row" id="keunggulanRow_${idx}">
+                <span class="input-group-text bg-light text-success fw-bold"><i class="bi bi-check-circle-fill"></i></span>
+                <input type="text" name="keunggulan_list[]" class="form-control" placeholder="Tuliskan poin keunggulan baru...">
+                <button type="button" class="btn btn-outline-danger" title="Hapus Poin Ini" onclick="hapusKeunggulanRow('keunggulanRow_${idx}')">
+                    <i class="bi bi-trash"></i>
+                </button>
+            </div>
+        `;
+        document.getElementById('keunggulanContainer').insertAdjacentHTML('beforeend', template);
+    }
+
     function reindexJalurBadges() {
         const badges = document.querySelectorAll('#adminJalurAccordion .jalur-card-item .jalur-badge-num');
         badges.forEach((b, i) => {
@@ -613,16 +685,37 @@
     function tambahJalurBaru() {
         const idx = nextJalurIdx++;
         const template = `
-            <div class="accordion-item mb-3 border shadow-none rounded-3 overflow-hidden jalur-card-item" id="adminJalurCard_${idx}">
-                <div class="accordion-header d-flex align-items-center bg-light" id="headingAdminJalur_${idx}">
-                    <button class="accordion-button py-2 px-3 bg-light fw-bold text-dark flex-grow-1 border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAdminJalur_${idx}">
-                        <span class="badge bg-success me-2 jalur-badge-num">+</span>
-                        <span class="me-2 jalur-title-header text-truncate" style="max-width: 500px;">Jalur Beasiswa Baru</span>
-                        <span class="badge bg-warning text-dark ms-auto me-2 jalur-badge-label">Baru</span>
-                    </button>
-                    <button type="button" class="btn btn-sm btn-outline-danger me-2 py-1 px-2 flex-shrink-0" title="Hapus Jalur Ini" onclick="hapusJalurCard('adminJalurCard_${idx}'); event.stopPropagation();">
-                        <i class="bi bi-trash me-1"></i> Hapus
-                    </button>
+            <div class="accordion-item mb-2 border shadow-none rounded-3 overflow-hidden jalur-card-item" id="adminJalurCard_${idx}">
+                <div class="accordion-header bg-light d-flex align-items-center justify-content-between p-2 px-3 border-bottom" id="headingAdminJalur_${idx}">
+                    <!-- Bagian Kiri: Nomor & Judul (Klik untuk toggle) -->
+                    <div class="d-flex align-items-center flex-grow-1 overflow-hidden me-3" 
+                         role="button" 
+                         data-bs-toggle="collapse" 
+                         data-bs-target="#collapseAdminJalur_${idx}" 
+                         style="cursor: pointer; min-width: 0;"
+                         title="Klik untuk membuka/menutup formulir jalur ini">
+                        <span class="badge bg-success me-2 jalur-badge-num flex-shrink-0">+</span>
+                        <span class="fw-bold text-dark jalur-title-header text-truncate">Jalur Beasiswa Baru</span>
+                    </div>
+
+                    <!-- Bagian Kanan: Badge Kuning Lurus Sejajar, Tombol Hapus, dan Icon Panah -->
+                    <div class="d-flex align-items-center gap-2 flex-shrink-0 ms-auto">
+                        <span class="badge bg-warning text-dark fw-bold jalur-badge-label">
+                            Baru
+                        </span>
+                        <button type="button" class="btn btn-sm btn-outline-danger py-1 px-2" 
+                                title="Hapus Jalur Beasiswa Ini" 
+                                onclick="hapusJalurCard('adminJalurCard_${idx}')">
+                            <i class="bi bi-trash"></i> Hapus
+                        </button>
+                        <button class="btn btn-sm btn-light border py-1 px-2 text-secondary" 
+                                type="button" 
+                                data-bs-toggle="collapse" 
+                                data-bs-target="#collapseAdminJalur_${idx}" 
+                                title="Buka / Tutup">
+                            <i class="bi bi-chevron-down"></i>
+                        </button>
+                    </div>
                 </div>
                 <div id="collapseAdminJalur_${idx}" class="accordion-collapse collapse show" data-bs-parent="#adminJalurAccordion">
                     <div class="accordion-body bg-white p-3 p-md-4">

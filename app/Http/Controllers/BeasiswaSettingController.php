@@ -110,7 +110,7 @@ class BeasiswaSettingController extends Controller
             $keunggulan = array_filter(array_map('trim', $request->input('keunggulan_list', [])), function ($val) {
                 return !empty($val);
             });
-            $validated['keunggulan_list'] = count($keunggulan) > 0 ? array_values($keunggulan) : BeasiswaSetting::defaultKeunggulan();
+            $validated['keunggulan_list'] = array_values($keunggulan);
         }
 
         // Clean jalur list
