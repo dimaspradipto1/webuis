@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BackupController;
 use App\Http\Controllers\BahasaSettingController;
 use App\Http\Controllers\BannerController;
+use App\Http\Controllers\BeasiswaSettingController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DesainGrafisController;
