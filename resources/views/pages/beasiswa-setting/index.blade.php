@@ -334,13 +334,16 @@
                     <div class="accordion" id="adminJalurAccordion">
                         @foreach($jalurData as $jIdx => $jalur)
                             <div class="accordion-item mb-3 border shadow-none rounded-3 overflow-hidden jalur-card-item" id="adminJalurCard_{{ $jIdx }}">
-                                <h2 class="accordion-header" id="headingAdminJalur_{{ $jIdx }}">
-                                    <button class="accordion-button {{ $jIdx > 0 ? 'collapsed' : '' }} py-2 px-3 bg-light fw-bold text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAdminJalur_{{ $jIdx }}">
-                                        <span class="badge bg-success me-2">{{ $jIdx + 1 }}</span>
-                                        <span class="me-2 jalur-title-header">{{ $jalur['judul'] ?? 'Jalur Beasiswa' }}</span>
-                                        <span class="badge bg-warning text-dark ms-auto me-3">{{ $jalur['badge'] ?? 'Beasiswa' }}</span>
+                                <div class="accordion-header d-flex align-items-center bg-light" id="headingAdminJalur_{{ $jIdx }}">
+                                    <button class="accordion-button {{ $jIdx > 0 ? 'collapsed' : '' }} py-2 px-3 bg-light fw-bold text-dark flex-grow-1 border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAdminJalur_{{ $jIdx }}">
+                                        <span class="badge bg-success me-2 jalur-badge-num">{{ $jIdx + 1 }}</span>
+                                        <span class="me-2 jalur-title-header text-truncate" style="max-width: 500px;">{{ $jalur['judul'] ?? 'Jalur Beasiswa' }}</span>
+                                        <span class="badge bg-warning text-dark ms-auto me-2 jalur-badge-label">{{ $jalur['badge'] ?? 'Beasiswa' }}</span>
                                     </button>
-                                </h2>
+                                    <button type="button" class="btn btn-sm btn-outline-danger me-2 py-1 px-2 flex-shrink-0" title="Hapus Jalur Beasiswa Ini" onclick="hapusJalurCard('adminJalurCard_{{ $jIdx }}'); event.stopPropagation();">
+                                        <i class="bi bi-trash me-1"></i> Hapus
+                                    </button>
+                                </div>
                                 <div id="collapseAdminJalur_{{ $jIdx }}" class="accordion-collapse collapse {{ $jIdx == 0 ? 'show' : '' }}" data-bs-parent="#adminJalurAccordion">
                                     <div class="accordion-body bg-white p-3 p-md-4">
                                         <input type="hidden" name="jalur_list[{{ $jIdx }}][id]" value="{{ $jalur['id'] ?? ('collapse_jalur_' . ($jIdx + 1)) }}">
@@ -350,12 +353,14 @@
                                                 <label class="form-label fw-semibold">Nama / Judul Jalur Beasiswa <span class="text-danger">*</span></label>
                                                 <input type="text" name="jalur_list[{{ $jIdx }}][judul]" class="form-control"
                                                        value="{{ $jalur['judul'] ?? '' }}" required
+                                                       oninput="updateJalurHeader(this, 'adminJalurCard_{{ $jIdx }}', 'title')"
                                                        placeholder="Contoh: Beasiswa KIP-Kuliah Merdeka (Kemendikbudristek)">
                                             </div>
                                             <div class="col-md-3">
                                                 <label class="form-label fw-semibold">Badge Highlight</label>
                                                 <input type="text" name="jalur_list[{{ $jIdx }}][badge]" class="form-control"
                                                        value="{{ $jalur['badge'] ?? '' }}"
+                                                       oninput="updateJalurHeader(this, 'adminJalurCard_{{ $jIdx }}', 'badge')"
                                                        placeholder="Contoh: Bebas 100% SPP">
                                             </div>
                                             <div class="col-md-2">
@@ -404,8 +409,8 @@
                                             </div>
 
                                             <div class="col-md-2 d-flex align-items-end">
-                                                <button type="button" class="btn btn-outline-danger w-100" onclick="hapusJalurCard('adminJalurCard_{{ $jIdx }}')">
-                                                    <i class="bi bi-trash me-1"></i> Hapus
+                                                <button type="button" class="btn btn-danger w-100" onclick="hapusJalurCard('adminJalurCard_{{ $jIdx }}')">
+                                                    <i class="bi bi-trash me-1"></i> Hapus Jalur
                                                 </button>
                                             </div>
                                         </div>
@@ -564,10 +569,36 @@
         }
     }
 
+    function reindexJalurBadges() {
+        const badges = document.querySelectorAll('#adminJalurAccordion .jalur-card-item .jalur-badge-num');
+        badges.forEach((b, i) => {
+            b.textContent = (i + 1);
+        });
+    }
+
+    function updateJalurHeader(input, cardId, type) {
+        const card = document.getElementById(cardId);
+        if (!card) return;
+        if (type === 'title') {
+            const titleEl = card.querySelector('.jalur-title-header');
+            if (titleEl) {
+                titleEl.textContent = input.value.trim() ? input.value : 'Jalur Beasiswa Baru';
+            }
+        } else if (type === 'badge') {
+            const badgeEl = card.querySelector('.jalur-badge-label');
+            if (badgeEl) {
+                badgeEl.textContent = input.value.trim() ? input.value : 'Beasiswa';
+            }
+        }
+    }
+
     function hapusJalurCard(elementId) {
-        if (confirm('Yakin ingin menghapus jalur beasiswa ini?')) {
+        if (confirm('Yakin ingin menghapus jalur beasiswa ini dari daftar?')) {
             const el = document.getElementById(elementId);
-            if (el) el.remove();
+            if (el) {
+                el.remove();
+                reindexJalurBadges();
+            }
         }
     }
 
@@ -583,24 +614,31 @@
         const idx = nextJalurIdx++;
         const template = `
             <div class="accordion-item mb-3 border shadow-none rounded-3 overflow-hidden jalur-card-item" id="adminJalurCard_${idx}">
-                <h2 class="accordion-header" id="headingAdminJalur_${idx}">
-                    <button class="accordion-button py-2 px-3 bg-light fw-bold text-dark" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAdminJalur_${idx}">
-                        <span class="badge bg-success me-2">+</span>
-                        <span class="me-2 jalur-title-header">Jalur Beasiswa Baru</span>
-                        <span class="badge bg-warning text-dark ms-auto me-3">Baru</span>
+                <div class="accordion-header d-flex align-items-center bg-light" id="headingAdminJalur_${idx}">
+                    <button class="accordion-button py-2 px-3 bg-light fw-bold text-dark flex-grow-1 border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAdminJalur_${idx}">
+                        <span class="badge bg-success me-2 jalur-badge-num">+</span>
+                        <span class="me-2 jalur-title-header text-truncate" style="max-width: 500px;">Jalur Beasiswa Baru</span>
+                        <span class="badge bg-warning text-dark ms-auto me-2 jalur-badge-label">Baru</span>
                     </button>
-                </h2>
+                    <button type="button" class="btn btn-sm btn-outline-danger me-2 py-1 px-2 flex-shrink-0" title="Hapus Jalur Ini" onclick="hapusJalurCard('adminJalurCard_${idx}'); event.stopPropagation();">
+                        <i class="bi bi-trash me-1"></i> Hapus
+                    </button>
+                </div>
                 <div id="collapseAdminJalur_${idx}" class="accordion-collapse collapse show" data-bs-parent="#adminJalurAccordion">
                     <div class="accordion-body bg-white p-3 p-md-4">
                         <input type="hidden" name="jalur_list[${idx}][id]" value="collapse_jalur_${idx}">
                         <div class="row g-3">
                             <div class="col-md-7">
                                 <label class="form-label fw-semibold">Nama / Judul Jalur Beasiswa <span class="text-danger">*</span></label>
-                                <input type="text" name="jalur_list[${idx}][judul]" class="form-control" required placeholder="Contoh: Beasiswa Mitra Spesial">
+                                <input type="text" name="jalur_list[${idx}][judul]" class="form-control" required
+                                       oninput="updateJalurHeader(this, 'adminJalurCard_${idx}', 'title')"
+                                       placeholder="Contoh: Beasiswa Mitra Spesial">
                             </div>
                             <div class="col-md-3">
                                 <label class="form-label fw-semibold">Badge Highlight</label>
-                                <input type="text" name="jalur_list[${idx}][badge]" class="form-control" placeholder="Contoh: Bebas SPP 50%">
+                                <input type="text" name="jalur_list[${idx}][badge]" class="form-control"
+                                       oninput="updateJalurHeader(this, 'adminJalurCard_${idx}', 'badge')"
+                                       placeholder="Contoh: Bebas SPP 50%">
                             </div>
                             <div class="col-md-2">
                                 <label class="form-label fw-semibold">Ikon Bi-*</label>
@@ -627,8 +665,8 @@
                                 <input type="text" name="jalur_list[${idx}][periode]" class="form-control" placeholder="Contoh: Mengikuti jadwal PMB UIS">
                             </div>
                             <div class="col-md-2 d-flex align-items-end">
-                                <button type="button" class="btn btn-outline-danger w-100" onclick="hapusJalurCard('adminJalurCard_${idx}')">
-                                    <i class="bi bi-trash me-1"></i> Hapus
+                                <button type="button" class="btn btn-danger w-100" onclick="hapusJalurCard('adminJalurCard_${idx}')">
+                                    <i class="bi bi-trash me-1"></i> Hapus Jalur
                                 </button>
                             </div>
                         </div>
@@ -637,6 +675,7 @@
             </div>
         `;
         document.getElementById('adminJalurAccordion').insertAdjacentHTML('beforeend', template);
+        reindexJalurBadges();
     }
 
     let nextFaqIdx = {{ count($faqData) + 10 }};
