@@ -969,18 +969,27 @@ a {
     gap: 8px;
 }
 
+.dropdown-item-custom:hover,
+.dropdown-item-custom.active,
+.dropdown-item-custom:active {
+    background: var(--uis-green-light, #eaf6ee) !important;
+
+    color: var(--uis-green, #046b26) !important;
+
+    font-weight: 700;
+}
+
 .dropdown-item-custom:hover {
-    background: var(--uis-green-light);
-
-    color: var(--uis-green);
-
     padding-left: 18px;
 }
 
-.dropdown-item-custom i {
+.dropdown-item-custom i,
+.dropdown-item-custom:hover i,
+.dropdown-item-custom.active i,
+.dropdown-item-custom:active i {
     font-size: 14px;
 
-    color: var(--uis-green);
+    color: var(--uis-green, #046b26) !important;
 }
 
 .navbar-toggler {

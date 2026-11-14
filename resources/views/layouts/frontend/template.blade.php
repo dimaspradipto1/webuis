@@ -180,6 +180,20 @@
       }
     }
 
+    /* Dropdown Item Active State — Matches UIS Hover Theme */
+    .dropdown-item-custom:hover,
+    .dropdown-item-custom.active,
+    .dropdown-item-custom:active {
+      background-color: var(--uis-green-light, #eaf6ee) !important;
+      color: var(--uis-green, #046b26) !important;
+      font-weight: 700 !important;
+    }
+    .dropdown-item-custom:hover i,
+    .dropdown-item-custom.active i,
+    .dropdown-item-custom:active i {
+      color: var(--uis-green, #046b26) !important;
+    }
+
     /* ═══════════════════════════════════════════════════════════════
        RESPONSIVE OPTIMIZATION FOR 14-INCH LAPTOPS (1200px - 1440px)
        & COMMON 768p VIEWPORTS (1366x768 / 1280x720 / 150% SCALING)

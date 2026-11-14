@@ -38,6 +38,20 @@
   .navbar-main .btn-pmb-nav:hover,
   .navbar-main .btn-pmb-nav:hover i { background: {{ $navAccent }} !important; border-color: {{ $navAccent }} !important; color: {{ $navIsLight ? '#ffffff' : $navBg }} !important; }
 
+  /* Dropdown Item Active / Hover Theme Match */
+  .navbar-main .dropdown-item-custom:hover,
+  .navbar-main .dropdown-item-custom.active,
+  .navbar-main .dropdown-item-custom:active {
+    background-color: var(--uis-green-light, #eaf6ee) !important;
+    color: var(--uis-green, #046b26) !important;
+    font-weight: 700 !important;
+  }
+  .navbar-main .dropdown-item-custom:hover i,
+  .navbar-main .dropdown-item-custom.active i,
+  .navbar-main .dropdown-item-custom:active i {
+    color: var(--uis-green, #046b26) !important;
+  }
+
   /* Footer */
   .footer-main { background: {{ $fBg }} !important; color: {{ $fText }} !important; border-top-color: {{ $fAccent }} !important; }
   .footer-main .footer-desc,
