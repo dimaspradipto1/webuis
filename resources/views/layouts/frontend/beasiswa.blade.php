@@ -37,24 +37,22 @@
     pointer-events: none;
   }
   .beasiswa-breadcrumb {
-    display: inline-flex;
+    display: flex;
     align-items: center;
-    gap: 8px;
-    padding: 6px 14px;
-    background: rgba(255, 255, 255, 0.12);
-    border-radius: 999px;
-    font-size: 13px;
-    margin-bottom: 20px;
-    backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.15);
+    gap: 9px;
+    margin: 0 0 16px;
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 12px;
+    line-height: 1.4;
   }
   .beasiswa-breadcrumb a {
-    color: rgba(255, 255, 255, 0.85);
+    color: rgba(255, 255, 255, 0.65);
     text-decoration: none;
     transition: color 0.2s ease;
   }
-  .beasiswa-breadcrumb a:hover {
-    color: var(--uis-yellow);
+  .beasiswa-breadcrumb a:hover,
+  .beasiswa-breadcrumb .active {
+    color: var(--uis-yellow, #FED802);
   }
   .beasiswa-hero-title {
     font-family: 'Plus Jakarta Sans', sans-serif;
@@ -234,23 +232,12 @@
   .beasiswa-img-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(180deg, rgba(4, 107, 38, 0.2) 0%, rgba(2, 56, 20, 0.85) 100%);
+    background: linear-gradient(180deg, rgba(4, 107, 38, 0.05) 0%, rgba(2, 56, 20, 0.88) 100%);
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: flex-end;
     padding: 24px;
     color: #fff;
-  }
-  .beasiswa-float-pill {
-    align-self: flex-start;
-    background: rgba(255, 255, 255, 0.92);
-    color: var(--uis-green);
-    font-size: 12px;
-    font-weight: 700;
-    padding: 6px 14px;
-    border-radius: 999px;
-    backdrop-filter: blur(8px);
-    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
   }
   .beasiswa-img-caption {
     background: rgba(4, 107, 38, 0.88);
@@ -465,7 +452,7 @@
     <nav class="beasiswa-breadcrumb" aria-label="breadcrumb">
       <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill"></i> Beranda</a>
       <span>/</span>
-      <span class="text-white fw-semibold">Program Beasiswa</span>
+      <span class="active">Program Beasiswa</span>
     </nav>
 
     <div class="row align-items-center">
@@ -573,7 +560,6 @@
                onerror="this.onerror=null; this.src='{{ asset('assets/img/logouis.png') }}';"
                alt="Gedung Kampus Universitas Ibnu Sina Batam">
           <div class="beasiswa-img-overlay">
-            <span class="beasiswa-float-pill"><i class="bi bi-star-fill text-warning me-1"></i> Kampus Terakreditasi BAN-PT</span>
             <div class="beasiswa-img-caption">
               <h5>Kampus Terpadu Universitas Ibnu Sina</h5>
               <p>Mencetak generasi profesional muda berdaya saing global dengan fasilitas laboratorium modern & kurikulum industri.</p>
