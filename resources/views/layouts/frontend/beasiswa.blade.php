@@ -158,9 +158,9 @@
   }
   .beasiswa-desc-lead {
     font-size: 13.5px;
-    line-height: 1.65;
+    line-height: 1.6;
     color: #334155;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
   }
   .beasiswa-feature-list {
     list-style: none;
@@ -509,10 +509,21 @@
           <h2 class="beasiswa-section-heading">{{ $beasiswaSetting->tentang_judul ?? 'Membuka Akses Pendidikan Tinggi Unggul Tanpa Kendala Biaya' }}</h2>
 
           @if(!empty($beasiswaSetting->tentang_deskripsi))
-            <div class="beasiswa-desc-lead" style="white-space: pre-line;">{!! nl2br(e($beasiswaSetting->tentang_deskripsi)) !!}</div>
+            @php
+              $paragrafList = array_values(array_filter(
+                array_map('trim', explode("\n", str_replace("\r", "", $beasiswaSetting->tentang_deskripsi))),
+                fn($line) => $line !== ''
+              ));
+            @endphp
+            @foreach($paragrafList as $pText)
+              <p class="beasiswa-desc-lead mb-2">{{ $pText }}</p>
+            @endforeach
           @else
-            <p class="beasiswa-desc-lead">
+            <p class="beasiswa-desc-lead mb-2">
               Sebagai institusi pendidikan tinggi terkemuka di Kota Batam yang berlandaskan nilai-nilai <strong>Iman, Ilmu, dan Amal</strong>, Universitas Ibnu Sina meyakini bahwa keterbatasan finansial tidak boleh menjadi penghalang bagi putra-putri bangsa untuk meraih gelar Sarjana (S1) maupun Magister (S2).
+            </p>
+            <p class="beasiswa-desc-lead mb-2">
+              Program Beasiswa UIS dirancang secara komprehensif bersama Kementerian Pendidikan, Pemerintah Daerah, Yayasan Pendidikan Ibnu Sina Batam (YAPISNA), serta asosiasi industri multinasional.
             </p>
           @endif
 
