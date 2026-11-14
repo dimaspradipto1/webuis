@@ -25,7 +25,7 @@ class PartnerAgreementRequest extends FormRequest
     {
         return [
             'jenis' => ['required', 'string', Rule::in(PartnerAgreement::TYPES)],
-            'judul' => ['required', 'string', 'max:255'],
+            'judul' => ['required', 'string', 'max:5000'],
             'nomor' => ['nullable', 'string', 'max:255'],
             'deskripsi' => ['nullable', 'string', 'max:10000'],
             'tanggal_mulai' => ['nullable', 'date'],

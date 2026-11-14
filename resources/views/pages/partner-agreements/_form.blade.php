@@ -9,26 +9,25 @@
         @error('jenis')<div class="invalid-feedback">{{ $message }}</div>@enderror
     </div>
     <div class="col-md-8">
-        <label for="judul" class="form-label fw-semibold">Judul Kerjasama / Program <span class="text-danger">*</span></label>
-        <input id="judul" name="judul" class="form-control @error('judul') is-invalid @enderror"
-               value="{{ old('judul', $agreement->judul) }}" maxlength="255" required
-               placeholder="Contoh: Kolaborasi Pendidikan, Riset dan Magang Industri">
-        @error('judul')<div class="invalid-feedback">{{ $message }}</div>@enderror
-    </div>
-    <div class="col-md-6">
         <label for="nomor" class="form-label fw-semibold">Nomor Dokumen / Perjanjian</label>
         <input id="nomor" name="nomor" class="form-control @error('nomor') is-invalid @enderror"
                value="{{ old('nomor', $agreement->nomor) }}" maxlength="255" placeholder="Contoh: 123/MOU/UIS/2026">
         @error('nomor')<div class="invalid-feedback">{{ $message }}</div>@enderror
     </div>
-    <div class="col-md-3">
+    <div class="col-12">
+        <label for="judul" class="form-label fw-semibold">Judul Kerjasama / Program <span class="text-danger">*</span></label>
+        <textarea id="judul" name="judul" rows="3" class="form-control @error('judul') is-invalid @enderror"
+                  required placeholder="Contoh: Nota Kesepahaman tentang Penyelenggaraan Pendidikan, Riset, Pengabdian Kepada Masyarakat dan Magang Industri">{{ old('judul', $agreement->judul) }}</textarea>
+        @error('judul')<div class="invalid-feedback">{{ $message }}</div>@enderror
+    </div>
+    <div class="col-md-6">
         <label for="tanggal_mulai" class="form-label fw-semibold">Tanggal Mulai</label>
         <input type="date" id="tanggal_mulai" name="tanggal_mulai"
                class="form-control @error('tanggal_mulai') is-invalid @enderror"
                value="{{ old('tanggal_mulai', $agreement->tanggal_mulai?->format('Y-m-d')) }}">
         @error('tanggal_mulai')<div class="invalid-feedback">{{ $message }}</div>@enderror
     </div>
-    <div class="col-md-3">
+    <div class="col-md-6">
         <label for="tanggal_selesai" class="form-label fw-semibold">Tanggal Selesai</label>
         <input type="date" id="tanggal_selesai" name="tanggal_selesai"
                class="form-control @error('tanggal_selesai') is-invalid @enderror"
