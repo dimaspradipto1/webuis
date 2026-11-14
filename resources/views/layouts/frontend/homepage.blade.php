@@ -942,17 +942,31 @@
       @if(isset($saranas) && $saranas->count())
         @foreach($saranas as $index => $sarana)
           <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ 100 + ($index * 100) }}">
-            <a href="{{ route('homepage.fasilitas.detail', $sarana->slug ?: $sarana->id) }}" class="text-decoration-none d-block h-100" style="color: inherit;">
-              <div class="fasilitas-box d-flex flex-column justify-content-between h-100">
-                <div>
-                  <div class="fasilitas-icon"><i class="bi {{ $sarana->icon ?? 'bi-building' }}"></i></div>
-                  <h4 class="fasilitas-title">{{ $sarana->nama }}</h4>
-                  <p class="fasilitas-desc mb-3">{{ trim(html_entity_decode(strip_tags($sarana->deskripsi ?? ''), ENT_QUOTES | ENT_HTML5, 'UTF-8')) ?: 'Fasilitas yang mendukung kegiatan akademik dan riset mahasiswa.' }}</p>
-                </div>
-                <div class="pt-2 mt-auto">
-                  <span class="d-inline-flex align-items-center gap-1 fw-bold" style="font-size: 13px; color: inherit; opacity: 0.9;">
-                    Lihat Detail <i class="bi bi-arrow-right"></i>
-                  </span>
+            <a href="{{ route('homepage.fasilitas.detail', $sarana->slug ?: $sarana->id) }}" class="gallery-card-item d-block text-decoration-none">
+              <div class="gallery-img-container">
+                @php
+                  $saranaImg = null;
+                  if (!empty($sarana->foto) && file_exists(public_path('storage/' . $sarana->foto))) {
+                      $saranaImg = asset('storage/' . $sarana->foto);
+                  } elseif (!empty($sarana->galeri) && is_array($sarana->galeri) && count($sarana->galeri) > 0 && file_exists(public_path('storage/' . $sarana->galeri[0]))) {
+                      $saranaImg = asset('storage/' . $sarana->galeri[0]);
+                  } else {
+                      $defaultImgs = [
+                          'storage/sarana/j5iAAWkR5yjvsSxUGIIruUQd1NqAnL9XKl0NHtuN.png',
+                          'storage/sarana/cli6lBRpE2SShWKl7nuR0KLND0K9YNJXsahId013.png',
+                          'storage/sarana/nXYvBgXCtS8344RDhQ3AjLY6wUjU4UxadDq6hVS5.png',
+                          'storage/sarana/B87I02qirKpALPEG0r7xNJv2tKam7MewKBykz8H0.png',
+                          'storage/sarana/Q0ykrPz1MNPQHYUVjXQ5uDwAeo2vD6zLmlHJyjw4.webp',
+                          'storage/sarana/f21hCPgLRLDMaQ0q2RbHcZ1mAt78pt7xsIWbDGGw.webp',
+                      ];
+                      $saranaImg = asset($defaultImgs[$index % count($defaultImgs)]);
+                  }
+                @endphp
+                <img src="{{ $saranaImg }}" alt="{{ $sarana->nama }}" class="gallery-card-img" loading="lazy">
+                <div class="gallery-card-overlay">
+                  <span class="gallery-tag"><i class="bi bi-tag-fill me-1"></i>{{ strtoupper($sarana->kategori ?: 'Fasilitas') }}</span>
+                  <h5 class="gallery-card-title">{{ $sarana->nama }}</h5>
+                  <p class="gallery-card-desc mb-0">{{ Str::limit(trim(html_entity_decode(strip_tags($sarana->deskripsi ?? ''), ENT_QUOTES | ENT_HTML5, 'UTF-8')), 85) ?: 'Sarana dan fasilitas mutakhir penunjang riset akademik.' }}</p>
                 </div>
               </div>
             </a>
