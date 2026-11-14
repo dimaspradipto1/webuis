@@ -33,6 +33,32 @@
 @section('og_image_type', $ogType)
 
 @section('content')
+<style>
+  .gallery-item-wrap.active-thumb {
+    outline: 3px solid #FED802 !important;
+    outline-offset: -3px;
+    box-shadow: 0 0 0 4px #046B26 !important;
+  }
+  .article-main-thumb-container {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 24px;
+    background: #0b1510;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  }
+  .article-main-thumb {
+    width: 100%;
+    max-height: 520px;
+    object-fit: cover;
+    display: block;
+    transition: opacity 0.25s ease, transform 0.25s ease;
+  }
+  .gallery-item-overlay {
+    background: rgba(4, 107, 38, 0.8) !important;
+    transition: all 0.25s ease;
+  }
+</style>
 
 <!-- ═══════════════════════════════════════════════
      HERO / TITLE BANNER
@@ -75,13 +101,24 @@
         <div class="article-main-card">
 
           {{-- Thumbnail Utama --}}
-          @if($news->thumbnail)
-            <img src="{{ asset('storage/' . $news->thumbnail) }}" alt="{{ $news->title }}" class="article-main-thumb">
-          @else
-            <div class="article-main-thumb d-flex align-items-center justify-content-center rounded-4 mb-4" style="height: 320px; background-color: #e2e8f0; color: #64748b;">
-              <i class="bi bi-image" style="font-size: 4rem;"></i>
-            </div>
-          @endif
+          <div class="article-main-thumb-container" id="mainNewsThumbWrapper">
+            @if($news->thumbnail)
+              <img id="mainNewsThumb" src="{{ asset('storage/' . $news->thumbnail) }}" alt="{{ $news->title }}" class="article-main-thumb" onclick="showImageModal(this.src)" title="Klik untuk memperbesar ukuran penuh" style="cursor: zoom-in;">
+            @else
+              <div id="mainNewsThumbFallback" class="d-flex align-items-center justify-content-center text-muted" style="height: 340px; background-color: #e2e8f0;">
+                <i class="bi bi-image" style="font-size: 4rem;"></i>
+              </div>
+              <img id="mainNewsThumb" src="" alt="{{ $news->title }}" class="article-main-thumb d-none" onclick="showImageModal(this.src)" title="Klik untuk memperbesar ukuran penuh" style="cursor: zoom-in;">
+            @endif
+
+            <span id="thumbActiveBadge" class="badge position-absolute top-0 end-0 m-3 rounded-pill px-3 py-2 shadow-sm d-none" style="background: rgba(2, 56, 20, 0.9); backdrop-filter: blur(4px); color: #FED802; font-size: 11.5px; font-weight: 700; z-index: 2;">
+              <i class="bi bi-check-circle-fill me-1"></i> Foto Terpilih
+            </span>
+
+            <button type="button" class="btn btn-sm btn-dark position-absolute bottom-0 end-0 m-3 rounded-pill px-3 shadow" style="font-size: 11.5px; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.25); z-index: 2;" onclick="showImageModal(document.getElementById('mainNewsThumb').src)">
+              <i class="bi bi-arrows-fullscreen me-1"></i> Ukuran Penuh
+            </button>
+          </div>
 
           {{-- Isi Berita --}}
           <div class="article-typography">
@@ -95,20 +132,34 @@
               $gridClass = $photoCount === 1 ? 'gallery-grid-1' : ($photoCount === 2 ? 'gallery-grid-2' : 'gallery-grid-3');
             @endphp
             <div class="gallery-section-box">
-              <div class="d-flex align-items-center justify-content-between mb-3">
+              <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
                 <h5 class="fw-bold mb-0 text-dark">
-                  <i class="bi bi-images me-2" style="color:var(--uis-purple);"></i>Dokumentasi Foto Kegiatan ({{ $photoCount }} Foto)
+                  <i class="bi bi-images me-2" style="color: #046B26;"></i>Dokumentasi Foto Kegiatan ({{ $photoCount }} Foto)
                 </h5>
-                <span class="badge" style="background: var(--uis-orange); color:#032e12;">Galeri Foto</span>
+                <span class="badge rounded-pill px-3 py-1" style="background: #046B26; color: #FED802; font-weight: 700;">Galeri Foto</span>
               </div>
-              <p class="text-muted small mb-3">Klik gambar untuk melihat tampilan resolusi penuh.</p>
+              <p class="text-muted small mb-3">
+                <i class="bi bi-hand-index-thumb text-success me-1"></i> Klik foto di bawah untuk menampilkan gambar tersebut sebagai foto utama di atas.
+              </p>
 
               <div class="gallery-grid-dynamic {{ $gridClass }}">
+                {{-- Opsi Foto Cover Utama jika ingin kembali ke cover asli --}}
+                @if($news->thumbnail)
+                  <div class="gallery-item-wrap active-thumb" onclick="changeMainThumbnail('{{ asset('storage/' . $news->thumbnail) }}', this)" title="Tampilkan Foto Cover Asli di Atas">
+                    <img src="{{ asset('storage/' . $news->thumbnail) }}" alt="Foto Cover Utama">
+                    <div class="gallery-item-overlay flex-column gap-1 text-center p-2">
+                      <i class="bi bi-arrow-up-circle-fill text-warning fs-4"></i>
+                      <span class="text-white fw-bold" style="font-size: 11px;">Foto Cover</span>
+                    </div>
+                  </div>
+                @endif
+
                 @foreach($news->gallery as $gIndex => $photoPath)
-                  <div class="gallery-item-wrap" onclick="showImageModal('{{ asset('storage/' . $photoPath) }}')">
+                  <div class="gallery-item-wrap" onclick="changeMainThumbnail('{{ asset('storage/' . $photoPath) }}', this)" title="Tampilkan Foto #{{ $gIndex + 1 }} di Atas">
                     <img src="{{ asset('storage/' . $photoPath) }}" alt="Foto Dokumentasi #{{ $gIndex + 1 }}">
-                    <div class="gallery-item-overlay">
-                      <i class="bi bi-zoom-in"></i>
+                    <div class="gallery-item-overlay flex-column gap-1 text-center p-2">
+                      <i class="bi bi-arrow-up-circle-fill text-warning fs-4"></i>
+                      <span class="text-white fw-bold" style="font-size: 11px;">Tampilkan di Atas</span>
                     </div>
                   </div>
                 @endforeach
@@ -248,7 +299,49 @@
 
 @push('scripts')
 <script>
+  function changeMainThumbnail(src, el) {
+    const mainImg = document.getElementById('mainNewsThumb');
+    const fallback = document.getElementById('mainNewsThumbFallback');
+    const badge = document.getElementById('thumbActiveBadge');
+
+    if (!mainImg) return;
+
+    if (fallback) {
+      fallback.classList.add('d-none');
+    }
+    mainImg.classList.remove('d-none');
+
+    // Animasi transisi halus saat berganti foto
+    mainImg.style.opacity = '0.2';
+    mainImg.style.transform = 'scale(0.98)';
+
+    setTimeout(() => {
+      mainImg.src = src;
+      mainImg.style.opacity = '1';
+      mainImg.style.transform = 'scale(1)';
+    }, 120);
+
+    if (badge) {
+      badge.classList.remove('d-none');
+    }
+
+    // Scroll halus ke arah foto thumbnail utama agar pengunjung langsung melihat perubahannya
+    const wrapper = document.getElementById('mainNewsThumbWrapper');
+    if (wrapper) {
+      wrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+
+    // Beri penanda aktif pada thumbnail yang diklik
+    document.querySelectorAll('.gallery-item-wrap').forEach(wrap => {
+      wrap.classList.remove('active-thumb');
+    });
+    if (el) {
+      el.classList.add('active-thumb');
+    }
+  }
+
   function showImageModal(src) {
+    if (!src) return;
     document.getElementById('modalImg').src = src;
     var myModal = new bootstrap.Modal(document.getElementById('imageModal'));
     myModal.show();
@@ -288,8 +381,9 @@
         const singleImg = document.createElement('img');
         singleImg.src = imgs[0].src;
         singleImg.alt = imgs[0].alt || 'Gambar Berita';
-        singleImg.setAttribute('onclick', `showImageModal('${imgs[0].src}')`);
-        singleImg.style.cursor = 'zoom-in';
+        singleImg.setAttribute('onclick', `changeMainThumbnail('${imgs[0].src}')`);
+        singleImg.style.cursor = 'pointer';
+        singleImg.title = 'Klik untuk menampilkan sebagai foto utama';
         wrap.appendChild(singleImg);
         group[0].replaceWith(wrap);
         for (let i = 1; i < group.length; i++) group[i].remove();
@@ -309,7 +403,9 @@
         const newImg = document.createElement('img');
         newImg.src = img.src;
         newImg.alt = img.alt || `Gambar Dokumentasi ${idx + 1}`;
-        newImg.setAttribute('onclick', `showImageModal('${img.src}')`);
+        newImg.setAttribute('onclick', `changeMainThumbnail('${img.src}')`);
+        newImg.style.cursor = 'pointer';
+        newImg.title = 'Klik untuk menampilkan sebagai foto utama';
         item.appendChild(newImg);
         grid.appendChild(item);
       });
