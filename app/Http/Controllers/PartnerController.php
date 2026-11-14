@@ -25,20 +25,38 @@ class PartnerController extends Controller
     {
         $path = $request->hasFile('logo') ? $request->file('logo')->store('partners', 'public') : null;
 
-        Partner::create([
+        $partner = Partner::create([
             'nama' => $request->nama,
             'logo' => $path,
             'urutan' => $request->urutan ?? 0,
             'aktif' => $request->has('aktif') ? true : false,
         ]);
 
-        alert()->success('Berhasil!', 'Mitra kerjasama berhasil ditambahkan.');
+        if ($request->filled('perjanjian_judul')) {
+            $partner->agreements()->create([
+                'jenis' => $request->input('perjanjian_jenis', 'MOU'),
+                'judul' => $request->perjanjian_judul,
+                'nomor' => $request->perjanjian_nomor,
+                'deskripsi' => $request->perjanjian_deskripsi,
+                'tanggal_mulai' => $request->perjanjian_tanggal_mulai,
+                'tanggal_selesai' => $request->perjanjian_tanggal_selesai,
+                'urutan' => 0,
+                'aktif' => $request->has('perjanjian_aktif') ? true : false,
+            ]);
+            alert()->success('Berhasil!', 'Mitra dan dokumen perjanjian kerjasama berhasil ditambahkan.');
+        } else {
+            alert()->success('Berhasil!', 'Mitra kerjasama berhasil ditambahkan.');
+        }
 
         return redirect()->route('partner.index');
     }
 
     public function edit(Partner $partner): View
     {
+        $partner->load(['agreements' => function ($q) {
+            $q->orderBy('urutan')->latest();
+        }]);
+
         return view('pages.partner.edit', compact('partner'));
     }
 
