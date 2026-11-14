@@ -342,39 +342,61 @@
     }
   }
 
-  document.addEventListener('DOMContentLoaded', function () {
-    function filterTable(tableId) {
+  // Pencarian & batas baris tabel pimpinan.
+  // Memakai event delegation agar tetap berfungsi setelah konten diperbarui realtime.
+  (function () {
+    const normalize = (s) => (s || '').toLowerCase().replace(/\s+/g, ' ').trim();
+
+    function filterManajemenTable(tableId) {
       const table = document.getElementById(tableId);
       if (!table) return;
-      const searchInput = document.querySelector(`.manajemen-search-input[data-table-id="${tableId}"]`);
-      const limitSelect = document.querySelector(`.manajemen-limit-select[data-table-id="${tableId}"]`);
-      const keyword = (searchInput ? searchInput.value : '').toLowerCase().trim();
+      const searchInput = document.querySelector('.manajemen-search-input[data-table-id="' + tableId + '"]');
+      const limitSelect = document.querySelector('.manajemen-limit-select[data-table-id="' + tableId + '"]');
+      const keyword = normalize(searchInput ? searchInput.value : '');
       const limit = parseInt(limitSelect ? limitSelect.value : '100', 10) || 100;
+      const tbody = table.querySelector('tbody');
 
       let shown = 0;
-      table.querySelectorAll('tbody tr.manajemen-data-row').forEach(row => {
-        const text = row.textContent.toLowerCase();
-        const matches = keyword === '' || text.includes(keyword);
-        if (matches && shown < limit) {
-          row.style.display = '';
-          shown++;
-        } else {
-          row.style.display = 'none';
-        }
+      let matched = 0;
+      tbody.querySelectorAll('tr.manajemen-data-row').forEach(row => {
+        const matches = keyword === '' || normalize(row.textContent).includes(keyword);
+        if (matches) matched++;
+        const visible = matches && shown < limit;
+        row.style.display = visible ? '' : 'none';
+        if (visible) shown++;
       });
+
+      let emptyRow = tbody.querySelector('tr.manajemen-empty-search');
+      if (matched === 0 && keyword !== '' && tbody.querySelector('tr.manajemen-data-row')) {
+        if (!emptyRow) {
+          emptyRow = document.createElement('tr');
+          emptyRow.className = 'manajemen-empty-search';
+          emptyRow.innerHTML = '<td colspan="3" class="text-center text-muted py-4"></td>';
+          tbody.appendChild(emptyRow);
+        }
+        emptyRow.firstElementChild.textContent = 'Tidak ada data yang cocok dengan "' + (searchInput ? searchInput.value.trim() : '') + '".';
+        emptyRow.style.display = '';
+      } else if (emptyRow) {
+        emptyRow.style.display = 'none';
+      }
     }
 
-    document.querySelectorAll('.manajemen-search-input').forEach(input => {
-      input.addEventListener('input', function () {
-        filterTable(this.getAttribute('data-table-id'));
-      });
+    const handler = function (e) {
+      const el = e.target;
+      if (!el || !el.matches) return;
+      if (el.matches('.manajemen-search-input, .manajemen-limit-select')) {
+        filterManajemenTable(el.getAttribute('data-table-id'));
+      }
+    };
+    document.addEventListener('input', handler);
+    document.addEventListener('change', handler);
+    document.addEventListener('search', handler, true); // tombol "x" pada input search
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' && e.target.matches && e.target.matches('.manajemen-search-input')) {
+        e.preventDefault();
+        filterManajemenTable(e.target.getAttribute('data-table-id'));
+      }
     });
-
-    document.querySelectorAll('.manajemen-limit-select').forEach(select => {
-      select.addEventListener('change', function () {
-        filterTable(this.getAttribute('data-table-id'));
-      });
-    });
-  });
+  })();
 </script>
 @endpush

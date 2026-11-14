@@ -427,8 +427,24 @@
     let isUpdating = false;
     const stateUrl = '{{ route("homepage.realtime-state") }}';
 
+    // Jangan timpa konten saat pengunjung sedang mengetik / memakai filter pencarian
+    function isUserInteracting() {
+      const content = document.getElementById('uis-realtime-content');
+      if (!content) return false;
+      const active = document.activeElement;
+      if (active && content.contains(active) && active.matches('input, textarea, select')) return true;
+      return [...content.querySelectorAll('input[type="search"], input[type="text"], textarea')]
+        .some(el => el.value && el.value.trim() !== '');
+    }
+
+    let pendingRefresh = false;
     async function refreshFrontendContent() {
       if (isUpdating) return;
+      if (isUserInteracting()) {
+        pendingRefresh = true;
+        return;
+      }
+      pendingRefresh = false;
       isUpdating = true;
       try {
         const res = await fetch(window.location.href, {
@@ -476,6 +492,7 @@
             AOS.refreshHard();
           }
           window.scrollTo({ top: scrollY, behavior: 'instant' });
+          document.dispatchEvent(new CustomEvent('uis:content-refreshed'));
         }
       } catch (e) {
         // Ignore network errors during background sync
