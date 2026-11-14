@@ -350,12 +350,18 @@
         </div>
 
         {{-- Banner PMB Mini --}}
-        <div class="sidebar-box text-white" style="background: var(--obsidian-dark); border: 2px solid var(--uis-green);">
-          <span class="badge mb-2" style="background: var(--uis-yellow); color:#032e12; font-weight:800;">PMB 2026/2027</span>
-          <h5 class="fw-bold mb-2">Ingin Kuliah di Universitas Ibnu Sina?</h5>
-          <p class="text-white-50 small mb-3">Tersedia Fakultas Teknik, Fakultas Ekonomi & Bisnis, Fakultas Ilmu Kesehatan, dan Program Pascasarjana (S2).</p>
-          <a href="{{ route('homepage.kontak') }}" class="btn-primary-hero w-100 justify-content-center" style="font-size:13px; padding:9px 14px;">
-            Daftar Sekarang <i class="bi bi-arrow-right"></i>
+        <div class="sidebar-box" style="background: linear-gradient(135deg, #023814 0%, #046B26 100%); border: 2px solid rgba(254, 216, 2, 0.35); border-radius: 20px; box-shadow: 0 10px 25px rgba(2, 56, 20, 0.25);">
+          <span class="badge mb-3 px-3 py-2 rounded-pill shadow-sm" style="background: #FED802; color: #023814; font-weight: 800; font-size: 11.5px; letter-spacing: 0.3px;">
+            <i class="bi bi-mortarboard-fill me-1"></i> PMB 2026/2027
+          </span>
+          <h5 class="fw-bold mb-2 text-white" style="font-size: 19px; line-height: 1.35; color: #ffffff !important;">
+            Ingin Kuliah di Universitas Ibnu Sina?
+          </h5>
+          <p class="small mb-4" style="color: rgba(255, 255, 255, 0.9) !important; line-height: 1.6; font-size: 13.5px;">
+            Tersedia Fakultas Teknik, Fakultas Ekonomi & Bisnis, Fakultas Ilmu Kesehatan, dan Program Pascasarjana (S2).
+          </p>
+          <a href="{{ route('homepage.kontak') }}" class="btn w-100 d-flex align-items-center justify-content-center gap-2 rounded-pill fw-bold shadow-sm" style="background: #FED802; color: #023814; font-size: 14px; padding: 11px 20px; border: none; transition: transform 0.2s ease;">
+            <span>Daftar Sekarang</span> <i class="bi bi-arrow-right"></i>
           </a>
         </div>
 
