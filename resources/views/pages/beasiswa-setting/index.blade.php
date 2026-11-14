@@ -1,5 +1,66 @@
 @extends('layouts.dashboard.template')
 
+@push('styles')
+<style>
+    /* ═══════════════════════════════════════════════════════════════
+       CUSTOM TAB & ACTIVE STYLING UIS GREEN THEME (ANTI WARNA BIRU)
+    ═══════════════════════════════════════════════════════════════ */
+    #beasiswaTabs .nav-link {
+        color: #475569;
+        background-color: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 10px;
+        padding: 10px 18px;
+        font-weight: 600;
+        transition: all 0.2s ease;
+    }
+    #beasiswaTabs .nav-link:hover {
+        background-color: #eaf6ee;
+        color: #046B26;
+        border-color: #cce8d4;
+    }
+    #beasiswaTabs .nav-link.active,
+    #beasiswaTabs .nav-pills .nav-link.active,
+    .nav-pills .nav-link.active {
+        background-color: #046B26 !important;
+        color: #ffffff !important;
+        border-color: #046B26 !important;
+        box-shadow: 0 4px 12px rgba(4, 107, 38, 0.25) !important;
+    }
+    #beasiswaTabs .nav-link.active i {
+        color: #FED802 !important; /* Aksen emas khas UIS saat aktif */
+    }
+    #beasiswaTabs .nav-link:not(.active) i {
+        color: #046B26 !important;
+    }
+
+    /* Override Fokus & Active Input/Switch agar tidak pernah biru */
+    .form-check-input:checked {
+        background-color: #046B26 !important;
+        border-color: #046B26 !important;
+    }
+    .form-check-input:focus {
+        border-color: #046B26 !important;
+        box-shadow: 0 0 0 0.2rem rgba(4, 107, 38, 0.18) !important;
+    }
+    .form-control:focus, .form-select:focus {
+        border-color: #046B26 !important;
+        box-shadow: 0 0 0 0.2rem rgba(4, 107, 38, 0.15) !important;
+    }
+
+    /* Accordion Admin Header Styling */
+    .jalur-card-item .accordion-button:not(.collapsed) {
+        background-color: #eaf6ee !important;
+        color: #046B26 !important;
+        box-shadow: none !important;
+    }
+    .jalur-card-item .accordion-button:focus {
+        border-color: #046B26 !important;
+        box-shadow: 0 0 0 0.2rem rgba(4, 107, 38, 0.15) !important;
+    }
+</style>
+@endpush
+
 @section('content')
 <div class="pagetitle">
     <h1>Pengaturan Program Beasiswa</h1>
@@ -327,7 +388,7 @@
                                             </div>
 
                                             <div class="col-md-6">
-                                                <label class="form-label fw-semibold text-primary">
+                                                <label class="form-label fw-semibold text-success">
                                                     <i class="bi bi-card-checklist me-1"></i> Persyaratan Dokumen & Ketentuan
                                                 </label>
                                                 <textarea name="jalur_list[{{ $jIdx }}][syarat]" rows="5" class="form-control"
@@ -410,7 +471,7 @@
                             @foreach($faqData as $fIdx => $fq)
                                 <div class="card border mb-3 p-3 bg-light faq-card-item" id="faqCard_{{ $fIdx }}">
                                     <div class="d-flex justify-content-between align-items-center mb-2">
-                                        <span class="badge bg-primary">FAQ #{{ $fIdx + 1 }}</span>
+                                        <span class="badge bg-success">FAQ #{{ $fIdx + 1 }}</span>
                                         <button type="button" class="btn btn-sm btn-outline-danger py-0 px-2" onclick="hapusFaqCard('faqCard_{{ $fIdx }}')">
                                             <i class="bi bi-trash"></i>
                                         </button>
@@ -558,7 +619,7 @@
                                 <textarea name="jalur_list[${idx}][manfaat]" rows="5" class="form-control" placeholder="Tuliskan tiap poin manfaat per baris baru..."></textarea>
                             </div>
                             <div class="col-md-6">
-                                <label class="form-label fw-semibold text-primary"><i class="bi bi-card-checklist me-1"></i> Persyaratan Dokumen</label>
+                                <label class="form-label fw-semibold text-success"><i class="bi bi-card-checklist me-1"></i> Persyaratan Dokumen</label>
                                 <textarea name="jalur_list[${idx}][syarat]" rows="5" class="form-control" placeholder="Tuliskan tiap syarat per baris baru..."></textarea>
                             </div>
                             <div class="col-md-10">
@@ -584,7 +645,7 @@
         const template = `
             <div class="card border mb-3 p-3 bg-light faq-card-item" id="faqCard_${idx}">
                 <div class="d-flex justify-content-between align-items-center mb-2">
-                    <span class="badge bg-primary">FAQ Baru</span>
+                    <span class="badge bg-success">FAQ Baru</span>
                     <button type="button" class="btn btn-sm btn-outline-danger py-0 px-2" onclick="hapusFaqCard('faqCard_${idx}')">
                         <i class="bi bi-trash"></i>
                     </button>

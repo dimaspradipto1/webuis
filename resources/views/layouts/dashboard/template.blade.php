@@ -119,6 +119,29 @@
             background-color: #046B26 !important;
             color: #fff !important;
         }
+        /* Global Nav Pills & Active Elements UIS Theme (NO BLUE) */
+        .nav-pills .nav-link.active,
+        .nav-pills .show > .nav-link {
+            background-color: #046B26 !important;
+            color: #ffffff !important;
+            border-color: #046B26 !important;
+        }
+        .nav-tabs .nav-link.active {
+            color: #046B26 !important;
+            border-bottom: 2px solid #046B26 !important;
+        }
+        .page-item.active .page-link {
+            background-color: #046B26 !important;
+            border-color: #046B26 !important;
+            color: #ffffff !important;
+        }
+        .form-check-input:checked {
+            background-color: #046B26 !important;
+            border-color: #046B26 !important;
+        }
+        .badge.bg-primary {
+            background-color: #046B26 !important;
+        }
         .btn-warning {
             background-color: #FED802 !important;
             border-color: #FED802 !important;
