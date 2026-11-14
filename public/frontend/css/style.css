@@ -4177,6 +4177,14 @@ section {
     margin-bottom: 4px;
 
     line-height: 1.35;
+
+    display: -webkit-box;
+
+    -webkit-line-clamp: 2;
+
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
 }
 
 .gallery-card-desc {
@@ -4185,6 +4193,14 @@ section {
     color: rgba(255, 255, 255, 0.8);
 
     line-height: 1.5;
+
+    display: -webkit-box;
+
+    -webkit-line-clamp: 2;
+
+    -webkit-box-orient: vertical;
+
+    overflow: hidden;
 }
 
 /* Custom Pagination */

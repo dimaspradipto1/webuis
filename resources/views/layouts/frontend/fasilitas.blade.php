@@ -31,34 +31,27 @@
     color: #ffffff;
     box-shadow: 0 6px 16px rgba(4, 107, 38, 0.22);
   }
-  .fasilitas-card-link {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    text-decoration: none;
-    color: inherit;
-  }
-  .fasilitas-card-link .fasilitas-box {
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    text-align: left;
-    padding: 32px 28px;
-  }
-  .fasilitas-card-footer {
-    margin-top: 20px;
-    padding-top: 16px;
-    border-top: 1px dashed rgba(15, 23, 42, 0.12);
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 13.5px;
+  .gallery-card-title {
+    font-size: 16px;
     font-weight: 700;
-    color: #046B26;
+    color: #ffffff;
+    margin-bottom: 5px;
+    line-height: 1.35;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 43px;
   }
-  .fasilitas-box:hover .fasilitas-card-footer {
-    color: #034e1c;
+  .gallery-card-desc {
+    font-size: 12.5px;
+    color: rgba(255, 255, 255, 0.82);
+    line-height: 1.5;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    min-height: 38px;
   }
 </style>
 
@@ -98,30 +91,35 @@
       </a>
     </div>
 
-    <!-- Grid Kartu Fasilitas & Laboratorium -->
+    <!-- Grid Kartu Fasilitas & Laboratorium (Gallery Style) -->
     <div class="row g-4">
       @forelse($saranas as $index => $sarana)
         <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ 50 + ($index * 60) }}">
-          <a href="{{ route('homepage.fasilitas.detail', $sarana->slug ?: $sarana->id) }}" class="fasilitas-card-link">
-            <div class="fasilitas-box">
-              <div>
-                <div class="d-flex align-items-center justify-content-between mb-3">
-                  <div class="fasilitas-icon m-0">
-                    <i class="bi {{ $sarana->icon ?: 'bi-building' }}"></i>
-                  </div>
-                  <span class="badge bg-light text-secondary border rounded-pill px-3 py-1" style="font-size: 11.5px;">
-                    {{ $sarana->kategori ?: 'Fasilitas Kampus' }}
-                  </span>
-                </div>
-                <h4 class="fasilitas-title">{{ $sarana->nama }}</h4>
-                <p class="fasilitas-desc mb-0">
-                  {{ trim(html_entity_decode(strip_tags($sarana->deskripsi ?? ''), ENT_QUOTES | ENT_HTML5, 'UTF-8')) ?: 'Fasilitas yang mendukung kegiatan akademik dan riset mahasiswa.' }}
-                </p>
-              </div>
-
-              <div class="fasilitas-card-footer">
-                <span>Lihat Detail & Spesifikasi</span>
-                <i class="bi bi-arrow-right-circle-fill fs-5"></i>
+          <a href="{{ route('homepage.fasilitas.detail', $sarana->slug ?: $sarana->id) }}" class="gallery-card-item d-block text-decoration-none">
+            <div class="gallery-img-container">
+              @php
+                $saranaImg = null;
+                if (!empty($sarana->foto) && file_exists(public_path('storage/' . $sarana->foto))) {
+                    $saranaImg = asset('storage/' . $sarana->foto);
+                } elseif (!empty($sarana->galeri) && is_array($sarana->galeri) && count($sarana->galeri) > 0 && file_exists(public_path('storage/' . $sarana->galeri[0]))) {
+                    $saranaImg = asset('storage/' . $sarana->galeri[0]);
+                } else {
+                    $defaultImgs = [
+                        'storage/sarana/j5iAAWkR5yjvsSxUGIIruUQd1NqAnL9XKl0NHtuN.png',
+                        'storage/sarana/cli6lBRpE2SShWKl7nuR0KLND0K9YNJXsahId013.png',
+                        'storage/sarana/nXYvBgXCtS8344RDhQ3AjLY6wUjU4UxadDq6hVS5.png',
+                        'storage/sarana/B87I02qirKpALPEG0r7xNJv2tKam7MewKBykz8H0.png',
+                        'storage/sarana/Q0ykrPz1MNPQHYUVjXQ5uDwAeo2vD6zLmlHJyjw4.webp',
+                        'storage/sarana/f21hCPgLRLDMaQ0q2RbHcZ1mAt78pt7xsIWbDGGw.webp',
+                    ];
+                    $saranaImg = asset($defaultImgs[$index % count($defaultImgs)]);
+                }
+              @endphp
+              <img src="{{ $saranaImg }}" alt="{{ $sarana->nama }}" class="gallery-card-img" loading="lazy">
+              <div class="gallery-card-overlay">
+                <span class="gallery-tag"><i class="bi bi-tag-fill me-1"></i>{{ strtoupper($sarana->kategori ?: 'Fasilitas') }}</span>
+                <h5 class="gallery-card-title">{{ $sarana->nama }}</h5>
+                <p class="gallery-card-desc mb-0">{{ Str::limit(trim(html_entity_decode(strip_tags($sarana->deskripsi ?? ''), ENT_QUOTES | ENT_HTML5, 'UTF-8')), 85) ?: 'Sarana dan fasilitas mutakhir penunjang riset akademik.' }}</p>
               </div>
             </div>
           </a>
