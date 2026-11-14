@@ -133,14 +133,9 @@
                         <i class="bi bi-grid-fill me-1 text-success"></i> 4. Jalur Beasiswa
                     </button>
                 </div>
-                <div class="col-6">
+                <div class="col-12">
                     <button class="nav-link text-center" id="tab-alur-faq-btn" data-bs-toggle="pill" data-bs-target="#tab-alur-faq" type="button" role="tab">
                         <i class="bi bi-signpost-split me-1 text-success"></i> 5. Alur & FAQ
-                    </button>
-                </div>
-                <div class="col-6">
-                    <button class="nav-link text-center" id="tab-cta-btn" data-bs-toggle="pill" data-bs-target="#tab-cta" type="button" role="tab">
-                        <i class="bi bi-star-fill me-1 text-success"></i> 6. Banner Ajakan (CTA)
                     </button>
                 </div>
             </div>
@@ -609,43 +604,6 @@
                                     </div>
                                 </div>
                             @endforeach
-                        </div>
-                    </div>
-                </div>
-
-                {{-- TAB 6: BANNER CTA --}}
-                <div class="tab-pane fade" id="tab-cta" role="tabpanel">
-                    <div class="d-flex align-items-center justify-content-between mb-3 pb-2 border-bottom">
-                        <h5 class="fw-bold text-dark mb-0"><i class="bi bi-star-fill text-success me-2"></i>Banner Ajakan (Call to Action) Bagian Bawah</h5>
-                        <span class="badge bg-light text-secondary border">Footer Banner</span>
-                    </div>
-
-                    @php
-                        $ctaData = old('cta_data', $beasiswa->effective_cta);
-                    @endphp
-                    <div class="row g-3">
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Teks Badge CTA</label>
-                            <input type="text" name="cta_data[badge]" class="form-control"
-                                   value="{{ $ctaData['badge'] ?? 'Jangan Lewatkan Kesempatan Ini' }}"
-                                   placeholder="Contoh: Jangan Lewatkan Kesempatan Ini">
-                        </div>
-                        <div class="col-md-6">
-                            <label class="form-label fw-semibold">Teks Tombol Aksi Utama</label>
-                            <input type="text" name="cta_data[btn_text]" class="form-control"
-                                   value="{{ $ctaData['btn_text'] ?? 'Daftar Online PMB' }}"
-                                   placeholder="Contoh: Daftar Online PMB">
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label fw-semibold">Judul Banner CTA</label>
-                            <input type="text" name="cta_data[judul]" class="form-control"
-                                   value="{{ $ctaData['judul'] ?? 'Siap Meraih Beasiswa Impian Anda di Universitas Ibnu Sina?' }}"
-                                   placeholder="Contoh: Siap Meraih Beasiswa Impian Anda di Universitas Ibnu Sina?">
-                        </div>
-                        <div class="col-12">
-                            <label class="form-label fw-semibold">Deskripsi Ajakan CTA</label>
-                            <textarea name="cta_data[deskripsi]" rows="3" class="form-control"
-                                      placeholder="Tuliskan ajakan singkat yang memotivasi calon mahasiswa...">{{ $ctaData['deskripsi'] ?? 'Kuota terbatas untuk setiap gelombang pendaftaran. Segera persiapkan dokumen Anda dan bergabunglah bersama ribuan mahasiswa berprestasi UIS Batam!' }}</textarea>
                         </div>
                     </div>
                 </div>

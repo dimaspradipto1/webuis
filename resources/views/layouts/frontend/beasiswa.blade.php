@@ -414,19 +414,6 @@
     line-height: 1.45;
   }
 
-  /* Bottom CTA Banner */
-  .beasiswa-cta-banner {
-    background: linear-gradient(135deg, #023814 0%, #046B26 65%, #088a33 100%);
-    border-radius: 18px;
-    padding: clamp(18px, 3vw, 30px);
-    color: #ffffff;
-    box-shadow: 0 8px 24px rgba(4, 107, 38, 0.14);
-    border: 2px solid var(--uis-yellow);
-    position: relative;
-    overflow: hidden;
-    margin-top: 16px;
-    margin-bottom: 24px;
-  }
 </style>
 @endpush
 
@@ -730,7 +717,7 @@
     $faqList = $beasiswaSetting->effective_faq ?? [];
   @endphp
   @if(count($faqList) > 0)
-  <section class="container beasiswa-section mb-3">
+  <section class="container beasiswa-section mb-4">
     <div class="beasiswa-overview-card p-3">
       <div class="text-center mb-2">
         <span class="beasiswa-section-tag"><i class="bi bi-question-circle-fill"></i> Pertanyaan Umum</span>
@@ -757,40 +744,6 @@
     </div>
   </section>
   @endif
-
-  {{-- CTA BOTTOM BANNER (DINAMIS DARI ADMIN) --}}
-  @php
-    $cta = $beasiswaSetting->effective_cta ?? [];
-  @endphp
-  <section class="container beasiswa-section">
-    <div class="beasiswa-cta-banner text-center text-lg-start">
-      <div class="row align-items-center g-3">
-        <div class="col-lg-8">
-          <span class="badge bg-warning text-dark px-3 py-1 fw-bold mb-2 rounded-pill" style="font-size: 10.5px;">
-            <i class="bi bi-star-fill me-1"></i> {{ $cta['badge'] ?? 'Jangan Lewatkan Kesempatan Ini' }}
-          </span>
-          <h2 class="fw-bold text-white mb-1" style="font-size: clamp(1.3rem, 1.8vw, 1.7rem);">
-            {{ $cta['judul'] ?? 'Siap Meraih Beasiswa Impian Anda di Universitas Ibnu Sina?' }}
-          </h2>
-          <p class="text-white-50 mb-0" style="max-width: 680px; font-size: 13px; line-height: 1.55;">
-            {{ $cta['deskripsi'] ?? 'Kuota terbatas untuk setiap gelombang pendaftaran. Segera persiapkan dokumen Anda dan bergabunglah bersama ribuan mahasiswa berprestasi UIS Batam!' }}
-          </p>
-        </div>
-        <div class="col-lg-4 text-center text-lg-end">
-          <div class="d-flex flex-column flex-sm-row flex-lg-column gap-2 justify-content-center">
-            <a href="{{ $pmbLink }}" target="_blank" class="btn btn-warning px-3 py-2 fw-bold text-dark shadow rounded-pill" style="background: var(--uis-yellow); border-color: var(--uis-yellow); font-size: 13px;">
-              <i class="bi bi-pencil-square me-2"></i>{{ $cta['btn_text'] ?? 'Daftar Online PMB' }}
-            </a>
-            @if(($waAdminSetting->is_active ?? true) && !empty($waAdminSetting->clean_wa))
-            <a href="{{ $waAdminSetting->wa_url }}" target="_blank" class="btn btn-outline-light px-3 py-2 fw-semibold rounded-pill" style="font-size: 12.5px;">
-              <i class="bi bi-whatsapp me-2 text-success"></i>Tanya Syarat Beasiswa
-            </a>
-            @endif
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
 
 </div>
 @endsection
