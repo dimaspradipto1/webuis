@@ -30,8 +30,6 @@ class PartnerAgreementRequest extends FormRequest
             'deskripsi' => ['nullable', 'string', 'max:10000'],
             'tanggal_mulai' => ['nullable', 'date'],
             'tanggal_selesai' => ['nullable', 'date', 'after_or_equal:tanggal_mulai'],
-            'file' => ['nullable', 'file', 'mimes:pdf', 'max:20480'],
-            'tautan' => ['nullable', 'url:http,https', 'max:2048'],
             'urutan' => ['nullable', 'integer', 'min:0'],
             'aktif' => ['boolean'],
         ];

@@ -2,13 +2,13 @@
 
 @section('content')
 <div class="pagetitle">
-    <h1>Tambah Dokumen Kerjasama</h1>
+    <h1>Tambah Kerjasama</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('partner.index') }}">Mitra</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('partner.index') }}">Mitra Kerjasama</a></li>
             <li class="breadcrumb-item"><a href="{{ route('partner.agreements.index', $partner) }}">{{ $partner->nama }}</a></li>
-            <li class="breadcrumb-item active">Tambah Dokumen</li>
+            <li class="breadcrumb-item active">Tambah</li>
         </ol>
     </nav>
 </div>
@@ -17,7 +17,7 @@
     <div class="col-xl-9">
         <div class="card shadow-sm">
             <div class="card-header py-3">
-                <h5 class="mb-0 fw-semibold"><i class="bi bi-file-earmark-plus me-2 text-success"></i>Dokumen untuk {{ $partner->nama }}</h5>
+                <h5 class="mb-0 fw-semibold"><i class="bi bi-file-earmark-plus me-2 text-success"></i>Tambah Kerjasama untuk {{ $partner->nama }}</h5>
             </div>
             <div class="card-body pt-4">
                 @if($errors->any())
@@ -28,12 +28,12 @@
                         </ul>
                     </div>
                 @endif
-                <form action="{{ route('partner.agreements.store', $partner) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('partner.agreements.store', $partner) }}" method="POST">
                     @csrf
                     @include('pages.partner-agreements._form')
                     <div class="d-flex gap-2 mt-4">
                         <a href="{{ route('partner.agreements.index', $partner) }}" class="btn btn-outline-secondary">Batal</a>
-                        <button type="submit" class="btn btn-success"><i class="bi bi-save me-1"></i>Simpan Dokumen</button>
+                        <button type="submit" class="btn btn-success"><i class="bi bi-save me-1"></i>Simpan Kerjasama</button>
                     </div>
                 </form>
             </div>

@@ -175,23 +175,11 @@
             </ul>
           </li>
 
-          <!-- 6. Publikasi dan mitra (Sesuai Urutan Header) -->
+          <!-- 6. Publikasi (Sesuai Urutan Header) -->
           <li class="nav-item">
-            <a class="nav-link {{ Route::is('publikasi.*') || Route::is('partner.*') ? '' : 'collapsed' }}" data-bs-target="#penelitian-nav" data-bs-toggle="collapse" href="#">
-              <i class="bi bi-file-earmark-medical"></i><span>Publikasi dan mitra</span><i class="bi bi-chevron-down ms-auto"></i>
+            <a class="nav-link {{ Route::is('publikasi.*') ? '' : 'collapsed' }}" href="{{ route('publikasi.index') }}">
+              <i class="bi bi-file-earmark-medical"></i><span>Publikasi</span>
             </a>
-            <ul id="penelitian-nav" class="nav-content collapse {{ Route::is('publikasi.*') || Route::is('partner.*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
-              <li>
-                <a href="{{ route('publikasi.index') }}" class="{{ Route::is('publikasi.*') ? 'active' : '' }}">
-                  <i class="bi bi-circle"></i><span>Publikasi</span>
-                </a>
-              </li>
-              <li>
-                <a href="{{ route('partner.index') }}" class="{{ Route::is('partner.*') ? 'active' : '' }}">
-                  <i class="bi bi-circle"></i><span>Mitra Kerjasama Riset</span>
-                </a>
-              </li>
-            </ul>
           </li>
           @elseif($isOrganisasi)
           <!-- Menu Khusus Role Organisasi Mahasiswa -->
@@ -205,10 +193,10 @@
           @if($isAdmin || $isPenulis)
           <!-- 7. Informasi (Berita & Pengumuman) -->
           <li class="nav-item">
-              <a class="nav-link {{ Route::is('news.*') || Route::is('pengumuman-agenda.*') || Route::is('faq.*') ? '' : 'collapsed' }}" data-bs-target="#informasi-nav" data-bs-toggle="collapse" href="#">
+              <a class="nav-link {{ Route::is('news.*') || Route::is('pengumuman-agenda.*') || Route::is('faq.*') || Route::is('partner.*') ? '' : 'collapsed' }}" data-bs-target="#informasi-nav" data-bs-toggle="collapse" href="#">
                   <i class="bi bi-newspaper"></i><span>Informasi</span><i class="bi bi-chevron-down ms-auto"></i>
               </a>
-              <ul id="informasi-nav" class="nav-content collapse {{ Route::is('news.*') || Route::is('pengumuman-agenda.*') || Route::is('faq.*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+              <ul id="informasi-nav" class="nav-content collapse {{ Route::is('news.*') || Route::is('pengumuman-agenda.*') || Route::is('faq.*') || Route::is('partner.*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
                   <li>
                       <a href="{{ route('news.index') }}" class="{{ Route::is('news.index') ? 'active' : '' }}">
                           <i class="bi bi-circle"></i><span>Semua Berita & Pengumuman</span>
@@ -228,6 +216,11 @@
                   <li>
                       <a href="{{ route('faq.index') }}" class="{{ Route::is('faq.*') ? 'active' : '' }}">
                           <i class="bi bi-circle"></i><span>FAQ Informasi</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="{{ route('partner.index') }}" class="{{ Route::is('partner.*') ? 'active' : '' }}">
+                          <i class="bi bi-circle"></i><span>Mitra Kerjasama</span>
                       </a>
                   </li>
                   @endif

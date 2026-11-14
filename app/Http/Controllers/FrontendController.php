@@ -219,6 +219,7 @@ class FrontendController extends Controller
 
         return view('layouts.frontend.kerjasama', compact(
             'partners',
+            'agreements',
             'agreementsByType',
             'agreementCounts',
             'agreementTypes'

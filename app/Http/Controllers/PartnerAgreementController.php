@@ -31,15 +31,10 @@ class PartnerAgreementController extends Controller
     public function store(PartnerAgreementRequest $request, Partner $partner): RedirectResponse
     {
         $data = $request->validated();
-        unset($data['file']);
-
-        if ($request->hasFile('file')) {
-            $data['file_path'] = $request->file('file')->store('partner-agreements', 'public');
-        }
 
         $partner->agreements()->create($data);
 
-        alert()->success('Berhasil!', 'Dokumen kerjasama berhasil ditambahkan.');
+        alert()->success('Berhasil!', 'Data kerjasama berhasil ditambahkan.');
 
         return redirect()->route('partner.agreements.index', $partner);
     }
@@ -55,20 +50,10 @@ class PartnerAgreementController extends Controller
     {
         $agreement = $partner->agreements()->findOrFail($agreement->id);
         $data = $request->validated();
-        unset($data['file']);
-        $previousFilePath = $agreement->file_path;
-
-        if ($request->hasFile('file')) {
-            $data['file_path'] = $request->file('file')->store('partner-agreements', 'public');
-        }
 
         $agreement->update($data);
 
-        if ($request->hasFile('file') && $previousFilePath && Storage::disk('public')->exists($previousFilePath)) {
-            Storage::disk('public')->delete($previousFilePath);
-        }
-
-        alert()->success('Berhasil!', 'Dokumen kerjasama berhasil diperbarui.');
+        alert()->success('Berhasil!', 'Data kerjasama berhasil diperbarui.');
 
         return redirect()->route('partner.agreements.index', $partner);
     }
@@ -84,7 +69,7 @@ class PartnerAgreementController extends Controller
             Storage::disk('public')->delete($filePath);
         }
 
-        alert()->success('Berhasil!', 'Dokumen kerjasama berhasil dihapus.');
+        alert()->success('Berhasil!', 'Data kerjasama berhasil dihapus.');
 
         return redirect()->route('partner.agreements.index', $partner);
     }

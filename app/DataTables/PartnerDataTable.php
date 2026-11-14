@@ -41,8 +41,8 @@ class PartnerDataTable extends DataTable
                 $btn = '<div class="d-flex justify-content-center align-items-center flex-wrap" style="gap:5px">';
                 $btn .= '<a href="'.route('partner.agreements.index', $partner->id).'"
                             class="btn btn-sm btn-outline-success"
-                            title="Kelola dokumen MOU, MOA, dan IA">
-                            <i class="bi bi-file-earmark-text me-1"></i>Dokumen
+                            title="Kelola data kerjasama (MOU, MOA, IA)">
+                            <i class="bi bi-file-earmark-text me-1"></i>Kerjasama
                          </a>';
                 $btn .= '<a href="'.route('partner.edit', $partner->id).'"
                             class="btn btn-sm btn-warning text-white"

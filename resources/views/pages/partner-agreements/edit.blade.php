@@ -2,13 +2,13 @@
 
 @section('content')
 <div class="pagetitle">
-    <h1>Edit Dokumen Kerjasama</h1>
+    <h1>Edit Kerjasama</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('partner.index') }}">Mitra</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('partner.index') }}">Mitra Kerjasama</a></li>
             <li class="breadcrumb-item"><a href="{{ route('partner.agreements.index', $partner) }}">{{ $partner->nama }}</a></li>
-            <li class="breadcrumb-item active">Edit Dokumen</li>
+            <li class="breadcrumb-item active">Edit Kerjasama</li>
         </ol>
     </nav>
 </div>
@@ -28,7 +28,7 @@
                         </ul>
                     </div>
                 @endif
-                <form action="{{ route('partner.agreements.update', [$partner, $agreement]) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('partner.agreements.update', [$partner, $agreement]) }}" method="POST">
                     @csrf
                     @method('PUT')
                     @include('pages.partner-agreements._form')
