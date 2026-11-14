@@ -196,7 +196,7 @@ class FrontendController extends Controller
     public function beasiswa()
     {
         $feature = Feature::where('judul', 'like', '%beasiswa%')->first();
-        $beasiswaSetting = \App\Models\BeasiswaSetting::first();
+        $beasiswaSetting = \App\Models\BeasiswaSetting::first() ?? new \App\Models\BeasiswaSetting();
 
         return view('layouts.frontend.beasiswa', compact('feature', 'beasiswaSetting'));
     }
