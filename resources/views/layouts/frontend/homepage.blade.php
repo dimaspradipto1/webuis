@@ -268,6 +268,10 @@
           return route('homepage.kerjasama');
       }
 
+      if ($judul !== '' && str_contains($judul, 'beasiswa')) {
+          return route('homepage.beasiswa');
+      }
+
       if (empty($card->id)) {
           return '#';
       }

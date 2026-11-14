@@ -193,8 +193,18 @@ class FrontendController extends Controller
         ));
     }
 
+    public function beasiswa()
+    {
+        $feature = Feature::where('judul', 'like', '%beasiswa%')->first();
+        return view('layouts.frontend.beasiswa', compact('feature'));
+    }
+
     public function featureDetail(Feature $feature)
     {
+        if (str_contains(strtolower($feature->judul), 'beasiswa')) {
+            return redirect()->route('homepage.beasiswa');
+        }
+
         return view('layouts.frontend.feature-detail', compact('feature'));
     }
 
