@@ -2,23 +2,34 @@
 
 @section('content')
 <div class="pagetitle">
-    <h1>Sunting Profil Tentang Kami</h1>
+    <h1>Tentang UIS</h1>
     <nav>
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('about.index') }}">Tentang Kami</a></li>
-            <li class="breadcrumb-item active">Sunting</li>
+            <li class="breadcrumb-item">Profil</li>
+            <li class="breadcrumb-item active">Tentang UIS</li>
         </ol>
     </nav>
 </div>
 
+@if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <i class="bi bi-check-circle me-1"></i>
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+
 <div class="row">
     <div class="col-lg-10">
         <div class="card shadow-sm">
-            <div class="card-header py-3">
+            <div class="card-header py-3 d-flex flex-wrap align-items-center justify-content-between gap-2">
                 <h5 class="mb-0 fw-semibold">
-                    <i class="bi bi-pencil-square me-2 text-primary"></i>Form Sunting Profil
+                    <i class="bi bi-pencil-square me-2 text-primary"></i>Form Sunting Profil Tentang UIS
                 </h5>
+                <a href="{{ route('homepage.tentang') }}" target="_blank" class="btn btn-sm btn-outline-success">
+                    <i class="bi bi-box-arrow-up-right me-1"></i> Lihat Halaman
+                </a>
             </div>
             <div class="card-body pt-4">
 
@@ -272,10 +283,10 @@
                     {{-- Buttons --}}
                     <div class="d-flex gap-2">
                         <a href="{{ route('about.index') }}" class="btn btn-secondary">
-                            <i class="bi bi-arrow-left me-1"></i> Batal
+                            <i class="bi bi-arrow-counterclockwise me-1"></i> Batalkan Perubahan
                         </a>
                         <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-save me-1"></i> Simpan
+                            <i class="bi bi-save me-1"></i> Simpan Perubahan
                         </button>
                     </div>
 

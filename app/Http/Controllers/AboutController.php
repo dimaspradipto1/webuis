@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\DataTables\AboutDataTable;
 use App\Http\Requests\AboutRequest;
 use App\Models\About;
 use Illuminate\Http\RedirectResponse;
@@ -11,14 +10,33 @@ use Illuminate\View\View;
 
 class AboutController extends Controller
 {
-    public function index(AboutDataTable $dataTable)
+    /**
+     * Profil "Tentang UIS" hanya satu data, jadi menu langsung membuka form sunting.
+     */
+    public function index(): View
     {
-        return $dataTable->render('pages.about.index');
+        $about = $this->singleton();
+
+        return view('pages.about.edit', compact('about'));
     }
 
-    public function create(): View
+    public function create(): RedirectResponse
     {
-        return view('pages.about.create');
+        return redirect()->route('about.index');
+    }
+
+    public function show(About $about): RedirectResponse
+    {
+        return redirect()->route('about.index');
+    }
+
+    /**
+     * Ambil satu-satunya data profil; buat data kosong bila belum ada.
+     */
+    private function singleton(): About
+    {
+        return About::orderBy('id')->first()
+            ?? About::create(['judul_profil' => 'UNIVERSITAS IBNU SINA']);
     }
 
     public function store(AboutRequest $request): RedirectResponse
@@ -44,9 +62,9 @@ class AboutController extends Controller
             ->with('success', 'Data Profil Tentang Kami berhasil ditambahkan.');
     }
 
-    public function edit(About $about): View
+    public function edit(About $about): RedirectResponse
     {
-        return view('pages.about.edit', compact('about'));
+        return redirect()->route('about.index');
     }
 
     public function update(AboutRequest $request, About $about): RedirectResponse
@@ -85,14 +103,7 @@ class AboutController extends Controller
 
     public function destroy(About $about): RedirectResponse
     {
-        if ($about->video_file && Storage::disk('public')->exists($about->video_file)) {
-            Storage::disk('public')->delete($about->video_file);
-        }
-
-        $about->delete();
-
-        return redirect()
-            ->route('about.index')
-            ->with('success', 'Data Profil Tentang Kami berhasil dihapus.');
+        // Profil tunggal tidak dihapus agar halaman Tentang UIS tidak kosong
+        return redirect()->route('about.index');
     }
 }
