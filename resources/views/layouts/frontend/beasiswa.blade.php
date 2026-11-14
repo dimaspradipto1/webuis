@@ -308,14 +308,32 @@
     color: #ffffff;
   }
   .beasiswa-pill-tag {
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 700;
-    padding: 2px 7px;
+    padding: 3px 12px;
     border-radius: 999px;
     letter-spacing: 0.3px;
     background: #fdf5d3;
     color: #8c7302;
     border: 1px solid #fae69e;
+    white-space: nowrap;
+    text-align: center;
+    width: 220px;
+    display: inline-block;
+  }
+  @media (max-width: 991px) {
+    .beasiswa-pill-tag {
+      width: 170px;
+      font-size: 10.5px;
+      padding: 3px 8px;
+    }
+  }
+  @media (max-width: 576px) {
+    .beasiswa-pill-tag {
+      width: auto;
+      font-size: 10px;
+      padding: 2px 6px;
+    }
   }
   .beasiswa-accordion .accordion-body {
     padding: 16px 18px;
@@ -613,15 +631,15 @@
           <h2 class="accordion-header" id="heading-{{ $cid }}">
             <button class="accordion-button {{ $isFirst ? '' : 'collapsed' }}" type="button" data-bs-toggle="collapse" data-bs-target="#{{ $cid }}" aria-expanded="{{ $isFirst ? 'true' : 'false' }}" aria-controls="{{ $cid }}">
               <div class="beasiswa-acc-icon"><i class="bi {{ $j['icon'] ?? 'bi-mortarboard-fill' }}"></i></div>
-              <div class="flex-grow-1">
-                <div class="d-flex flex-wrap align-items-center gap-2 mb-1">
-                  <span>{{ $j['judul'] ?? 'Jalur Beasiswa' }}</span>
+              <div class="flex-grow-1 me-2" style="min-width: 0;">
+                <div class="d-flex align-items-center justify-content-between gap-2 mb-1">
+                  <span class="fw-bold text-dark beasiswa-jalur-title">{{ $j['judul'] ?? 'Jalur Beasiswa' }}</span>
                   @if(!empty($j['badge']))
-                    <span class="beasiswa-pill-tag">{{ $j['badge'] }}</span>
+                    <span class="beasiswa-pill-tag ms-auto flex-shrink-0">{{ $j['badge'] }}</span>
                   @endif
                 </div>
                 @if(!empty($j['ringkasan']))
-                  <small class="text-muted fw-normal d-block" style="font-size: 12px;">{{ $j['ringkasan'] }}</small>
+                  <small class="text-muted fw-normal d-block text-truncate" style="font-size: 12px;">{{ $j['ringkasan'] }}</small>
                 @endif
               </div>
             </button>
