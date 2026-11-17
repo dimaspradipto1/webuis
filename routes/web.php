@@ -18,6 +18,7 @@ use App\Http\Controllers\FeatureController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HeroHumasController;
+use App\Http\Controllers\KampusBerdampakController;
 use App\Http\Controllers\KurikulumController;
 use App\Http\Controllers\LayananController;
 use App\Http\Controllers\LayananHumasController;
@@ -72,6 +73,7 @@ Route::controller(FrontendController::class)->group(function () {
     Route::get('/sistem-akademik', 'sistemAkademik')->name('homepage.sistem-akademik');
     Route::get('/program-studi', 'programStudi')->name('homepage.program-studi');
     Route::get('/program-studi/{slug}', 'programStudiDetail')->name('homepage.program-studi.detail');
+    Route::get('/kampus-berdampak', 'kampusBerdampak')->name('homepage.kampus-berdampak');
     Route::get('/kerjasama', 'kerjasama')->name('homepage.kerjasama');
     Route::get('/layanan', 'programStudi')->name('homepage.layanan');
     Route::get('/layanan/{slug}', 'programStudiDetail')->name('homepage.layanan.detail');
@@ -248,6 +250,15 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::get('partner/{partner}/agreements/{agreement}/edit', [PartnerAgreementController::class, 'edit'])->name('partner.agreements.edit');
     Route::put('partner/{partner}/agreements/{agreement}', [PartnerAgreementController::class, 'update'])->name('partner.agreements.update');
     Route::delete('partner/{partner}/agreements/{agreement}', [PartnerAgreementController::class, 'destroy'])->name('partner.agreements.destroy');
+
+    // Kampus Berdampak
+    Route::prefix('admin-kampus-berdampak')->name('kampus-berdampak.')->group(function () {
+        Route::get('/', [KampusBerdampakController::class, 'index'])->name('index');
+        Route::put('/setting', [KampusBerdampakController::class, 'updateSetting'])->name('setting.update');
+        Route::post('/program', [KampusBerdampakController::class, 'storeProgram'])->name('program.store');
+        Route::put('/program/{program}', [KampusBerdampakController::class, 'updateProgram'])->name('program.update');
+        Route::delete('/program/{program}', [KampusBerdampakController::class, 'destroyProgram'])->name('program.destroy');
+    });
     Route::resource('visimisi', VisiMisiController::class);
     Route::resource('nilaiperusahaan', NilaiPerusahaanController::class);
     Route::resource('faculty-stat', FacultyStatController::class);

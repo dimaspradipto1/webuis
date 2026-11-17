@@ -95,10 +95,10 @@
               'urutan' => 1,
           ],
           (object) [
-              'icon' => 'bi-people',
-              'judul' => 'Kerjasama',
-              'deskripsi' => 'Mitra industri dan institusi nasional & internasional',
-              'badge' => 'MOU AKTIF',
+              'icon' => 'bi-house-door',
+              'judul' => 'Kampus Berdampak',
+              'deskripsi' => 'Mendorong inovasi dan kontribusi nyata bagi masyarakat',
+              'badge' => 'AKTIF 2024',
               'urutan' => 2,
           ],
           (object) [
@@ -264,6 +264,10 @@
           return route('homepage.program-studi');
       }
 
+      if ($judul !== '' && (str_contains($judul, 'kampus berdampak') || str_contains($judul, 'berdampak'))) {
+          return route('homepage.kampus-berdampak');
+      }
+
       if ($judul !== '' && (str_contains($judul, 'kerjasama') || str_contains($judul, 'mitra'))) {
           return route('homepage.kerjasama');
       }
@@ -287,6 +291,7 @@
         @php
           $cardTitle = strtolower(trim((string) ($card->judul ?? '')));
           $hasCustomLink = str_contains($cardTitle, 'program studi')
+              || str_contains($cardTitle, 'berdampak')
               || str_contains($cardTitle, 'kerjasama')
               || str_contains($cardTitle, 'mitra');
           $isCardLinked = !empty($card->id) || $hasCustomLink;

@@ -201,10 +201,26 @@ class FrontendController extends Controller
         return view('layouts.frontend.beasiswa', compact('feature', 'beasiswaSetting'));
     }
 
+    public function kampusBerdampak()
+    {
+        $setting = \App\Models\KampusBerdampak::first() ?? new \App\Models\KampusBerdampak();
+        $programs = \App\Models\KampusBerdampakProgram::where('is_active', true)
+            ->orderBy('urutan')
+            ->orderBy('id')
+            ->get();
+        $feature = Feature::where('judul', 'like', '%berdampak%')->first();
+
+        return view('layouts.frontend.kampus-berdampak', compact('setting', 'programs', 'feature'));
+    }
+
     public function featureDetail(Feature $feature)
     {
         if (str_contains(strtolower($feature->judul), 'beasiswa')) {
             return redirect()->route('homepage.beasiswa');
+        }
+
+        if (str_contains(strtolower($feature->judul), 'berdampak')) {
+            return redirect()->route('homepage.kampus-berdampak');
         }
 
         return view('layouts.frontend.feature-detail', compact('feature'));

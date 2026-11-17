@@ -198,10 +198,10 @@
           @if($isAdmin || $isPenulis)
           <!-- 7. Informasi (Berita & Pengumuman) -->
           <li class="nav-item">
-              <a class="nav-link {{ Route::is('news.*') || Route::is('pengumuman-agenda.*') || Route::is('faq.*') || Route::is('partner.*') ? '' : 'collapsed' }}" data-bs-target="#informasi-nav" data-bs-toggle="collapse" href="#">
+              <a class="nav-link {{ Route::is('news.*') || Route::is('pengumuman-agenda.*') || Route::is('faq.*') || Route::is('partner.*') || Route::is('kampus-berdampak.*') ? '' : 'collapsed' }}" data-bs-target="#informasi-nav" data-bs-toggle="collapse" href="#">
                   <i class="bi bi-newspaper"></i><span>Informasi</span><i class="bi bi-chevron-down ms-auto"></i>
               </a>
-              <ul id="informasi-nav" class="nav-content collapse {{ Route::is('news.*') || Route::is('pengumuman-agenda.*') || Route::is('faq.*') || Route::is('partner.*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+              <ul id="informasi-nav" class="nav-content collapse {{ Route::is('news.*') || Route::is('pengumuman-agenda.*') || Route::is('faq.*') || Route::is('partner.*') || Route::is('kampus-berdampak.*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
                   <li>
                       <a href="{{ route('news.index') }}" class="{{ Route::is('news.index') ? 'active' : '' }}">
                           <i class="bi bi-circle"></i><span>Semua Berita & Pengumuman</span>
@@ -226,6 +226,11 @@
                   <li>
                       <a href="{{ route('partner.index') }}" class="{{ Route::is('partner.*') ? 'active' : '' }}">
                           <i class="bi bi-circle"></i><span>Mitra Kerjasama</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="{{ route('kampus-berdampak.index') }}" class="{{ Route::is('kampus-berdampak.*') ? 'active' : '' }}">
+                          <i class="bi bi-circle"></i><span>Kampus Berdampak</span>
                       </a>
                   </li>
                   @endif

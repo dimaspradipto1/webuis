@@ -42,10 +42,15 @@ class Feature extends Model
             }
         }
 
+        if (str_contains(strtolower($this->attributes['judul'] ?? ''), 'berdampak')) {
+            $setting = \App\Models\KampusBerdampak::first();
+            return $setting?->badge_status ?: 'AKTIF 2024';
+        }
+
         return match ((int) ($this->attributes['urutan'] ?? 0)) {
             1 => 'TERAKREDITASI',
             2 => 'AKTIF 2024',
-            3 => 'MOU AKTIF',
+            3 => 'AKTIF 2024',
             4 => 'BUKA 2025',
             default => 'AKTIF',
         };
