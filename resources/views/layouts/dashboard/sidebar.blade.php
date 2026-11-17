@@ -331,13 +331,8 @@
                       </a>
                   </li>
                   <li>
-                      <a href="{{ route('layanan-humas.edit-item', 'permintaan-rilis') }}" class="{{ request()->route('kode') === 'permintaan-rilis' ? 'active' : '' }}">
-                          <i class="bi bi-circle"></i><span>Permintaan Rilis</span>
-                      </a>
-                  </li>
-                  <li>
-                      <a href="{{ route('layanan-humas.edit-item', 'pendampingan-acara') }}" class="{{ request()->route('kode') === 'pendampingan-acara' ? 'active' : '' }}">
-                          <i class="bi bi-circle"></i><span>Pendampingan Acara</span>
+                      <a href="{{ route('layanan-humas.edit-item', 'sihumas') }}" class="{{ request()->route('kode') === 'sihumas' ? 'active' : '' }}">
+                          <i class="bi bi-circle"></i><span>SIHUMAS</span>
                       </a>
                   </li>
                   <li>

@@ -13,7 +13,28 @@
     </nav>
 </div>
 
-@if($item->kode === 'permintaan-rilis')
+@if($item->kode === 'sihumas')
+    {{-- Banner Khusus SIHUMAS --}}
+    <div class="alert alert-success border-0 shadow-sm d-flex align-items-center justify-content-between p-3 mb-4" style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 12px;">
+        <div class="d-flex align-items-center gap-3">
+            <div class="rounded-circle p-2 bg-white text-success fs-4 d-flex align-items-center justify-content-center shadow-sm" style="width: 48px; height: 48px;">
+                <i class="bi bi-globe2" style="color: #0b6828;"></i>
+            </div>
+            <div>
+                <h6 class="fw-bold mb-1" style="color: #064e3b;">Portal Resmi Sistem Informasi Humas (SIHUMAS)</h6>
+                <p class="mb-0 text-muted small">
+                    Layanan SIHUMAS terhubung langsung ke aplikasi daring Universitas Ibnu Sina:
+                    <a href="https://sihumas.uisbatam.com/" target="_blank" class="fw-bold text-success text-decoration-underline ms-1">
+                        https://sihumas.uisbatam.com/ <i class="bi bi-box-arrow-up-right small"></i>
+                    </a>
+                </p>
+            </div>
+        </div>
+        <a href="https://sihumas.uisbatam.com/" target="_blank" class="btn btn-sm btn-success fw-bold shadow-sm d-none d-md-inline-flex align-items-center gap-1" style="background-color: #0b6828; border-color: #0b6828; border-radius: 8px;">
+            <i class="bi bi-box-arrow-up-right"></i> Buka SIHUMAS
+        </a>
+    </div>
+@elseif($item->kode === 'permintaan-rilis')
     {{-- Banner Khusus Permintaan Rilis --}}
     <div class="alert alert-success border-0 shadow-sm d-flex align-items-center justify-content-between p-3 mb-4" style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 12px;">
         <div class="d-flex align-items-center gap-3">
@@ -366,7 +387,28 @@
                     <div class="card border border-light-subtle bg-light p-3 mb-3" style="border-radius: 10px;">
                         <label class="form-label fw-bold text-dark mb-2" style="font-size: 13.5px;">
                             <i class="bi bi-link-45deg me-1 text-primary"></i> 
-                            @if($item->kode === 'permintaan-rilis')
+                            @if($item->kode === 'sihumas')
+    {{-- Banner Khusus SIHUMAS --}}
+    <div class="alert alert-success border-0 shadow-sm d-flex align-items-center justify-content-between p-3 mb-4" style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 12px;">
+        <div class="d-flex align-items-center gap-3">
+            <div class="rounded-circle p-2 bg-white text-success fs-4 d-flex align-items-center justify-content-center shadow-sm" style="width: 48px; height: 48px;">
+                <i class="bi bi-globe2" style="color: #0b6828;"></i>
+            </div>
+            <div>
+                <h6 class="fw-bold mb-1" style="color: #064e3b;">Portal Resmi Sistem Informasi Humas (SIHUMAS)</h6>
+                <p class="mb-0 text-muted small">
+                    Layanan SIHUMAS terhubung langsung ke aplikasi daring Universitas Ibnu Sina:
+                    <a href="https://sihumas.uisbatam.com/" target="_blank" class="fw-bold text-success text-decoration-underline ms-1">
+                        https://sihumas.uisbatam.com/ <i class="bi bi-box-arrow-up-right small"></i>
+                    </a>
+                </p>
+            </div>
+        </div>
+        <a href="https://sihumas.uisbatam.com/" target="_blank" class="btn btn-sm btn-success fw-bold shadow-sm d-none d-md-inline-flex align-items-center gap-1" style="background-color: #0b6828; border-color: #0b6828; border-radius: 8px;">
+            <i class="bi bi-box-arrow-up-right"></i> Buka SIHUMAS
+        </a>
+    </div>
+@elseif($item->kode === 'permintaan-rilis')
                                 Berkas Pedoman / SOP Naskah Siaran Pers
                             @elseif($item->kode === 'pendampingan-acara')
                                 Berkas Dokumen SOP Pendampingan Acara (PDF/DOCX)
@@ -375,7 +417,28 @@
                             @endif
                         </label>
                         <p class="text-muted small mb-3">
-                            @if($item->kode === 'permintaan-rilis')
+                            @if($item->kode === 'sihumas')
+    {{-- Banner Khusus SIHUMAS --}}
+    <div class="alert alert-success border-0 shadow-sm d-flex align-items-center justify-content-between p-3 mb-4" style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 12px;">
+        <div class="d-flex align-items-center gap-3">
+            <div class="rounded-circle p-2 bg-white text-success fs-4 d-flex align-items-center justify-content-center shadow-sm" style="width: 48px; height: 48px;">
+                <i class="bi bi-globe2" style="color: #0b6828;"></i>
+            </div>
+            <div>
+                <h6 class="fw-bold mb-1" style="color: #064e3b;">Portal Resmi Sistem Informasi Humas (SIHUMAS)</h6>
+                <p class="mb-0 text-muted small">
+                    Layanan SIHUMAS terhubung langsung ke aplikasi daring Universitas Ibnu Sina:
+                    <a href="https://sihumas.uisbatam.com/" target="_blank" class="fw-bold text-success text-decoration-underline ms-1">
+                        https://sihumas.uisbatam.com/ <i class="bi bi-box-arrow-up-right small"></i>
+                    </a>
+                </p>
+            </div>
+        </div>
+        <a href="https://sihumas.uisbatam.com/" target="_blank" class="btn btn-sm btn-success fw-bold shadow-sm d-none d-md-inline-flex align-items-center gap-1" style="background-color: #0b6828; border-color: #0b6828; border-radius: 8px;">
+            <i class="bi bi-box-arrow-up-right"></i> Buka SIHUMAS
+        </a>
+    </div>
+@elseif($item->kode === 'permintaan-rilis')
                                 Unggah dokumen pedoman atau SOP rilis (PDF/DOCX) yang dapat diunduh langsung oleh sivitas akademika:
                             @elseif($item->kode === 'pendampingan-acara')
                                 Unggah dokumen SOP pendampingan acara universitas (PDF/DOCX) yang dapat diunduh di halaman publik:
@@ -410,7 +473,28 @@
                         {{-- Opsi 2: Upload File --}}
                         <div class="mb-2">
                             <label for="file" class="form-label fw-semibold text-dark small">
-                                @if($item->kode === 'permintaan-rilis')
+                                @if($item->kode === 'sihumas')
+    {{-- Banner Khusus SIHUMAS --}}
+    <div class="alert alert-success border-0 shadow-sm d-flex align-items-center justify-content-between p-3 mb-4" style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 12px;">
+        <div class="d-flex align-items-center gap-3">
+            <div class="rounded-circle p-2 bg-white text-success fs-4 d-flex align-items-center justify-content-center shadow-sm" style="width: 48px; height: 48px;">
+                <i class="bi bi-globe2" style="color: #0b6828;"></i>
+            </div>
+            <div>
+                <h6 class="fw-bold mb-1" style="color: #064e3b;">Portal Resmi Sistem Informasi Humas (SIHUMAS)</h6>
+                <p class="mb-0 text-muted small">
+                    Layanan SIHUMAS terhubung langsung ke aplikasi daring Universitas Ibnu Sina:
+                    <a href="https://sihumas.uisbatam.com/" target="_blank" class="fw-bold text-success text-decoration-underline ms-1">
+                        https://sihumas.uisbatam.com/ <i class="bi bi-box-arrow-up-right small"></i>
+                    </a>
+                </p>
+            </div>
+        </div>
+        <a href="https://sihumas.uisbatam.com/" target="_blank" class="btn btn-sm btn-success fw-bold shadow-sm d-none d-md-inline-flex align-items-center gap-1" style="background-color: #0b6828; border-color: #0b6828; border-radius: 8px;">
+            <i class="bi bi-box-arrow-up-right"></i> Buka SIHUMAS
+        </a>
+    </div>
+@elseif($item->kode === 'permintaan-rilis')
                                     Upload File Pedoman / Dokumen SOP Rilis (PDF, DOCX)
                                 @elseif($item->kode === 'pendampingan-acara')
                                     Upload File SOP / Pedoman Acara (PDF, DOCX)
@@ -508,7 +592,28 @@
                     </span>
                 </div>
 
-                @if($item->kode === 'permintaan-rilis')
+                @if($item->kode === 'sihumas')
+    {{-- Banner Khusus SIHUMAS --}}
+    <div class="alert alert-success border-0 shadow-sm d-flex align-items-center justify-content-between p-3 mb-4" style="background: linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%); border-radius: 12px;">
+        <div class="d-flex align-items-center gap-3">
+            <div class="rounded-circle p-2 bg-white text-success fs-4 d-flex align-items-center justify-content-center shadow-sm" style="width: 48px; height: 48px;">
+                <i class="bi bi-globe2" style="color: #0b6828;"></i>
+            </div>
+            <div>
+                <h6 class="fw-bold mb-1" style="color: #064e3b;">Portal Resmi Sistem Informasi Humas (SIHUMAS)</h6>
+                <p class="mb-0 text-muted small">
+                    Layanan SIHUMAS terhubung langsung ke aplikasi daring Universitas Ibnu Sina:
+                    <a href="https://sihumas.uisbatam.com/" target="_blank" class="fw-bold text-success text-decoration-underline ms-1">
+                        https://sihumas.uisbatam.com/ <i class="bi bi-box-arrow-up-right small"></i>
+                    </a>
+                </p>
+            </div>
+        </div>
+        <a href="https://sihumas.uisbatam.com/" target="_blank" class="btn btn-sm btn-success fw-bold shadow-sm d-none d-md-inline-flex align-items-center gap-1" style="background-color: #0b6828; border-color: #0b6828; border-radius: 8px;">
+            <i class="bi bi-box-arrow-up-right"></i> Buka SIHUMAS
+        </a>
+    </div>
+@elseif($item->kode === 'permintaan-rilis')
                     <div class="mt-3 pt-3 border-top text-start">
                         <small class="fw-bold text-dark d-block mb-1">
                             <i class="bi bi-link-45deg text-success"></i> Halaman Publik Tujuan:

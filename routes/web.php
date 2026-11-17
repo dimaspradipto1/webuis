@@ -105,8 +105,9 @@ Route::controller(FrontendController::class)->group(function () {
     Route::get('/unduhan/{kategori}', 'unduhan')->name('homepage.unduhan.kategori');
     Route::get('/desain-grafis', 'desainGrafis')->name('homepage.desain-grafis');
     Route::get('/template-dokumen', 'templateDokumen')->name('homepage.template-dokumen');
-    Route::get('/permintaan-rilis', 'permintaanRilis')->name('homepage.permintaan-rilis');
-    Route::get('/pendampingan-acara', 'pendampinganAcara')->name('homepage.pendampingan-acara');
+    Route::get('/sihumas', fn () => redirect()->away('https://sihumas.uisbatam.com/'))->name('homepage.sihumas');
+    Route::get('/permintaan-rilis', fn () => redirect()->away('https://sihumas.uisbatam.com/'))->name('homepage.permintaan-rilis');
+    Route::get('/pendampingan-acara', fn () => redirect()->away('https://sihumas.uisbatam.com/'))->name('homepage.pendampingan-acara');
     Route::get('/survey-layanan', 'surveyLayanan')->name('homepage.survey-layanan');
     Route::get('/kontak', 'kontak')->name('homepage.kontak');
 });

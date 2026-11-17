@@ -662,8 +662,7 @@
           'template-dokumen'   => ['url' => route('homepage.template-dokumen'), 'icon' => 'bi-file-earmark-text', 'label' => 'Template Dokumen'],
           'panduan-desain'     => ['url' => route('homepage.desain-grafis'), 'icon' => 'bi-camera-video', 'label' => 'Panduan Desain & Video'],
           'galeri-kegiatan'    => ['url' => route('homepage.galeri.humas'), 'icon' => 'bi-images', 'label' => 'Galeri Kegiatan'],
-          'permintaan-rilis'   => ['url' => route('homepage.permintaan-rilis'), 'icon' => 'bi-journal-richtext', 'label' => 'Permintaan Rilis'],
-          'pendampingan-acara' => ['url' => route('homepage.pendampingan-acara'), 'icon' => 'bi-people-fill', 'label' => 'Pendampingan Acara'],
+          'sihumas'            => ['url' => 'https://sihumas.uisbatam.com/', 'icon' => 'bi-globe2', 'label' => 'SIHUMAS', 'target_blank' => true],
           'survey-layanan'     => ['url' => route('homepage.survey-layanan'), 'icon' => 'bi-chat-left-dots', 'label' => 'Survey Layanan'],
         ];
       @endphp
@@ -671,7 +670,7 @@
         @php
           $itemDb = $layananHumasItems[$key] ?? null;
           $targetUrl = $itemDb ? $itemDb->target_url : $def['url'];
-          $targetBlank = $itemDb && $itemDb->target_blank;
+          $targetBlank = ($itemDb && $itemDb->target_blank) || (!empty($def['target_blank']));
           $iconClass = $itemDb && $itemDb->icon ? $itemDb->icon : $def['icon'];
           $label = $itemDb && $itemDb->nama ? $itemDb->nama : $def['label'];
         @endphp

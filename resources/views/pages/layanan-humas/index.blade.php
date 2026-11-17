@@ -19,7 +19,7 @@
     <div>
         <h6 class="fw-bold mb-1" style="color: #312e81;">Pusat Akses Layanan Humas</h6>
         <p class="mb-0 text-muted small" style="line-height: 1.5;">
-            Di bawah ini merupakan <strong>8 layanan utama</strong> yang tampil pada floating bar <strong>"Layanan"</strong> di Beranda Humas (<code>/humas</code>). Anda dapat mengelola tautan (Google Form/Drive/Web) atau mengunggah file panduan resmi untuk setiap layanan.
+            Di bawah ini merupakan <strong>layanan utama</strong> yang tampil pada floating bar <strong>"Layanan"</strong> di Beranda Humas (<code>/humas</code>), termasuk akses langsung ke <strong>SIHUMAS (https://sihumas.uisbatam.com/)</strong>. Anda dapat mengelola tautan (Portal/Web/Form) atau mengunggah file panduan resmi untuk setiap layanan.
         </p>
     </div>
 </div>
