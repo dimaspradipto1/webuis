@@ -331,9 +331,14 @@
                       </a>
                   </li>
                   <li>
-                      <a href="{{ route('layanan-humas.edit-item', 'sihumas') }}" class="{{ request()->route('kode') === 'sihumas' ? 'active' : '' }}">
-                          <i class="bi bi-circle"></i><span>SIHUMAS</span>
-                      </a>
+                      <div class="d-flex align-items-center justify-content-between pe-3">
+                          <a href="{{ route('layanan-humas.edit-item', 'sihumas') }}" class="{{ request()->route('kode') === 'sihumas' ? 'active' : '' }} flex-grow-1">
+                              <i class="bi bi-circle"></i><span>SIHUMAS</span>
+                          </a>
+                          <a href="https://sihumas.uisbatam.com/" target="_blank" rel="noopener noreferrer" title="Buka Portal SIHUMAS di Tab Baru" class="text-success small ms-1" style="font-size: 11px; opacity: 0.85;">
+                              <i class="bi bi-box-arrow-up-right"></i>
+                          </a>
+                      </div>
                   </li>
                   <li>
                       <a href="{{ route('layanan-humas.edit-item', 'survey-layanan') }}" class="{{ request()->route('kode') === 'survey-layanan' ? 'active' : '' }}">
