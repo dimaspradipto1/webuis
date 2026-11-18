@@ -631,10 +631,6 @@
   $heroBadge = $heroHumas?->badge_text ?: 'Layanan';
   $pillText1 = $heroHumas?->pill_text_1 ?: 'Informasi Khusus PMB TA 2026/2027';
   $pillUrl1 = $heroHumas?->pill_url_1 ?: route('homepage.unduhan', ['kategori' => 'image']);
-  $pillText2 = $heroHumas?->pill_text_2 ?: 'Panduan Penggunaan Logo & Merek';
-  $pillUrl2 = $heroHumas?->pill_url_2 ?: route('homepage.unduhan', ['kategori' => 'template']);
-  $pillText3 = $heroHumas?->pill_text_3 ?: 'Logo UIS';
-  $pillUrl3 = $heroHumas?->pill_url_3 ?: route('homepage.unduhan', ['kategori' => 'image']);
 @endphp
 
 <!-- ══════════════════════════════════════════════════════
@@ -682,28 +678,14 @@
     </div>
 
     <!-- Notification Info Action Pills (Matching exact reference design) -->
+    @if(!empty($pillText1))
     <div class="humas-pill-container" data-aos="fade-up" data-aos-delay="150">
-      @if(!empty($pillText1))
       <a href="{{ $pillUrl1 }}" class="humas-info-pill pill-lime">
         <span>{{ $pillText1 }}</span>
         <span class="humas-pill-btn">Unduh</span>
       </a>
-      @endif
-
-      @if(!empty($pillText2))
-      <a href="{{ $pillUrl2 }}" class="humas-info-pill pill-emerald">
-        <span>{{ $pillText2 }}</span>
-        <span class="humas-pill-btn">Lihat</span>
-      </a>
-      @endif
-
-      @if(!empty($pillText3))
-      <a href="{{ $pillUrl3 }}" target="{{ str_starts_with($pillUrl3, 'http') ? '_blank' : '_self' }}" class="humas-info-pill pill-emerald">
-        <span>{{ $pillText3 }}</span>
-        <span class="humas-pill-btn">Unduh</span>
-      </a>
-      @endif
     </div>
+    @endif
   </div>
 </section>
 

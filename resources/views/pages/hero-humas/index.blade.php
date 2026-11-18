@@ -161,40 +161,22 @@
                             </div>
                         </div>
 
-                        {{-- Section 3: Pengaturan Tombol & Action Pills --}}
+                        {{-- Section 3: Pengaturan Tombol Notifikasi (Action Pill) --}}
                         <h6 class="fw-bold text-dark border-bottom pb-2 mb-3">
-                            <i class="bi bi-tag-fill text-warning me-1"></i> Pengaturan Tombol Notifikasi & Pintasan (Action Pills)
+                            <i class="bi bi-tag-fill text-warning me-1"></i> Pengaturan Tombol Notifikasi & Pintasan
                         </h6>
 
                         <div class="row g-3 mb-3">
                             {{-- Pill 1 --}}
                             <div class="col-md-6">
-                                <label for="pill_text_1" class="form-label fw-semibold small">Teks Tombol 1 (Kiri)</label>
-                                <input type="text" id="pill_text_1" name="pill_text_1" class="form-control" value="{{ old('pill_text_1', $hero->pill_text_1) }}" placeholder="Informasi Khusus PMB TA 2026/2027">
+                                <label for="pill_text_1" class="form-label fw-semibold small">Teks Tombol Notifikasi</label>
+                                <input type="text" id="pill_text_1" name="pill_text_1" class="form-control" value="{{ old('pill_text_1', $hero->pill_text_1) }}" placeholder="Contoh: Informasi Khusus PMB TA 2026/2027">
+                                <div class="form-text small text-muted">Kosongkan jika tidak ingin menampilkan tombol notifikasi di bawah quick bar.</div>
                             </div>
                             <div class="col-md-6">
-                                <label for="pill_url_1" class="form-label fw-semibold small">Tautan / URL Tombol 1</label>
-                                <input type="text" id="pill_url_1" name="pill_url_1" class="form-control" value="{{ old('pill_url_1', $hero->pill_url_1) }}" placeholder="Kosongkan untuk otomatis ke PMB">
-                            </div>
-
-                            {{-- Pill 2 --}}
-                            <div class="col-md-6">
-                                <label for="pill_text_2" class="form-label fw-semibold small">Teks Tombol 2 (Tengah)</label>
-                                <input type="text" id="pill_text_2" name="pill_text_2" class="form-control" value="{{ old('pill_text_2', $hero->pill_text_2) }}" placeholder="Pengumuman Prestasi & Kejuaraan Kampus">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="pill_url_2" class="form-label fw-semibold small">Tautan / URL Tombol 2</label>
-                                <input type="text" id="pill_url_2" name="pill_url_2" class="form-control" value="{{ old('pill_url_2', $hero->pill_url_2) }}" placeholder="Kosongkan untuk otomatis ke Prestasi">
-                            </div>
-
-                            {{-- Pill 3 --}}
-                            <div class="col-md-6">
-                                <label for="pill_text_3" class="form-label fw-semibold small">Teks Tombol 3 (Kanan / WhatsApp)</label>
-                                <input type="text" id="pill_text_3" name="pill_text_3" class="form-control" value="{{ old('pill_text_3', $hero->pill_text_3) }}" placeholder="Live Chat Layanan Humas">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="pill_url_3" class="form-label fw-semibold small">Tautan / URL Tombol 3</label>
-                                <input type="text" id="pill_url_3" name="pill_url_3" class="form-control" value="{{ old('pill_url_3', $hero->pill_url_3) }}" placeholder="Kosongkan untuk otomatis ke WhatsApp Utama">
+                                <label for="pill_url_1" class="form-label fw-semibold small">Tautan / URL Tombol</label>
+                                <input type="text" id="pill_url_1" name="pill_url_1" class="form-control" value="{{ old('pill_url_1', $hero->pill_url_1) }}" placeholder="https://... atau /unduhan">
+                                <div class="form-text small text-muted">Tautan tujuan saat tombol diklik.</div>
                             </div>
                         </div>
 
