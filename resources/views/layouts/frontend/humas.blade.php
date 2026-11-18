@@ -630,7 +630,7 @@
   $heroSubjudul = $heroHumas?->subjudul ?: 'di Biro Hubungan Masyarakat dan Protokoler Universitas Ibnu Sina';
   $heroBadge = $heroHumas?->badge_text ?: 'Layanan';
   $pillText1 = $heroHumas?->pill_text_1 ?: 'Informasi Khusus PMB TA 2026/2027';
-  $pillUrl1 = $heroHumas?->pill_url_1 ?: route('homepage.unduhan', ['kategori' => 'image']);
+  $pillUrl1 = $heroHumas?->pill_url_1 ?: route('homepage.informasi-pmb');
 @endphp
 
 <!-- ══════════════════════════════════════════════════════

@@ -18,6 +18,7 @@ use App\Http\Controllers\FeatureController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\GalleryController;
 use App\Http\Controllers\HeroHumasController;
+use App\Http\Controllers\InformasiPmbHumasController;
 use App\Http\Controllers\KampusBerdampakController;
 use App\Http\Controllers\KurikulumController;
 use App\Http\Controllers\LayananController;
@@ -109,6 +110,7 @@ Route::controller(FrontendController::class)->group(function () {
     Route::get('/permintaan-rilis', fn () => redirect()->away('https://sihumas.uisbatam.com/'))->name('homepage.permintaan-rilis');
     Route::get('/pendampingan-acara', fn () => redirect()->away('https://sihumas.uisbatam.com/'))->name('homepage.pendampingan-acara');
     Route::get('/survey-layanan', 'surveyLayanan')->name('homepage.survey-layanan');
+    Route::get('/informasi-khusus-pmb', 'informasiKhususPmb')->name('homepage.informasi-pmb');
     Route::get('/kontak', 'kontak')->name('homepage.kontak');
 });
 
@@ -183,6 +185,8 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::get('admin-layanan-humas', [LayananHumasController::class, 'index'])->name('layanan-humas.index');
     Route::get('admin-layanan-humas/{kode}', [LayananHumasController::class, 'editItem'])->name('layanan-humas.edit-item');
     Route::put('admin-layanan-humas/{kode}', [LayananHumasController::class, 'updateItem'])->name('layanan-humas.update-item');
+    Route::get('admin-informasi-pmb-humas', [InformasiPmbHumasController::class, 'index'])->name('informasi-pmb-humas.index');
+    Route::put('admin-informasi-pmb-humas', [InformasiPmbHumasController::class, 'update'])->name('informasi-pmb-humas.update');
     Route::put('admin-template-dokumen/setting', [TemplateDokumenController::class, 'updateSetting'])->name('template-dokumen.update-setting');
     Route::resource('admin-template-dokumen', TemplateDokumenController::class)
         ->parameters(['admin-template-dokumen' => 'templateDokumen'])

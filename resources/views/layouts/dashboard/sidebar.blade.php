@@ -299,12 +299,12 @@
               </ul>
           </li>
 
-          <!-- Layanan Humas (Dropdown 8 Layanan Sesuai Floating Bar Frontend) -->
+          <!-- Layanan Humas (Dropdown Layanan Sesuai Floating Bar & Tombol Humas) -->
           <li class="nav-item">
-              <a class="nav-link {{ Route::is('unduhan.*') || Route::is('desain-grafis.*') || (Route::is('gallery.*') && request('kategori') === 'humas') || Route::is('layanan-humas.*') || Route::is('template-dokumen.*') ? '' : 'collapsed' }}" data-bs-target="#layanan-humas-nav" data-bs-toggle="collapse" href="#">
+              <a class="nav-link {{ Route::is('unduhan.*') || Route::is('desain-grafis.*') || (Route::is('gallery.*') && request('kategori') === 'humas') || Route::is('layanan-humas.*') || Route::is('template-dokumen.*') || Route::is('informasi-pmb-humas.*') ? '' : 'collapsed' }}" data-bs-target="#layanan-humas-nav" data-bs-toggle="collapse" href="#">
                   <i class="bi bi-grid-fill"></i><span>Layanan Humas</span><i class="bi bi-chevron-down ms-auto"></i>
               </a>
-              <ul id="layanan-humas-nav" class="nav-content collapse {{ Route::is('unduhan.*') || Route::is('desain-grafis.*') || (Route::is('gallery.*') && request('kategori') === 'humas') || Route::is('layanan-humas.*') || Route::is('template-dokumen.*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+              <ul id="layanan-humas-nav" class="nav-content collapse {{ Route::is('unduhan.*') || Route::is('desain-grafis.*') || (Route::is('gallery.*') && request('kategori') === 'humas') || Route::is('layanan-humas.*') || Route::is('template-dokumen.*') || Route::is('informasi-pmb-humas.*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
                   <li>
                       <a href="{{ route('unduhan.index') }}" class="{{ Route::is('unduhan.*') ? 'active' : '' }}">
                           <i class="bi bi-circle"></i><span>Unduhan</span>
@@ -343,6 +343,11 @@
                   <li>
                       <a href="{{ route('layanan-humas.edit-item', 'survey-layanan') }}" class="{{ request()->route('kode') === 'survey-layanan' ? 'active' : '' }}">
                           <i class="bi bi-circle"></i><span>Survey Layanan</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="{{ route('informasi-pmb-humas.index') }}" class="{{ Route::is('informasi-pmb-humas.*') ? 'active' : '' }}">
+                          <i class="bi bi-circle"></i><span>Informasi Khusus PMB</span>
                       </a>
                   </li>
               </ul>

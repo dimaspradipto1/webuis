@@ -822,6 +822,28 @@ class FrontendController extends Controller
         return view('layouts.frontend.survey-layanan', compact('contact', 'pmbSetting', 'item', 'setting', 'buttons'));
     }
 
+    public function informasiKhususPmb()
+    {
+        $contact = Contact::first();
+        $pmbSetting = PmbSetting::first();
+        $pmb = \App\Models\InformasiPmbHumas::firstOrCreate(
+            ['id' => 1],
+            [
+                'judul' => 'Informasi Khusus Penerimaan Mahasiswa Baru',
+                'subjudul' => 'Tahun Akademik 2026/2027 — Universitas Ibnu Sina',
+                'badge_text' => 'PMB TA 2026/2027',
+                'deskripsi_singkat' => 'Biro Hubungan Masyarakat dan Protokoler Universitas Ibnu Sina menyajikan informasi resmi dan panduan lengkap Penerimaan Mahasiswa Baru (PMB) untuk jenjang Sarjana (S1) dan Pascasarjana (S2). Unduh buku panduan dan simak brosur infografis pendaftaran di bawah ini.',
+                'link_pendaftaran' => 'https://pmb.uis.ac.id',
+                'no_wa_pmb' => '082283958644',
+                'gelombang_info' => "• Gelombang I : Januari - Maret 2026\n• Gelombang II : April - Juni 2026\n• Gelombang III: Juli - September 2026",
+                'persyaratan_info' => "1. Salinan Ijazah/SKL SMA/SMK/MA/Sederajat yang dilegalisir (2 lembar)\n2. Salinan Kartu Keluarga (KK) dan KTP (2 lembar)\n3. Pas foto berwarna ukuran 3x4 (3 lembar)\n4. Mengisi formulir pendaftaran daring di portal resmi PMB UIS",
+                'is_active' => true,
+            ]
+        );
+
+        return view('layouts.frontend.informasi-pmb-humas', compact('contact', 'pmbSetting', 'pmb'));
+    }
+
     public function news(Request $request, $categorySlug = null)
     {
         // Jika ada query param ?category=..., redirect 301 ke slug URL
