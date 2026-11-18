@@ -35,11 +35,9 @@ class VisiMisiDataTable extends DataTable
                 return '<span class="badge bg-light text-muted border"><i class="bi bi-image me-1"></i>Belum ada gambar</span>';
             })
             ->addColumn('judul', function ($vm) {
-                $output = '<div class="fw-bold text-dark mb-1">'.e($vm->judul ?: 'Gambar Visi Misi #'.$vm->id).'</div>';
+                $output = '<div class="fw-bold text-dark mb-1">'.e($vm->judul ?: 'Gambar Visi Misi #'.$vm->urutan).'</div>';
                 if ($vm->keterangan) {
                     $output .= '<small class="text-muted d-block">'.e(Str::limit($vm->keterangan, 70)).'</small>';
-                } elseif ($vm->isi) {
-                    $output .= '<small class="text-muted d-block">'.e(Str::limit(strip_tags($vm->isi), 60)).'</small>';
                 }
                 return $output;
             })
@@ -82,6 +80,7 @@ class VisiMisiDataTable extends DataTable
     public function query(VisiMisi $model): QueryBuilder
     {
         return $model->newQuery()
+            ->whereNotNull('gambar')
             ->orderBy('urutan')
             ->orderBy('id');
     }
