@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\DataTables\VisiMisiDataTable;
 use App\Http\Requests\VisiMisiRequest;
+use App\Models\About;
 use App\Models\VisiMisi;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
@@ -13,8 +15,26 @@ class VisiMisiController extends Controller
 {
     public function index(VisiMisiDataTable $dataTable)
     {
+        $about = About::first() ?? new About();
         $totalGambar = VisiMisi::whereNotNull('gambar')->count();
-        return $dataTable->render('pages.visimisi.index', compact('totalGambar'));
+
+        return $dataTable->render('pages.visimisi.index', compact('about', 'totalGambar'));
+    }
+
+    public function updateHeader(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'visimisi_label' => ['nullable', 'string', 'max:255'],
+            'visimisi_judul' => ['nullable', 'string', 'max:255'],
+            'visimisi_deskripsi' => ['nullable', 'string', 'max:1000'],
+        ]);
+
+        $about = About::firstOrCreate(['id' => 1]);
+        $about->update($validated);
+
+        alert()->success('Berhasil!', 'Teks judul dan deskripsi halaman Visi & Misi berhasil diperbarui.');
+
+        return redirect()->route('visimisi.index');
     }
 
     public function create(): View

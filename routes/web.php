@@ -260,6 +260,7 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
         Route::put('/program/{program}', [KampusBerdampakController::class, 'updateProgram'])->name('program.update');
         Route::delete('/program/{program}', [KampusBerdampakController::class, 'destroyProgram'])->name('program.destroy');
     });
+    Route::put('visimisi-header', [VisiMisiController::class, 'updateHeader'])->name('visimisi.update-header');
     Route::resource('visimisi', VisiMisiController::class);
     Route::resource('nilaiperusahaan', NilaiPerusahaanController::class);
     Route::resource('faculty-stat', FacultyStatController::class);
