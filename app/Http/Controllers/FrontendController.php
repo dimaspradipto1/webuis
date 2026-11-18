@@ -506,10 +506,15 @@ class FrontendController extends Controller
     public function visiMisi()
     {
         $about = About::first();
+        $visiMisiGambar = VisiMisi::where('is_active', true)
+            ->whereNotNull('gambar')
+            ->orderBy('urutan')
+            ->orderBy('id')
+            ->get();
         $visiMisis = VisiMisi::orderBy('urutan')->get()->groupBy('tipe');
         $nilaiPerusahaans = NilaiPerusahaan::orderBy('urutan')->get();
 
-        return view('layouts.frontend.visi-misi', compact('about', 'visiMisis', 'nilaiPerusahaans'));
+        return view('layouts.frontend.visi-misi', compact('about', 'visiMisiGambar', 'visiMisis', 'nilaiPerusahaans'));
     }
 
     public function sejarah()
