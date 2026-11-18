@@ -6,10 +6,12 @@
 
 @push('styles')
 <style>
+  /* Hero Banner Konsisten dengan Standar Hero UIS */
   .pmb-hero {
-    background: linear-gradient(135deg, #023814 0%, #046B26 70%, #06541f 100%);
-    color: #ffffff;
-    padding: 70px 0 60px 0;
+    background: #046b26 !important;
+    border-bottom: 3px solid #fed802 !important;
+    color: #ffffff !important;
+    padding: 24px 0 22px 0 !important;
     position: relative;
     overflow: hidden;
   }
@@ -19,57 +21,75 @@
     inset: 0;
     background-image: radial-gradient(rgba(254, 216, 2, 0.12) 1.5px, transparent 1.5px);
     background-size: 24px 24px;
-    opacity: 0.6;
+    opacity: 0.45;
     pointer-events: none;
   }
   .pmb-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    background: rgba(254, 216, 2, 0.18);
-    border: 1px solid #FED802;
-    color: #FED802;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    padding: 6px 16px;
-    border-radius: 50px;
-    margin-bottom: 16px;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    background: rgba(254, 216, 2, 0.18) !important;
+    border: 1px solid #FED802 !important;
+    color: #FED802 !important;
+    font-size: 11.5px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.4px !important;
+    padding: 3px 12px !important;
+    border-radius: 50px !important;
+    margin-bottom: 8px !important;
   }
+  .pmb-hero h1,
   .pmb-hero-title {
-    font-size: 36px;
-    font-weight: 800;
-    line-height: 1.25;
-    margin-bottom: 12px;
-    letter-spacing: -0.5px;
+    color: #ffffff !important;
+    font-weight: 800 !important;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.35) !important;
+    font-size: clamp(22px, 2.6vw, 28px) !important;
+    line-height: 1.25 !important;
+    margin-bottom: 6px !important;
+    letter-spacing: -0.3px !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
   }
+  .pmb-hero p,
   .pmb-hero-subtitle {
-    font-size: 17px;
-    color: #e2e8f0;
+    color: rgba(255, 255, 255, 0.92) !important;
+    font-size: 13.5px !important;
     max-width: 780px;
-    margin-bottom: 24px;
-    line-height: 1.6;
+    margin-bottom: 14px !important;
+    line-height: 1.5 !important;
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.25) !important;
   }
-  .breadcrumb-pmb {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 13px;
-    color: rgba(255, 255, 255, 0.75);
-    margin-bottom: 20px;
-    flex-wrap: wrap;
+  .breadcrumb-custom {
+    display: inline-flex !important;
+    align-items: center !important;
+    flex-wrap: wrap !important;
+    gap: 6px !important;
+    font-size: 12.5px !important;
+    line-height: 1.4 !important;
+    color: rgba(255, 255, 255, 0.7) !important;
+    margin-bottom: 10px !important;
   }
-  .breadcrumb-pmb a {
-    color: rgba(255, 255, 255, 0.85);
-    text-decoration: none;
-    transition: color 0.2s;
+  .breadcrumb-custom a {
+    color: #ffffff !important;
+    text-decoration: none !important;
+    font-size: 12.5px !important;
+    font-weight: 500 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+    transition: color 0.2s ease !important;
   }
-  .breadcrumb-pmb a:hover {
-    color: #FED802;
+  .breadcrumb-custom a:hover {
+    color: #fed802 !important;
+    text-decoration: underline !important;
   }
-  .breadcrumb-pmb .active {
-    color: #FED802;
-    font-weight: 600;
+  .breadcrumb-custom span {
+    color: rgba(255, 255, 255, 0.6) !important;
+    font-size: 12px !important;
+  }
+  .breadcrumb-custom .active {
+    color: #fed802 !important;
+    font-size: 12.5px !important;
+    font-weight: 700 !important;
   }
 
   /* Card Brosur Poster */
@@ -194,7 +214,7 @@
 ══════════════════════════════════════════════════════ -->
 <div class="pmb-hero">
   <div class="container position-relative">
-    <div class="breadcrumb-pmb" data-aos="fade-down">
+    <div class="breadcrumb-custom" data-aos="fade-down">
       <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
       <span>/</span>
       <a href="{{ route('homepage.humas') }}">Humas</a>
@@ -203,29 +223,31 @@
     </div>
 
     <div data-aos="fade-up">
-      <div class="pmb-badge">
-        <i class="bi bi-mortarboard-fill"></i> {{ $pmb->badge_text ?? 'PMB TA 2026/2027' }}
+      <div>
+        <span class="pmb-badge">
+          <i class="bi bi-mortarboard-fill"></i> {{ $pmb->badge_text ?? 'PMB TA 2026/2027' }}
+        </span>
       </div>
-      <h1 class="pmb-hero-title">{{ $pmb->judul ?? 'Informasi Khusus Penerimaan Mahasiswa Baru' }}</h1>
+      <h1 class="pmb-hero-title text-white">{{ $pmb->judul ?? 'Informasi Khusus Penerimaan Mahasiswa Baru' }}</h1>
       <p class="pmb-hero-subtitle">
         {{ $pmb->subjudul ?? 'Tahun Akademik 2026/2027 — Universitas Ibnu Sina' }}
       </p>
 
-      <div class="d-flex flex-wrap align-items-center gap-3 pt-2">
+      <div class="d-flex flex-wrap align-items-center gap-2 pt-1">
         @if(!empty($pmb->link_pendaftaran))
-          <a href="{{ $pmb->link_pendaftaran }}" target="_blank" rel="noopener noreferrer" class="btn fw-bold px-4 py-2 shadow-sm d-inline-flex align-items-center gap-2" style="background-color: #FED802; color: #023814; border-radius: 50px; font-size: 14.5px;">
+          <a href="{{ $pmb->link_pendaftaran }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm fw-bold px-3 py-2 shadow-sm d-inline-flex align-items-center gap-2" style="background-color: #FED802; color: #023814; border-radius: 50px; font-size: 13.5px;">
             <i class="bi bi-box-arrow-up-right"></i> Daftar PMB Online
           </a>
         @endif
 
         @if(!empty($pmb->file_pdf))
-          <a href="{{ $pmb->pdf_url }}" download class="btn btn-outline-light fw-bold px-4 py-2 d-inline-flex align-items-center gap-2" style="border-radius: 50px; font-size: 14.5px;">
+          <a href="{{ $pmb->pdf_url }}" download class="btn btn-sm btn-outline-light fw-bold px-3 py-2 d-inline-flex align-items-center gap-2" style="border-radius: 50px; font-size: 13.5px;">
             <i class="bi bi-file-earmark-pdf-fill text-danger"></i> Unduh Panduan PDF
           </a>
         @endif
 
         @if(!empty($pmb->no_wa_pmb))
-          <a href="https://wa.me/{{ $pmb->clean_wa }}?text=Halo%20Panitia%20PMB%20Universitas%20Ibnu%20Sina,%20saya%20ingin%20bertanya%20mengenai%20pendaftaran%20mahasiswa%20baru" target="_blank" rel="noopener noreferrer" class="btn fw-semibold px-4 py-2 d-inline-flex align-items-center gap-2 text-white" style="background-color: #25D366; border-radius: 50px; font-size: 14.5px;">
+          <a href="https://wa.me/{{ $pmb->clean_wa }}?text=Halo%20Panitia%20PMB%20Universitas%20Ibnu%20Sina,%20saya%20ingin%20bertanya%20mengenai%20pendaftaran%20mahasiswa%20baru" target="_blank" rel="noopener noreferrer" class="btn btn-sm fw-semibold px-3 py-2 d-inline-flex align-items-center gap-2 text-white" style="background-color: #25D366; border-radius: 50px; font-size: 13.5px;">
             <i class="bi bi-whatsapp"></i> Chat Panitia PMB
           </a>
         @endif
