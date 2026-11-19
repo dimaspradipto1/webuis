@@ -26,6 +26,7 @@ class ProgramStudi extends Model
         'visi',
         'misi',
         'prospek_karir',
+        'thumbnail',
         'foto',
         'galeri',
         'link_website',
@@ -57,25 +58,34 @@ class ProgramStudi extends Model
         });
     }
 
-    public function getFotoUrlAttribute(): ?string
+    public function getThumbnailUrlAttribute(): ?string
     {
-        if (empty($this->foto)) {
+        $thumb = $this->thumbnail ?: $this->foto;
+        if (empty($thumb)) {
             return null;
         }
-        if (str_starts_with($this->foto, 'http')) {
-            return $this->foto;
+        if (str_starts_with($thumb, 'http')) {
+            return $thumb;
         }
-        if (str_starts_with($this->foto, 'assets/')) {
-            return asset($this->foto);
+        if (str_starts_with($thumb, 'assets/')) {
+            return asset($thumb);
         }
 
-        return asset('storage/'.$this->foto);
+        return asset('storage/'.$thumb);
+    }
+
+    public function getFotoUrlAttribute(): ?string
+    {
+        return $this->thumbnail_url ?: (empty($this->foto) ? null : (str_starts_with($this->foto, 'http') ? $this->foto : (str_starts_with($this->foto, 'assets/') ? asset($this->foto) : asset('storage/'.$this->foto))));
     }
 
     public function getAllPhotosAttribute(): array
     {
         $photos = [];
-        if (! empty($this->foto)) {
+        if (! empty($this->thumbnail)) {
+            $photos[] = $this->thumbnail;
+        }
+        if (! empty($this->foto) && ! in_array($this->foto, $photos, true)) {
             $photos[] = $this->foto;
         }
         if (is_array($this->galeri)) {

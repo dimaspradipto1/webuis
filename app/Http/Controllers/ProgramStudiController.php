@@ -64,13 +64,22 @@ class ProgramStudiController extends Controller
             'prospek_karir' => ['nullable', 'string'],
             'link_website' => ['nullable', 'string', 'max:500'],
             'urutan' => ['nullable', 'integer', 'min:1'],
+            'thumbnail' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:20480'],
             'foto' => ['nullable'],
             'foto.*' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:20480'],
         ], [
             'nama.required' => 'Nama Program Studi wajib diisi.',
             'jenjang.required' => 'Jenjang pendidikan wajib dipilih.',
             'fakultas.required' => 'Fakultas wajib dipilih.',
+            'thumbnail.image' => 'File thumbnail harus berupa gambar.',
+            'thumbnail.mimes' => 'Format thumbnail harus berupa JPG, JPEG, PNG, atau WEBP.',
+            'thumbnail.max' => 'Ukuran thumbnail maksimal 20 MB.',
         ]);
+
+        $thumbnailPath = null;
+        if ($request->hasFile('thumbnail')) {
+            $thumbnailPath = $request->file('thumbnail')->store('assets/prodi/thumbnail', 'public');
+        }
 
         $uploadedPhotos = [];
         if ($request->hasFile('foto')) {
@@ -103,6 +112,7 @@ class ProgramStudiController extends Controller
             'visi' => $validated['visi'] ?? null,
             'misi' => $validated['misi'] ?? null,
             'prospek_karir' => $validated['prospek_karir'] ?? null,
+            'thumbnail' => $thumbnailPath,
             'foto' => $uploadedPhotos[0] ?? null,
             'galeri' => count($uploadedPhotos) > 0 ? $uploadedPhotos : null,
             'link_website' => $linkWebsite ?: null,
@@ -139,9 +149,36 @@ class ProgramStudiController extends Controller
             'prospek_karir' => ['nullable', 'string'],
             'link_website' => ['nullable', 'string', 'max:500'],
             'urutan' => ['nullable', 'integer', 'min:1'],
+            'thumbnail' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:20480'],
+            'remove_thumbnail' => ['nullable', 'boolean'],
             'foto' => ['nullable'],
             'foto.*' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:20480'],
+        ], [
+            'nama.required' => 'Nama Program Studi wajib diisi.',
+            'jenjang.required' => 'Jenjang pendidikan wajib dipilih.',
+            'fakultas.required' => 'Fakultas wajib dipilih.',
+            'thumbnail.image' => 'File thumbnail harus berupa gambar.',
+            'thumbnail.mimes' => 'Format thumbnail harus berupa JPG, JPEG, PNG, atau WEBP.',
+            'thumbnail.max' => 'Ukuran thumbnail maksimal 20 MB.',
         ]);
+
+        // Manage Thumbnail
+        $thumbnailPath = $programStudi->thumbnail;
+        if ($request->hasFile('thumbnail')) {
+            if (! empty($programStudi->thumbnail) && ! str_starts_with($programStudi->thumbnail, 'http') && ! str_starts_with($programStudi->thumbnail, 'assets/img/')) {
+                if (Storage::disk('public')->exists($programStudi->thumbnail)) {
+                    Storage::disk('public')->delete($programStudi->thumbnail);
+                }
+            }
+            $thumbnailPath = $request->file('thumbnail')->store('assets/prodi/thumbnail', 'public');
+        } elseif ($request->boolean('remove_thumbnail')) {
+            if (! empty($programStudi->thumbnail) && ! str_starts_with($programStudi->thumbnail, 'http') && ! str_starts_with($programStudi->thumbnail, 'assets/img/')) {
+                if (Storage::disk('public')->exists($programStudi->thumbnail)) {
+                    Storage::disk('public')->delete($programStudi->thumbnail);
+                }
+            }
+            $thumbnailPath = null;
+        }
 
         // Existing photos management
         $currentPhotos = $programStudi->all_photos;
@@ -201,6 +238,7 @@ class ProgramStudiController extends Controller
             'visi' => $validated['visi'] ?? null,
             'misi' => $validated['misi'] ?? null,
             'prospek_karir' => $validated['prospek_karir'] ?? null,
+            'thumbnail' => $thumbnailPath,
             'foto' => $currentPhotos[0] ?? null,
             'galeri' => count($currentPhotos) > 0 ? $currentPhotos : null,
             'link_website' => $linkWebsite ?: null,
@@ -215,6 +253,12 @@ class ProgramStudiController extends Controller
 
     public function destroy(ProgramStudi $programStudi): RedirectResponse
     {
+        if (! empty($programStudi->thumbnail) && ! str_starts_with($programStudi->thumbnail, 'http') && ! str_starts_with($programStudi->thumbnail, 'assets/img/')) {
+            if (Storage::disk('public')->exists($programStudi->thumbnail)) {
+                Storage::disk('public')->delete($programStudi->thumbnail);
+            }
+        }
+
         foreach ($programStudi->all_photos as $photo) {
             if (! str_starts_with($photo, 'http') && ! str_starts_with($photo, 'assets/img/')) {
                 if (Storage::disk('public')->exists($photo)) {

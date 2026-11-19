@@ -142,16 +142,49 @@
                 </div>
             </div>
 
-            {{-- 3. Multi-Upload Foto / Dokumentasi Prodi --}}
+            {{-- 3. Thumbnail & Galeri Foto Prodi --}}
             <div class="card border-0 shadow-sm rounded-4 mb-4">
                 <div class="card-header bg-white py-3 px-4" style="border-top: 3px solid #046B26; border-radius: 16px 16px 0 0;">
                     <h5 class="mb-0 fw-bold text-dark">
-                        <i class="bi bi-images text-success me-2"></i>Foto Banner & Galeri Dokumentasi Prodi (Bisa Banyak Foto)
+                        <i class="bi bi-image text-success me-2"></i>Image Thumbnail & Galeri Foto Prodi
                     </h5>
                 </div>
                 <div class="card-body p-4">
+
+                    {{-- Dedicated Image Thumbnail (Nullable) --}}
+                    <div class="mb-4 p-3 rounded-4 bg-light border">
+                        <label class="form-label fw-bold text-dark mb-1">
+                            <i class="bi bi-card-image text-success me-1"></i> Image Thumbnail / Sampul Prodi <span class="text-muted fw-normal small">(Opsional / Nullable - Boleh dikosongkan)</span>
+                        </label>
+                        <p class="text-muted small mb-3">Foto thumbnail utama prodi. Jika dikosongkan, halaman prodi tetap tampil elegan tanpa error.</p>
+                        
+                        <div class="row align-items-center g-3">
+                            <div class="col-md-8">
+                                <input type="file" name="thumbnail" id="thumbnailInput" class="form-control @error('thumbnail') is-invalid @enderror" accept="image/jpeg,image/png,image/webp" onchange="previewThumbnailImage(this)">
+                                <div class="form-text text-muted">Format: JPG, JPEG, PNG, WEBP. Maksimal 20 MB. Boleh dikosongkan.</div>
+                                @error('thumbnail')
+                                    <div class="invalid-feedback d-block">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <div id="thumbnailPreviewWrap" class="d-none">
+                                    <img id="thumbnailPreview" src="" alt="Preview Thumbnail" class="img-fluid rounded-3 border shadow-sm" style="max-height: 120px; object-fit: cover;">
+                                    <div class="mt-1">
+                                        <button type="button" class="btn btn-sm btn-link text-danger p-0" onclick="resetThumbnailInput()">
+                                            <i class="bi bi-x-circle me-1"></i>Batal Pilih
+                                        </button>
+                                    </div>
+                                </div>
+                                <div id="thumbnailEmptyPlaceholder" class="p-3 border rounded-3 bg-white text-muted small d-flex flex-column align-items-center justify-content-center" style="height: 100px;">
+                                    <i class="bi bi-image fs-3 mb-1 text-secondary opacity-50"></i>
+                                    <span>Preview Thumbnail</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                     <label class="form-label fw-bold small d-block mb-2">
-                        <i class="bi bi-cloud-arrow-up-fill text-success me-1"></i> Pilih Foto Kegiatan / Banner Prodi (Kapasitas Lapang Maks. 20 MB per Foto)
+                        <i class="bi bi-cloud-arrow-up-fill text-success me-1"></i> Foto Dokumentasi Tambahan (Bisa Banyak Foto)
                     </label>
                     <div class="w-100 text-center p-4 p-md-5 rounded-4 position-relative"
                          style="border: 2px dashed #046B26; background: #f4faf6; cursor: pointer;"
@@ -161,8 +194,8 @@
                              style="width: 60px; height: 60px; background: #e3f3e8; color: #046B26; font-size: 26px;">
                             <i class="bi bi-cloud-arrow-up-fill"></i>
                         </div>
-                        <h6 class="fw-bold text-dark mb-1">Klik di Sini untuk Memilih Foto Dokumentasi / Banner Prodi</h6>
-                        <p class="text-muted small mb-2">Bisa pilih lebih dari 1 gambar sekaligus. Foto pertama otomatis menjadi foto sampul utama.</p>
+                        <h6 class="fw-bold text-dark mb-1">Klik di Sini untuk Memilih Foto Dokumentasi / Banner Tambahan</h6>
+                        <p class="text-muted small mb-2">Bisa pilih lebih dari 1 gambar sekaligus.</p>
                         <span class="badge rounded-pill px-3 py-1.5" style="background: #046B26;">Kapasitas Lapang: Maksimal 20 MB / Foto (JPG, PNG, WEBP)</span>
                     </div>
 
