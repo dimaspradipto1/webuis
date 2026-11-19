@@ -319,9 +319,13 @@
                 <div>
                   <div class="d-flex align-items-start justify-content-between gap-3 mb-3">
                     <div class="d-flex align-items-center gap-3">
-                      <div class="uis-prodi-item-icon" style="width: 52px; height: 52px; font-size: 24px; background: #eaf5ee;">
-                        <i class="bi {{ $prodi->icon ?: 'bi-mortarboard-fill' }}"></i>
-                      </div>
+                      @if($prodi->thumbnail_url)
+                        <img src="{{ $prodi->thumbnail_url }}" alt="{{ $prodi->nama }}" class="rounded-3 shadow-xs" style="width: 52px; height: 52px; object-fit: cover; flex-shrink: 0;">
+                      @else
+                        <div class="uis-prodi-item-icon" style="width: 52px; height: 52px; font-size: 24px; background: #eaf5ee;">
+                          <i class="bi {{ $prodi->icon ?: 'bi-mortarboard-fill' }}"></i>
+                        </div>
+                      @endif
                       <div>
                         <span class="badge rounded-pill text-bg-success mb-1" style="font-size: 11px;">Program Pascasarjana (S2)</span>
                         <h3 class="fw-bold mb-0" style="font-size: 19px; color: #0c2e19;">
@@ -396,9 +400,13 @@
                   @foreach($listProdi as $prodi)
                     <a href="{{ route('homepage.program-studi.detail', $prodi->slug) }}" class="uis-prodi-item-link">
                       <div class="d-flex align-items-center gap-3">
-                        <div class="uis-prodi-item-icon">
-                          <i class="bi {{ $prodi->icon ?: 'bi-mortarboard-fill' }}"></i>
-                        </div>
+                        @if($prodi->thumbnail_url)
+                          <img src="{{ $prodi->thumbnail_url }}" alt="{{ $prodi->nama }}" class="rounded-3 shadow-xs" style="width: 44px; height: 44px; object-fit: cover; flex-shrink: 0;">
+                        @else
+                          <div class="uis-prodi-item-icon">
+                            <i class="bi {{ $prodi->icon ?: 'bi-mortarboard-fill' }}"></i>
+                          </div>
+                        @endif
                         <div>
                           <div class="uis-prodi-item-title">{{ $prodi->nama }}</div>
                           <div class="uis-prodi-item-meta">

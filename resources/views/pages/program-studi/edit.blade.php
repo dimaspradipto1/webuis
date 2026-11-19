@@ -164,7 +164,68 @@
                 </div>
             </div>
 
-            {{-- 3. Multi-Upload Foto / Dokumentasi Prodi --}}
+            {{-- 3. Image Thumbnail / Sampul Prodi (Opsional / Nullable) --}}
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-header bg-white py-3 px-4" style="border-top: 3px solid #046B26; border-radius: 16px 16px 0 0;">
+                    <h5 class="mb-0 fw-bold text-dark">
+                        <i class="bi bi-card-image text-success me-2"></i>Image Thumbnail / Sampul Prodi <span class="badge bg-secondary-subtle text-secondary ms-2 fw-normal" style="font-size: 11px;">Opsional / Nullable</span>
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <p class="text-muted small mb-3">Foto thumbnail utama prodi. Jika dikosongkan (null), tampilan prodi di frontend dan admin tetap elegan tanpa gambar placeholder rusak.</p>
+
+                    <div class="row g-4 align-items-center">
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold small text-muted d-block mb-2">Thumbnail Saat Ini</label>
+                            @if($programStudi->thumbnail_url)
+                                <div class="p-2 border rounded-3 bg-light text-center">
+                                    <img src="{{ $programStudi->thumbnail_url }}" alt="Thumbnail {{ $programStudi->nama }}" class="img-fluid rounded-2 shadow-xs" style="max-height: 140px; object-fit: cover;">
+                                </div>
+                                <div class="form-check mt-2">
+                                    <input class="form-check-input" type="checkbox" name="remove_thumbnail" id="remove_thumbnail" value="1">
+                                    <label class="form-check-label text-danger small fw-semibold" for="remove_thumbnail">
+                                        <i class="bi bi-trash me-1"></i>Hapus thumbnail saat ini (jadikan tanpa thumbnail / null)
+                                    </label>
+                                </div>
+                            @else
+                                <div class="p-4 border rounded-3 bg-light text-muted small d-flex flex-column align-items-center justify-content-center text-center" style="height: 120px;">
+                                    <i class="bi bi-image fs-2 mb-1 text-secondary opacity-50"></i>
+                                    <span>Belum ada thumbnail (kosong / null)</span>
+                                </div>
+                            @endif
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold small text-muted d-block mb-2">
+                                {{ $programStudi->thumbnail ? 'Ganti Thumbnail' : 'Unggah Thumbnail' }}
+                            </label>
+                            <input type="file" name="thumbnail" id="thumbnailInput" class="form-control @error('thumbnail') is-invalid @enderror" accept="image/jpeg,image/png,image/webp" onchange="previewThumbnailImage(this)">
+                            <div class="form-text text-muted small">Format: JPG, JPEG, PNG, WEBP. Maks. 20 MB. Boleh dikosongkan.</div>
+                            @error('thumbnail')
+                                <div class="invalid-feedback d-block">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold small text-muted d-block mb-2">Pratinjau File Baru</label>
+                            <div id="thumbnailPreviewWrap" class="d-none p-2 border rounded-3 bg-light text-center">
+                                <img id="thumbnailPreview" src="" alt="Pratinjau Baru" class="img-fluid rounded-2 shadow-xs" style="max-height: 140px; object-fit: cover;">
+                                <div class="mt-1">
+                                    <button type="button" class="btn btn-sm btn-link text-danger p-0" onclick="resetThumbnailInput()">
+                                        <i class="bi bi-x-circle me-1"></i>Batal Pilih
+                                    </button>
+                                </div>
+                            </div>
+                            <div id="thumbnailEmptyPlaceholder" class="p-3 border rounded-3 bg-white text-muted small d-flex flex-column align-items-center justify-content-center text-center" style="height: 120px;">
+                                <i class="bi bi-eye fs-3 mb-1 text-secondary opacity-50"></i>
+                                <span>Preview saat memilih file baru</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {{-- 4. Multi-Upload Foto / Dokumentasi Prodi --}}
             <div class="card border-0 shadow-sm rounded-4 mb-4">
                 <div class="card-header bg-white py-3 px-4" style="border-top: 3px solid #046B26; border-radius: 16px 16px 0 0;">
                     <h5 class="mb-0 fw-bold text-dark">
@@ -173,7 +234,7 @@
                 </div>
                 <div class="card-body p-4">
                     @php
-                        $existingPhotos = $programStudi->all_photos;
+                        $existingPhotos = $programStudi->gallery_photos;
                     @endphp
 
                     @if(count($existingPhotos) > 0)
@@ -240,6 +301,30 @@
 
 @push('scripts')
 <script>
+function previewThumbnailImage(input) {
+    const wrap = document.getElementById('thumbnailPreviewWrap');
+    const placeholder = document.getElementById('thumbnailEmptyPlaceholder');
+    const img = document.getElementById('thumbnailPreview');
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            img.src = e.target.result;
+            wrap.classList.remove('d-none');
+            if (placeholder) placeholder.classList.add('d-none');
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function resetThumbnailInput() {
+    const input = document.getElementById('thumbnailInput');
+    if (input) input.value = '';
+    const wrap = document.getElementById('thumbnailPreviewWrap');
+    if (wrap) wrap.classList.add('d-none');
+    const placeholder = document.getElementById('thumbnailEmptyPlaceholder');
+    if (placeholder) placeholder.classList.remove('d-none');
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     const iconInput = document.getElementById('iconInput');
     const iconPreview = document.getElementById('iconPreview');

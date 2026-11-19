@@ -70,12 +70,15 @@
     border-radius: 16px;
     overflow: hidden;
     background: #0b2e19;
-    max-height: 440px;
+    max-height: 480px;
     position: relative;
+    box-shadow: 0 4px 18px rgba(11, 46, 25, 0.08);
   }
   .prodi-main-photo-wrap img {
     width: 100%;
-    height: 420px;
+    max-height: 460px;
+    height: auto;
+    min-height: 220px;
     object-fit: cover;
     display: block;
   }

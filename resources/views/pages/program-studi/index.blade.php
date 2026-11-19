@@ -86,7 +86,9 @@
                             <div>
                                 <div class="d-flex align-items-start justify-content-between gap-3 mb-2">
                                     <div class="d-flex align-items-center gap-3">
-                                        @if($prodi->foto_url)
+                                        @if($prodi->thumbnail_url)
+                                            <img src="{{ $prodi->thumbnail_url }}" alt="{{ $prodi->nama }}" class="rounded-3 border" style="width: 56px; height: 56px; object-fit: cover; flex-shrink: 0;">
+                                        @elseif($prodi->foto_url)
                                             <img src="{{ $prodi->foto_url }}" alt="{{ $prodi->nama }}" class="rounded-3 border" style="width: 56px; height: 56px; object-fit: cover; flex-shrink: 0;">
                                         @else
                                             <div class="rounded-3 d-flex align-items-center justify-content-center" style="width: 56px; height: 56px; background: #eaf5ee; color: #046B26; font-size: 24px; flex-shrink: 0;">
@@ -103,6 +105,11 @@
                                                 @if($prodi->akreditasi)
                                                     <span class="badge bg-warning-subtle text-dark fw-semibold" style="font-size: 11px;">
                                                         <i class="bi bi-patch-check-fill text-warning me-1"></i>{{ $prodi->akreditasi }}
+                                                    </span>
+                                                @endif
+                                                @if($prodi->thumbnail)
+                                                    <span class="badge bg-primary-subtle text-primary-emphasis" style="font-size: 11px;">
+                                                        <i class="bi bi-image me-1"></i>Thumbnail
                                                     </span>
                                                 @endif
                                                 @if($photoCount > 0)

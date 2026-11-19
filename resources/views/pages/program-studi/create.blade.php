@@ -216,6 +216,30 @@
 
 @push('scripts')
 <script>
+function previewThumbnailImage(input) {
+    const wrap = document.getElementById('thumbnailPreviewWrap');
+    const placeholder = document.getElementById('thumbnailEmptyPlaceholder');
+    const img = document.getElementById('thumbnailPreview');
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            img.src = e.target.result;
+            wrap.classList.remove('d-none');
+            if (placeholder) placeholder.classList.add('d-none');
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function resetThumbnailInput() {
+    const input = document.getElementById('thumbnailInput');
+    if (input) input.value = '';
+    const wrap = document.getElementById('thumbnailPreviewWrap');
+    if (wrap) wrap.classList.add('d-none');
+    const placeholder = document.getElementById('thumbnailEmptyPlaceholder');
+    if (placeholder) placeholder.classList.remove('d-none');
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     const iconInput = document.getElementById('iconInput');
     const iconPreview = document.getElementById('iconPreview');

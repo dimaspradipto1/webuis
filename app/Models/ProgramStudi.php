@@ -79,6 +79,23 @@ class ProgramStudi extends Model
         return $this->thumbnail_url ?: (empty($this->foto) ? null : (str_starts_with($this->foto, 'http') ? $this->foto : (str_starts_with($this->foto, 'assets/') ? asset($this->foto) : asset('storage/'.$this->foto))));
     }
 
+    public function getGalleryPhotosAttribute(): array
+    {
+        $photos = [];
+        if (! empty($this->foto)) {
+            $photos[] = $this->foto;
+        }
+        if (is_array($this->galeri)) {
+            foreach ($this->galeri as $img) {
+                if (! empty($img) && ! in_array($img, $photos, true)) {
+                    $photos[] = $img;
+                }
+            }
+        }
+
+        return $photos;
+    }
+
     public function getAllPhotosAttribute(): array
     {
         $photos = [];

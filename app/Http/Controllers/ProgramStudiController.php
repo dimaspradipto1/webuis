@@ -180,8 +180,8 @@ class ProgramStudiController extends Controller
             $thumbnailPath = null;
         }
 
-        // Existing photos management
-        $currentPhotos = $programStudi->all_photos;
+        // Existing photos management (gallery documentation)
+        $currentPhotos = $programStudi->gallery_photos;
         $deletedPhotos = (array) $request->input('delete_photos', []);
 
         if (! empty($deletedPhotos)) {
