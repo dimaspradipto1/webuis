@@ -19,6 +19,21 @@ class AlumniTestimonialRequest extends FormRequest
             'kategori' => ['required', 'string', 'max:150'],
             'bintang' => ['required', 'integer', 'min:1', 'max:5'],
             'pesan' => ['required', 'string', 'max:2000'],
+            'captcha' => [
+                'required',
+                'numeric',
+                function ($attribute, $value, $fail) {
+                    $expected = session('alumni_captcha_answer');
+                    if ($expected === null || (int) $value !== (int) $expected) {
+                        $fail('Jawaban verifikasi captcha keamanan tidak cocok. Silakan coba lagi.');
+                    }
+                },
+            ],
+            // Honeypot trap: bot spammer otomatis mengisi input tak kasat mata
+            'website_trap' => [
+                'nullable',
+                'max:0',
+            ],
         ];
     }
 
@@ -30,6 +45,9 @@ class AlumniTestimonialRequest extends FormRequest
             'kategori.required' => 'Kategori hubungan wajib dipilih.',
             'bintang.required' => 'Rating kepuasan bintang wajib dipilih.',
             'pesan.required' => 'Pesan / testimoni Anda wajib diisi.',
+            'captcha.required' => 'Jawaban verifikasi captcha keamanan wajib diisi.',
+            'captcha.numeric' => 'Jawaban captcha harus berupa angka.',
+            'website_trap.max' => 'Spam terdeteksi.',
         ];
     }
 }

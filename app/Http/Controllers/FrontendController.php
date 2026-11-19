@@ -1122,15 +1122,45 @@ class FrontendController extends Controller
 
     public function alumniCreateTestimoni()
     {
+        $num1 = rand(1, 9);
+        $num2 = rand(1, 9);
+        session([
+            'alumni_captcha_num1' => $num1,
+            'alumni_captcha_num2' => $num2,
+            'alumni_captcha_answer' => $num1 + $num2,
+        ]);
+
         return view('layouts.frontend.alumni-form');
+    }
+
+    public function refreshAlumniCaptcha()
+    {
+        $num1 = rand(1, 9);
+        $num2 = rand(1, 9);
+        session([
+            'alumni_captcha_num1' => $num1,
+            'alumni_captcha_num2' => $num2,
+            'alumni_captcha_answer' => $num1 + $num2,
+        ]);
+
+        return response()->json([
+            'num1' => $num1,
+            'num2' => $num2,
+            'question' => "{$num1} + {$num2} = ?",
+        ]);
     }
 
     public function storeTestimonial(AlumniTestimonialRequest $request)
     {
         $validated = $request->validated();
+        unset($validated['captcha'], $validated['website_trap']);
+
         $validated['aktif'] = false; // Pending moderasi admin
 
         Testimonial::create($validated);
+
+        // Bersihkan sesi captcha setelah pengiriman berhasil
+        session()->forget(['alumni_captcha_num1', 'alumni_captcha_num2', 'alumni_captcha_answer']);
 
         return redirect()
             ->route('homepage.alumni.create')

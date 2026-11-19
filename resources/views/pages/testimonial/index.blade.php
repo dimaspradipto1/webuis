@@ -14,7 +14,7 @@
 <div class="card shadow-sm">
     <div class="card-header d-flex align-items-center justify-content-between py-3">
         <h5 class="mb-0 fw-semibold">
-            <i class="bi bi-chat-square-quote-fill me-2 text-primary"></i>Daftar Testimoni Pelanggan
+            <i class="bi bi-chat-square-quote-fill me-2 text-primary"></i>Daftar Testimoni Alumni & Civitas
         </h5>
         <a href="{{ route('testimonial.create') }}" class="btn btn-primary btn-sm">
             <i class="bi bi-plus-lg me-1"></i> Tambah Testimoni
@@ -23,7 +23,7 @@
     <div class="card-body pt-3">
         <div class="alert alert-info alert-dismissible fade show mb-3" role="alert">
             <i class="bi bi-info-circle-fill me-2"></i>
-            <strong>Info Moderasi:</strong> Setiap testimoni yang dikirimkan oleh pelanggan umum via website akan berstatus <strong>Pending</strong>.
+            <strong>Info Moderasi:</strong> Setiap testimoni yang dikirimkan oleh alumni maupun publik via website akan berstatus <strong>Pending</strong>.
             Anda perlu mengklik tombol <strong>Edit</strong> dan mencentang status <strong>Aktif</strong> agar ulasan tersebut tampil di halaman utama website.
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>

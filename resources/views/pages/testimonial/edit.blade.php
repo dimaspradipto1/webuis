@@ -17,7 +17,7 @@
         <div class="card shadow-sm">
             <div class="card-header py-3">
                 <h5 class="mb-0 fw-semibold">
-                    <i class="bi bi-pencil-square me-2 text-warning"></i>Edit Testimoni Pelanggan
+                    <i class="bi bi-pencil-square me-2 text-warning"></i>Edit Testimoni Alumni & Civitas
                 </h5>
             </div>
             <div class="card-body pt-4">
@@ -44,31 +44,31 @@
                         {{-- Nama (wajib) --}}
                         <div class="col-md-6">
                             <label for="nama" class="form-label fw-semibold">
-                                Nama Pelanggan <span class="text-danger">*</span>
+                                Nama Lengkap & Gelar <span class="text-danger">*</span>
                             </label>
                             <input type="text"
                                    id="nama"
                                    name="nama"
                                    class="form-control @error('nama') is-invalid @enderror"
                                    value="{{ old('nama', $testimonial->nama) }}"
-                                   placeholder="Contoh: Budi Nugraha"
+                                   placeholder="Contoh: Ir. Budi Nugraha, S.T., M.Kom / Ns. Siti Rahma, S.Kep"
                                    required>
                             @error('nama')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        {{-- Pekerjaan / Asal Kota (wajib) --}}
+                        {{-- Pekerjaan / Tempat Bekerja (wajib) --}}
                         <div class="col-md-6">
                             <label for="pekerjaan" class="form-label fw-semibold">
-                                Pekerjaan / Asal Kota <span class="text-danger">*</span>
+                                Profesi / Jabatan / Tempat Bekerja <span class="text-danger">*</span>
                             </label>
                             <input type="text"
                                    id="pekerjaan"
                                    name="pekerjaan"
                                    class="form-control @error('pekerjaan') is-invalid @enderror"
                                    value="{{ old('pekerjaan', $testimonial->pekerjaan) }}"
-                                   placeholder="Contoh: Kontraktor, Bandung"
+                                   placeholder="Contoh: Software Engineer di PT Telkom / Perawat di RSUD"
                                    required>
                             @error('pekerjaan')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -82,10 +82,18 @@
                             <label for="kategori" class="form-label fw-semibold">
                                 Kategori Profil <span class="text-danger">*</span>
                             </label>
+                            @php
+                                $currentKat = old('kategori', $testimonial->kategori);
+                            @endphp
                             <select id="kategori" name="kategori" class="form-select @error('kategori') is-invalid @enderror" required>
-                                <option value="kontraktor" {{ old('kategori', $testimonial->kategori) === 'kontraktor' ? 'selected' : '' }}>Kontraktor</option>
-                                <option value="arsitek" {{ old('kategori', $testimonial->kategori) === 'arsitek' ? 'selected' : '' }}>Arsitek</option>
-                                <option value="pemilik" {{ old('kategori', $testimonial->kategori) === 'pemilik' ? 'selected' : '' }}>Pemilik Rumah</option>
+                                <option value="Alumni" {{ str_contains(strtolower($currentKat), 'alumni') ? 'selected' : '' }}>Alumni UIS</option>
+                                <option value="Mahasiswa" {{ str_contains(strtolower($currentKat), 'mahasiswa') ? 'selected' : '' }}>Mahasiswa Aktif</option>
+                                <option value="Mitra Industri" {{ (str_contains(strtolower($currentKat), 'mitra') || str_contains(strtolower($currentKat), 'industri')) ? 'selected' : '' }}>Mitra Dunia Usaha & Industri (DUDI)</option>
+                                <option value="Dosen & Staff" {{ (str_contains(strtolower($currentKat), 'dosen') || str_contains(strtolower($currentKat), 'staff')) ? 'selected' : '' }}>Dosen & Tenaga Kependidikan</option>
+                                <option value="Pengguna Lulusan / Stakeholder" {{ (str_contains(strtolower($currentKat), 'pengguna') || str_contains(strtolower($currentKat), 'stakeholder')) ? 'selected' : '' }}>Pengguna Lulusan / Stakeholder</option>
+                                @if(!empty($currentKat) && !in_array($currentKat, ['Alumni', 'Mahasiswa', 'Mitra Industri', 'Dosen & Staff', 'Pengguna Lulusan / Stakeholder']))
+                                    <option value="{{ $currentKat }}" selected>{{ $currentKat }}</option>
+                                @endif
                             </select>
                             @error('kategori')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -119,7 +127,7 @@
                                   name="pesan"
                                   class="form-control @error('pesan') is-invalid @enderror"
                                   rows="4"
-                                  placeholder="Tuliskan masukan / ulasan pengalaman pelanggan di sini..."
+                                  placeholder="Tuliskan testimoni pengalaman belajar, perkuliahan di Universitas Ibnu Sina, bimbingan dosen, suasana kampus, atau kemudahan berkarir..."
                                   required>{{ old('pesan', $testimonial->pesan) }}</textarea>
                         @error('pesan')
                             <div class="invalid-feedback">{{ $message }}</div>

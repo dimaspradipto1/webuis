@@ -154,6 +154,46 @@
                 @enderror
               </div>
 
+              {{-- Honeypot Trap (Tersembunyi dari Pengguna Nyata untuk Menjebak Bot Spammer Otomatis) --}}
+              <div style="display:none !important;" aria-hidden="true">
+                <input type="text" name="website_trap" tabindex="-1" autocomplete="off">
+              </div>
+
+              {{-- Verifikasi Keamanan Captcha Anti-Spam --}}
+              <div class="col-12">
+                <div class="p-3.5 p-md-4 rounded-4 bg-light border" style="border-color: #d1e7dd !important;">
+                  <label class="form-label fw-semibold text-dark mb-2 d-flex align-items-center justify-content-between flex-wrap gap-2">
+                    <span class="d-inline-flex align-items-center">
+                      <i class="bi bi-shield-lock-fill text-success fs-5 me-2"></i>
+                      <span>Verifikasi Keamanan (Captcha Anti-Spam) <span class="text-danger">*</span></span>
+                    </span>
+                    <span class="small text-muted fw-normal">Selesaikan penjumlahan angka</span>
+                  </label>
+                  
+                  <div class="d-flex align-items-center gap-3 flex-wrap">
+                    <div class="py-2 px-3 rounded-3 bg-white border text-dark fw-bold d-inline-flex align-items-center gap-2 shadow-xs" style="font-size: 16px; user-select: none;">
+                      <span id="captchaDisplay" class="font-monospace text-success fw-bold" style="letter-spacing: 2px;">
+                        {{ session('alumni_captcha_num1', 7) }} + {{ session('alumni_captcha_num2', 5) }} = ?
+                      </span>
+                      <button type="button" class="btn btn-sm btn-link p-0 text-success ms-2" onclick="refreshCaptcha()" title="Ganti Angka Captcha">
+                        <i class="bi bi-arrow-clockwise fs-5"></i>
+                      </button>
+                    </div>
+
+                    <div style="max-width: 200px; flex: 1 1 140px;">
+                      <input type="number" name="captcha" id="captchaInput" class="form-control form-control-lg @error('captcha') is-invalid @enderror" placeholder="Tulis jawaban..." required style="border-radius: 12px; font-size: 14px;">
+                    </div>
+                  </div>
+
+                  @error('captcha')
+                    <div class="invalid-feedback d-block mt-2">{{ $message }}</div>
+                  @enderror
+                  <div class="small text-muted mt-2">
+                    <i class="bi bi-info-circle me-1"></i>Fitur ini melindungi sistem dari pengiriman formulir otomatis/spam.
+                  </div>
+                </div>
+              </div>
+
               {{-- Tombol Kirim --}}
               <div class="col-12 text-center mt-4">
                 <button type="submit" class="btn-primary-hero px-5 py-3 shadow" style="cursor: pointer; border-radius: 30px; font-size: 15px;">
@@ -195,6 +235,26 @@
       customInput.value = '';
       hiddenInput.value = val;
     }
+  }
+
+  function refreshCaptcha() {
+    const display = document.getElementById('captchaDisplay');
+    if (!display) return;
+    display.innerHTML = '<span class="spinner-border spinner-border-sm text-success" role="status"></span>';
+    
+    fetch('{{ route("homepage.alumni.captcha-refresh") }}')
+      .then(res => res.json())
+      .then(data => {
+        display.textContent = data.question;
+        const input = document.getElementById('captchaInput');
+        if (input) {
+          input.value = '';
+          input.focus();
+        }
+      })
+      .catch(() => {
+        display.textContent = '7 + 5 = ?';
+      });
   }
 
   // Sync on page load (for validation errors)

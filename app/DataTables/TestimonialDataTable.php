@@ -50,13 +50,15 @@ class TestimonialDataTable extends DataTable
             ->addColumn('kategori', function ($testimonial) {
                 $kat = strtolower($testimonial->kategori ?? '');
                 if (str_contains($kat, 'alumni')) {
-                    return '<span class="badge text-white" style="background:#823ca2;">Alumni</span>';
+                    return '<span class="badge text-white" style="background:#046B26;">Alumni</span>';
                 } elseif (str_contains($kat, 'mahasiswa')) {
                     return '<span class="badge bg-primary">Mahasiswa</span>';
-                } elseif (str_contains($kat, 'mitra') || str_contains($kat, 'rumah sakit')) {
-                    return '<span class="badge bg-success">Mitra RS / Klinik</span>';
-                } elseif (str_contains($kat, 'dosen') || str_contains($kat, 'staff')) {
-                    return '<span class="badge bg-info text-dark">Dosen / Staff</span>';
+                } elseif (str_contains($kat, 'mitra') || str_contains($kat, 'industri') || str_contains($kat, 'perusahaan') || str_contains($kat, 'rumah sakit')) {
+                    return '<span class="badge bg-success">Mitra Industri / DUDI</span>';
+                } elseif (str_contains($kat, 'dosen') || str_contains($kat, 'staff') || str_contains($kat, 'pendidik')) {
+                    return '<span class="badge bg-info text-dark">Dosen & Staff</span>';
+                } elseif (str_contains($kat, 'pengguna') || str_contains($kat, 'stakeholder')) {
+                    return '<span class="badge text-white" style="background:#823ca2;">Pengguna Lulusan</span>';
                 }
 
                 return '<span class="badge bg-secondary">'.e($testimonial->kategori ?? 'Umum').'</span>';

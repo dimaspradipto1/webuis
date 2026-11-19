@@ -43,31 +43,31 @@
                         {{-- Nama (wajib) --}}
                         <div class="col-md-6">
                             <label for="nama" class="form-label fw-semibold">
-                                Nama Pelanggan <span class="text-danger">*</span>
+                                Nama Lengkap & Gelar <span class="text-danger">*</span>
                             </label>
                             <input type="text"
                                    id="nama"
                                    name="nama"
                                    class="form-control @error('nama') is-invalid @enderror"
                                    value="{{ old('nama') }}"
-                                   placeholder="Contoh: Budi Nugraha"
+                                   placeholder="Contoh: Ir. Budi Nugraha, S.T., M.Kom / Ns. Siti Rahma, S.Kep"
                                    required>
                             @error('nama')
                                 <div class="invalid-feedback">{{ $message }}</div>
                             @enderror
                         </div>
 
-                        {{-- Pekerjaan / Asal Kota (wajib) --}}
+                        {{-- Pekerjaan / Tempat Bekerja (wajib) --}}
                         <div class="col-md-6">
                             <label for="pekerjaan" class="form-label fw-semibold">
-                                Pekerjaan / Asal Kota <span class="text-danger">*</span>
+                                Profesi / Jabatan / Tempat Bekerja <span class="text-danger">*</span>
                             </label>
                             <input type="text"
                                    id="pekerjaan"
                                    name="pekerjaan"
                                    class="form-control @error('pekerjaan') is-invalid @enderror"
                                    value="{{ old('pekerjaan') }}"
-                                   placeholder="Contoh: Kontraktor, Bandung"
+                                   placeholder="Contoh: Software Engineer di PT Telkom / Perawat di RSUD"
                                    required>
                             @error('pekerjaan')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -82,10 +82,12 @@
                                 Kategori Profil <span class="text-danger">*</span>
                             </label>
                             <select id="kategori" name="kategori" class="form-select @error('kategori') is-invalid @enderror" required>
-                                <option value="" disabled selected>-- Pilih Kategori --</option>
-                                <option value="kontraktor" {{ old('kategori') === 'kontraktor' ? 'selected' : '' }}>Kontraktor</option>
-                                <option value="arsitek" {{ old('kategori') === 'arsitek' ? 'selected' : '' }}>Arsitek</option>
-                                <option value="pemilik" {{ old('kategori') === 'pemilik' ? 'selected' : '' }}>Pemilik Rumah</option>
+                                <option value="" disabled {{ old('kategori') ? '' : 'selected' }}>-- Pilih Kategori --</option>
+                                <option value="Alumni" {{ old('kategori') === 'Alumni' ? 'selected' : '' }}>Alumni UIS</option>
+                                <option value="Mahasiswa" {{ old('kategori') === 'Mahasiswa' ? 'selected' : '' }}>Mahasiswa Aktif</option>
+                                <option value="Mitra Industri" {{ old('kategori') === 'Mitra Industri' ? 'selected' : '' }}>Mitra Dunia Usaha & Industri (DUDI)</option>
+                                <option value="Dosen & Staff" {{ old('kategori') === 'Dosen & Staff' ? 'selected' : '' }}>Dosen & Tenaga Kependidikan</option>
+                                <option value="Pengguna Lulusan / Stakeholder" {{ old('kategori') === 'Pengguna Lulusan / Stakeholder' ? 'selected' : '' }}>Pengguna Lulusan / Stakeholder</option>
                             </select>
                             @error('kategori')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -119,7 +121,7 @@
                                   name="pesan"
                                   class="form-control @error('pesan') is-invalid @enderror"
                                   rows="4"
-                                  placeholder="Tuliskan masukan / ulasan pengalaman pelanggan di sini..."
+                                  placeholder="Tuliskan testimoni pengalaman belajar, perkuliahan di Universitas Ibnu Sina, bimbingan dosen, suasana kampus, atau kemudahan berkarir..."
                                   required>{{ old('pesan') }}</textarea>
                         @error('pesan')
                             <div class="invalid-feedback">{{ $message }}</div>
