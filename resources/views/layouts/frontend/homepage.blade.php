@@ -1449,16 +1449,21 @@
       <p class="mirror-active-desc" id="ormawaMirrorActiveDesc">
         {{ $firstOrmawaDesc }}
       </p>
-      <div class="d-flex align-items-center justify-content-center gap-3 flex-wrap">
-        <a href="{{ $firstOrmawaUrl }}" class="mirror-active-cta" id="ormawaMirrorActiveBtn">
+      <div class="d-flex align-items-center justify-content-center gap-3 flex-wrap mt-3 mb-2">
+        <a href="{{ $firstOrmawaUrl }}"
+           class="mirror-active-cta m-0"
+           id="ormawaMirrorActiveBtn"
+           style="height: 42px; padding: 0 24px; font-size: 13.5px; font-weight: 700; line-height: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; margin: 0 !important;">
           <span>Profil Lengkap</span>
-          <i class="bi bi-arrow-right-circle-fill"></i>
+          <i class="bi bi-arrow-right-circle-fill" style="font-size: 14px; line-height: 1;"></i>
         </a>
         <a href="{{ !empty($organisasiSetting?->tombol_url) ? $organisasiSetting->tombol_url : route('homepage.organisasi') }}"
-           class="btn btn-outline-light rounded-pill px-4 py-2 fw-semibold"
-           style="font-size: 13px; border-color: rgba(254, 216, 2, 0.5); color: #fed802;">
+           class="btn rounded-pill m-0 fw-semibold"
+           style="height: 42px; padding: 0 24px; font-size: 13.5px; line-height: 1; display: inline-flex; align-items: center; justify-content: center; gap: 8px; border: 1.5px solid rgba(254, 216, 2, 0.6); color: #fed802; background: transparent; transition: all 0.25s ease; margin: 0 !important;"
+           onmouseenter="this.style.background='rgba(254,216,2,0.15)'; this.style.borderColor='#fed802'; this.style.transform='translateY(-2px)';"
+           onmouseleave="this.style.background='transparent'; this.style.borderColor='rgba(254,216,2,0.6)'; this.style.transform='none';">
           <span>{{ $organisasiSetting?->tombol_teks ?: 'Jelajahi Semua Organisasi' }}</span>
-          <i class="bi bi-grid-fill ms-1"></i>
+          <i class="bi bi-grid-fill" style="font-size: 13px; line-height: 1;"></i>
         </a>
       </div>
     </div>

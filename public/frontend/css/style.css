@@ -2735,17 +2735,21 @@ section {
 .mirror-active-cta {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     background: #fed802;
     color: #02240e;
     font-weight: 800;
     font-size: 13.5px;
-    padding: 8px 24px;
+    line-height: 1;
+    height: 42px;
+    padding: 0 24px;
     border-radius: 50px;
     text-decoration: none;
     box-shadow: 0 8px 20px rgba(254, 216, 2, 0.35);
     transition: all 0.25s ease;
-    margin-bottom: 18px;
+    margin: 0;
+    vertical-align: middle;
 }
 .mirror-active-cta:hover {
     background: #ffffff;
