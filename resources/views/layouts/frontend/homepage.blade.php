@@ -1000,8 +1000,106 @@
 <!-- ═══════════════════════════════════════════════
      8. PRESTASI MAHASISWA & STUDENT LIFE
 ═══════════════════════════════════════════════ -->
+<style>
+  .prestasi-motion-wrapper {
+    position: relative;
+    width: 100%;
+    margin-bottom: 2.5rem;
+  }
+  .prestasi-motion-viewport {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    padding: 12px 0 24px 0;
+    cursor: grab;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: pan-y;
+    -webkit-mask-image: linear-gradient(to right, transparent 0%, black 2.5%, black 97.5%, transparent 100%);
+    mask-image: linear-gradient(to right, transparent 0%, black 2.5%, black 97.5%, transparent 100%);
+  }
+  .prestasi-motion-viewport:active {
+    cursor: grabbing;
+  }
+  .prestasi-motion-track {
+    display: flex;
+    align-items: stretch;
+    gap: 24px;
+    width: max-content;
+    will-change: transform;
+    pointer-events: auto;
+  }
+  .prestasi-motion-item {
+    flex: 0 0 370px;
+    width: 370px;
+    max-width: 85vw;
+    display: flex;
+    height: auto;
+  }
+  .prestasi-motion-item .prestasi-card {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  @media (max-width: 768px) {
+    .prestasi-motion-item {
+      flex: 0 0 310px;
+      width: 310px;
+    }
+    .prestasi-motion-track {
+      gap: 16px;
+    }
+  }
+  .prestasi-nav-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: #ffffff;
+    border: 1.5px solid #e2e8f0;
+    color: #046B26;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 19px;
+    z-index: 12;
+    cursor: pointer;
+    transition: all 0.25s ease;
+  }
+  .prestasi-nav-btn:hover {
+    background: #046B26;
+    color: #fed802;
+    border-color: #046B26;
+    box-shadow: 0 8px 22px rgba(4, 107, 38, 0.28);
+    transform: translateY(-50%) scale(1.08);
+  }
+  .prestasi-nav-btn.prev {
+    left: -20px;
+  }
+  .prestasi-nav-btn.next {
+    right: -20px;
+  }
+  @media (max-width: 1200px) {
+    .prestasi-nav-btn.prev {
+      left: -8px;
+    }
+    .prestasi-nav-btn.next {
+      right: -8px;
+    }
+  }
+  @media (max-width: 768px) {
+    .prestasi-nav-btn {
+      display: none;
+    }
+  }
+</style>
+
 <section class="section-bg-white" id="prestasi">
-  <div class="container">
+  <div class="container position-relative">
     <div class="text-center mb-5" data-aos="fade-up">
       <div class="section-label mx-auto">Kebanggaan Kampus</div>
       <h2 class="section-title">Prestasi Gemilang <em>Mahasiswa UIS</em></h2>
@@ -1012,60 +1110,79 @@
     </div>
 
     @if(isset($prestasis) && $prestasis->count() > 0)
-      <div class="row g-4 mb-5">
-        @foreach($prestasis as $index => $prestasi)
-          @php
-            $prestasiTitle = $prestasi->title ?? $prestasi->judul_prestasi ?? 'Prestasi Mahasiswa';
-            $prestasiThumb = $prestasi->thumbnail ?? $prestasi->foto ?? null;
-            $prestasiDesc  = $prestasi->description ?? $prestasi->content ?? $prestasi->deskripsi ?? '';
-            $prestasiDate  = ($prestasi->published_at ?? $prestasi->created_at)?->format('d M Y');
-          @endphp
-          <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ ($index + 1) * 100 }}">
-            <div class="prestasi-card">
-              <div class="prestasi-img-wrap">
-                @if(!empty($prestasiThumb))
-                  <img src="{{ asset('storage/' . $prestasiThumb) }}" alt="{{ $prestasiTitle }}" class="prestasi-img">
-                @else
-                  <div class="d-flex align-items-center justify-content-center h-100 flex-column gap-2" style="background: #e2e8f0; color: #64748b;">
-                    <i class="bi bi-image" style="font-size: 44px;"></i>
+      <div class="prestasi-motion-wrapper position-relative mb-5" data-aos="fade-up">
+        <div class="prestasi-motion-viewport" id="prestasiMotionViewport">
+          <div class="prestasi-motion-track" id="prestasiMotionTrack">
+            @php
+              $totalPrestasi = $prestasis->count();
+              $prestasiRepeats = max(3, (int) ceil(12 / max(1, $totalPrestasi)));
+            @endphp
+            @for($r = 0; $r < $prestasiRepeats; $r++)
+              @foreach($prestasis as $index => $prestasi)
+                @php
+                  $prestasiTitle = $prestasi->title ?? $prestasi->judul_prestasi ?? 'Prestasi Mahasiswa';
+                  $prestasiThumb = $prestasi->thumbnail ?? $prestasi->foto ?? null;
+                  $prestasiDesc  = $prestasi->description ?? $prestasi->content ?? $prestasi->deskripsi ?? '';
+                  $prestasiDate  = ($prestasi->published_at ?? $prestasi->created_at)?->format('d M Y');
+                  $prestasiUrl   = route('homepage.prestasi.detail', $prestasi->slug ?? $prestasi->id);
+                @endphp
+                <div class="prestasi-motion-item">
+                  <div class="prestasi-card">
+                    <div class="prestasi-img-wrap">
+                      @if(!empty($prestasiThumb))
+                        <img src="{{ asset('storage/' . $prestasiThumb) }}" alt="{{ $prestasiTitle }}" class="prestasi-img" loading="lazy">
+                      @else
+                        <div class="d-flex align-items-center justify-content-center h-100 flex-column gap-2" style="background: #e2e8f0; color: #64748b;">
+                          <i class="bi bi-image" style="font-size: 44px;"></i>
+                        </div>
+                      @endif
+                      <span class="prestasi-tingkat-badge badge bg-success text-white">
+                        <i class="bi bi-trophy-fill me-1 text-warning"></i>{{ $prestasi->category ?? 'Prestasi Mahasiswa' }}
+                      </span>
+                    </div>
+
+                    <div class="p-4 d-flex flex-column justify-content-between flex-grow-1">
+                      <div>
+                        @if($prestasiDate)
+                          <div class="text-muted small mb-2" style="font-size: 12px;">
+                            <i class="bi bi-calendar3 me-1"></i>{{ $prestasiDate }}
+                          </div>
+                        @endif
+
+                        <h4 class="fw-bold mb-2 text-dark" style="font-size: 16.5px; line-height: 1.45;">
+                          <a href="{{ $prestasiUrl }}" class="text-dark text-decoration-none">
+                            {{ $prestasiTitle }}
+                          </a>
+                        </h4>
+
+                        @if(!empty($prestasiDesc))
+                          <div class="text-muted small mt-2" style="font-size: 12.5px; line-height: 1.6;">
+                            {{ Str::limit(trim(preg_replace('/\s+/', ' ', html_entity_decode(strip_tags($prestasiDesc)))), 115) }}
+                          </div>
+                        @endif
+                      </div>
+
+                      <div class="pt-3 border-top mt-3">
+                        <a href="{{ $prestasiUrl }}" class="fw-bold text-decoration-none d-flex align-items-center justify-content-between" style="color: var(--uis-purple); font-size: 13px;">
+                          <span>Lihat Selengkapnya</span>
+                          <i class="bi bi-arrow-right"></i>
+                        </a>
+                      </div>
+                    </div>
                   </div>
-                @endif
-                <span class="prestasi-tingkat-badge badge bg-success text-white">
-                  <i class="bi bi-trophy-fill me-1 text-warning"></i>{{ $prestasi->category ?? 'Prestasi Mahasiswa' }}
-                </span>
-              </div>
-
-              <div class="p-4 d-flex flex-column justify-content-between flex-grow-1">
-                <div>
-                  @if($prestasiDate)
-                    <div class="text-muted small mb-2" style="font-size: 12px;">
-                      <i class="bi bi-calendar3 me-1"></i>{{ $prestasiDate }}
-                    </div>
-                  @endif
-
-                  <h4 class="fw-bold mb-2 text-dark" style="font-size: 16.5px; line-height: 1.45;">
-                    <a href="{{ route('homepage.prestasi.detail', $prestasi->slug ?? $prestasi->id) }}" class="text-dark text-decoration-none">
-                      {{ $prestasiTitle }}
-                    </a>
-                  </h4>
-
-                  @if(!empty($prestasiDesc))
-                    <div class="text-muted small mt-2" style="font-size: 12.5px; line-height: 1.6;">
-                      {{ Str::limit(trim(preg_replace('/\s+/', ' ', html_entity_decode(strip_tags($prestasiDesc)))), 115) }}
-                    </div>
-                  @endif
                 </div>
-
-                <div class="pt-3 border-top mt-3">
-                  <a href="{{ route('homepage.prestasi.detail', $prestasi->slug ?? $prestasi->id) }}" class="fw-bold text-decoration-none d-flex align-items-center justify-content-between" style="color: var(--uis-purple); font-size: 13px;">
-                    <span>Lihat Selengkapnya</span>
-                    <i class="bi bi-arrow-right"></i>
-                  </a>
-                </div>
-              </div>
-            </div>
+              @endforeach
+            @endfor
           </div>
-        @endforeach
+        </div>
+
+        {{-- Tombol Navigasi Panah Kiri & Kanan --}}
+        <button type="button" class="prestasi-nav-btn prev" id="prestasiPrevBtn" aria-label="Sebelumnya">
+          <i class="bi bi-chevron-left"></i>
+        </button>
+        <button type="button" class="prestasi-nav-btn next" id="prestasiNextBtn" aria-label="Selanjutnya">
+          <i class="bi bi-chevron-right"></i>
+        </button>
       </div>
 
       {{-- Tombol Lihat Semua Prestasi --}}
@@ -1075,7 +1192,6 @@
         </a>
       </div>
     @endif
-
 
   </div>
 </section>
@@ -2329,6 +2445,146 @@
         }
       }
     });
+
+    // ── Continuous Motion Engine (Prestasi Gemilang Mahasiswa UIS) ────────
+    const prestasiViewport = document.getElementById('prestasiMotionViewport');
+    const prestasiTrack = document.getElementById('prestasiMotionTrack');
+
+    if (prestasiViewport && prestasiTrack) {
+      const items = Array.from(prestasiTrack.querySelectorAll('.prestasi-motion-item'));
+      const totalItems = items.length;
+      const uniqueCount = {{ isset($prestasis) ? $prestasis->count() : 0 }};
+
+      if (totalItems > 0 && uniqueCount > 0) {
+        let cardWidth = items[0].offsetWidth || (window.innerWidth < 768 ? 310 : 370);
+        let gap = window.innerWidth < 768 ? 16 : 24;
+        let itemStep = cardWidth + gap;
+        let singleCycleWidth = uniqueCount * itemStep;
+
+        let scrollPos = 0;
+        let baseSpeed = 0.85; // Kecepatan gerak kontinu otomatis halus
+        let currentSpeed = baseSpeed;
+        let targetSpeed = baseSpeed;
+        let isDragging = false;
+        let dragStartX = 0;
+        let dragStartPos = 0;
+        let lastDragX = 0;
+        let dragVel = 0;
+        let hasMovedSignificantly = false;
+
+        function updatePrestasiDimensions() {
+          if (!items[0]) return;
+          cardWidth = items[0].offsetWidth || (window.innerWidth < 768 ? 310 : 370);
+          gap = window.innerWidth < 768 ? 16 : 24;
+          itemStep = cardWidth + gap;
+          singleCycleWidth = uniqueCount * itemStep;
+        }
+        window.addEventListener('resize', updatePrestasiDimensions);
+        updatePrestasiDimensions();
+
+        function renderPrestasiMotion() {
+          if (!isDragging) {
+            currentSpeed += (targetSpeed - currentSpeed) * 0.08;
+            scrollPos += currentSpeed;
+
+            if (Math.abs(dragVel) > 0.05) {
+              scrollPos += dragVel;
+              dragVel *= 0.92;
+            }
+          }
+
+          // Loop tak berujung (seamless infinite wrap)
+          if (singleCycleWidth > 0) {
+            if (scrollPos >= singleCycleWidth) {
+              scrollPos -= singleCycleWidth;
+              if (isDragging) dragStartPos -= singleCycleWidth;
+            } else if (scrollPos < 0) {
+              scrollPos += singleCycleWidth;
+              if (isDragging) dragStartPos += singleCycleWidth;
+            }
+          }
+
+          prestasiTrack.style.transform = `translate3d(${-scrollPos}px, 0, 0)`;
+          requestAnimationFrame(renderPrestasiMotion);
+        }
+
+        requestAnimationFrame(renderPrestasiMotion);
+
+        // Pause saat kursor mouse berada di atas kartu (agar mudah dibaca & diklik)
+        prestasiViewport.addEventListener('mouseenter', () => {
+          targetSpeed = 0;
+        });
+        prestasiViewport.addEventListener('mouseleave', () => {
+          if (!isDragging) targetSpeed = baseSpeed;
+        });
+
+        // Interaksi Drag / Geser Halus (Touch & Mouse)
+        prestasiViewport.addEventListener('pointerdown', (e) => {
+          isDragging = true;
+          hasMovedSignificantly = false;
+          dragStartX = e.clientX;
+          dragStartPos = scrollPos;
+          lastDragX = e.clientX;
+          dragVel = 0;
+          try {
+            prestasiViewport.setPointerCapture(e.pointerId);
+          } catch (err) {}
+        });
+
+        prestasiViewport.addEventListener('pointermove', (e) => {
+          if (!isDragging) return;
+          const delta = e.clientX - lastDragX;
+          if (Math.abs(e.clientX - dragStartX) > 6) {
+            hasMovedSignificantly = true;
+          }
+          dragVel = -delta * 0.7;
+          lastDragX = e.clientX;
+          scrollPos = dragStartPos - (e.clientX - dragStartX);
+        });
+
+        function endPrestasiDrag(e) {
+          if (!isDragging) return;
+          isDragging = false;
+          targetSpeed = baseSpeed;
+          try {
+            if (e && e.pointerId && prestasiViewport.hasPointerCapture(e.pointerId)) {
+              prestasiViewport.releasePointerCapture(e.pointerId);
+            }
+          } catch (err) {}
+        }
+
+        prestasiViewport.addEventListener('pointerup', endPrestasiDrag);
+        prestasiViewport.addEventListener('pointercancel', endPrestasiDrag);
+
+        // Cegah klik tautan bila pengguna sedang melakukan drag / geser
+        prestasiTrack.addEventListener('click', (e) => {
+          if (hasMovedSignificantly) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }, true);
+
+        // Navigasi Tombol Prev & Next
+        const prevBtn = document.getElementById('prestasiPrevBtn');
+        const nextBtn = document.getElementById('prestasiNextBtn');
+
+        if (prevBtn) {
+          prevBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            scrollPos -= itemStep;
+            dragVel = -4;
+          });
+        }
+        if (nextBtn) {
+          nextBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            scrollPos += itemStep;
+            dragVel = 4;
+          });
+        }
+      }
+    }
+
     // ── Continuous 3D Cylinder Horizon Motion Engine (Ormawa & Kegiatan Mahasiswa) ────────
     const ormawaViewport = document.getElementById('ormawaCylinderViewport');
     const ormawaTrack = document.getElementById('ormawaCylinderTrack');
