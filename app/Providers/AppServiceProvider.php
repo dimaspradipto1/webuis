@@ -87,11 +87,18 @@ class AppServiceProvider extends ServiceProvider
                 $defaultBahasa = null;
             }
 
+            try {
+                $themeSetting = \App\Models\ThemeSetting::current();
+            } catch (\Throwable $e) {
+                $themeSetting = new \App\Models\ThemeSetting(\App\Models\ThemeSetting::defaultAttributes());
+            }
+
             $view->with([
                 'contact' => $contact,
                 'cleanWa' => $cleanWa,
                 'waAdminSetting' => $waAdminSetting,
                 'tampilan' => \App\Support\TampilanConfig::get(),
+                'themeSetting' => $themeSetting,
                 'pmbSetting' => $pmbSetting,
                 'navProdis' => $navProdis,
                 'navPublikasis' => $navPublikasis,

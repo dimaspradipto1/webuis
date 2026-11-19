@@ -374,9 +374,9 @@
 
           @if($isAdmin)
           <li class="nav-item">
-              <a class="nav-link {{ Route::is('tampilan.*') ? '' : 'collapsed' }}" href="{{ route('tampilan.index') }}">
-                  <i class="bi bi-palette"></i>
-                  <span>Warna Header, Footer & Layout</span>
+              <a class="nav-link {{ Route::is('theme.*') ? '' : 'collapsed' }}" href="{{ route('theme.index') }}">
+                  <i class="bi bi-palette-fill"></i>
+                  <span>Warna Frontend & Admin</span>
               </a>
           </li>
 

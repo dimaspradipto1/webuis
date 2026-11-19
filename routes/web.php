@@ -278,7 +278,14 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::post('admin-bahasa/{id}/set-default', [BahasaSettingController::class, 'setDefault'])->name('bahasa.set-default');
     Route::delete('admin-bahasa/{id}', [BahasaSettingController::class, 'destroy'])->name('bahasa.destroy');
 
-    // Warna Header, Footer & Tata Letak Beranda
+    // Pengaturan Warna Frontend, Admin & Tata Letak Beranda (Sistem Theme Setting Modern Seperti FIKES)
+    Route::get('admin-theme', [\App\Http\Controllers\ThemeSettingController::class, 'index'])->name('theme.index');
+    Route::post('admin-theme', [\App\Http\Controllers\ThemeSettingController::class, 'update'])->name('theme.update');
+    Route::post('admin-theme/layout', [\App\Http\Controllers\ThemeSettingController::class, 'updateLayout'])->name('theme.update-layout');
+    Route::post('admin-theme/reset-layout', [\App\Http\Controllers\ThemeSettingController::class, 'resetLayout'])->name('theme.reset-layout');
+    Route::post('admin-theme/reset', [\App\Http\Controllers\ThemeSettingController::class, 'reset'])->name('theme.reset');
+
+    // Warna Header, Footer & Tata Letak Beranda (Legacy Tampilan)
     Route::get('admin-tampilan', [\App\Http\Controllers\TampilanController::class, 'index'])->name('tampilan.index');
     Route::put('admin-tampilan/header', [\App\Http\Controllers\TampilanController::class, 'updateHeader'])->name('tampilan.update-header');
     Route::put('admin-tampilan/footer', [\App\Http\Controllers\TampilanController::class, 'updateFooter'])->name('tampilan.update-footer');
@@ -300,3 +307,6 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
         Route::post('/import-storage', [BackupController::class, 'importStorage'])->name('import-storage');
     });
 });
+
+// Endpoint Live Sync (Auto-Update Frontend & Admin Tanpa Reload)
+Route::get('/api/live-state', [\App\Http\Controllers\ThemeSettingController::class, 'liveState'])->name('api.live-state');

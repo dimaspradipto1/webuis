@@ -39,13 +39,19 @@
     outline-offset: -3px;
     box-shadow: 0 0 0 4px #046B26 !important;
   }
+  .article-main-thumb-wrapper {
+    margin-bottom: 24px;
+  }
   .article-main-thumb-container {
     position: relative;
     border-radius: 20px;
     overflow: hidden;
-    margin-bottom: 24px;
+    margin-bottom: 0;
     background: #0b1510;
     box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+  }
+  .article-thumb-caption {
+    margin-top: 10px;
   }
   .article-main-thumb {
     width: 100%;
@@ -182,24 +188,38 @@
       <div class="col-lg-8" data-aos="fade-right">
         <div class="article-main-card">
 
-          {{-- Thumbnail Utama --}}
-          <div class="article-main-thumb-container" id="mainNewsThumbWrapper">
-            @if($news->thumbnail)
-              <img id="mainNewsThumb" src="{{ asset('storage/' . $news->thumbnail) }}" alt="{{ $news->title }}" class="article-main-thumb" onclick="showImageModal(this.src)" title="Klik untuk memperbesar ukuran penuh" style="cursor: zoom-in;">
-            @else
-              <div id="mainNewsThumbFallback" class="d-flex align-items-center justify-content-center text-muted" style="height: 340px; background-color: #e2e8f0;">
-                <i class="bi bi-image" style="font-size: 4rem;"></i>
+          {{-- Wrapper Thumbnail Utama & Keterangan Gambar --}}
+          <div class="article-main-thumb-wrapper">
+            <div class="article-main-thumb-container" id="mainNewsThumbWrapper">
+              @if($news->thumbnail)
+                <img id="mainNewsThumb" src="{{ asset('storage/' . $news->thumbnail) }}" alt="{{ $news->title }}" class="article-main-thumb" onclick="showImageModal(this.src, '{{ addslashes($news->thumbnail_caption ?? '') }}')" title="Klik untuk memperbesar ukuran penuh" style="cursor: zoom-in;">
+              @else
+                <div id="mainNewsThumbFallback" class="d-flex align-items-center justify-content-center text-muted" style="height: 340px; background-color: #e2e8f0;">
+                  <i class="bi bi-image" style="font-size: 4rem;"></i>
+                </div>
+                <img id="mainNewsThumb" src="" alt="{{ $news->title }}" class="article-main-thumb d-none" onclick="showImageModal(this.src, '{{ addslashes($news->thumbnail_caption ?? '') }}')" title="Klik untuk memperbesar ukuran penuh" style="cursor: zoom-in;">
+              @endif
+
+              <span id="thumbActiveBadge" class="badge position-absolute top-0 end-0 m-3 rounded-pill px-3 py-2 shadow-sm d-none" style="background: rgba(2, 56, 20, 0.9); backdrop-filter: blur(4px); color: #FED802; font-size: 11.5px; font-weight: 700; z-index: 2;">
+                <i class="bi bi-check-circle-fill me-1"></i> Foto Terpilih
+              </span>
+
+              <button type="button" class="btn btn-sm btn-dark position-absolute bottom-0 end-0 m-3 rounded-pill px-3 shadow" style="font-size: 11.5px; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.25); z-index: 2;" onclick="showImageModal(document.getElementById('mainNewsThumb').src, '{{ addslashes($news->thumbnail_caption ?? '') }}')">
+                <i class="bi bi-arrows-fullscreen me-1"></i> Ukuran Penuh
+              </button>
+            </div>
+
+            {{-- Teks Keterangan di Bawah Gambar (Caption Foto) --}}
+            @if(!empty($news->thumbnail_caption))
+              <div class="article-thumb-caption" id="mainNewsCaptionWrap">
+                <div class="d-flex align-items-start gap-2 py-2 px-3 rounded-3" style="background: #f8fafc; border-left: 3px solid #046B26; border-top: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0;">
+                  <i class="bi bi-camera-fill flex-shrink-0 mt-0.5" style="color: #046B26; font-size: 14px;"></i>
+                  <div class="text-muted small fst-italic" style="font-size: 13px; line-height: 1.55; color: #475569 !important;" id="mainNewsCaption">
+                    {{ $news->thumbnail_caption }}
+                  </div>
+                </div>
               </div>
-              <img id="mainNewsThumb" src="" alt="{{ $news->title }}" class="article-main-thumb d-none" onclick="showImageModal(this.src)" title="Klik untuk memperbesar ukuran penuh" style="cursor: zoom-in;">
             @endif
-
-            <span id="thumbActiveBadge" class="badge position-absolute top-0 end-0 m-3 rounded-pill px-3 py-2 shadow-sm d-none" style="background: rgba(2, 56, 20, 0.9); backdrop-filter: blur(4px); color: #FED802; font-size: 11.5px; font-weight: 700; z-index: 2;">
-              <i class="bi bi-check-circle-fill me-1"></i> Foto Terpilih
-            </span>
-
-            <button type="button" class="btn btn-sm btn-dark position-absolute bottom-0 end-0 m-3 rounded-pill px-3 shadow" style="font-size: 11.5px; background: rgba(0, 0, 0, 0.65); backdrop-filter: blur(8px); border: 1px solid rgba(255,255,255,0.25); z-index: 2;" onclick="showImageModal(document.getElementById('mainNewsThumb').src)">
-              <i class="bi bi-arrows-fullscreen me-1"></i> Ukuran Penuh
-            </button>
           </div>
 
           {{-- Isi Berita --}}
@@ -379,11 +399,14 @@
 
   <div class="lightbox-content-wrap" onclick="event.stopPropagation()">
     <img id="lightboxImg" src="" alt="Ukuran Penuh" class="lightbox-img">
-    <div class="lightbox-caption">
-      <span class="lightbox-badge"><i class="bi bi-arrows-fullscreen me-1"></i> Tampilan Resolusi Penuh</span>
-      <button type="button" class="btn btn-sm btn-outline-light rounded-pill px-3 py-1" onclick="forceCloseLightbox()">
-        <i class="bi bi-x-circle me-1"></i> Tutup Preview
-      </button>
+    <div class="lightbox-caption flex-column align-items-start">
+      <div class="d-flex align-items-center justify-content-between w-100">
+        <span class="lightbox-badge"><i class="bi bi-arrows-fullscreen me-1"></i> Tampilan Resolusi Penuh</span>
+        <button type="button" class="btn btn-sm btn-outline-light rounded-pill px-3 py-1" onclick="forceCloseLightbox()">
+          <i class="bi bi-x-circle me-1"></i> Tutup Preview
+        </button>
+      </div>
+      <div id="lightboxCaptionText" class="text-white-50 small mt-2 d-none fst-italic" style="line-height: 1.5; font-size: 13.5px;"></div>
     </div>
   </div>
 </div>
@@ -433,13 +456,23 @@
     }
   }
 
-  function showImageModal(src) {
+  function showImageModal(src, captionText) {
     if (!src) return;
     const overlay = document.getElementById('imageLightboxModal');
     const img = document.getElementById('lightboxImg');
+    const captionEl = document.getElementById('lightboxCaptionText');
     if (!overlay || !img) return;
 
     img.src = src;
+    if (captionEl) {
+      if (captionText && captionText.trim() !== '') {
+        captionEl.textContent = captionText;
+        captionEl.classList.remove('d-none');
+      } else {
+        captionEl.textContent = '';
+        captionEl.classList.add('d-none');
+      }
+    }
     overlay.style.display = 'flex';
     document.body.style.overflow = 'hidden';
 
@@ -458,6 +491,11 @@
       document.body.style.overflow = '';
       const img = document.getElementById('lightboxImg');
       if (img) img.src = '';
+      const captionEl = document.getElementById('lightboxCaptionText');
+      if (captionEl) {
+        captionEl.textContent = '';
+        captionEl.classList.add('d-none');
+      }
     }, 200);
   }
 

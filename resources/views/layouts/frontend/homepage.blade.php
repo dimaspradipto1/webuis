@@ -4,12 +4,14 @@
 @section('meta_description', 'Portal Resmi Universitas Ibnu Sina (UIS) Batam — Mewujudkan Perguruan Tinggi Terkemuka Berdaya Saing Global, Inovatif, dan Berakhlak Mulia.')
 
 @section('content')
-{{-- Tata letak beranda (urutan & visibilitas section diatur dari Admin > Warna Header, Footer & Layout) --}}
+@php
+  $homeLayoutSections = isset($themeSetting) ? $themeSetting->getLayoutSections() : ($tampilan->layout ?? \App\Models\ThemeSetting::defaultSections());
+@endphp
 <style id="uis-home-layout-style">
   #uisHomeLayout { display: flex; flex-direction: column; }
   #uisHomeLayout > section { width: 100%; }
-@foreach(($tampilan->layout ?? []) as $sectionKey => $sectionRow)
-  #uisHomeLayout > section#{{ $sectionKey }} { order: {{ (int) $sectionRow['order'] }};{{ empty($sectionRow['visible']) ? ' display: none !important;' : '' }} }
+@foreach($homeLayoutSections as $sectionKey => $sectionRow)
+  #uisHomeLayout > section#{{ $sectionKey }} { order: {{ (int) ($sectionRow['order'] ?? 1) }};{{ empty($sectionRow['visible']) ? ' display: none !important;' : '' }} }
 @endforeach
 </style>
 <div id="uisHomeLayout">

@@ -23,6 +23,7 @@ class NewsRequest extends FormRequest
             'published_at' => ['nullable', 'date'],
             'gallery' => ['nullable', 'array'],
             'gallery.*' => ['image', 'mimes:jpeg,png,jpg,gif,svg,webp', 'max:20480'],
+            'thumbnail_caption' => ['nullable', 'string', 'max:1000'],
         ];
 
         $rules['thumbnail'] = ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg,webp', 'max:20480'];

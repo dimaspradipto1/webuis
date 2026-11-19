@@ -38,86 +38,138 @@
 
     @stack('styles')
 
-    <style>
+    <style id="dynamic-admin-theme">
         :root {
-            --uis-purple: #046B26;
-            --uis-purple-dark: #03521d;
-            --uis-orange: #FED802;
-            --uis-orange-dark: #e5c302;
+            --uis-purple: {{ $themeSetting->admin_primary_color ?? '#046B26' }};
+            --uis-purple-dark: {{ $themeSetting->admin_primary_color ?? '#03521d' }};
+            --uis-orange: {{ $themeSetting->admin_accent_color ?? '#FED802' }};
+            --uis-orange-dark: {{ $themeSetting->admin_accent_color ?? '#e5c302' }};
         }
-        /* Header — Solid Purple #046B26 */
+        /* Header — Dynamic Admin Theme */
         .header {
-            background-color: #046B26 !important;
-            border-bottom: 2.5px solid #FED802 !important;
+            height: {{ $themeSetting->admin_header_height ?? 78 }}px !important;
+            background-color: {{ $themeSetting->admin_header_bg_color ?? '#046B26' }} !important;
+            border-bottom: 3px solid {{ $themeSetting->admin_header_border_color ?? '#FED802' }} !important;
             box-shadow: 0 2px 14px rgba(0, 0, 0, 0.16) !important;
         }
+        #main {
+            margin-top: {{ $themeSetting->admin_header_height ?? 78 }}px !important;
+        }
+        .sidebar {
+            top: {{ $themeSetting->admin_header_height ?? 78 }}px !important;
+            background-color: {{ $themeSetting->admin_sidebar_bg_color ?? '#ffffff' }} !important;
+        }
+        .header .logo img {
+            max-height: 46px !important;
+            height: 46px !important;
+        }
         .header .logo span {
-            color: #FED802 !important;
+            color: {{ $themeSetting->admin_header_brand_color ?? '#FED802' }} !important;
             font-weight: 800;
             letter-spacing: 0.5px;
         }
         .header .toggle-sidebar-btn {
-            color: #ffffff !important;
+            color: {{ $themeSetting->admin_header_text_color ?? '#ffffff' }} !important;
         }
         .header .toggle-sidebar-btn:hover {
-            color: #FED802 !important;
+            color: {{ $themeSetting->admin_accent_color ?? '#FED802' }} !important;
         }
         .header .nav-profile {
-            color: #ffffff !important;
+            color: {{ $themeSetting->admin_header_text_color ?? '#ffffff' }} !important;
         }
         .header .nav-profile span {
-            color: #ffffff !important;
+            color: {{ $themeSetting->admin_header_text_color ?? '#ffffff' }} !important;
             font-weight: 700;
         }
         .header .nav-profile:hover span {
-            color: #FED802 !important;
+            color: {{ $themeSetting->admin_accent_color ?? '#FED802' }} !important;
         }
         .header .nav-icon {
-            color: #ffffff !important;
+            color: {{ $themeSetting->admin_header_text_color ?? '#ffffff' }} !important;
         }
         .header .nav-icon:hover {
-            color: #FED802 !important;
+            color: {{ $themeSetting->admin_accent_color ?? '#FED802' }} !important;
+        }
+        .sidebar {
+            background-color: {{ $themeSetting->admin_sidebar_bg_color ?? '#ffffff' }} !important;
+        }
+        .sidebar-nav .nav-link.collapsed {
+            background: {{ $themeSetting->admin_sidebar_bg_color ?? '#ffffff' }};
+            color: {{ $themeSetting->admin_sidebar_text_color ?? '#046B26' }};
+        }
+        .sidebar-nav .nav-link.collapsed i {
+            color: {{ $themeSetting->admin_sidebar_text_color ?? '#046B26' }};
         }
         .sidebar-nav .nav-link {
-            background: #f8fcf9;
-            color: #046B26;
+            background: {{ $themeSetting->admin_sidebar_active_bg_color ?? '#eaf6ee' }};
+            color: {{ $themeSetting->admin_sidebar_active_text_color ?? '#046B26' }};
         }
         .sidebar-nav .nav-link:not(.collapsed) {
-            background: #eaf6ee;
-            color: #046B26;
+            background: {{ $themeSetting->admin_sidebar_active_bg_color ?? '#eaf6ee' }};
+            color: {{ $themeSetting->admin_sidebar_active_text_color ?? '#046B26' }};
+            border-left: 4px solid {{ $themeSetting->admin_accent_color ?? '#FED802' }};
         }
         .sidebar-nav .nav-link:not(.collapsed) i {
-            color: #046B26;
+            color: {{ $themeSetting->admin_sidebar_active_text_color ?? '#046B26' }};
+        }
+        .sidebar-nav .nav-content a {
+            color: {{ $themeSetting->admin_sidebar_text_color ?? '#046B26' }};
         }
         .sidebar-nav .nav-content a.active {
-            color: #046B26;
+            color: {{ $themeSetting->admin_sidebar_active_text_color ?? '#046B26' }};
             font-weight: 700;
         }
         .sidebar-nav .nav-content a.active i {
-            background-color: #FED802;
+            background-color: {{ $themeSetting->admin_accent_color ?? '#FED802' }};
         }
-        .sidebar-nav .nav-link:hover {
-            color: #FED802;
-            background: #f8fcf9;
+        .sidebar-nav .nav-link:hover,
+        .sidebar-nav .nav-link.collapsed:hover {
+            color: {{ $themeSetting->admin_sidebar_hover_text_color ?? '#FED802' }};
+            background: {{ $themeSetting->admin_sidebar_hover_bg_color ?? '#f8fcf9' }};
         }
-        .sidebar-nav .nav-link:hover i {
-            color: #FED802;
+        .sidebar-nav .nav-link:hover i,
+        .sidebar-nav .nav-link.collapsed:hover i {
+            color: {{ $themeSetting->admin_sidebar_hover_text_color ?? '#FED802' }};
         }
         .btn-primary {
-            background-color: #046B26 !important;
-            border-color: #046B26 !important;
+            background-color: {{ $themeSetting->admin_primary_color ?? '#046B26' }} !important;
+            border-color: {{ $themeSetting->admin_primary_color ?? '#046B26' }} !important;
         }
         .btn-primary:hover, .btn-primary:focus {
-            background-color: #03521d !important;
-            border-color: #03521d !important;
+            background-color: {{ $themeSetting->admin_primary_color ?? '#03521d' }} !important;
+            border-color: {{ $themeSetting->admin_primary_color ?? '#03521d' }} !important;
+            filter: brightness(0.92);
         }
         .btn-outline-primary {
-            color: #046B26 !important;
-            border-color: #046B26 !important;
+            color: {{ $themeSetting->admin_primary_color ?? '#046B26' }} !important;
+            border-color: {{ $themeSetting->admin_primary_color ?? '#046B26' }} !important;
         }
         .btn-outline-primary:hover {
-            background-color: #046B26 !important;
+            background-color: {{ $themeSetting->admin_primary_color ?? '#046B26' }} !important;
             color: #fff !important;
+        }
+        .btn-warning {
+            background-color: {{ $themeSetting->admin_accent_color ?? '#FED802' }} !important;
+            border-color: {{ $themeSetting->admin_accent_color ?? '#FED802' }} !important;
+            color: #111827 !important;
+        }
+        .btn-warning:hover {
+            background-color: {{ $themeSetting->admin_accent_color ?? '#e5c302' }} !important;
+            border-color: {{ $themeSetting->admin_accent_color ?? '#e5c302' }} !important;
+            color: #111827 !important;
+            filter: brightness(0.94);
+        }
+        .pagetitle h1 {
+            color: {{ $themeSetting->admin_primary_color ?? '#046B26' }};
+        }
+        .card-title {
+            color: {{ $themeSetting->admin_primary_color ?? '#046B26' }};
+        }
+        .back-to-top {
+            background: {{ $themeSetting->admin_primary_color ?? '#046B26' }};
+        }
+        .back-to-top:hover {
+            background: {{ $themeSetting->admin_accent_color ?? '#FED802' }};
         }
         /* Global Nav Pills & Active Elements UIS Theme (NO BLUE) */
         .nav-pills .nav-link.active,
@@ -598,6 +650,109 @@
                 }
             }
         });
+    </script>
+
+        // Live sync Admin Theme without reload
+        (function () {
+            window.applyLiveAdminTheme = function (t) {
+                var styleEl = document.getElementById('dynamic-admin-theme');
+                if (!styleEl) {
+                    styleEl = document.createElement('style');
+                    styleEl.id = 'dynamic-admin-theme';
+                    document.head.appendChild(styleEl);
+                }
+                var hH = t.admin_header_height || 78;
+                styleEl.innerHTML = `
+                    :root {
+                        --uis-purple: ${t.admin_primary_color || '#046B26'};
+                        --uis-purple-dark: ${t.admin_primary_color || '#03521d'};
+                        --uis-orange: ${t.admin_accent_color || '#FED802'};
+                        --uis-orange-dark: ${t.admin_accent_color || '#e5c302'};
+                    }
+                    .header {
+                        height: ${hH}px !important;
+                        background-color: ${t.admin_header_bg_color || '#046B26'} !important;
+                        border-bottom: 3px solid ${t.admin_header_border_color || '#FED802'} !important;
+                        box-shadow: 0 2px 14px rgba(0, 0, 0, 0.16) !important;
+                    }
+                    #main { margin-top: ${hH}px !important; }
+                    .sidebar {
+                        top: ${hH}px !important;
+                        background-color: ${t.admin_sidebar_bg_color || '#ffffff'} !important;
+                    }
+                    .header .logo span {
+                        color: ${t.admin_header_brand_color || '#FED802'} !important;
+                        font-weight: 800;
+                        letter-spacing: 0.5px;
+                    }
+                    .header .toggle-sidebar-btn { color: ${t.admin_header_text_color || '#ffffff'} !important; }
+                    .header .toggle-sidebar-btn:hover { color: ${t.admin_accent_color || '#FED802'} !important; }
+                    .header .nav-profile, .header .nav-profile span, .header .nav-icon {
+                        color: ${t.admin_header_text_color || '#ffffff'} !important;
+                    }
+                    .header .nav-profile:hover span, .header .nav-icon:hover {
+                        color: ${t.admin_accent_color || '#FED802'} !important;
+                    }
+                    .sidebar-nav .nav-link.collapsed {
+                        background: ${t.admin_sidebar_bg_color || '#ffffff'};
+                        color: ${t.admin_sidebar_text_color || '#046B26'};
+                    }
+                    .sidebar-nav .nav-link.collapsed i { color: ${t.admin_sidebar_text_color || '#046B26'}; }
+                    .sidebar-nav .nav-link {
+                        background: ${t.admin_sidebar_active_bg_color || '#eaf6ee'};
+                        color: ${t.admin_sidebar_active_text_color || '#046B26'};
+                    }
+                    .sidebar-nav .nav-link:not(.collapsed) {
+                        background: ${t.admin_sidebar_active_bg_color || '#eaf6ee'};
+                        color: ${t.admin_sidebar_active_text_color || '#046B26'};
+                        border-left: 4px solid ${t.admin_accent_color || '#FED802'};
+                    }
+                    .sidebar-nav .nav-link:not(.collapsed) i { color: ${t.admin_sidebar_active_text_color || '#046B26'}; }
+                    .sidebar-nav .nav-content a { color: ${t.admin_sidebar_text_color || '#046B26'}; }
+                    .sidebar-nav .nav-content a.active {
+                        color: ${t.admin_sidebar_active_text_color || '#046B26'};
+                        font-weight: 700;
+                    }
+                    .sidebar-nav .nav-content a.active i { background-color: ${t.admin_accent_color || '#FED802'}; }
+                    .sidebar-nav .nav-link:hover, .sidebar-nav .nav-link.collapsed:hover {
+                        color: ${t.admin_sidebar_hover_text_color || '#FED802'};
+                        background: ${t.admin_sidebar_hover_bg_color || '#f8fcf9'};
+                    }
+                    .sidebar-nav .nav-link:hover i, .sidebar-nav .nav-link.collapsed:hover i {
+                        color: ${t.admin_sidebar_hover_text_color || '#FED802'};
+                    }
+                    .btn-primary {
+                        background-color: ${t.admin_primary_color || '#046B26'} !important;
+                        border-color: ${t.admin_primary_color || '#046B26'} !important;
+                    }
+                    .btn-outline-primary {
+                        color: ${t.admin_primary_color || '#046B26'} !important;
+                        border-color: ${t.admin_primary_color || '#046B26'} !important;
+                    }
+                    .btn-warning {
+                        background-color: ${t.admin_accent_color || '#FED802'} !important;
+                        border-color: ${t.admin_accent_color || '#FED802'} !important;
+                        color: #111827 !important;
+                    }
+                    .pagetitle h1, .card-title { color: ${t.admin_primary_color || '#046B26'}; }
+                    .back-to-top { background: ${t.admin_primary_color || '#046B26'}; }
+                    .back-to-top:hover { background: ${t.admin_accent_color || '#FED802'}; }
+                `;
+            };
+
+            // Broadcast current saved state to Frontend tabs on every Admin load
+            var savedTheme = @json(isset($themeSetting) ? array_merge($themeSetting->only(array_keys(\App\Models\ThemeSetting::defaultAttributes())), ['layout' => $themeSetting->getLayoutSections()]) : null);
+            try {
+                if ('BroadcastChannel' in window) {
+                    var bc = new BroadcastChannel('webuis_live_sync');
+                    bc.postMessage({ type: 'content_update', theme: savedTheme, ts: Date.now() });
+                }
+                if (savedTheme) {
+                    localStorage.setItem('webuis_live_theme', JSON.stringify({ theme: savedTheme, ts: Date.now() }));
+                }
+                localStorage.setItem('webuis_live_content_ping', String(Date.now()));
+            } catch (e) {}
+        })();
     </script>
 
     @stack('scripts')

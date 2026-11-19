@@ -239,6 +239,24 @@
                                 </div>
                             </div>
                         </div>
+
+                        {{-- Teks / Keterangan di Bawah Thumbnail (Caption) --}}
+                        <div class="mt-3 pt-3 border-top">
+                            <label for="thumbnail_caption" class="form-label fw-semibold">
+                                <i class="bi bi-card-text me-1 text-success"></i> Teks / Keterangan di Bawah Gambar (Caption Foto) <span class="text-muted small fw-normal">(Opsional)</span>
+                            </label>
+                            <textarea id="thumbnail_caption"
+                                      name="thumbnail_caption"
+                                      class="form-control @error('thumbnail_caption') is-invalid @enderror"
+                                      rows="2"
+                                      placeholder="Tuliskan keterangan/caption foto yang akan tampil tepat di bawah gambar thumbnail">{{ old('thumbnail_caption', $news->thumbnail_caption) }}</textarea>
+                            <div class="form-text text-muted small">
+                                <i class="bi bi-info-circle me-1"></i> Teks ini akan ditampilkan sebagai keterangan/caption resmi tepat di bawah gambar thumbnail utama pada artikel berita.
+                            </div>
+                            @error('thumbnail_caption')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
                     </div>
 
                     {{-- Galeri Foto Berita --}}

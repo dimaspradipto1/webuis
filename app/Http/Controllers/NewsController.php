@@ -53,6 +53,7 @@ class NewsController extends Controller
         News::create([
             'user_id' => Auth::id(),
             'thumbnail' => $thumbnailPath,
+            'thumbnail_caption' => $request->thumbnail_caption,
             'gallery' => ! empty($galleryPaths) ? $galleryPaths : null,
             'title' => $request->title,
             'description' => $request->description,
@@ -111,6 +112,7 @@ class NewsController extends Controller
 
         $news->update([
             'thumbnail' => $thumbnailPath,
+            'thumbnail_caption' => $request->thumbnail_caption,
             'gallery' => ! empty($currentGallery) ? array_values($currentGallery) : null,
             'title' => $request->title,
             'description' => $request->description,
