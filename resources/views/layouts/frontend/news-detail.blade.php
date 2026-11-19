@@ -188,19 +188,20 @@
       <div class="col-lg-8" data-aos="fade-right">
         <div class="article-main-card">
 
-          {{-- Wrapper Thumbnail Utama & Keterangan Gambar --}}
-          <div class="article-main-thumb-wrapper">
-            <div class="article-main-thumb-container" id="mainNewsThumbWrapper">
-              @if($news->thumbnail)
-                <img id="mainNewsThumb" src="{{ asset('storage/' . $news->thumbnail) }}" alt="{{ $news->title }}" class="article-main-thumb" onclick="showImageModal(this.src, '{{ addslashes($news->thumbnail_caption ?? '') }}')" title="Klik untuk memperbesar ukuran penuh" style="cursor: zoom-in;">
-              @else
-                <div id="mainNewsThumbFallback" class="d-flex align-items-center justify-content-center text-muted" style="height: 340px; background-color: #e2e8f0;">
-                  <i class="bi bi-image" style="font-size: 4rem;"></i>
-                </div>
-                <img id="mainNewsThumb" src="" alt="{{ $news->title }}" class="article-main-thumb d-none" onclick="showImageModal(this.src, '{{ addslashes($news->thumbnail_caption ?? '') }}')" title="Klik untuk memperbesar ukuran penuh" style="cursor: zoom-in;">
-              @endif
+          @php
+            $hasCover = !empty($news->thumbnail);
+            $hasGalleryPhotos = !empty($news->gallery) && is_array($news->gallery) && count($news->gallery) > 0;
+            $hasAnyImage = $hasCover || $hasGalleryPhotos;
+            $initialMainImg = $hasCover ? asset('storage/' . $news->thumbnail) : ($hasGalleryPhotos ? asset('storage/' . $news->gallery[0]) : '');
+          @endphp
 
-              <span id="thumbActiveBadge" class="badge position-absolute top-0 end-0 m-3 rounded-pill px-3 py-2 shadow-sm d-none" style="background: rgba(2, 56, 20, 0.9); backdrop-filter: blur(4px); color: #FED802; font-size: 11.5px; font-weight: 700; z-index: 2;">
+          {{-- Wrapper Thumbnail Utama & Keterangan Gambar --}}
+          @if($hasAnyImage)
+          <div class="article-main-thumb-wrapper" id="articleMainThumbWrapper">
+            <div class="article-main-thumb-container" id="mainNewsThumbWrapper">
+              <img id="mainNewsThumb" src="{{ $initialMainImg }}" alt="{{ $news->title }}" class="article-main-thumb" onclick="showImageModal(this.src, '{{ addslashes($news->thumbnail_caption ?? '') }}')" title="Klik untuk memperbesar ukuran penuh" style="cursor: zoom-in;">
+
+              <span id="thumbActiveBadge" class="badge position-absolute top-0 end-0 m-3 rounded-pill px-3 py-2 shadow-sm {{ $hasCover ? 'd-none' : '' }}" style="background: rgba(2, 56, 20, 0.9); backdrop-filter: blur(4px); color: #FED802; font-size: 11.5px; font-weight: 700; z-index: 2;">
                 <i class="bi bi-check-circle-fill me-1"></i> Foto Terpilih
               </span>
 
@@ -221,6 +222,7 @@
               </div>
             @endif
           </div>
+          @endif
 
           {{-- Isi Berita --}}
           <div class="article-typography">

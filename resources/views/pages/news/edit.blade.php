@@ -201,11 +201,18 @@
                                              alt="{{ $news->title }}"
                                              class="img-thumbnail rounded shadow-sm"
                                              style="max-height: 140px; object-fit: cover;">
+                                        <div class="form-check mt-2">
+                                            <input class="form-check-input" type="checkbox" name="remove_thumbnail" id="remove_thumbnail" value="1">
+                                            <label class="form-check-label text-danger small fw-semibold" for="remove_thumbnail">
+                                                <i class="bi bi-trash me-1"></i> Hapus thumbnail saat ini (jadikan tanpa thumbnail)
+                                            </label>
+                                        </div>
                                     @else
                                         <div class="d-flex align-items-center justify-content-center rounded border shadow-sm"
                                              style="width: 180px; height: 120px; background-color: #e2e8f0; color: #64748b;">
                                             <i class="bi bi-image" style="font-size: 2.5rem; line-height: 1;"></i>
                                         </div>
+                                        <small class="text-muted d-block mt-1">Belum ada thumbnail (kosong)</small>
                                     @endif
                                 </div>
                             </div>

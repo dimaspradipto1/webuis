@@ -40,11 +40,16 @@
         <div class="row g-0 h-100 align-items-stretch">
           <div class="col-lg-5 col-md-5">
             <div class="news-featured-img-wrap">
-              @if($featured->thumbnail)
-                <img src="{{ asset('storage/' . $featured->thumbnail) }}" alt="{{ $featured->title }}" class="news-featured-thumb">
+              @php
+                $featuredThumb = !empty($featured->thumbnail) 
+                  ? asset('storage/' . $featured->thumbnail) 
+                  : (!empty($featured->gallery[0]) ? asset('storage/' . $featured->gallery[0]) : null);
+              @endphp
+              @if($featuredThumb)
+                <img src="{{ $featuredThumb }}" alt="{{ $featured->title }}" class="news-featured-thumb">
               @else
-                <div class="w-100 h-100 d-flex align-items-center justify-content-center" style="background-color: #e2e8f0; color: #64748b; min-height: 240px;">
-                  <i class="bi bi-image" style="font-size: 3.5rem;"></i>
+                <div class="w-100 h-100 d-flex align-items-center justify-content-center" style="background-color: #f1f5f9; color: #64748b; min-height: 240px;">
+                  <img src="{{ asset('frontend/img/logouis.png') }}" alt="UIS" style="max-height: 56px; opacity: 0.6;">
                 </div>
               @endif
               <span class="badge position-absolute top-0 start-0 m-3 px-3 py-2" style="background: #FED802; color: #046B26; font-weight: 800; font-size: 11px; border-radius: 50px; box-shadow: 0 2px 8px rgba(0,0,0,0.18);">
@@ -148,12 +153,17 @@
         @foreach($newsList as $article)
           <div class="col-md-6 col-lg-4" data-aos="fade-up">
             <div class="news-card-portal">
+              @php
+                $artThumb = !empty($article->thumbnail) 
+                  ? asset('storage/' . $article->thumbnail) 
+                  : (!empty($article->gallery[0]) ? asset('storage/' . $article->gallery[0]) : null);
+              @endphp
               <div class="news-card-thumb-wrap">
-                @if($article->thumbnail)
-                  <img src="{{ asset('storage/' . $article->thumbnail) }}" alt="{{ $article->title }}" class="news-card-thumb" loading="lazy">
+                @if($artThumb)
+                  <img src="{{ $artThumb }}" alt="{{ $article->title }}" class="news-card-thumb" loading="lazy">
                 @else
-                  <div class="w-100 h-100 d-flex align-items-center justify-content-center" style="background-color: #e2e8f0; color: #64748b;">
-                    <i class="bi bi-image fs-1"></i>
+                  <div class="w-100 h-100 d-flex align-items-center justify-content-center" style="background-color: #f1f5f9; color: #64748b; min-height: 180px;">
+                    <img src="{{ asset('frontend/img/logouis.png') }}" alt="UIS" style="max-height: 48px; opacity: 0.5;">
                   </div>
                 @endif
                 <span class="news-cat-badge">{{ $article->category ?? 'Berita' }}</span>

@@ -21,12 +21,24 @@ class NewsRequest extends FormRequest
             'category' => ['required', 'string', 'max:100'],
             'is_featured' => ['nullable', 'boolean'],
             'published_at' => ['nullable', 'date'],
-            'gallery' => ['nullable', 'array'],
-            'gallery.*' => ['image', 'mimes:jpeg,png,jpg,gif,svg,webp', 'max:20480'],
             'thumbnail_caption' => ['nullable', 'string', 'max:1000'],
+            'remove_thumbnail' => ['nullable', 'boolean'],
         ];
 
-        $rules['thumbnail'] = ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg,webp', 'max:20480'];
+        // Validasi thumbnail: hanya periksa format dan ukuran bila ada file yang diunggah
+        if ($this->hasFile('thumbnail')) {
+            $rules['thumbnail'] = ['image', 'mimes:jpeg,png,jpg,gif,svg,webp', 'max:20480'];
+        } else {
+            $rules['thumbnail'] = ['nullable'];
+        }
+
+        // Validasi galeri: hanya periksa format dan ukuran bila ada file galeri yang diunggah
+        if ($this->hasFile('gallery')) {
+            $rules['gallery'] = ['array'];
+            $rules['gallery.*'] = ['image', 'mimes:jpeg,png,jpg,gif,svg,webp', 'max:20480'];
+        } else {
+            $rules['gallery'] = ['nullable'];
+        }
 
         return $rules;
     }
@@ -41,7 +53,6 @@ class NewsRequest extends FormRequest
             'content.required' => 'Konten berita wajib diisi.',
             'status.required' => 'Status wajib dipilih.',
             'status.in' => 'Status tidak valid.',
-            'thumbnail.required' => 'Thumbnail utama wajib diunggah.',
             'thumbnail.image' => 'File thumbnail harus berupa gambar.',
             'thumbnail.mimes' => 'Format gambar harus jpeg, png, jpg, gif, svg, atau webp.',
             'thumbnail.max' => 'Ukuran thumbnail maksimal 20 MB.',

@@ -86,6 +86,9 @@ class NewsController extends Controller
         if ($request->hasFile('thumbnail')) {
             $this->fileUploadService->delete($news->thumbnail);
             $thumbnailPath = $this->fileUploadService->uploadThumbnail($request->file('thumbnail'), 'news');
+        } elseif ($request->boolean('remove_thumbnail')) {
+            $this->fileUploadService->delete($news->thumbnail);
+            $thumbnailPath = null;
         }
 
         $currentGallery = is_array($news->gallery) ? $news->gallery : [];

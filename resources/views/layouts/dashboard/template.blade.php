@@ -652,6 +652,7 @@
         });
     </script>
 
+    <script>
         // Live sync Admin Theme without reload
         (function () {
             window.applyLiveAdminTheme = function (t) {

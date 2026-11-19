@@ -232,11 +232,6 @@
                     <span class="preset-dot" style="background: #FED802; margin-left:-4px;"></span>
                     Hijau & Kuning UIS (Standar)
                 </button>
-                <button type="button" class="preset-badge" onclick="applyFullPreset('fikes_purple')">
-                    <span class="preset-dot" style="background: #4A00E0;"></span>
-                    <span class="preset-dot" style="background: #FF6B00; margin-left:-4px;"></span>
-                    Ungu & Oranye FIKES
-                </button>
                 <button type="button" class="preset-badge" onclick="applyFullPreset('gold_dark')">
                     <span class="preset-dot" style="background: #111827;"></span>
                     <span class="preset-dot" style="background: #FFD700; margin-left:-4px;"></span>
@@ -1100,18 +1095,6 @@
             admin_primary_color: '#046B26', admin_accent_color: '#FED802', admin_header_bg_color: '#046B26', admin_header_text_color: '#ffffff',
             admin_header_brand_color: '#FED802', admin_header_border_color: '#FED802', admin_sidebar_bg_color: '#ffffff', admin_sidebar_text_color: '#046B26',
             admin_sidebar_active_bg_color: '#eaf6ee', admin_sidebar_active_text_color: '#046B26', admin_sidebar_hover_bg_color: '#f8fcf9', admin_sidebar_hover_text_color: '#FED802'
-        },
-        fikes_purple: {
-            primary_color: '#4A00E0', primary_dark_color: '#2E008B', secondary_color: '#FF6B00', secondary_dark_color: '#e66000',
-            header_bg_color: '#4A00E0', header_text_color: '#ffffff', header_active_bg_color: '#FF6B00', header_active_text_color: '#ffffff',
-            header_pmb_bg_color: '#FF6B00', header_pmb_text_color: '#ffffff', header_login_bg_color: '#ffffff', header_login_text_color: '#4A00E0',
-            header_lang_bg_color: '#2E008B', header_lang_text_color: '#ffffff', header_border_color: '#FF6B00',
-            hero_bg_color: '#3b00b3', hero_border_color: '#FF6B00',
-            footer_bg_color: '#23006b', footer_text_color: '#ffffff', footer_heading_color: '#FF6B00', footer_border_top_color: '#FF6B00',
-            footer_link_color: '#e2e8f0', footer_link_hover_color: '#FF6B00', footer_social_bg_color: '#FF6B00', footer_social_text_color: '#ffffff',
-            admin_primary_color: '#4A00E0', admin_accent_color: '#FF6B00', admin_header_bg_color: '#4A00E0', admin_header_text_color: '#ffffff',
-            admin_header_brand_color: '#FF6B00', admin_header_border_color: '#FF6B00', admin_sidebar_bg_color: '#ffffff', admin_sidebar_text_color: '#3b00b3',
-            admin_sidebar_active_bg_color: '#f3efff', admin_sidebar_active_text_color: '#4A00E0', admin_sidebar_hover_bg_color: '#faf8ff', admin_sidebar_hover_text_color: '#FF6B00'
         },
         gold_dark: {
             primary_color: '#111827', primary_dark_color: '#090d16', secondary_color: '#FFD700', secondary_dark_color: '#e6c200',

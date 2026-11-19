@@ -19,11 +19,16 @@
       <div class="col-sm-6">
         <a href="{{ route('homepage.news.detail', $news->slug ?? $news->id) }}" class="news-mini-item">
           <div class="news-mini-img-wrap">
-            @if(!empty($news->thumbnail))
-              <img src="{{ asset('storage/' . $news->thumbnail) }}" alt="{{ $news->title }}" class="news-mini-img" loading="lazy">
+            @php
+              $miniThumb = !empty($news->thumbnail) 
+                ? asset('storage/' . $news->thumbnail) 
+                : (!empty($news->gallery[0]) ? asset('storage/' . $news->gallery[0]) : null);
+            @endphp
+            @if($miniThumb)
+              <img src="{{ $miniThumb }}" alt="{{ $news->title }}" class="news-mini-img" loading="lazy">
             @else
-              <div class="news-mini-fallback" style="background-color: #e2e8f0; color: #64748b;">
-                <i class="bi bi-image"></i>
+              <div class="news-mini-fallback" style="background-color: #f1f5f9; color: #64748b; display: flex; align-items: center; justify-content: center;">
+                <img src="{{ asset('frontend/img/logouis.png') }}" alt="UIS" style="max-height: 28px; opacity: 0.5;">
               </div>
             @endif
           </div>
