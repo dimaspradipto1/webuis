@@ -38,6 +38,11 @@
                 <i class="bi bi-file-earmark-excel me-1 text-success"></i> Template Excel
             </a>
 
+            {{-- Tombol Export Excel --}}
+            <a href="{{ route('news.export-excel') }}" class="btn btn-outline-success btn-sm fw-semibold" title="Export Seluruh Data Berita ke Excel (.xlsx)">
+                <i class="bi bi-file-earmark-arrow-down me-1"></i> Export Excel
+            </a>
+
             {{-- Tombol Import Excel --}}
             <button type="button" class="btn btn-success btn-sm text-white" data-bs-toggle="modal" data-bs-target="#importExcelModal">
                 <i class="bi bi-file-earmark-arrow-up me-1"></i> Import Excel

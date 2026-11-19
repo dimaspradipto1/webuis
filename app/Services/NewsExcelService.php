@@ -194,6 +194,123 @@ class NewsExcelService
     }
 
     /**
+     * Export all news data to an Excel (.xlsx) file.
+     */
+    public function exportExcel(?int $onlyUserId = null): StreamedResponse
+    {
+        $query = News::with('user')->latest('id');
+        if ($onlyUserId !== null) {
+            $query->where('user_id', $onlyUserId);
+        }
+        $newsList = $query->get();
+
+        $spreadsheet = new Spreadsheet;
+        $sheet = $spreadsheet->getActiveSheet();
+        $sheet->setTitle('Data Berita');
+
+        $headers = [
+            'A1' => 'No',
+            'B1' => 'Judul Berita *',
+            'C1' => 'Kategori *',
+            'D1' => 'Status *',
+            'E1' => 'Artikel Unggulan',
+            'F1' => 'Deskripsi Singkat *',
+            'G1' => 'Konten Berita *',
+            'H1' => 'Thumbnail',
+            'I1' => 'Caption Thumbnail',
+            'J1' => 'Tanggal Terbit',
+            'K1' => 'Penulis',
+        ];
+
+        foreach ($headers as $cell => $text) {
+            $sheet->setCellValue($cell, $text);
+        }
+
+        $headerStyle = [
+            'font' => [
+                'bold' => true,
+                'color' => ['rgb' => 'FFFFFF'],
+                'size' => 11,
+            ],
+            'fill' => [
+                'fillType' => Fill::FILL_SOLID,
+                'startColor' => ['rgb' => '046B26'],
+            ],
+            'alignment' => [
+                'horizontal' => Alignment::HORIZONTAL_CENTER,
+                'vertical' => Alignment::VERTICAL_CENTER,
+                'wrapText' => true,
+            ],
+            'borders' => [
+                'allBorders' => [
+                    'borderStyle' => Border::BORDER_THIN,
+                    'color' => ['rgb' => '023814'],
+                ],
+            ],
+        ];
+        $sheet->getStyle('A1:K1')->applyFromArray($headerStyle);
+        $sheet->getRowDimension(1)->setRowHeight(32);
+
+        $rowNum = 2;
+        foreach ($newsList as $idx => $item) {
+            $pubDate = $item->published_at ?? $item->created_at;
+            $cleanDesc = trim(strip_tags((string) $item->description));
+            $cleanContent = trim(html_entity_decode(strip_tags((string) $item->content), ENT_QUOTES | ENT_HTML5, 'UTF-8'));
+
+            $sheet->setCellValue('A'.$rowNum, $idx + 1);
+            $sheet->setCellValue('B'.$rowNum, (string) $item->title);
+            $sheet->setCellValue('C'.$rowNum, (string) ($item->category ?: 'Berita Universitas'));
+            $sheet->setCellValue('D'.$rowNum, (string) ($item->status ?: 'published'));
+            $sheet->setCellValue('E'.$rowNum, $item->is_featured ? 'Ya' : 'Tidak');
+            $sheet->setCellValue('F'.$rowNum, $cleanDesc);
+            $sheet->setCellValue('G'.$rowNum, $cleanContent);
+            $sheet->setCellValue('H'.$rowNum, (string) ($item->thumbnail ?? ''));
+            $sheet->setCellValue('I'.$rowNum, (string) ($item->thumbnail_caption ?? ''));
+            $sheet->setCellValue('J'.$rowNum, $pubDate ? $pubDate->format('Y-m-d H:i:s') : '');
+            $sheet->setCellValue('K'.$rowNum, $item->user?->name ?? 'admin');
+
+            $sheet->getStyle("A{$rowNum}:K{$rowNum}")->applyFromArray([
+                'borders' => [
+                    'allBorders' => [
+                        'borderStyle' => Border::BORDER_THIN,
+                        'color' => ['rgb' => 'D0D5DD'],
+                    ],
+                ],
+                'alignment' => [
+                    'vertical' => Alignment::VERTICAL_CENTER,
+                ],
+            ]);
+            $sheet->getStyle("A{$rowNum}")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle("C{$rowNum}:E{$rowNum}")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+            $sheet->getStyle("J{$rowNum}:K{$rowNum}")->getAlignment()->setHorizontal(Alignment::HORIZONTAL_CENTER);
+            $sheet->getRowDimension($rowNum)->setRowHeight(28);
+            $rowNum++;
+        }
+
+        $sheet->getColumnDimension('A')->setWidth(7);
+        $sheet->getColumnDimension('B')->setWidth(48);
+        $sheet->getColumnDimension('C')->setWidth(26);
+        $sheet->getColumnDimension('D')->setWidth(14);
+        $sheet->getColumnDimension('E')->setWidth(18);
+        $sheet->getColumnDimension('F')->setWidth(45);
+        $sheet->getColumnDimension('G')->setWidth(60);
+        $sheet->getColumnDimension('H')->setWidth(30);
+        $sheet->getColumnDimension('I')->setWidth(35);
+        $sheet->getColumnDimension('J')->setWidth(22);
+        $sheet->getColumnDimension('K')->setWidth(18);
+
+        $filename = 'Export_Post_Berita_UIS_'.date('Y-m-d_His').'.xlsx';
+
+        return response()->streamDownload(function () use ($spreadsheet) {
+            $writer = new Xlsx($spreadsheet);
+            $writer->save('php://output');
+        }, $filename, [
+            'Content-Type' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'Cache-Control' => 'max-age=0',
+        ]);
+    }
+
+    /**
      * Import news data from uploaded spreadsheet file.
      *
      * @throws \Exception
@@ -264,6 +381,7 @@ class NewsExcelService
                 $description = trim((string) ($row['F'] ?? ''));
                 $content = trim((string) ($row['G'] ?? ''));
                 $thumbnail = trim((string) ($row['H'] ?? ''));
+                $thumbnailCaption = trim((string) ($row['I'] ?? ''));
 
                 $category = 'Berita Universitas';
                 if (! empty($rawCategory)) {
@@ -304,6 +422,7 @@ class NewsExcelService
                 News::create([
                     'user_id' => $userId,
                     'thumbnail' => $thumbnailPath,
+                    'thumbnail_caption' => !empty($thumbnailCaption) && !preg_match('/^\d{4}-\d{2}-\d{2}/', $thumbnailCaption) ? $thumbnailCaption : null,
                     'gallery' => null,
                     'title' => $title,
                     'description' => $description,

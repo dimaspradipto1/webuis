@@ -172,6 +172,16 @@ class NewsController extends Controller
         return $this->excelService->downloadTemplate();
     }
 
+    public function exportExcel(): StreamedResponse
+    {
+        $onlyUserId = null;
+        if (Auth::check() && Auth::user()->hasExactRole('penulis') && ! Auth::user()->isAdmin()) {
+            $onlyUserId = Auth::id();
+        }
+
+        return $this->excelService->exportExcel($onlyUserId);
+    }
+
     public function importExcel(Request $request): RedirectResponse
     {
         $request->validate([
