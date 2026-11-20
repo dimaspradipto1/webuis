@@ -266,7 +266,7 @@
     </div>
 
     {{-- ═══════════════════════════════════════════════
-         BAGIAN 1: KETENTUAN PENULISAN BERITA (Sesuai UIR)
+         BAGIAN 1: KETENTUAN PENULISAN BERITA (Sesuai UIS)
     ═══════════════════════════════════════════════ --}}
     <div id="ketentuan-naskah" class="mb-5" data-aos="fade-up">
       <div class="d-flex align-items-center gap-3 mb-4">

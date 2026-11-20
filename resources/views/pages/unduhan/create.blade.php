@@ -44,7 +44,7 @@
                         <input type="text" id="judul" name="judul"
                                class="form-control @error('judul') is-invalid @enderror"
                                value="{{ old('judul') }}"
-                               placeholder="Contoh: Logo Resmi Universitas Islam Riau (HD Vector)" required>
+                               placeholder="Contoh: Logo Resmi Universitas Ibnu Sina (HD Vector)" required>
                         @error('judul')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -92,7 +92,7 @@
                         <input type="url" id="file_url" name="file_url"
                                class="form-control @error('file_url') is-invalid @enderror"
                                value="{{ old('file_url') }}"
-                               placeholder="Contoh: https://drive.google.com/file/d/xxxx/view atau https://link.uir.ac.id/asset">
+                               placeholder="Contoh: https://drive.google.com/file/d/xxxx/view atau https://link.uis.ac.id/asset">
                         <div class="form-text">
                             <i class="bi bi-link-45deg me-1"></i>
                             Gunakan jika berkas tersimpan di Google Drive, Dropbox, OneDrive, atau server CDN.

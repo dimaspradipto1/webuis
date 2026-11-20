@@ -45,7 +45,7 @@
                         <input type="text" id="judul" name="judul"
                                class="form-control @error('judul') is-invalid @enderror"
                                value="{{ old('judul', $unduhan->judul) }}"
-                               placeholder="Contoh: Logo Resmi Universitas Islam Riau (HD Vector)" required>
+                               placeholder="Contoh: Logo Resmi Universitas Ibnu Sina (HD Vector)" required>
                         @error('judul')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror

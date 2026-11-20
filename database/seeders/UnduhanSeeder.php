@@ -12,7 +12,7 @@ class UnduhanSeeder extends Seeder
         $data = [
             // Category: Image
             [
-                'judul' => 'Logo PKKMB UIR 2026',
+                'judul' => 'Logo PKKMB UIS 2026',
                 'kategori' => 'image',
                 'file_url' => '#',
                 'file_size' => '2.4 MB',
@@ -20,7 +20,7 @@ class UnduhanSeeder extends Seeder
                 'is_active' => true,
             ],
             [
-                'judul' => 'Logo UIR',
+                'judul' => 'Logo Universitas Ibnu Sina (UIS)',
                 'kategori' => 'image',
                 'file_url' => '#',
                 'file_size' => '1.8 MB',
@@ -52,7 +52,7 @@ class UnduhanSeeder extends Seeder
                 'is_active' => true,
             ],
             [
-                'judul' => 'Logo Milad 64 TH UIR',
+                'judul' => 'Logo Milad UIS',
                 'kategori' => 'image',
                 'file_url' => '#',
                 'file_size' => '4.2 MB',
@@ -108,7 +108,7 @@ class UnduhanSeeder extends Seeder
                 'is_active' => true,
             ],
             [
-                'judul' => 'Logo UIR HEBAT',
+                'judul' => 'Logo UIS HEBAT',
                 'kategori' => 'image',
                 'file_url' => '#',
                 'file_size' => '1.6 MB',
@@ -116,7 +116,7 @@ class UnduhanSeeder extends Seeder
                 'is_active' => true,
             ],
             [
-                'judul' => 'LAYOUT AUDITORIUM L4 4 REKTORAT UIR',
+                'judul' => 'LAYOUT AUDITORIUM KAMPUS TERPADU UIS',
                 'kategori' => 'image',
                 'file_url' => '#',
                 'file_size' => '5.6 MB',
@@ -134,7 +134,7 @@ class UnduhanSeeder extends Seeder
 
             // Category: Video
             [
-                'judul' => 'Video Profil Resmi Universitas Islam Riau (4K UHD)',
+                'judul' => 'Video Profil Resmi Universitas Ibnu Sina (4K UHD)',
                 'kategori' => 'video',
                 'file_url' => '#',
                 'file_size' => '48.5 MB',
@@ -150,7 +150,7 @@ class UnduhanSeeder extends Seeder
                 'is_active' => true,
             ],
             [
-                'judul' => 'Video Animasi Logo 3D UIR (Transparan Alpha)',
+                'judul' => 'Video Animasi Logo 3D UIS (Transparan Alpha)',
                 'kategori' => 'video',
                 'file_url' => '#',
                 'file_size' => '18.7 MB',
@@ -160,7 +160,7 @@ class UnduhanSeeder extends Seeder
 
             // Category: Audio
             [
-                'judul' => 'Mars Universitas Islam Riau (Studio Master HQ Audio)',
+                'judul' => 'Mars Universitas Ibnu Sina (Studio Master HQ Audio)',
                 'kategori' => 'audio',
                 'file_url' => '#',
                 'file_size' => '7.8 MB',
@@ -168,7 +168,7 @@ class UnduhanSeeder extends Seeder
                 'is_active' => true,
             ],
             [
-                'judul' => 'Hymne Universitas Islam Riau (Orchestral Master)',
+                'judul' => 'Hymne Universitas Ibnu Sina (Orchestral Master)',
                 'kategori' => 'audio',
                 'file_url' => '#',
                 'file_size' => '8.4 MB',
@@ -176,7 +176,7 @@ class UnduhanSeeder extends Seeder
                 'is_active' => true,
             ],
             [
-                'judul' => 'Jingle Resmi Kampus UIR',
+                'judul' => 'Jingle Resmi Kampus UIS',
                 'kategori' => 'audio',
                 'file_url' => '#',
                 'file_size' => '4.2 MB',
@@ -186,7 +186,7 @@ class UnduhanSeeder extends Seeder
 
             // Category: Template
             [
-                'judul' => 'Template Presentasi PowerPoint (PPTX) Resmi UIR 2026',
+                'judul' => 'Template Presentasi PowerPoint (PPTX) Resmi UIS 2026',
                 'kategori' => 'template',
                 'file_url' => '#',
                 'file_size' => '12.3 MB',
@@ -194,7 +194,7 @@ class UnduhanSeeder extends Seeder
                 'is_active' => true,
             ],
             [
-                'judul' => 'Template Sertifikat & Piagam Penghargaan Resmi UIR',
+                'judul' => 'Template Sertifikat & Piagam Penghargaan Resmi UIS',
                 'kategori' => 'template',
                 'file_url' => '#',
                 'file_size' => '15.6 MB',
