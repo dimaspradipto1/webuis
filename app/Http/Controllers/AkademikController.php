@@ -16,8 +16,8 @@ class AkademikController extends Controller
     private array $defaults = [
         'kurikulum' => [
             'judul' => 'Kurikulum & Capaian Pembelajaran',
-            'subjudul' => 'Struktur kurikulum berbasis kompetensi dan Outcome-Based Education (OBE) FIKES UIS.',
-            'deskripsi' => '<p>Kurikulum Fakultas Ilmu Kesehatan dirancang untuk menghasilkan lulusan yang kompeten, berdaya saing global, dan berintegritas tinggi. Mengacu pada Kerangka Kualifikasi Nasional Indonesia (KKNI) serta standar profesi kesehatan.</p>',
+            'subjudul' => 'Struktur kurikulum berbasis kompetensi dan Outcome-Based Education (OBE) Universitas Ibnu Sina (UIS).',
+            'deskripsi' => '<p>Kurikulum Universitas Ibnu Sina dirancang untuk menghasilkan lulusan yang kompeten, berdaya saing global, berjiwa entrepreneur, dan berintegritas tinggi. Mengacu pada Kerangka Kualifikasi Nasional Indonesia (KKNI) serta standar pendidikan tinggi nasional.</p>',
             'link_url' => '',
         ],
         'kalender' => [
@@ -29,13 +29,13 @@ class AkademikController extends Controller
         'pedoman' => [
             'judul' => 'Pedoman & Panduan Akademik Mahasiswa',
             'subjudul' => 'Buku panduan tata tertib, prosedur skripsi, magang/PKL, dan etika akademik.',
-            'deskripsi' => '<p>Buku Pedoman Akademik merupakan acuan utama bagi seluruh civitas akademika FIKES UIS dalam menjalankan aktivitas belajar-mengajar, tata tertib perkuliahan, evaluasi hasil belajar, dan layanan kemahasiswaan.</p>',
+            'deskripsi' => '<p>Buku Pedoman Akademik merupakan acuan utama bagi seluruh civitas akademika Universitas Ibnu Sina (UIS) dalam menjalankan aktivitas belajar-mengajar, tata tertib perkuliahan, evaluasi hasil belajar, dan layanan kemahasiswaan.</p>',
             'link_url' => '',
         ],
         'sistem' => [
             'judul' => 'Portal Sistem Informasi Akademik (SIAKAD & E-Learning)',
             'subjudul' => 'Layanan portal digital terpadu untuk pengisian KRS, presensi, nilai, dan pembelajaran online.',
-            'deskripsi' => '<p>Sistem Informasi Akademik (SIAKAD) FIKES Universitas Ibnu Sina memfasilitasi mahasiswa dan dosen dalam proses administrasi perkuliahan secara daring, cepat, dan transparan.</p>',
+            'deskripsi' => '<p>Sistem Informasi Akademik (SIAKAD) Universitas Ibnu Sina memfasilitasi mahasiswa dan dosen dalam proses administrasi perkuliahan secara daring, cepat, dan transparan.</p>',
             'link_url' => 'https://siakad.uis.ac.id',
         ],
     ];

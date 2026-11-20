@@ -18,15 +18,15 @@ class LayananTerkaitSeeder extends Seeder
             ['id' => 1],
             [
                 'judul_seksi' => 'LAYANAN TERKAIT',
-                'subjudul_seksi' => 'Akses cepat ke berbagai sistem dan layanan digital Fakultas Ilmu Kesehatan Universitas Ibnu Sina untuk mendukung kegiatan akademik, administrasi, dan kemahasiswaan.',
+                'subjudul_seksi' => 'Akses cepat ke berbagai sistem dan layanan digital Universitas Ibnu Sina untuk mendukung kegiatan akademik, administrasi, dan kemahasiswaan.',
             ]
         );
 
         // 2. Data Link & Kartu Layanan
         $services = [
             [
-                'nama' => 'E-ARSIP FIKES',
-                'deskripsi' => 'Sistem Informasi Tata Naskah & Pengarsipan Digital Surat Menyurat FIKES UIS',
+                'nama' => 'E-ARSIP UIS',
+                'deskripsi' => 'Sistem Informasi Tata Naskah & Pengarsipan Digital Surat Menyurat Universitas Ibnu Sina',
                 'url' => 'https://e-arsip.uis.ac.id/',
                 'logo' => 'assets/img/layanan-terkait/uis.svg',
                 'icon' => 'bi-archive-fill',

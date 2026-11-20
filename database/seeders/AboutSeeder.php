@@ -15,24 +15,24 @@ class AboutSeeder extends Seeder
         About::truncate();
 
         About::create([
-            // Profil Fakultas
-            'judul_profil' => 'Pusat Keunggulan Pendidikan & Pelayanan Kesehatan',
-            'deskripsi_profil_1' => 'Fakultas Ilmu Kesehatan (FIKES) berdedikasi menyelenggarakan pendidikan tinggi berkualitas di bidang kesehatan dengan kurikulum modern yang berorientasi pada capaian kompetensi, riset inovatif, dan pelayanan masyarakat.',
-            'deskripsi_profil_2' => 'FIKES didukung oleh tenaga pendidik berkualifikasi magister dan doktor, sarana laboratorium terpadu berstandar nasional, serta jejaring kemitraan rumah sakit pendidikan terkemuka.',
+            // Profil Universitas
+            'judul_profil' => 'Pusat Keunggulan Pendidikan Tinggi & Kewirausahaan Berbasis Imtaq',
+            'deskripsi_profil_1' => 'Universitas Ibnu Sina (UIS) Batam berdedikasi menyelenggarakan pendidikan tinggi berkualitas dengan kurikulum adaptif berbasis Outcome-Based Education (OBE), riset inovatif, dan pengabdian kepada masyarakat yang berakar kuat pada nilai-nilai keislaman dan daya saing global.',
+            'deskripsi_profil_2' => 'Universitas Ibnu Sina (UIS) didukung oleh dosen dan tenaga pendidik berkualifikasi Magister dan Doktor, sarana laboratorium terpadu berstandar modern, serta jejaring kemitraan strategis dengan dunia usaha, industri, dan instansi pemerintahan.',
 
             // Visi
             'visi_judul' => 'Visi Kami',
             'visi_icon' => 'bi-eye',
-            'visi' => 'Menjadi Fakultas Ilmu Kesehatan yang unggul, terkemuka, dan berdaya saing global dalam penyelenggaraan Tri Dharma Perguruan Tinggi yang berlandaskan nilai integritas dan kemanusiaan.',
+            'visi' => 'Menjadi Universitas yang unggul, bermartabat, berjiwa entrepreneur, dan bereputasi internasional berlandaskan Iman dan Taqwa (Imtaq) pada tahun 2029.',
 
             // Misi
             'misi_judul' => 'Misi Kami',
             'misi_icon' => 'bi-rocket-takeoff',
-            'misi' => "Menyelenggarakan pendidikan akademik dan profesi kesehatan yang berkualitas dan berstandar nasional/internasional.\nMengembangkan penelitian terapan dan inovatif di bidang ilmu kesehatan yang bermanfaat bagi masyarakat.\nMelaksanakan pengabdian kepada masyarakat secara berkelanjutan demi meningkatkan derajat kesehatan publik.\nMenjalin kerjasama strategis dengan institusi pelayanan kesehatan, rumah sakit, dan mitra global.",
+            'misi' => "Menyelenggarakan pendidikan akademik dan profesional yang adaptif, inovatif, dan berstandar mutu internasional.\nMengembangkan penelitian terapan dan hilirisasi iptek yang bermanfaat bagi masyarakat dan industri.\nMelaksanakan pengabdian kepada masyarakat secara berkelanjutan demi mendorong kesejahteraan sosial dan ekonomi.\nMenjalin kemitraan strategis dengan dunia usaha, industri, perguruan tinggi terkemuka, dan jejaring internasional.",
 
             // Nilai Budaya Civitas
             'judul_nilai' => 'Nilai Budaya Civitas',
-            'deskripsi_nilai' => 'Prinsip dasar yang melandasi seluruh proses pembelajaran, riset, dan pelayanan kesehatan di lingkungan FIKES.',
+            'deskripsi_nilai' => 'Prinsip dasar yang melandasi seluruh proses pendidikan, riset ilmiah, dan pengabdian kepada masyarakat di lingkungan Universitas Ibnu Sina (UIS) dengan menjunjung tinggi integritas dan imtaq.',
 
             // Nilai 1 — Integritas
             'nilai_1_judul' => 'Integritas',

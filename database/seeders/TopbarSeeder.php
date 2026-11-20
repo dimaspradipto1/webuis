@@ -15,7 +15,7 @@ class TopbarSeeder extends Seeder
         $contact = Contact::first();
 
         Topbar::create([
-            'badge_text' => 'FIKES UIS',
+            'badge_text' => 'UNIVERSITAS IBNU SINA',
             'badge_icon' => 'bi-shield-check',
             'alamat' => $contact?->alamat ?? 'Lubuk Baja Kota, Kec. Lubuk Baja, Kota Batam, Kepulauan Riau 29444',
             'jam_operasional' => 'Senin - Sabtu: 08.00 - 17.00 WIB',

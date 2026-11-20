@@ -17,47 +17,47 @@ class FaqSeeder extends Seeder
         $faqs = [
             // Akademik & Program Studi
             [
-                'question' => 'Apa saja program studi yang tersedia di Fakultas Ilmu Kesehatan (FIKES)?',
-                'answer' => 'FIKES menyelenggarakan berbagai program studi unggulan seperti S1 Ilmu Keperawatan & Profesi Ners, Kebidanan (D3/S1 & Profesi), S1 Farmasi, S1 Ilmu Gizi, serta S1 Kesehatan Masyarakat.',
+                'question' => 'Apa saja fakultas dan program studi yang tersedia di Universitas Ibnu Sina (UIS)?',
+                'answer' => 'Universitas Ibnu Sina (UIS) menyelenggarakan berbagai program studi unggulan jenjang Sarjana (S1) dan Pascasarjana (S2) yang terbagi dalam Fakultas Teknik (Teknik Industri, Teknik Informatika, Sistem Informasi, Teknik Logistik, Teknik Perkapalan), Fakultas Ekonomi & Bisnis (Manajemen, Akuntansi), Fakultas Ilmu Kesehatan (K3, Kesehatan Lingkungan), serta Program Pascasarjana (Magister Manajemen, Magister Kesehatan Masyarakat).',
                 'category' => 'akademik',
             ],
             [
-                'question' => 'Bagaimana status akreditasi program studi di FIKES?',
-                'answer' => 'Seluruh program studi di FIKES telah terakreditasi oleh Lembaga Akreditasi Mandiri Pendidikan Tinggi Kesehatan Indonesia (LAM-PTKes) dan Badan Akreditasi Nasional Perguruan Tinggi (BAN-PT).',
+                'question' => 'Bagaimana status akreditasi program studi di Universitas Ibnu Sina (UIS)?',
+                'answer' => 'Seluruh program studi di Universitas Ibnu Sina (UIS) telah terakreditasi resmi oleh Badan Akreditasi Nasional Perguruan Tinggi (BAN-PT) serta Lembaga Akreditasi Mandiri terkait (LAM-PTKes, LAM INFOKOM, dan LAMEMBA) dengan peringkat Baik Sekali dan Baik.',
                 'category' => 'akademik',
             ],
             [
-                'question' => 'Apakah lulusan FIKES langsung mendapatkan gelar profesi?',
-                'answer' => 'Untuk program studi yang memiliki jenjang profesi (seperti Keperawatan Ners dan Bidan), mahasiswa dapat melanjutkan ke tahap pendidikan profesi setelah menyelesaikan tahap sarjana untuk memperoleh Surat Tanda Registrasi (STR).',
+                'question' => 'Apakah Universitas Ibnu Sina (UIS) menyediakan kelas karyawan / perkuliahan malam?',
+                'answer' => 'Ya, Universitas Ibnu Sina (UIS) menyediakan program kelas reguler pagi serta kelas karyawan / kelas malam dan akhir pekan yang fleksibel bagi mahasiswa yang sedang bekerja atau berwirausaha.',
                 'category' => 'akademik',
             ],
 
             // Pendaftaran & Penerimaan Mahasiswa Baru
             [
-                'question' => 'Bagaimana alur pendaftaran mahasiswa baru di FIKES?',
-                'answer' => 'Pendaftaran dapat dilakukan secara online melalui portal resmi PMB atau datang langsung ke sekretariat pendaftaran FIKES dengan membawa berkas persyaratan akademik dan kesehatan.',
+                'question' => 'Bagaimana alur pendaftaran mahasiswa baru di Universitas Ibnu Sina (UIS)?',
+                'answer' => 'Pendaftaran dapat dilakukan secara online melalui portal resmi PMB UIS (pmb.uis.ac.id) atau datang langsung ke Sekretariat PMB di Gedung Rektorat Kampus Terpadu Universitas Ibnu Sina, Batam dengan membawa berkas persyaratan.',
                 'category' => 'pendaftaran',
             ],
             [
-                'question' => 'Apakah ada tes kesehatan khusus dalam seleksi masuk FIKES?',
-                'answer' => 'Ya, calon mahasiswa wajib mengikuti pemeriksaan kesehatan (seperti tes bebas buta warna untuk program studi tertentu, bebas narkoba, dan pemeriksaan fisik dasar) demi memastikan kesiapan praktek klinik.',
+                'question' => 'Jalur penerimaan mahasiswa baru apa saja yang dibuka di UIS?',
+                'answer' => 'UIS membuka berbagai jalur penerimaan, antara lain Jalur Reguler, Jalur Prestasi Akademik & Minat Bakat, Jalur Alih Jenjang / Transfer, dan Jalur Rekognisi Pembelajaran Lampau (RPL) bagi praktisi industri.',
                 'category' => 'pendaftaran',
             ],
             [
-                'question' => 'Apakah tersedia program beasiswa di FIKES?',
-                'answer' => 'Tersedia berbagai pilihan beasiswa, antara lain KIP-Kuliah, Beasiswa Prestasi Akademik/Non-Akademik, Beasiswa Yayasan, dan Beasiswa Kemitraan Instansi.',
+                'question' => 'Apakah tersedia program beasiswa di Universitas Ibnu Sina (UIS)?',
+                'answer' => 'Tersedia berbagai pilihan beasiswa, antara lain KIP-Kuliah, Beasiswa Prestasi Akademik/Non-Akademik, Beasiswa Yayasan Pendidikan Ibnu Sina Batam, dan Beasiswa Kemitraan Perusahaan & Pemerintah Daerah.',
                 'category' => 'pendaftaran',
             ],
 
             // Fasilitas & Praktek Kerja
             [
-                'question' => 'Di mana saja mahasiswa FIKES melaksanakan praktek klinik / lapangan?',
-                'answer' => 'Mahasiswa melaksanakan praktek di rumah sakit pendidikan tipe A & B, RSUD, RS swasta terakreditasi paripurna, Puskesmas, laboratorium klinik, dan industri farmasi mitra resmi FIKES.',
+                'question' => 'Bagaimana kerja sama industri dan peluang kerja bagi lulusan UIS?',
+                'answer' => 'Universitas Ibnu Sina berlokasi strategis di kawasan industri Kota Batam dan menjalin kemitraan erat dengan ratusan perusahaan multinasional, BUMN, instansi pemerintahan, rumah sakit, dan asosiasi profesi untuk program magang industri dan penyerapan kerja lulusan.',
                 'category' => 'fasilitas',
             ],
             [
-                'question' => 'Fasilitas laboratorium apa saja yang disediakan di kampus FIKES?',
-                'answer' => 'Kampus menyediakan Laboratorium Keterampilan Medis (OSCE Center), Mini Hospital, Laboratorium Farmakologi & Kimia, Laboratorium Dietetika & Pangan, serta Laboratorium Simulasi Kebidanan.',
+                'question' => 'Fasilitas apa saja yang disediakan di Kampus Terpadu Universitas Ibnu Sina (UIS)?',
+                'answer' => 'Kampus Terpadu UIS dilengkapi laboratorium komputer & rekayasa software terpadu, lab teknik & simulasi industri, lab K3 & kesehatan lingkungan, perpustakaan digital, sarana olahraga, aula serbaguna, masjid kampus, serta area hotspot wifi terintegrasi.',
                 'category' => 'fasilitas',
             ],
         ];

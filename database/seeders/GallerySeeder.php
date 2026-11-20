@@ -27,12 +27,12 @@ class GallerySeeder extends Seeder
             ],
             [
                 'judul' => 'Pelatihan Tanggap Darurat & Simulasi Pemadam Kebakaran',
-                'deskripsi' => 'Workshop simulasi keselamatan kerja dan evakuasi kebakaran bersertifikasi bagi mahasiswa FIKES UIS.',
+                'deskripsi' => 'Workshop simulasi keselamatan kerja dan evakuasi kebakaran bersertifikasi bagi mahasiswa Universitas Ibnu Sina (UIS).',
                 'url' => 'news/gallery/HFKUfCcjAxO1drsegABwhs8L3G5zH3LX4G7CpUS5.jpg',
             ],
             [
                 'judul' => 'Bakti Sosial & Pemeriksaan Kesehatan Gratis Masyarakat',
-                'deskripsi' => 'Pengabdian kepada masyarakat oleh BEM dan HIMA FIKES di kawasan pemukiman nelayan Pulau Batam.',
+                'deskripsi' => 'Pengabdian kepada masyarakat oleh BEM dan civitas akademika UIS di kawasan pemukiman nelayan Pulau Batam.',
                 'url' => 'news/gallery/Efovwdh2GyB9NOLgACPf218cw7N7MeDXFAUDBnih.jpg',
             ],
             [

@@ -16,7 +16,7 @@ class PmbSettingController extends Controller
     {
         $pmb = PmbSetting::firstOrCreate([], [
             'badge_text' => 'PENERIMAAN MAHASISWA BARU (PMB) T.A. 2026/2027',
-            'judul' => 'Daftar Sekarang & Raih Masa Depan Cerah Bersama FIKES UIS!',
+            'judul' => 'Daftar Sekarang & Raih Masa Depan Cerah Bersama Universitas Ibnu Sina (UIS)!',
             'deskripsi' => 'Tersedia berbagai jalur seleksi: Jalur Bebas Tes / Prestasi, Jalur Reguler, Jalur KIP-Kuliah, dan Jalur Alih Jenjang Karyawan.',
             'tombol_text_1' => 'Daftar PMB Sekarang',
             'tombol_link_1' => '/kontak',
