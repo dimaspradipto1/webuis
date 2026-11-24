@@ -151,21 +151,10 @@
 <!-- ═══════════════════════════════════════════════
      HERO BANNER & BREADCRUMB STANDAR UIS
 ═══════════════════════════════════════════════ -->
-<div class="kampus-berdampak-hero">
-  <div class="container">
-    <div data-aos="fade-up" data-aos-duration="700">
-      <div class="breadcrumb-custom mb-2">
-        <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
-        <span>/</span>
-        <span class="active">Kampus Berdampak</span>
-      </div>
-      <h1 class="kampus-hero-title">Kampus <em>Berdampak</em> UIS</h1>
-      <p class="text-white-50 mb-0" style="max-width: 680px; font-size: 14px; line-height: 1.45;">
-        Mendorong kebebasan belajar, riset terapan inovatif, dan kontribusi nyata civitas akademika bagi kemajuan masyarakat dan dunia industri.
-      </p>
-    </div>
-  </div>
-</div>
+@include('layouts.frontend.components.breadcrumb-hero', [
+    'pageKey' => 'kampus-berdampak',
+    'heroClass' => 'kampus-berdampak-hero'
+])
 
 <!-- ═══════════════════════════════════════════════
      MAIN TWO-COLUMN CONTENT

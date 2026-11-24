@@ -96,22 +96,10 @@
 <!-- ═══════════════════════════════════════════════
      HERO BANNER (Persis Banner FAQ di Image 1)
 ═══════════════════════════════════════════════ -->
-<div class="faq-hero">
-  <div class="container">
-    <div class="faq-hero-content" data-aos="fade-up" data-aos-duration="800">
-      <h1 class="faq-hero-title">
-        Template Dokumen <em>(UIS)</em>
-      </h1>
-      <div class="breadcrumb-custom">
-        <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
-        <span>/</span>
-        <a href="{{ route('homepage.humas') }}">Humas</a>
-        <span>/</span>
-        <span class="active">Template Dokumen</span>
-      </div>
-    </div>
-  </div>
-</div>
+@include('layouts.frontend.components.breadcrumb-hero', [
+    'pageKey' => 'template-dokumen',
+    'heroClass' => 'faq-hero'
+])
 
 <!-- ═══════════════════════════════════════════════
      TEMPLATE DOKUMEN SECTION (Persis di Image 1 & 2)

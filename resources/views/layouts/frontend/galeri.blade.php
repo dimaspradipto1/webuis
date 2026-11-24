@@ -13,30 +13,10 @@
 <!-- ═══════════════════════════════════════════════
      HERO BANNER
 ═══════════════════════════════════════════════ -->
-<div class="galeri-hero">
-  <div class="container">
-    <div class="galeri-hero-content" data-aos="fade-up" data-aos-duration="800">
-      <h1 class="galeri-hero-title">
-        @if($isHumas)
-          Galeri & <em>Kegiatan Humas</em>
-        @else
-          Galeri & <em>Dokumentasi</em>
-        @endif
-      </h1>
-      <div class="breadcrumb-custom">
-        <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
-        <span>/</span>
-        @if($isHumas)
-          <a href="{{ route('homepage.humas') }}">Humas</a>
-          <span>/</span>
-          <span class="active">Galeri Humas</span>
-        @else
-          <span class="active">Galeri & Dokumentasi</span>
-        @endif
-      </div>
-    </div>
-  </div>
-</div>
+@include('layouts.frontend.components.breadcrumb-hero', [
+    'pageKey' => ($isHumas ?? false) ? 'galeri-humas' : 'galeri',
+    'heroClass' => 'galeri-hero'
+])
 
 <!-- ═══════════════════════════════════════════════
      GALLERY GRID

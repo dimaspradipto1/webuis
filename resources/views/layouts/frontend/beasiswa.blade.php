@@ -418,20 +418,10 @@
 <!-- ═══════════════════════════════════════════════
      HEADER HERO BANNER & BREADCRUMB (SESUAI ACUAN TENTANG UIS)
 ═══════════════════════════════════════════════ -->
-<div class="about-hero">
-  <div class="container">
-    <div class="about-hero-content" data-aos="fade-up" data-aos-duration="800">
-      <h1 class="about-hero-title">
-        Program <em>Beasiswa</em>
-      </h1>
-      <div class="breadcrumb-custom">
-        <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
-        <span>/</span>
-        <span class="active">Program Beasiswa</span>
-      </div>
-    </div>
-  </div>
-</div>
+@include('layouts.frontend.components.breadcrumb-hero', [
+    'pageKey' => 'beasiswa',
+    'heroClass' => 'about-hero'
+])
 
 <div class="beasiswa-page-wrapper">
 

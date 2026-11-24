@@ -212,26 +212,10 @@
 <!-- ══════════════════════════════════════════════════════
      HERO BANNER INFORMASI KHUSUS PMB
 ══════════════════════════════════════════════════════ -->
-<div class="pmb-hero">
-  <div class="container position-relative">
-    <div class="breadcrumb-custom" data-aos="fade-down">
-      <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
-      <span>/</span>
-      <a href="{{ route('homepage.humas') }}">Humas</a>
-      <span>/</span>
-      <span class="active">Informasi Khusus PMB</span>
-    </div>
-
-    <div data-aos="fade-up">
-      <div>
-        <span class="pmb-badge">
-          <i class="bi bi-mortarboard-fill"></i> {{ $pmb->badge_text ?? 'PMB TA 2026/2027' }}
-        </span>
-      </div>
-      <h1 class="pmb-hero-title text-white">{{ $pmb->judul ?? 'Informasi Khusus Penerimaan Mahasiswa Baru' }}</h1>
-      <p class="pmb-hero-subtitle">
-        {{ $pmb->subjudul ?? 'Tahun Akademik 2026/2027 — Universitas Ibnu Sina' }}
-      </p>
+@include('layouts.frontend.components.breadcrumb-hero', [
+    'pageKey' => 'informasi-pmb',
+    'heroClass' => 'pmb-hero'
+])
 
       <div class="d-flex flex-wrap align-items-center gap-2 pt-1">
         @if(!empty($pmb->link_pendaftaran))

@@ -235,23 +235,10 @@
 <!-- ═══════════════════════════════════════════════
      HERO BANNER
 ═══════════════════════════════════════════════ -->
-<div class="uis-prodi-hero">
-  <div class="container position-relative" style="z-index: 2;">
-    <div class="text-center mx-auto" style="max-width: 760px;" data-aos="fade-up" data-aos-duration="700">
-      <span class="badge rounded-pill px-3 py-2 mb-3 fw-bold" style="background: rgba(244, 196, 48, 0.18); color: #f4c430; border: 1px solid rgba(244, 196, 48, 0.4); letter-spacing: 1px;">
-        <i class="bi bi-mortarboard-fill me-1"></i> AKADEMIK UNIVERSITAS IBNU SINA
-      </span>
-      <h1 class="fw-extrabold mb-3 text-white" style="font-size: clamp(2rem, 4vw, 3rem);">
-        Program Studi <span style="color: #f4c430;">Pilihan Anda</span>
-      </h1>
-      <div class="breadcrumb-custom justify-content-center">
-        <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
-        <span>/</span>
-        <span class="active">Program Studi</span>
-      </div>
-    </div>
-  </div>
-</div>
+@include('layouts.frontend.components.breadcrumb-hero', [
+    'pageKey' => 'program-studi',
+    'heroClass' => 'uis-prodi-hero'
+])
 
 <!-- ═══════════════════════════════════════════════
      INTRO SECTION (SEPERTI UIS.AC.ID/PROGRAM-STUDI-UIS/)

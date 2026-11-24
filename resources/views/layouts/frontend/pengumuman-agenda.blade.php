@@ -55,21 +55,10 @@
 </style>
 
 <!-- Header Hero -->
-<div class="pa-page-hero">
-  <div class="container">
-    <div class="breadcrumb-custom mb-3">
-      <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
-      <span>/</span>
-      <span class="active">Pengumuman & Agenda</span>
-    </div>
-    <h1 class="fw-bold text-white mb-2" style="font-size: clamp(26px, 3.5vw, 38px);">
-      Pengumuman & Agenda Akademik
-    </h1>
-    <p class="text-white-50 mb-0" style="max-width: 720px; font-size: 15.5px;">
-      Pusat informasi pengumuman resmi akademik, jadwal perkuliahan, dan agenda kegiatan Universitas Ibnu Sina Batam.
-    </p>
-  </div>
-</div>
+@include('layouts.frontend.components.breadcrumb-hero', [
+    'pageKey' => 'pengumuman-agenda',
+    'heroClass' => 'pa-page-hero'
+])
 
 <section class="section-bg-sand py-5">
   <div class="container py-2">

@@ -5,31 +5,10 @@
 
 @section('content')
 <!-- HERO SECTION -->
-<section class="ormawa-hero">
-  <div class="container position-relative">
-    <div class="row align-items-center">
-      <div class="col-lg-8" data-aos="fade-up">
-        <div class="ormawa-hero-badge">
-          <i class="bi bi-people-fill"></i>
-          <span>Kemahasiswaan Universitas Ibnu Sina</span>
-        </div>
-        <h1 class="fw-bold mb-3 text-white" style="font-size: clamp(26px, 3.5vw, 42px); line-height: 1.2;">
-          Organisasi & Kegiatan Mahasiswa
-        </h1>
-        <p class="text-white-50 mb-0" style="font-size: 16px; max-width: 650px;">
-          Wadah pengembangan potensi, kepemimpinan, riset keilmuan, kreativitas, serta kepedulian sosial mahasiswa Universitas Ibnu Sina.
-        </p>
-      </div>
-      <div class="col-lg-4 text-lg-end mt-4 mt-lg-0" data-aos="fade-left">
-        <div class="breadcrumb-custom justify-content-lg-end">
-          <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
-          <span>/</span>
-          <span class="active">Organisasi Mahasiswa</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
+@include('layouts.frontend.components.breadcrumb-hero', [
+    'pageKey' => 'organisasi-mahasiswa',
+    'heroClass' => 'ormawa-hero'
+])
 
 <!-- MAIN CONTENT SECTION -->
 <section class="py-5" style="background-color: #fbf9fc; min-height: 500px;">

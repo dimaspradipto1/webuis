@@ -18,20 +18,10 @@
 <!-- ═══════════════════════════════════════════════
      HERO BANNER
 ═══════════════════════════════════════════════ -->
-<div class="contact-hero">
-  <div class="container">
-    <div class="contact-hero-content" data-aos="fade-up" data-aos-duration="800">
-      <h1 class="contact-hero-title">
-        Hubungi <em>UIS</em>
-      </h1>
-      <div class="breadcrumb-custom">
-        <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
-        <span>/</span>
-        <span class="active">Hubungi Kami</span>
-      </div>
-    </div>
-  </div>
-</div>
+@include('layouts.frontend.components.breadcrumb-hero', [
+    'pageKey' => 'kontak',
+    'heroClass' => 'contact-hero'
+])
 
 <!-- ═══════════════════════════════════════════════
      CONTACT INFO CARDS & MAP

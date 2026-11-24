@@ -260,18 +260,10 @@
 </style>
 
 {{-- HERO --}}
-<section class="kerjasama-hero">
-  <div class="container">
-    <div class="breadcrumb-custom mb-3" aria-label="breadcrumb">
-      <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
-      <span>/</span>
-      <span class="active">Mitra & Kerjasama</span>
-    </div>
-    <div class="mt-3">
-      <h1>Mitra <span>Kerjasama</span></h1>
-    </div>
-  </div>
-</section>
+@include('layouts.frontend.components.breadcrumb-hero', [
+    'pageKey' => 'kerjasama',
+    'heroClass' => 'kerjasama-hero'
+])
 
 {{-- STATISTIK KARTU TOP --}}
 <section class="kerjasama-stats">

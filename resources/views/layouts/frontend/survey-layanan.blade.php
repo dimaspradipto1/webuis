@@ -119,25 +119,10 @@
 <div class="survey-page pb-5">
 
   {{-- HERO BANNER (Konsisten dengan Standar Hero UIS) --}}
-  <div style="background: #046b26; border-bottom: 3px solid #fed802; color: #ffffff; padding: 32px 0 28px 0; position: relative;">
-    <div class="container text-center position-relative" style="z-index: 1;">
-      <div class="breadcrumb-custom justify-content-center mb-3">
-        <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
-        <span>/</span>
-        <a href="{{ route('homepage.humas') }}">Humas</a>
-        <span>/</span>
-        <span class="active">{{ $setting->judul_hero ?? 'Survey Layanan' }}</span>
-      </div>
-
-      <h1 class="fw-bold mb-2 text-white" style="font-size: 32px; letter-spacing: -0.5px;">
-        {{ $setting->judul_hero ?? 'Survey Layanan' }}
-      </h1>
-      <div class="divider-line-gold"></div>
-      <p class="text-white-50 mx-auto mb-0" style="max-width: 680px; font-size: 14.5px; line-height: 1.6;">
-        {{ $setting->subjudul_hero ?? 'Kuesioner Evaluasi Kepuasan & Mutu Pelayanan Humas Universitas Ibnu Sina' }}
-      </p>
-    </div>
-  </div>
+  @include('layouts.frontend.components.breadcrumb-hero', [
+      'pageKey' => 'survey-layanan',
+      'heroClass' => 'page-hero-banner'
+  ])
 
   {{-- MAIN CONTENT SECTON: SURVEI EVALUASI --}}
   <div class="container py-5">

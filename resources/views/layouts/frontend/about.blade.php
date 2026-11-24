@@ -18,20 +18,10 @@
 <!-- ═══════════════════════════════════════════════
      ABOUT HERO BANNER
 ═══════════════════════════════════════════════ -->
-<div class="about-hero">
-  <div class="container">
-    <div class="about-hero-content" data-aos="fade-up" data-aos-duration="800">
-      <h1 class="about-hero-title">
-        Tentang <em>UIS</em>
-      </h1>
-      <div class="breadcrumb-custom">
-        <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
-        <span>/</span>
-        <span class="active">Tentang Universitas</span>
-      </div>
-    </div>
-  </div>
-</div>
+@include('layouts.frontend.components.breadcrumb-hero', [
+    'pageKey' => 'tentang',
+    'heroClass' => 'about-hero'
+])
 
 <!-- ═══════════════════════════════════════════════
      PROFIL UNIVERSITAS (FULL WIDTH & VIDEO)

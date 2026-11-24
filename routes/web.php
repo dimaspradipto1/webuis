@@ -7,6 +7,7 @@ use App\Http\Controllers\BackupController;
 use App\Http\Controllers\BahasaSettingController;
 use App\Http\Controllers\BannerController;
 use App\Http\Controllers\BeasiswaSettingController;
+use App\Http\Controllers\BreadcrumbController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DesainGrafisController;
@@ -297,6 +298,12 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::post('admin-tampilan/reset/{group}', [\App\Http\Controllers\TampilanController::class, 'reset'])
         ->whereIn('group', ['header', 'footer', 'layout'])
         ->name('tampilan.reset');
+
+    // Pengaturan Breadcrumb & Hero Banner Halaman Frontend
+    Route::get('admin-breadcrumb', [BreadcrumbController::class, 'index'])->name('breadcrumb-setting.index');
+    Route::get('admin-breadcrumb/{breadcrumb}/edit', [BreadcrumbController::class, 'edit'])->name('breadcrumb-setting.edit');
+    Route::put('admin-breadcrumb/{breadcrumb}', [BreadcrumbController::class, 'update'])->name('breadcrumb-setting.update');
+    Route::post('admin-breadcrumb/{breadcrumb}/reset', [BreadcrumbController::class, 'reset'])->name('breadcrumb-setting.reset');
 
     // Pengaturan WA Admin
     Route::get('admin-wa-setting', [\App\Http\Controllers\WaAdminController::class, 'index'])->name('wa-admin.index');

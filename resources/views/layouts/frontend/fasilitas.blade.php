@@ -57,21 +57,10 @@
 </style>
 
 <!-- Header Hero -->
-<div class="fasilitas-page-hero">
-  <div class="container">
-    <div class="breadcrumb-custom mb-3">
-      <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
-      <span>/</span>
-      <span class="active">Fasilitas & Laboratorium</span>
-    </div>
-    <h1 class="fw-bold text-white mb-2" style="font-size: clamp(26px, 3.5vw, 38px);">
-      Fasilitas & Laboratorium Kampus
-    </h1>
-    <p class="text-white-50 mb-0" style="max-width: 720px; font-size: 15.5px;">
-      Menunjang proses riset, praktikum laboratorium, dan kegiatan akademik mahasiswa Universitas Ibnu Sina dengan sarana berteknologi mutakhir.
-    </p>
-  </div>
-</div>
+@include('layouts.frontend.components.breadcrumb-hero', [
+    'pageKey' => 'fasilitas',
+    'heroClass' => 'fasilitas-page-hero'
+])
 
 <section class="section-bg-sand py-5">
   <div class="container py-2">

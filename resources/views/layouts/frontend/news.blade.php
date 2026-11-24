@@ -9,24 +9,10 @@
 <!-- ═══════════════════════════════════════════════
      HERO BANNER
 ═══════════════════════════════════════════════ -->
-<div class="news-hero">
-  <div class="container">
-    <div data-aos="fade-up">
-      <div class="badge px-2.5 py-1 rounded-pill mb-2" style="background: rgba(4, 107, 38, 0.45); color: var(--uis-orange); border: 1px solid rgba(254, 216, 2, 0.4); font-size: 11px;">
-        <i class="bi bi-newspaper me-1"></i> Warta & Informasi Universitas Ibnu Sina
-      </div>
-      <h1 class="news-hero-title">Berita & <em>Warta Kampus</em> UIS</h1>
-      <p class="text-white-50 mb-2" style="max-width: 650px; font-size: 13px; line-height: 1.45;">
-        Kumpulan warta kegiatan universitas, pengumuman akademik, prestasi mahasiswa, riset terapan, dan inovasi civitas akademika Universitas Ibnu Sina Batam.
-      </p>
-      <div class="breadcrumb-custom">
-        <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
-        <span>/</span>
-        <span class="active">Berita & Warta Kampus</span>
-      </div>
-    </div>
-  </div>
-</div>
+@include('layouts.frontend.components.breadcrumb-hero', [
+    'pageKey' => 'berita',
+    'heroClass' => 'news-hero'
+])
 
 <!-- ═══════════════════════════════════════════════
      NEWS PORTAL CONTENT

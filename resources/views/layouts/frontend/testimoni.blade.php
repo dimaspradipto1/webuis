@@ -9,24 +9,10 @@
 <!-- ═══════════════════════════════════════════════
      HERO BANNER
 ═══════════════════════════════════════════════ -->
-<div class="about-hero">
-  <div class="container">
-    <div class="about-hero-content" data-aos="fade-up" data-aos-duration="800">
-      <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-3" style="background: rgba(254, 216, 2, 0.15); border: 1px solid rgba(254, 216, 2, 0.4);">
-        <i class="bi bi-mortarboard-fill text-warning"></i>
-        <span class="text-warning small fw-bold">PORTAL ALUMNI & CIVITAS</span>
-      </div>
-      <h1 style="font-size: 38px; font-weight: 800; color: var(--white); margin-bottom: 10px;">
-        Kisah Sukses & <em style="font-style: normal; color: var(--uis-orange);">Testimoni Alumni</em>
-      </h1>
-      <div class="breadcrumb-custom">
-        <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
-        <span>/</span>
-        <span class="active">Testimoni Alumni</span>
-      </div>
-    </div>
-  </div>
-</div>
+@include('layouts.frontend.components.breadcrumb-hero', [
+    'pageKey' => 'testimoni',
+    'heroClass' => 'about-hero'
+])
 
 <!-- ═══════════════════════════════════════════════
      RATING ANALYTICS & SUMMARY SECTION

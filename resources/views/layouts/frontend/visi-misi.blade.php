@@ -79,22 +79,10 @@
 <!-- ═══════════════════════════════════════════════
      HERO BANNER
 ═══════════════════════════════════════════════ -->
-<div class="visimisi-hero">
-  <div class="container">
-    <div data-aos="fade-up">
-      <h1 class="visimisi-hero-title">
-        Visi & <em>Misi</em>
-      </h1>
-      <div class="breadcrumb-custom">
-        <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
-        <span>/</span>
-        <a href="{{ route('homepage.tentang') }}">Profil</a>
-        <span>/</span>
-        <span class="active">Visi & Misi</span>
-      </div>
-    </div>
-  </div>
-</div>
+@include('layouts.frontend.components.breadcrumb-hero', [
+    'pageKey' => 'visi-misi',
+    'heroClass' => 'visimisi-hero'
+])
 
 <!-- ═══════════════════════════════════════════════
      VISI & MISI IMAGES (3 COLUMNS - ONLY IMAGES)

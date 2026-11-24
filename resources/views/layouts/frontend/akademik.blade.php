@@ -7,24 +7,22 @@
 <!-- ═══════════════════════════════════════════════
      HERO HEADER
 ═══════════════════════════════════════════════ -->
-<section class="akademik-hero">
-  <div class="container position-relative" data-aos="fade-up">
-    <div class="badge px-3 py-2 rounded-pill mb-3" style="background: var(--uis-orange); color: #032e12; font-weight: 800; font-size: 11.5px; letter-spacing: 0.8px;">
-      LAYANAN AKADEMIK Universitas Ibnu Sina
-    </div>
-    <h1 class="display-6 fw-bold text-white mb-2">{{ $item->judul }}</h1>
-    @if($item->subjudul)
-      <p class="lead text-white-50 mb-0" style="max-width: 760px; font-size: 16px;">
-        {{ $item->subjudul }}
-      </p>
-    @endif
-    <div class="breadcrumb-custom mt-3">
-      <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
-      <span>/</span>
-      <span class="active">{{ $pageTitle }}</span>
-    </div>
-  </div>
-</section>
+@php
+  $pageKeyAkademik = match($item->tipe ?? '') {
+      'kalender' => 'kalender-akademik',
+      'pedoman' => 'pedoman-akademik',
+      'sistem' => 'sistem-akademik',
+      default => 'kurikulum'
+  };
+@endphp
+
+@include('layouts.frontend.components.breadcrumb-hero', [
+    'pageKey' => $pageKeyAkademik,
+    'heroClass' => 'akademik-hero',
+    'defaultTitle' => $item->judul ?? 'Layanan Akademik',
+    'defaultSubtitle' => $item->subjudul ?? null,
+    'defaultActive' => $pageTitle ?? 'Akademik'
+])
 
 <!-- ═══════════════════════════════════════════════
      MAIN CONTENT

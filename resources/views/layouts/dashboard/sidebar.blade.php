@@ -374,6 +374,13 @@
 
           @if($isAdmin)
           <li class="nav-item">
+              <a class="nav-link {{ Route::is('breadcrumb-setting.*') ? '' : 'collapsed' }}" href="{{ route('breadcrumb-setting.index') }}">
+                  <i class="bi bi-signpost-2"></i>
+                  <span>Pengaturan Breadcrumb</span>
+              </a>
+          </li>
+
+          <li class="nav-item">
               <a class="nav-link {{ Route::is('theme.*') ? '' : 'collapsed' }}" href="{{ route('theme.index') }}">
                   <i class="bi bi-palette-fill"></i>
                   <span>Warna Frontend & Admin</span>

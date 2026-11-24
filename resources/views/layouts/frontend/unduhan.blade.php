@@ -185,22 +185,10 @@
 <!-- ═══════════════════════════════════════════════
      1. DOWNLOAD HERO BANNER (GREEN BANNER WITH BREADCRUMB)
 ═══════════════════════════════════════════════ -->
-<div class="download-hero">
-  <div class="container">
-    <div class="download-hero-content" data-aos="fade-up" data-aos-duration="800">
-      <h1 class="download-hero-title">
-        Downloads Dokumen <em>Humas</em>
-      </h1>
-      <div class="breadcrumb-custom">
-        <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
-        <span>/</span>
-        <a href="{{ route('homepage.humas') }}">Humas & Protokoler</a>
-        <span>/</span>
-        <span class="active">Downloads</span>
-      </div>
-    </div>
-  </div>
-</div>
+@include('layouts.frontend.components.breadcrumb-hero', [
+    'pageKey' => 'unduhan',
+    'heroClass' => 'download-hero'
+])
 
 <!-- ═══════════════════════════════════════════════
      2. MAIN CONTENT CARD

@@ -5,22 +5,10 @@
 
 @section('content')
 <!-- Header Hero -->
-<div class="kurikulum-hero text-white">
-  <div class="container text-center">
-    <div class="badge px-3 py-2 rounded-pill mb-2" style="background: rgba(229, 168, 35, 0.2); color: #FED802; border: 1px solid rgba(229, 168, 35, 0.4);">
-      <i class="bi bi-mortarboard-fill me-1"></i> Layanan Akademik Universitas Ibnu Sina
-    </div>
-    <h1 class="fw-bold mb-2" style="font-size: 34px;">Kurikulum & Capaian Pembelajaran</h1>
-    <p class="text-white-50 mx-auto mb-0" style="max-width: 620px; font-size: 14.5px;">
-      Struktur kurikulum berbasis kompetensi dan Kerangka Kualifikasi Nasional Indonesia (KKNI) untuk setiap program studi di Universitas Ibnu Sina.
-    </p>
-    <div class="breadcrumb-custom justify-content-center mt-3">
-      <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
-      <span>/</span>
-      <span class="active">Kurikulum Akademik</span>
-    </div>
-  </div>
-</div>
+@include('layouts.frontend.components.breadcrumb-hero', [
+    'pageKey' => 'kurikulum',
+    'heroClass' => 'kurikulum-hero'
+])
 
 <section class="section-bg-sand py-5">
   <div class="container py-3">

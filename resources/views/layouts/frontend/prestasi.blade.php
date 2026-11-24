@@ -5,22 +5,10 @@
 
 @section('content')
 <!-- Header Banner -->
-<div class="prestasi-hero text-white">
-  <div class="container text-center">
-    <div class="badge px-3 py-2 rounded-pill mb-3" style="background: rgba(254, 216, 2, 0.18); color: #FED802; border: 1px solid rgba(254, 216, 2, 0.45); font-weight: 700; font-size: 13px; letter-spacing: 0.5px;">
-      <i class="bi bi-trophy-fill me-1"></i> Hall of Fame & Prestasi
-    </div>
-    <h1 class="fw-bold mb-3 text-white" style="font-size: 38px; color: #ffffff !important; text-shadow: 0 2px 10px rgba(0,0,0,0.35);">Prestasi Mahasiswa Universitas Ibnu Sina</h1>
-    <p class="mx-auto text-white mb-2" style="max-width: 680px; line-height: 1.7; color: rgba(255, 255, 255, 0.92) !important; font-size: 15.5px;">
-      Koleksi prestasi gemilang, medali kejuaraan, dan publikasi ilmiah sivitas akademika Universitas Ibnu Sina di tingkat regional, nasional, dan internasional.
-    </p>
-    <div class="breadcrumb-custom justify-content-center mt-3">
-      <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
-      <span>/</span>
-      <span class="active">Prestasi Mahasiswa</span>
-    </div>
-  </div>
-</div>
+@include('layouts.frontend.components.breadcrumb-hero', [
+    'pageKey' => 'prestasi',
+    'heroClass' => 'prestasi-hero'
+])
 
 <!-- Main Content -->
 <section class="section-bg-sand py-5">

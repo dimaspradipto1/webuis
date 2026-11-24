@@ -9,22 +9,10 @@
 <!-- ═══════════════════════════════════════════════
      HERO BANNER
 ═══════════════════════════════════════════════ -->
-<div class="sejarah-hero">
-  <div class="container">
-    <div data-aos="fade-up">
-      <h1 class="sejarah-hero-title">
-        Sejarah & <em>Milestone</em>
-      </h1>
-      <div class="breadcrumb-custom">
-        <a href="{{ route('homepage') }}"><i class="bi bi-house-door-fill me-1"></i>Beranda</a>
-        <span>/</span>
-        <a href="{{ route('homepage.tentang') }}">Profil</a>
-        <span>/</span>
-        <span class="active">Sejarah Universitas</span>
-      </div>
-    </div>
-  </div>
-</div>
+@include('layouts.frontend.components.breadcrumb-hero', [
+    'pageKey' => 'sejarah',
+    'heroClass' => 'sejarah-hero'
+])
 
 <!-- ═══════════════════════════════════════════════
      SEJARAH NARASI SECTION
