@@ -2,8 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\DataTables\PmbBrosurDataTable;
 use App\Models\InformasiPmbHumas;
+use App\Models\PmbBrosur;
 use App\Models\PmbSetting;
+use App\Models\ProgramStudi;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -121,54 +124,145 @@ class AdminPmbController extends Controller
     }
 
     /**
-     * 5. Halaman Brosur & Poster PMB
+     * 5. Halaman Kelola Galeri Brosur & Poster PMB (DataTable Antar-Fakultas)
      */
-    public function brosur(): View
+    public function brosur(PmbBrosurDataTable $dataTable)
     {
+        PmbBrosur::ensureTableExists();
+
         $pmb = $this->getPmbData();
-        return view('pages.pmb.brosur', compact('pmb'));
+
+        // Opsi Fakultas dari ProgramStudi + Universitas
+        $fakultasFromProdi = ProgramStudi::select('fakultas')
+            ->distinct()
+            ->pluck('fakultas')
+            ->filter()
+            ->values()
+            ->toArray();
+
+        $defaultFakultas = [
+            'Universitas',
+            'Fakultas Sains dan Teknologi',
+            'Fakultas Ekonomi dan Bisnis',
+            'Fakultas Ilmu Kesehatan',
+            'Program Pascasarjana',
+        ];
+
+        $fakultasOptions = array_values(array_unique(array_merge($defaultFakultas, $fakultasFromProdi)));
+
+        return $dataTable->render('pages.pmb.brosur', compact('pmb', 'fakultasOptions'));
     }
 
-    public function updateBrosur(Request $request): RedirectResponse
+    /**
+     * Simpan Brosur Baru
+     */
+    public function storeBrosur(Request $request): RedirectResponse
     {
-        $pmb = $this->getPmbData();
+        PmbBrosur::ensureTableExists();
 
-        $request->validate([
-            'gambar_brosur' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:10240',
-            'gambar_brosur_2' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:10240',
+        $validated = $request->validate([
+            'judul' => 'required|string|max:255',
+            'kategori_fakultas' => 'required|string|max:255',
+            'gambar' => 'required|image|mimes:jpeg,png,jpg,webp|max:10240',
+            'file_pdf' => 'nullable|mimes:pdf|max:20480',
+            'deskripsi' => 'nullable|string',
+            'tahun_akademik' => 'nullable|string|max:50',
+            'urutan' => 'nullable|integer',
+            'is_active' => 'nullable|boolean',
         ]);
 
-        // Upload Brosur 1
-        if ($request->hasFile('gambar_brosur')) {
-            if ($pmb->gambar_brosur && Storage::disk('public')->exists($pmb->gambar_brosur)) {
-                Storage::disk('public')->delete($pmb->gambar_brosur);
-            }
-            $file = $request->file('gambar_brosur');
-            $pmb->gambar_brosur = $file->store('informasi-pmb', 'public');
-        } elseif ($request->boolean('hapus_brosur_1') && $pmb->gambar_brosur) {
-            if (Storage::disk('public')->exists($pmb->gambar_brosur)) {
-                Storage::disk('public')->delete($pmb->gambar_brosur);
-            }
-            $pmb->gambar_brosur = null;
+        $gambarPath = $request->file('gambar')->store('pmb-brosur', 'public');
+
+        $pdfPath = null;
+        if ($request->hasFile('file_pdf')) {
+            $pdfPath = $request->file('file_pdf')->store('pmb-brosur-pdf', 'public');
         }
 
-        // Upload Brosur 2
-        if ($request->hasFile('gambar_brosur_2')) {
-            if ($pmb->gambar_brosur_2 && Storage::disk('public')->exists($pmb->gambar_brosur_2)) {
-                Storage::disk('public')->delete($pmb->gambar_brosur_2);
+        PmbBrosur::create([
+            'judul' => $validated['judul'],
+            'kategori_fakultas' => $validated['kategori_fakultas'],
+            'gambar' => $gambarPath,
+            'file_pdf' => $pdfPath,
+            'deskripsi' => $validated['deskripsi'] ?? null,
+            'tahun_akademik' => $validated['tahun_akademik'] ?? '2026/2027',
+            'urutan' => $validated['urutan'] ?? 0,
+            'is_active' => $request->boolean('is_active', true),
+        ]);
+
+        return redirect()->route('admin.pmb.brosur')->with('success', 'Brosur & Poster PMB baru berhasil ditambahkan!');
+    }
+
+    /**
+     * Update Brosur Item
+     */
+    public function updateBrosurItem(Request $request, $id): RedirectResponse
+    {
+        PmbBrosur::ensureTableExists();
+
+        $brosur = PmbBrosur::findOrFail($id);
+
+        $validated = $request->validate([
+            'judul' => 'required|string|max:255',
+            'kategori_fakultas' => 'required|string|max:255',
+            'gambar' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:10240',
+            'file_pdf' => 'nullable|mimes:pdf|max:20480',
+            'deskripsi' => 'nullable|string',
+            'tahun_akademik' => 'nullable|string|max:50',
+            'urutan' => 'nullable|integer',
+            'is_active' => 'nullable|boolean',
+        ]);
+
+        // Gambar Baru
+        if ($request->hasFile('gambar')) {
+            if ($brosur->gambar && Storage::disk('public')->exists($brosur->gambar)) {
+                Storage::disk('public')->delete($brosur->gambar);
             }
-            $file2 = $request->file('gambar_brosur_2');
-            $pmb->gambar_brosur_2 = $file2->store('informasi-pmb', 'public');
-        } elseif ($request->boolean('hapus_brosur_2') && $pmb->gambar_brosur_2) {
-            if (Storage::disk('public')->exists($pmb->gambar_brosur_2)) {
-                Storage::disk('public')->delete($pmb->gambar_brosur_2);
-            }
-            $pmb->gambar_brosur_2 = null;
+            $brosur->gambar = $request->file('gambar')->store('pmb-brosur', 'public');
         }
 
-        $pmb->save();
+        // PDF Baru
+        if ($request->hasFile('file_pdf')) {
+            if ($brosur->file_pdf && Storage::disk('public')->exists($brosur->file_pdf)) {
+                Storage::disk('public')->delete($brosur->file_pdf);
+            }
+            $brosur->file_pdf = $request->file('file_pdf')->store('pmb-brosur-pdf', 'public');
+        } elseif ($request->boolean('hapus_pdf') && $brosur->file_pdf) {
+            if (Storage::disk('public')->exists($brosur->file_pdf)) {
+                Storage::disk('public')->delete($brosur->file_pdf);
+            }
+            $brosur->file_pdf = null;
+        }
 
-        return redirect()->back()->with('success', 'Brosur & Poster PMB berhasil disimpan!');
+        $brosur->judul = $validated['judul'];
+        $brosur->kategori_fakultas = $validated['kategori_fakultas'];
+        $brosur->deskripsi = $validated['deskripsi'] ?? null;
+        $brosur->tahun_akademik = $validated['tahun_akademik'] ?? '2026/2027';
+        $brosur->urutan = $validated['urutan'] ?? 0;
+        $brosur->is_active = $request->boolean('is_active');
+        $brosur->save();
+
+        return redirect()->route('admin.pmb.brosur')->with('success', 'Brosur & Poster PMB berhasil diperbarui!');
+    }
+
+    /**
+     * Hapus Brosur Item
+     */
+    public function destroyBrosur($id): RedirectResponse
+    {
+        PmbBrosur::ensureTableExists();
+
+        $brosur = PmbBrosur::findOrFail($id);
+
+        if ($brosur->gambar && Storage::disk('public')->exists($brosur->gambar)) {
+            Storage::disk('public')->delete($brosur->gambar);
+        }
+        if ($brosur->file_pdf && Storage::disk('public')->exists($brosur->file_pdf)) {
+            Storage::disk('public')->delete($brosur->file_pdf);
+        }
+
+        $brosur->delete();
+
+        return redirect()->route('admin.pmb.brosur')->with('success', 'Brosur / Poster PMB berhasil dihapus!');
     }
 
     /**

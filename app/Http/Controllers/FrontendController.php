@@ -915,7 +915,17 @@ class FrontendController extends Controller
             ]
         );
 
-        return view('layouts.frontend.pmb-brosur', compact('contact', 'pmbSetting', 'pmb'));
+        \App\Models\PmbBrosur::ensureTableExists();
+
+        $brosurs = \App\Models\PmbBrosur::where('is_active', true)
+            ->orderBy('urutan')
+            ->orderBy('id', 'desc')
+            ->get();
+
+        // Kategori yang ada di data brosur
+        $categories = $brosurs->pluck('kategori_fakultas')->unique()->filter()->values();
+
+        return view('layouts.frontend.pmb-brosur', compact('contact', 'pmbSetting', 'pmb', 'brosurs', 'categories'));
     }
 
     public function pmbPanduan()

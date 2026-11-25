@@ -227,7 +227,9 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
         Route::get('/syarat', 'syarat')->name('syarat');
         Route::put('/syarat', 'updateSyarat')->name('syarat.update');
         Route::get('/brosur', 'brosur')->name('brosur');
-        Route::put('/brosur', 'updateBrosur')->name('brosur.update');
+        Route::post('/brosur', 'storeBrosur')->name('brosur.store');
+        Route::put('/brosur/{brosur}', 'updateBrosurItem')->name('brosur.update-item');
+        Route::delete('/brosur/{brosur}', 'destroyBrosur')->name('brosur.destroy');
         Route::get('/dokumen', 'dokumen')->name('dokumen');
         Route::put('/dokumen', 'updateDokumen')->name('dokumen.update');
         Route::get('/link-daftar', 'linkDaftar')->name('link-daftar');
