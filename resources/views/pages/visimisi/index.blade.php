@@ -63,20 +63,23 @@
                     <label class="form-label fw-bold text-dark small mb-2">Preview Background Saat Ini</label>
                     <div class="position-relative rounded-3 overflow-hidden border shadow-sm" style="height: 160px; background: #046B26;">
                         @if($about->visimisi_background_url)
-                            <img src="{{ $about->visimisi_background_url }}" alt="Background Visi Misi" style="width: 100%; height: 100%; object-fit: cover;">
-                            <div class="position-absolute bottom-0 start-0 end-0 p-2 d-flex align-items-center justify-content-between" style="background: rgba(0,0,0,0.65);">
+                            <img src="{{ $about->visimisi_background_url }}" 
+                                 alt="Background Visi Misi" 
+                                 id="currentBgPreviewImg"
+                                 style="width: 100%; height: 100%; object-fit: cover;"
+                                 onerror="this.style.display='none'; document.getElementById('bgFallbackStandard').classList.remove('d-none'); document.getElementById('bgOverlayBar').classList.add('d-none');">
+                            <div id="bgOverlayBar" class="position-absolute bottom-0 start-0 end-0 p-2 d-flex align-items-center justify-content-between" style="background: rgba(0,0,0,0.65);">
                                 <span class="badge bg-success" style="font-size: 10.5px;"><i class="bi bi-check-circle me-1"></i>Kustom Aktif</span>
                                 <button type="button" class="btn btn-danger btn-sm py-0 px-2" style="font-size: 11px;" onclick="document.getElementById('formDeleteBackground').submit();" title="Hapus Background Kustom">
                                     <i class="bi bi-trash me-1"></i>Hapus
                                 </button>
                             </div>
-                        @else
-                            <div class="d-flex flex-column align-items-center justify-content-center h-100 text-white text-center p-3" style="background: linear-gradient(135deg, #13883a 0%, #034b1a 100%);">
-                                <i class="bi bi-palette fs-2 mb-1 text-warning"></i>
-                                <span class="fw-bold small">Latar Standar Gradasi Hijau UIS</span>
-                                <small class="text-white-50" style="font-size: 11px;">Belum ada foto background kustom</small>
-                            </div>
                         @endif
+                        <div id="bgFallbackStandard" class="d-flex flex-column align-items-center justify-content-center h-100 text-white text-center p-3 @if($about->visimisi_background_url) d-none @endif" style="background: linear-gradient(135deg, #13883a 0%, #034b1a 100%);">
+                            <i class="bi bi-palette fs-2 mb-1 text-warning"></i>
+                            <span class="fw-bold small">Latar Standar Gradasi Hijau UIS</span>
+                            <small class="text-white-50" style="font-size: 11px;">Belum ada foto background kustom</small>
+                        </div>
                     </div>
                 </div>
 
@@ -323,6 +326,41 @@
 @push('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', function () {
+        // Live Preview saat memilih file background baru
+        const inputBg = document.getElementById('visimisi_background');
+        if (inputBg) {
+            inputBg.addEventListener('change', function (e) {
+                const file = e.target.files && e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (evt) {
+                        let img = document.getElementById('currentBgPreviewImg');
+                        const fallback = document.getElementById('bgFallbackStandard');
+                        const overlay = document.getElementById('bgOverlayBar');
+                        const container = fallback ? fallback.parentElement : null;
+
+                        if (!img && container) {
+                            img = document.createElement('img');
+                            img.id = 'currentBgPreviewImg';
+                            img.alt = 'Background Visi Misi';
+                            img.style.width = '100%';
+                            img.style.height = '100%';
+                            img.style.objectFit = 'cover';
+                            container.prepend(img);
+                        }
+
+                        if (img) {
+                            img.src = evt.target.result;
+                            img.style.display = 'block';
+                        }
+                        if (fallback) fallback.classList.add('d-none');
+                        if (overlay) overlay.classList.remove('d-none');
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
         if (typeof tinymce !== 'undefined') {
             tinymce.init({
                 selector: 'textarea.tinymce-visimisi',

@@ -324,3 +324,12 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
 
 // Endpoint Live Sync (Auto-Update Frontend & Admin Tanpa Reload)
 Route::get('/api/live-state', [\App\Http\Controllers\ThemeSettingController::class, 'liveState'])->name('api.live-state');
+
+// Fallback Serving Storage (Menjamin semua file upload tetap tampil meskipun symlink public/storage belum dibuat di cPanel/shared hosting)
+Route::get('/storage/{path}', function (string $path) {
+    $cleanPath = ltrim($path, '/');
+    if (!\Illuminate\Support\Facades\Storage::disk('public')->exists($cleanPath)) {
+        abort(404);
+    }
+    return \Illuminate\Support\Facades\Storage::disk('public')->response($cleanPath);
+})->where('path', '.*')->name('storage.fallback');

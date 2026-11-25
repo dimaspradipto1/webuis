@@ -48,8 +48,14 @@ class VisiMisiController extends Controller
         $about = About::firstOrCreate(['id' => 1]);
 
         if ($request->hasFile('visimisi_background')) {
-            if ($about->visimisi_background && Storage::disk('public')->exists($about->visimisi_background)) {
-                Storage::disk('public')->delete($about->visimisi_background);
+            if ($about->visimisi_background) {
+                $oldPath = ltrim(preg_replace('#^(public/|storage/)#', '', $about->visimisi_background), '/');
+                if (Storage::disk('public')->exists($oldPath)) {
+                    Storage::disk('public')->delete($oldPath);
+                }
+                if (file_exists(public_path('storage/' . $oldPath))) {
+                    @unlink(public_path('storage/' . $oldPath));
+                }
             }
             $validated['visimisi_background'] = $request->file('visimisi_background')->store('visi-misi', 'public');
         }
@@ -125,8 +131,14 @@ class VisiMisiController extends Controller
     {
         $about = About::firstOrCreate(['id' => 1]);
 
-        if ($about->visimisi_background && Storage::disk('public')->exists($about->visimisi_background)) {
-            Storage::disk('public')->delete($about->visimisi_background);
+        if ($about->visimisi_background) {
+            $clean = ltrim(preg_replace('#^(public/|storage/)#', '', $about->visimisi_background), '/');
+            if (Storage::disk('public')->exists($clean)) {
+                Storage::disk('public')->delete($clean);
+            }
+            if (file_exists(public_path('storage/' . $clean))) {
+                @unlink(public_path('storage/' . $clean));
+            }
         }
 
         $about->visimisi_background = null;

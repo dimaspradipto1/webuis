@@ -142,11 +142,25 @@ class About extends Model
             return null;
         }
 
-        if (str_starts_with($this->visimisi_background, 'http://') || str_starts_with($this->visimisi_background, 'https://')) {
-            return $this->visimisi_background;
+        $raw = trim($this->visimisi_background);
+
+        if (str_starts_with($raw, 'http://') || str_starts_with($raw, 'https://')) {
+            return $raw;
         }
 
-        return asset('storage/' . $this->visimisi_background);
+        $cleanPath = ltrim(preg_replace('#^(public/|storage/)#', '', $raw), '/');
+
+        // Pastikan file fisik benar-benar ada di disk public atau direktori public
+        $disk = \Illuminate\Support\Facades\Storage::disk('public');
+        $exists = $disk->exists($cleanPath)
+            || file_exists(public_path('storage/' . $cleanPath))
+            || file_exists(public_path($cleanPath));
+
+        if (! $exists) {
+            return null;
+        }
+
+        return asset('storage/' . $cleanPath);
     }
 
     /**
