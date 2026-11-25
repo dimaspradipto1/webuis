@@ -115,14 +115,11 @@
 
         <!-- PMB Dropdown -->
         <li class="nav-item dropdown">
-          <a class="nav-link nav-link-custom dropdown-toggle {{ request()->routeIs('homepage.informasi-pmb') || request()->routeIs('homepage.beasiswa*') ? 'active' : '' }}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+          <a class="nav-link nav-link-custom dropdown-toggle {{ request()->routeIs('homepage.informasi-pmb') ? 'active' : '' }}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             PMB <i class="bi bi-chevron-down ms-1" style="font-size: 10px;"></i>
           </a>
           <ul class="dropdown-menu dropdown-menu-custom">
-            <li><a class="dropdown-item dropdown-item-custom {{ request()->routeIs('homepage.informasi-pmb') ? 'active' : '' }}" href="{{ route('homepage.informasi-pmb') }}"><i class="bi bi-info-circle"></i> Informasi PMB</a></li>
-            <li><a class="dropdown-item dropdown-item-custom" href="{{ route('homepage.informasi-pmb') }}#jadwal-gelombang"><i class="bi bi-calendar-event"></i> Jadwal Gelombang</a></li>
-            <li><a class="dropdown-item dropdown-item-custom" href="{{ route('homepage.informasi-pmb') }}#persyaratan-pmb"><i class="bi bi-file-earmark-check"></i> Syarat Pendaftaran</a></li>
-            <li><a class="dropdown-item dropdown-item-custom {{ request()->routeIs('homepage.beasiswa*') ? 'active' : '' }}" href="{{ route('homepage.beasiswa') }}"><i class="bi bi-award"></i> Program Beasiswa</a></li>
+            <li><a class="dropdown-item dropdown-item-custom {{ request()->routeIs('homepage.informasi-pmb') ? 'active' : '' }}" href="{{ route('homepage.informasi-pmb') }}"><i class="bi bi-info-circle-fill" style="color: #046B26;"></i> Informasi PMB</a></li>
             <li><a class="dropdown-item dropdown-item-custom" href="{{ route('homepage.informasi-pmb') }}#brosur-pmb"><i class="bi bi-images"></i> Brosur & Poster PMB</a></li>
             <li><a class="dropdown-item dropdown-item-custom" href="{{ route('homepage.informasi-pmb') }}#unduh-panduan"><i class="bi bi-file-earmark-pdf"></i> Dokumen Panduan (PDF)</a></li>
             <li><hr class="dropdown-divider my-1"></li>

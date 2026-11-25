@@ -868,6 +868,11 @@ class FrontendController extends Controller
     {
         $contact = Contact::first();
         $pmbSetting = PmbSetting::first();
+        $beasiswaSetting = \App\Models\BeasiswaSetting::first();
+        $jalurBeasiswa = $beasiswaSetting?->jalur_list ?? \App\Models\BeasiswaSetting::defaultJalur();
+        $beasiswaStats = $beasiswaSetting?->stats ?? \App\Models\BeasiswaSetting::defaultStats();
+        $prodiCount = \App\Models\ProgramStudi::count();
+
         $pmb = \App\Models\InformasiPmbHumas::firstOrCreate(
             ['id' => 1],
             [
@@ -883,7 +888,15 @@ class FrontendController extends Controller
             ]
         );
 
-        return view('layouts.frontend.informasi-pmb-humas', compact('contact', 'pmbSetting', 'pmb'));
+        return view('layouts.frontend.informasi-pmb-humas', compact(
+            'contact',
+            'pmbSetting',
+            'pmb',
+            'beasiswaSetting',
+            'jalurBeasiswa',
+            'beasiswaStats',
+            'prodiCount'
+        ));
     }
 
     public function news(Request $request, $categorySlug = null)

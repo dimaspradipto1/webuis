@@ -217,23 +217,8 @@
               </a>
               <ul id="pmb-admin-nav" class="nav-content collapse {{ Route::is('admin.pmb.*') || Route::is('beasiswa.admin*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
                   <li>
-                      <a href="{{ route('admin.pmb.index') }}" class="{{ Route::is('admin.pmb.index') ? 'active' : '' }}">
-                          <i class="bi bi-circle"></i><span>Informasi PMB</span>
-                      </a>
-                  </li>
-                  <li>
-                      <a href="{{ route('admin.pmb.gelombang') }}" class="{{ Route::is('admin.pmb.gelombang') ? 'active' : '' }}">
-                          <i class="bi bi-circle"></i><span>Jadwal Gelombang</span>
-                      </a>
-                  </li>
-                  <li>
-                      <a href="{{ route('admin.pmb.syarat') }}" class="{{ Route::is('admin.pmb.syarat') ? 'active' : '' }}">
-                          <i class="bi bi-circle"></i><span>Syarat Pendaftaran</span>
-                      </a>
-                  </li>
-                  <li>
-                      <a href="{{ route('beasiswa.admin') }}" class="{{ Route::is('beasiswa.admin*') ? 'active' : '' }}">
-                          <i class="bi bi-circle"></i><span>Program Beasiswa</span>
+                      <a href="{{ route('admin.pmb.index') }}" class="{{ Route::is('admin.pmb.index') || Route::is('admin.pmb.gelombang') || Route::is('admin.pmb.syarat') ? 'active' : '' }}">
+                          <i class="bi bi-circle"></i><span>Informasi PMB (Terpadu)</span>
                       </a>
                   </li>
                   <li>

@@ -51,6 +51,9 @@ class AdminPmbController extends Controller
             'badge_text' => 'nullable|string|max:100',
             'deskripsi_singkat' => 'nullable|string',
             'no_wa_pmb' => 'nullable|string|max:50',
+            'gelombang_info' => 'nullable|string',
+            'persyaratan_info' => 'nullable|string',
+            'beasiswa_info' => 'nullable|string',
             'is_active' => 'nullable|boolean',
         ]);
 
@@ -60,10 +63,13 @@ class AdminPmbController extends Controller
             'badge_text' => $validated['badge_text'] ?? null,
             'deskripsi_singkat' => $validated['deskripsi_singkat'] ?? null,
             'no_wa_pmb' => $validated['no_wa_pmb'] ?? null,
+            'gelombang_info' => $validated['gelombang_info'] ?? $pmb->gelombang_info,
+            'persyaratan_info' => $validated['persyaratan_info'] ?? $pmb->persyaratan_info,
+            'beasiswa_info' => $validated['beasiswa_info'] ?? null,
             'is_active' => $request->has('is_active'),
         ]);
 
-        return redirect()->back()->with('success', 'Data Informasi PMB berhasil diperbarui!');
+        return redirect()->back()->with('success', 'Informasi PMB (termasuk Jadwal Gelombang, Syarat, dan Beasiswa) berhasil diperbarui!');
     }
 
     /**

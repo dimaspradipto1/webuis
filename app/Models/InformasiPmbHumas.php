@@ -24,6 +24,7 @@ class InformasiPmbHumas extends Model
         'no_wa_pmb',
         'gelombang_info',
         'persyaratan_info',
+        'beasiswa_info',
         'is_active',
     ];
 
