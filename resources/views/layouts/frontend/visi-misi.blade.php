@@ -280,6 +280,16 @@
 ═══════════════════════════════════════════════ -->
 <section class="section-bg-sand py-5">
   <div class="container py-2">
+    @php
+      $globalBg = $about?->visimisi_background_url;
+      $fallbackBg1 = \App\Models\VisiMisi::where('urutan', 1)->value('gambar');
+      $fallbackBg2 = \App\Models\VisiMisi::where('urutan', 2)->value('gambar');
+      $fallbackBg3 = \App\Models\VisiMisi::where('urutan', 3)->value('gambar');
+
+      $bgCard1 = $globalBg ?: ($fallbackBg1 ? asset('storage/' . $fallbackBg1) : null);
+      $bgCard2 = $globalBg ?: ($fallbackBg2 ? asset('storage/' . $fallbackBg2) : null);
+      $bgCard3 = $globalBg ?: ($fallbackBg3 ? asset('storage/' . $fallbackBg3) : null);
+    @endphp
     <div class="row g-4 justify-content-center align-items-stretch">
       
       {{-- ═══════════════════════════════════════════════
@@ -287,7 +297,7 @@
            ═══════════════════════════════════════════════ --}}
       <div class="col-lg-4 col-md-6 col-12 d-flex" data-aos="fade-up" data-aos-delay="100">
         <div class="visimisi-card w-100 d-flex flex-column" 
-             style="@if($about?->visimisi_background_url) background-image: linear-gradient(135deg, rgba(14, 114, 46, 0.88) 0%, rgba(2, 53, 18, 0.93) 100%), url('{{ $about->visimisi_background_url }}'); @endif">
+             style="@if($bgCard1) background-image: linear-gradient(135deg, rgba(14, 114, 46, 0.88) 0%, rgba(2, 53, 18, 0.93) 100%), url('{{ $bgCard1 }}'); @endif">
           
           {{-- Dot Matrix Accents --}}
           <div class="visimisi-dot-matrix top-left"></div>
@@ -321,16 +331,29 @@
 
           {{-- Middle Content Box (Glassmorphism) --}}
           <div class="visimisi-glass-content flex-grow-1 d-flex flex-column justify-content-center text-center">
-            @if(strip_tags($about?->visimisi_tagline_visi) !== $about?->visimisi_tagline_visi)
-              <div class="visi-html-content mb-0">
-                {!! $about->visimisi_tagline_visi !!}
-              </div>
+            @php
+              $rawVisi = $about?->visimisi_tagline_visi ?? $about?->visi ?? '';
+              $hasVisi = !empty(trim(strip_tags($rawVisi)));
+            @endphp
+            @if($hasVisi)
+              @if(strip_tags($rawVisi) !== $rawVisi)
+                <div class="visi-html-content mb-0">
+                  {!! $rawVisi !!}
+                </div>
+              @else
+                <div class="mb-2">
+                  <i class="bi bi-quote fs-1 text-warning opacity-75"></i>
+                </div>
+                <p class="visi-text-highlight mb-0">
+                  "{{ $rawVisi }}"
+                </p>
+              @endif
             @else
               <div class="mb-2">
                 <i class="bi bi-quote fs-1 text-warning opacity-75"></i>
               </div>
               <p class="visi-text-highlight mb-0">
-                "{{ $about?->visimisi_tagline_visi ?? 'Unggul, Berintegritas, Berjiwa Entrepreneurship' }}"
+                "Unggul, Berintegritas, Berjiwa Entrepreneurship"
               </p>
             @endif
           </div>
@@ -367,7 +390,7 @@
            ═══════════════════════════════════════════════ --}}
       <div class="col-lg-4 col-md-6 col-12 d-flex" data-aos="fade-up" data-aos-delay="200">
         <div class="visimisi-card w-100 d-flex flex-column" 
-             style="@if($about?->visimisi_background_url) background-image: linear-gradient(135deg, rgba(14, 114, 46, 0.88) 0%, rgba(2, 53, 18, 0.93) 100%), url('{{ $about->visimisi_background_url }}'); @endif">
+             style="@if($bgCard2) background-image: linear-gradient(135deg, rgba(14, 114, 46, 0.88) 0%, rgba(2, 53, 18, 0.93) 100%), url('{{ $bgCard2 }}'); @endif">
           
           {{-- Dot Matrix Accents --}}
           <div class="visimisi-dot-matrix top-left"></div>
@@ -401,27 +424,31 @@
 
           {{-- Middle Content Box (Glassmorphism) --}}
           <div class="visimisi-glass-content flex-grow-1 d-flex flex-column justify-content-center">
-            @if(strip_tags($about?->visimisi_misi_items) !== $about?->visimisi_misi_items)
-              <div class="misi-html-content">
-                {!! $about->visimisi_misi_items !!}
-              </div>
+            @php
+              $rawMisi = $about?->visimisi_misi_items ?? $about?->misi ?? '';
+              $hasMisi = !empty(trim(strip_tags($rawMisi)));
+            @endphp
+            @if($hasMisi)
+              @if(strip_tags($rawMisi) !== $rawMisi)
+                <div class="misi-html-content">
+                  {!! $rawMisi !!}
+                </div>
+              @else
+                <ol class="misi-ordered-list mb-0 ps-3">
+                  @foreach(preg_split('/\r\n|\r|\n/', trim($rawMisi)) as $line)
+                    @if(trim($line))
+                      <li>{{ preg_replace('/^\d+[\.\)]\s*/', '', trim($line)) }}</li>
+                    @endif
+                  @endforeach
+                </ol>
+              @endif
             @else
               <ol class="misi-ordered-list mb-0 ps-3">
-                @php
-                  $misiItems = $about?->misi_list ?? [];
-                  if (empty($misiItems)) {
-                      $misiItems = [
-                          'Menyelenggarakan pendidikan tinggi yang unggul dengan mengintegrasikan nilai-nilai integritas dan kewirausahaan dalam proses pembelajaran, penelitian, dan pengabdian kepada Masyarakat.',
-                          'Mengembangkan penelitian inovatif dan relevan yang berkontribusi pada kemajuan ilmu pengetahuan, teknologi, dan pemecahan masalah di masyarakat.',
-                          'Membangun ekosistem kewirausahaan yang mendorong kreativitas, inovasi, dan kemandirian di kalangan civitas akademika dan masyarakat luas.',
-                          'Menerapkan tata kelola universitas yang kredibel, transparan, akuntabel, bertanggungjawab dan berintegritas tinggi untuk mendukung pencapaian keunggulan institusi.',
-                          'Menjalin kerjasama strategis dengan berbagai pemangku kepentingan untuk meningkatkan daya saing, reputasi, dan kontribusi universitas di tingkat nasional dan internasional.'
-                      ];
-                  }
-                @endphp
-                @foreach($misiItems as $misi)
-                  <li>{{ preg_replace('/^\d+[\.\)]\s*/', '', $misi) }}</li>
-                @endforeach
+                <li>Menyelenggarakan pendidikan tinggi yang unggul dengan mengintegrasikan nilai-nilai integritas dan kewirausahaan dalam proses pembelajaran, penelitian, dan pengabdian kepada Masyarakat.</li>
+                <li>Mengembangkan penelitian inovatif dan relevan yang berkontribusi pada kemajuan ilmu pengetahuan, teknologi, dan pemecahan masalah di masyarakat.</li>
+                <li>Membangun ekosistem kewirausahaan yang mendorong kreativitas, inovasi, dan kemandirian di kalangan civitas akademika dan masyarakat luas.</li>
+                <li>Menerapkan tata kelola universitas yang kredibel, transparan, akuntabel, bertanggungjawab dan berintegritas tinggi untuk mendukung pencapaian keunggulan institusi.</li>
+                <li>Menjalin kerjasama strategis dengan berbagai pemangku kepentingan untuk meningkatkan daya saing, reputasi, dan kontribusi universitas di tingkat nasional dan internasional.</li>
               </ol>
             @endif
           </div>
@@ -458,7 +485,7 @@
            ═══════════════════════════════════════════════ --}}
       <div class="col-lg-4 col-md-6 col-12 d-flex" data-aos="fade-up" data-aos-delay="300">
         <div class="visimisi-card w-100 d-flex flex-column" 
-             style="@if($about?->visimisi_background_url) background-image: linear-gradient(135deg, rgba(14, 114, 46, 0.88) 0%, rgba(2, 53, 18, 0.93) 100%), url('{{ $about->visimisi_background_url }}'); @endif">
+             style="@if($bgCard3) background-image: linear-gradient(135deg, rgba(14, 114, 46, 0.88) 0%, rgba(2, 53, 18, 0.93) 100%), url('{{ $bgCard3 }}'); @endif">
           
           {{-- Dot Matrix Accents --}}
           <div class="visimisi-dot-matrix top-left"></div>
@@ -492,35 +519,48 @@
 
           {{-- Middle Content Box (Glassmorphism) --}}
           <div class="visimisi-glass-content flex-grow-1 d-flex flex-column justify-content-center">
-            @if(strip_tags($about?->visimisi_tatanilai_items) !== $about?->visimisi_tatanilai_items)
-              <div class="tatanilai-html-content">
-                {!! $about->visimisi_tatanilai_items !!}
-              </div>
+            @php
+              $rawTataNilai = $about?->visimisi_tatanilai_items ?? '';
+              $hasTataNilai = !empty(trim(strip_tags($rawTataNilai)));
+            @endphp
+            @if($hasTataNilai)
+              @if(strip_tags($rawTataNilai) !== $rawTataNilai)
+                <div class="tatanilai-html-content">
+                  {!! $rawTataNilai !!}
+                </div>
+              @else
+                <div class="tatanilai-items-wrap">
+                  @foreach(preg_split('/\r\n|\r|\n/', trim($rawTataNilai)) as $tn)
+                    @if(trim($tn))
+                      @php
+                        $parts = explode(':', trim($tn), 2);
+                      @endphp
+                      <div class="tatanilai-item mb-3">
+                        @if(count($parts) === 2)
+                          <strong class="tatanilai-label d-block mb-1 text-warning">{{ trim($parts[0]) }}:</strong>
+                          <span class="tatanilai-desc text-white">{{ trim($parts[1]) }}</span>
+                        @else
+                          <span class="tatanilai-desc text-white">{{ $tn }}</span>
+                        @endif
+                      </div>
+                    @endif
+                  @endforeach
+                </div>
+              @endif
             @else
               <div class="tatanilai-items-wrap">
-                @php
-                  $tataNilaiItems = $about?->tata_nilai_list ?? [];
-                  if (empty($tataNilaiItems)) {
-                      $tataNilaiItems = [
-                          '(C) CERDAS: Spiritual, intelektual dan emosional',
-                          '(I) INTEGRITAS: Jujur, disiplin, Komitmen dan bertanggung jawab',
-                          '(P) PROFESIONAL: Objektif, Adil dan Transparan'
-                      ];
-                  }
-                @endphp
-                @foreach($tataNilaiItems as $tn)
-                  @php
-                    $parts = explode(':', $tn, 2);
-                  @endphp
-                  <div class="tatanilai-item mb-3">
-                    @if(count($parts) === 2)
-                      <strong class="tatanilai-label d-block mb-1">{{ trim($parts[0]) }}:</strong>
-                      <span class="tatanilai-desc">{{ trim($parts[1]) }}</span>
-                    @else
-                      <span class="tatanilai-desc">{{ $tn }}</span>
-                    @endif
-                  </div>
-                @endforeach
+                <div class="tatanilai-item mb-3">
+                  <strong class="tatanilai-label d-block mb-1 text-warning">(C) CERDAS:</strong>
+                  <span class="tatanilai-desc text-white">Spiritual, intelektual dan emosional</span>
+                </div>
+                <div class="tatanilai-item mb-3">
+                  <strong class="tatanilai-label d-block mb-1 text-warning">(I) INTEGRITAS:</strong>
+                  <span class="tatanilai-desc text-white">Jujur, disiplin, Komitmen dan bertanggung jawab</span>
+                </div>
+                <div class="tatanilai-item mb-0">
+                  <strong class="tatanilai-label d-block mb-1 text-warning">(P) PROFESIONAL:</strong>
+                  <span class="tatanilai-desc text-white">Objektif, Adil dan Transparan</span>
+                </div>
               </div>
             @endif
           </div>
@@ -551,6 +591,10 @@
 
         </div>
       </div>
+
+    </div>
+  </div>
+</section>
 
     </div>
   </div>

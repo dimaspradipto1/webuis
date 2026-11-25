@@ -145,8 +145,7 @@
                             <textarea class="form-control tinymce-visimisi @error('visimisi_tagline_visi') is-invalid @enderror" 
                                       id="visimisi_tagline_visi" 
                                       name="visimisi_tagline_visi" 
-                                      rows="8" 
-                                      placeholder="Contoh: 'Unggul, Berintegritas, Berjiwa Entrepreneurship'">{{ old('visimisi_tagline_visi', $about->visimisi_tagline_visi ?? 'Unggul, Berintegritas, Berjiwa Entrepreneurship') }}</textarea>
+                                      rows="8">{!! old('visimisi_tagline_visi', !empty(trim(strip_tags($about->visimisi_tagline_visi ?? ''))) ? $about->visimisi_tagline_visi : '<p>Unggul, Berintegritas, Berjiwa Entrepreneurship</p>') !!}</textarea>
                             <div class="form-text text-muted small mt-1">
                                 Teks ini akan tampil besar dan elegan di tengah kartu Visi.
                             </div>
@@ -178,8 +177,7 @@
                                       id="visimisi_misi_items" 
                                       name="visimisi_misi_items" 
                                       rows="11" 
-                                      style="font-size: 12.5px; line-height: 1.5;"
-                                      placeholder="1. Menyelenggarakan pendidikan tinggi yang unggul...&#10;2. Mengembangkan penelitian inovatif...&#10;3. Membangun ekosistem kewirausahaan...">{{ old('visimisi_misi_items', $about->visimisi_misi_items) }}</textarea>
+                                      style="font-size: 12.5px; line-height: 1.5;">{!! old('visimisi_misi_items', !empty(trim(strip_tags($about->visimisi_misi_items ?? ''))) ? $about->visimisi_misi_items : "<ol>\n<li>Menyelenggarakan pendidikan tinggi yang unggul dengan mengintegrasikan nilai-nilai integritas dan kewirausahaan dalam proses pembelajaran, penelitian, dan pengabdian kepada Masyarakat.</li>\n<li>Mengembangkan penelitian inovatif dan relevan yang berkontribusi pada kemajuan ilmu pengetahuan, teknologi, dan pemecahan masalah di masyarakat.</li>\n<li>Membangun ekosistem kewirausahaan yang mendorong kreativitas, inovasi, dan kemandirian di kalangan civitas akademika dan masyarakat luas.</li>\n<li>Menerapkan tata kelola universitas yang kredibel, transparan, akuntabel, bertanggungjawab dan berintegritas tinggi untuk mendukung pencapaian keunggulan institusi.</li>\n<li>Menjalin kerjasama strategis dengan berbagai pemangku kepentingan untuk meningkatkan daya saing, reputasi, dan kontribusi universitas di tingkat nasional dan internasional.</li>\n</ol>") !!}</textarea>
                             <div class="form-text text-muted small mt-1">
                                 Tuliskan setiap butir misi (bisa menggunakan fitur Numbered List di editor).
                             </div>
@@ -226,8 +224,7 @@
                                       id="visimisi_tatanilai_items" 
                                       name="visimisi_tatanilai_items" 
                                       rows="7" 
-                                      style="font-size: 12.5px; line-height: 1.5;"
-                                      placeholder="(C) CERDAS: Spiritual, intelektual dan emosional&#10;(I) INTEGRITAS: Jujur, disiplin, Komitmen dan bertanggung jawab&#10;(P) PROFESIONAL: Objektif, Adil dan Transparan">{{ old('visimisi_tatanilai_items', $about->visimisi_tatanilai_items) }}</textarea>
+                                      style="font-size: 12.5px; line-height: 1.5;">{!! old('visimisi_tatanilai_items', !empty(trim(strip_tags($about->visimisi_tatanilai_items ?? ''))) ? $about->visimisi_tatanilai_items : "<p><strong>(C) CERDAS:</strong> Spiritual, intelektual dan emosional</p>\n<p><strong>(I) INTEGRITAS:</strong> Jujur, disiplin, Komitmen dan bertanggung jawab</p>\n<p><strong>(P) PROFESIONAL:</strong> Objektif, Adil dan Transparan</p>") !!}</textarea>
                             <div class="form-text text-muted small mt-1">
                                 Format: <code>(C) CERDAS: Penjelasan</code> (gunakan format Bold atau warna untuk label).
                             </div>
@@ -371,9 +368,18 @@
                 toolbar: 'undo redo | bold italic underline | forecolor backcolor | bullist numlist | alignleft aligncenter alignright | removeformat code',
                 content_style: 'body { font-family: "Plus Jakarta Sans", Arial, sans-serif; font-size: 13.5px; line-height: 1.6; color: #1e293b; } ol, ul { padding-left: 20px; } p { margin-bottom: 6px; } strong, b { font-weight: 700; }',
                 setup: function (editor) {
-                    editor.on('change', function () {
+                    editor.on('change keyup NodeChange', function () {
                         editor.save();
                     });
+                }
+            });
+        }
+
+        const mainForm = document.querySelector('form[action="{{ route('visimisi.update-content') }}"]');
+        if (mainForm) {
+            mainForm.addEventListener('submit', function () {
+                if (typeof tinymce !== 'undefined') {
+                    tinymce.triggerSave();
                 }
             });
         }

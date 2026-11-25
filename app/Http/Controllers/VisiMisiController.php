@@ -21,6 +21,29 @@ class VisiMisiController extends Controller
         $this->ensureSchemaExists();
 
         $about = About::firstOrCreate(['id' => 1]);
+
+        // Berikan nilai awal default jika data teks masih kosong agar editor langsung terisi
+        $dirty = false;
+        if (empty(trim(strip_tags($about->visimisi_tagline_visi ?? '')))) {
+            $about->visimisi_tagline_visi = '<p>Unggul, Berintegritas, Berjiwa Entrepreneurship</p>';
+            $dirty = true;
+        }
+        if (empty(trim(strip_tags($about->visimisi_misi_items ?? '')))) {
+            $about->visimisi_misi_items = "<ol>\n<li>Menyelenggarakan pendidikan tinggi yang unggul dengan mengintegrasikan nilai-nilai integritas dan kewirausahaan dalam proses pembelajaran, penelitian, dan pengabdian kepada Masyarakat.</li>\n<li>Mengembangkan penelitian inovatif dan relevan yang berkontribusi pada kemajuan ilmu pengetahuan, teknologi, dan pemecahan masalah di masyarakat.</li>\n<li>Membangun ekosistem kewirausahaan yang mendorong kreativitas, inovasi, dan kemandirian di kalangan civitas akademika dan masyarakat luas.</li>\n<li>Menerapkan tata kelola universitas yang kredibel, transparan, akuntabel, bertanggungjawab dan berintegritas tinggi untuk mendukung pencapaian keunggulan institusi.</li>\n<li>Menjalin kerjasama strategis dengan berbagai pemangku kepentingan untuk meningkatkan daya saing, reputasi, dan kontribusi universitas di tingkat nasional dan internasional.</li>\n</ol>";
+            $dirty = true;
+        }
+        if (empty(trim(strip_tags($about->visimisi_tatanilai_items ?? '')))) {
+            $about->visimisi_tatanilai_items = "<p><strong>(C) CERDAS:</strong> Spiritual, intelektual dan emosional</p>\n<p><strong>(I) INTEGRITAS:</strong> Jujur, disiplin, Komitmen dan bertanggung jawab</p>\n<p><strong>(P) PROFESIONAL:</strong> Objektif, Adil dan Transparan</p>";
+            $dirty = true;
+        }
+        if (empty($about->visimisi_tatanilai_judul)) {
+            $about->visimisi_tatanilai_judul = 'TATA NILAI UIS "CIP"';
+            $dirty = true;
+        }
+        if ($dirty) {
+            $about->save();
+        }
+
         $breadcrumb = Breadcrumb::getForPage('visi-misi');
 
         return view('pages.visimisi.index', compact('about', 'breadcrumb'));
