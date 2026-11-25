@@ -41,6 +41,11 @@ class Akademik extends Model
             return $this->file_dokumen;
         }
 
+        $publicAsset = 'assets/dokumen/akademik/' . basename($this->file_dokumen);
+        if (file_exists(public_path($publicAsset))) {
+            return asset($publicAsset);
+        }
+
         return asset('storage/' . ltrim($this->file_dokumen, '/'));
     }
 
@@ -52,6 +57,11 @@ class Akademik extends Model
 
         if (str_starts_with($this->gambar, 'http://') || str_starts_with($this->gambar, 'https://')) {
             return $this->gambar;
+        }
+
+        $publicAsset = 'assets/img/akademik/' . basename($this->gambar);
+        if (file_exists(public_path($publicAsset))) {
+            return asset($publicAsset);
         }
 
         return asset('storage/' . ltrim($this->gambar, '/'));
