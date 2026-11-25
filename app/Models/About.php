@@ -16,6 +16,9 @@ class About extends Model
         'deskripsi_profil_2',
         'video_url',
         'video_file',
+        'dokumen_file',
+        'dokumen_nama',
+        'dokumen_link',
         'visi',
         'visi_judul',
         'visi_icon',
@@ -69,6 +72,30 @@ class About extends Model
     public function hasVideo(): bool
     {
         return ! empty($this->video_url) || ! empty($this->video_file);
+    }
+
+    /**
+     * Cek apakah terdapat dokumen profil (upload berkas atau link gdrive/cloud).
+     */
+    public function hasDokumen(): bool
+    {
+        return ! empty($this->dokumen_file) || ! empty($this->dokumen_link);
+    }
+
+    /**
+     * Dapatkan URL dokumen profil baik dari storage lokal maupun link eksternal.
+     */
+    public function getDokumenUrlAttribute(): ?string
+    {
+        if (! empty($this->dokumen_file)) {
+            return asset('storage/' . $this->dokumen_file);
+        }
+
+        if (! empty($this->dokumen_link)) {
+            return $this->dokumen_link;
+        }
+
+        return null;
     }
 
     /**

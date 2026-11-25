@@ -47,6 +47,10 @@ class AboutController extends Controller
             $data['video_file'] = $request->file('video_file')->store('about-videos', 'public');
         }
 
+        if ($request->hasFile('dokumen_file')) {
+            $data['dokumen_file'] = $request->file('dokumen_file')->store('about-documents', 'public');
+        }
+
         if (! empty($data['video_url'])) {
             $raw = trim($data['video_url']);
             if (preg_match('/<iframe.*?src=["\']([^"\']+)["\']/i', $raw, $frameMatch)) {
@@ -84,6 +88,21 @@ class AboutController extends Controller
                 Storage::disk('public')->delete($about->video_file);
             }
             $data['video_file'] = $request->file('video_file')->store('about-videos', 'public');
+        }
+
+        // Hapus file dokumen jika diminta
+        if ($request->boolean('delete_dokumen_file')) {
+            if ($about->dokumen_file && Storage::disk('public')->exists($about->dokumen_file)) {
+                Storage::disk('public')->delete($about->dokumen_file);
+            }
+            $data['dokumen_file'] = null;
+        }
+
+        if ($request->hasFile('dokumen_file')) {
+            if ($about->dokumen_file && Storage::disk('public')->exists($about->dokumen_file)) {
+                Storage::disk('public')->delete($about->dokumen_file);
+            }
+            $data['dokumen_file'] = $request->file('dokumen_file')->store('about-documents', 'public');
         }
 
         if (! empty($data['video_url'])) {

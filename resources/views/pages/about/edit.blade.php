@@ -141,6 +141,79 @@
                                 </div>
                             @endif
                         </div>
+
+                        <!-- DOKUMEN PROFIL & PANDUAN KAMPUS SECTION -->
+                        <div class="card bg-light border-0 p-3 rounded-3 mt-4">
+                            <h6 class="fw-bold text-dark mb-1">
+                                <i class="bi bi-file-earmark-pdf-fill me-2 text-danger"></i>Dokumen Profil Universitas / Statuta / Brosur Kampus
+                            </h6>
+                            <p class="text-muted small mb-3">Dokumen ini akan dibuka saat pengunjung mengklik tombol <strong>"Baca Selengkapnya"</strong> pada section Profil / Tentang Universitas di beranda dan halaman profil.</p>
+                            
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label for="dokumen_nama" class="form-label fw-semibold small">Label / Nama Dokumen</label>
+                                    <input type="text" id="dokumen_nama" name="dokumen_nama" class="form-control @error('dokumen_nama') is-invalid @enderror" value="{{ old('dokumen_nama', $about->dokumen_nama) }}" placeholder="Contoh: Dokumen Profil Lengkap Universitas Ibnu Sina">
+                                    @error('dokumen_nama')
+                                        <div class="text-danger small mt-1">{{ $message }}</div>
+                                    @enderror
+                                    <div class="form-text small text-muted">Opsional. Jika dikosongkan, tombol di frontend akan tertulis <em>"Baca Selengkapnya"</em>.</div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="dokumen_link" class="form-label fw-semibold small">Atau Link Google Drive / Cloud URL Dokumen</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-white"><i class="bi bi-link-45deg"></i></span>
+                                        <input type="text" id="dokumen_link" name="dokumen_link" class="form-control @error('dokumen_link') is-invalid @enderror" value="{{ old('dokumen_link', $about->dokumen_link) }}" placeholder="https://drive.google.com/file/d/.../view?usp=sharing">
+                                    </div>
+                                    @error('dokumen_link')
+                                        <div class="text-danger small mt-1">{{ $message }}</div>
+                                    @enderror
+                                    <div class="form-text small text-muted">Gunakan tautan Google Drive jika berkas dokumen berukuran sangat besar.</div>
+                                </div>
+
+                                <div class="col-12">
+                                    <label for="dokumen_file" class="form-label fw-semibold small">Upload File Dokumen Resmi (PDF / DOCX)</label>
+                                    <input type="file" id="dokumen_file" name="dokumen_file" class="form-control @error('dokumen_file') is-invalid @enderror" accept=".pdf,.doc,.docx,.ppt,.pptx">
+                                    @error('dokumen_file')
+                                        <div class="text-danger small mt-1">{{ $message }}</div>
+                                    @enderror
+                                    <div class="form-text small text-muted">Format yang didukung: PDF, DOCX, PPTX (Maksimal 25 MB).</div>
+                                </div>
+                            </div>
+
+                            @if($about->hasDokumen())
+                                <div class="mt-3 pt-3 border-top">
+                                    <div class="fw-semibold small text-muted mb-2"><i class="bi bi-file-check-fill text-success me-1"></i>Dokumen Terpasang Saat Ini:</div>
+                                    <div class="d-flex flex-wrap align-items-center gap-3">
+                                        @if($about->dokumen_file)
+                                            <div class="d-flex align-items-center gap-2">
+                                                <a href="{{ asset('storage/' . $about->dokumen_file) }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-danger d-inline-flex align-items-center gap-1">
+                                                    <i class="bi bi-file-earmark-pdf"></i>
+                                                    <span>{{ basename($about->dokumen_file) }}</span>
+                                                    <i class="bi bi-box-arrow-up-right ms-1" style="font-size: 11px;"></i>
+                                                </a>
+                                                <div class="form-check ms-1 mb-0">
+                                                    <input class="form-check-input" type="checkbox" name="delete_dokumen_file" id="delete_dokumen_file" value="1">
+                                                    <label class="form-check-label text-danger small" for="delete_dokumen_file">
+                                                        Hapus file PDF
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        @endif
+
+                                        @if($about->dokumen_link)
+                                            <div>
+                                                <a href="{{ $about->dokumen_link }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm btn-outline-success d-inline-flex align-items-center gap-1">
+                                                    <i class="bi bi-google"></i>
+                                                    <span>Buka Link Drive</span>
+                                                    <i class="bi bi-box-arrow-up-right ms-1" style="font-size: 11px;"></i>
+                                                </a>
+                                            </div>
+                                        @endif
+                                    </div>
+                                </div>
+                            @endif
+                        </div>
                     </div>
 
                     <!-- SECTION 2: VISI & MISI -->

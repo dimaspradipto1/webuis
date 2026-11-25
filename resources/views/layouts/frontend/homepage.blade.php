@@ -377,9 +377,30 @@
 
         {{-- Content / Deskripsi Kanan --}}
         <div class="col-lg-6">
-          <div class="h-100 p-4 p-md-4 rounded-4 shadow-sm" style="font-size: 15.5px; line-height: 1.85; color: #2d3748; background: #f8faf9; border-left: 5px solid var(--uis-green, #046B26); border-top: 1px solid #edf2f7; border-right: 1px solid #edf2f7; border-bottom: 1px solid #edf2f7;">
+          <div class="h-100 p-4 p-md-4 rounded-4 shadow-sm d-flex flex-column justify-content-between" style="font-size: 15.5px; line-height: 1.85; color: #2d3748; background: #f8faf9; border-left: 5px solid var(--uis-green, #046B26); border-top: 1px solid #edf2f7; border-right: 1px solid #edf2f7; border-bottom: 1px solid #edf2f7;">
             <div class="about-desc-content" style="text-align: justify;">
               {!! $about->deskripsi_profil_1 ?? 'Universitas Ibnu Sina (UIS) Batam merupakan perguruan tinggi swasta terkemuka di Provinsi Kepulauan Riau yang lahir dari perpaduan keunggulan akademik Sekolah Tinggi Teknik (STT), Sekolah Tinggi Ilmu Ekonomi (STIE), dan Sekolah Tinggi Ilmu Kesehatan (STIKES) di bawah naungan Yayasan Pendidikan Ibnu Sina Batam (YAPISNA). Berlokasi strategis di kawasan industri dan perdagangan internasional Kota Batam, UIS mengelola tiga fakultas unggulan: Fakultas Teknik (Sains & Teknologi), Fakultas Ekonomi dan Bisnis (FEB), serta Fakultas Ilmu Kesehatan (FIKES), beserta Program Pascasarjana (Magister). UIS bertekad mencetak lulusan profesional muda yang inovatif, berdaya saing global, berjiwa entrepreneur, dan berakhlak mulia berlandaskan Iman dan Taqwa (Imtaq).' !!}
+            </div>
+
+            {{-- Tombol Baca Selengkapnya --}}
+            <div class="pt-3 mt-3 border-top d-flex flex-wrap align-items-center gap-2">
+              @if($about?->hasDokumen())
+                <a href="{{ $about->dokumen_url }}" target="_blank" rel="noopener noreferrer" class="btn text-white fw-bold d-inline-flex align-items-center gap-2 shadow-sm px-3 py-2" style="background: linear-gradient(135deg, #046B26 0%, #03531e 100%); border-radius: 8px; font-size: 13.5px; transition: all 0.25s ease;">
+                  <i class="bi bi-file-earmark-text-fill text-warning"></i>
+                  <span>{{ $about->dokumen_nama ?: 'Baca Selengkapnya' }}</span>
+                  <i class="bi bi-box-arrow-up-right ms-1" style="font-size: 11px;"></i>
+                </a>
+              @else
+                <a href="{{ route('homepage.tentang') }}" class="btn text-white fw-bold d-inline-flex align-items-center gap-2 shadow-sm px-3 py-2" style="background: linear-gradient(135deg, #046B26 0%, #03531e 100%); border-radius: 8px; font-size: 13.5px; transition: all 0.25s ease;">
+                  <i class="bi bi-book-half text-warning"></i>
+                  <span>Baca Selengkapnya</span>
+                  <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+              @endif
+              <a href="{{ route('homepage.tentang') }}" class="btn btn-outline-success fw-semibold d-inline-flex align-items-center gap-1 px-3 py-2" style="border-radius: 8px; font-size: 13.5px; border-color: #046B26; color: #046B26;">
+                <i class="bi bi-info-circle"></i>
+                Halaman Profil Lengkap
+              </a>
             </div>
           </div>
         </div>
@@ -392,6 +413,27 @@
             <div class="about-desc-content">
               {!! $about->deskripsi_profil_1 ?? 'Universitas Ibnu Sina (UIS) Batam merupakan perguruan tinggi swasta terkemuka di Provinsi Kepulauan Riau yang lahir dari perpaduan keunggulan akademik Sekolah Tinggi Teknik (STT), Sekolah Tinggi Ilmu Ekonomi (STIE), dan Sekolah Tinggi Ilmu Kesehatan (STIKES) di bawah naungan Yayasan Pendidikan Ibnu Sina Batam (YAPISNA). Berlokasi strategis di kawasan industri dan perdagangan internasional Kota Batam, UIS mengelola tiga fakultas unggulan: Fakultas Teknik (Sains & Teknologi), Fakultas Ekonomi dan Bisnis (FEB), serta Fakultas Ilmu Kesehatan (FIKES), beserta Program Pascasarjana (Magister). UIS bertekad mencetak lulusan profesional muda yang inovatif, berdaya saing global, berjiwa entrepreneur, dan berakhlak mulia berlandaskan Iman dan Taqwa (Imtaq).' !!}
             </div>
+
+            {{-- Tombol Baca Selengkapnya --}}
+            <div class="pt-3 mt-3 border-top d-flex flex-wrap align-items-center gap-2">
+              @if($about?->hasDokumen())
+                <a href="{{ $about->dokumen_url }}" target="_blank" rel="noopener noreferrer" class="btn text-white fw-bold d-inline-flex align-items-center gap-2 shadow-sm px-3 py-2" style="background: linear-gradient(135deg, #046B26 0%, #03531e 100%); border-radius: 8px; font-size: 13.5px; transition: all 0.25s ease;">
+                  <i class="bi bi-file-earmark-text-fill text-warning"></i>
+                  <span>{{ $about->dokumen_nama ?: 'Baca Selengkapnya' }}</span>
+                  <i class="bi bi-box-arrow-up-right ms-1" style="font-size: 11px;"></i>
+                </a>
+              @else
+                <a href="{{ route('homepage.tentang') }}" class="btn text-white fw-bold d-inline-flex align-items-center gap-2 shadow-sm px-3 py-2" style="background: linear-gradient(135deg, #046B26 0%, #03531e 100%); border-radius: 8px; font-size: 13.5px; transition: all 0.25s ease;">
+                  <i class="bi bi-book-half text-warning"></i>
+                  <span>Baca Selengkapnya</span>
+                  <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+              @endif
+              <a href="{{ route('homepage.tentang') }}" class="btn btn-outline-success fw-semibold d-inline-flex align-items-center gap-1 px-3 py-2" style="border-radius: 8px; font-size: 13.5px; border-color: #046B26; color: #046B26;">
+                <i class="bi bi-info-circle"></i>
+                Halaman Profil Lengkap
+              </a>
+            </div>
           </div>
         </div>
       </div>
@@ -399,8 +441,15 @@
 
     <!-- TOMBOL CTA PROFIL LENGKAP -->
     <div class="row justify-content-center mb-4" data-aos="fade-up" data-aos-delay="250">
-      <div class="col-12 text-center">
-        <a href="{{ route('homepage.tentang') }}" class="btn-primary-hero">
+      <div class="col-12 text-center d-flex flex-wrap justify-content-center gap-3">
+        @if($about?->hasDokumen())
+          <a href="{{ $about->dokumen_url }}" target="_blank" rel="noopener noreferrer" class="btn-primary-hero d-inline-flex align-items-center gap-2" style="background: linear-gradient(135deg, #046B26 0%, #03531e 100%); padding: 12px 28px; border-radius: 30px;">
+            <i class="bi bi-file-earmark-pdf-fill text-warning fs-5"></i>
+            <span>{{ $about->dokumen_nama ?: 'Baca Selengkapnya (Dokumen Profil UIS)' }}</span>
+            <i class="bi bi-box-arrow-up-right ms-1" style="font-size: 12px;"></i>
+          </a>
+        @endif
+        <a href="{{ route('homepage.tentang') }}" class="btn btn-outline-success fw-bold d-inline-flex align-items-center gap-2 px-4 py-2" style="border-radius: 30px; font-size: 15px; border: 2px solid #046B26; color: #046B26; background: #fff;">
           <i class="bi bi-info-circle"></i>
           Profil Lengkap Universitas Ibnu Sina
         </a>
