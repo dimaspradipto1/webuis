@@ -10,9 +10,9 @@
      KONSEP POSTER / BANNER VISI, MISI & TATA NILAI UIS
      (Format Banner Tunggal Panjang ke Bawah Berbasis Background Image)
   ═══════════════════════════════════════════════ */
+  /* Banner Poster Wrapper */
   .visimisi-poster-banner {
     background-color: #046B26;
-    background-image: linear-gradient(135deg, rgba(14, 114, 46, 0.88) 0%, rgba(2, 56, 20, 0.94) 100%);
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -24,6 +24,29 @@
     border: 2px solid rgba(254, 216, 2, 0.5);
     max-width: 900px;
     margin: 0 auto;
+  }
+
+  /* Khusus Jika Menggunakan Background Default UIS (Header & Footer Sudah Menyatu di Gambar) */
+  .visimisi-poster-banner.using-default-bg {
+    padding-top: 140px;
+    padding-bottom: 110px;
+    background-size: 100% 100%;
+    background-position: center;
+  }
+  @media (max-width: 768px) {
+    .visimisi-poster-banner.using-default-bg {
+      padding-top: 95px !important;
+      padding-bottom: 80px !important;
+      background-size: cover !important;
+    }
+  }
+  @media (max-width: 576px) {
+    .visimisi-poster-banner.using-default-bg {
+      padding-top: 75px !important;
+      padding-bottom: 65px !important;
+      padding-left: 14px !important;
+      padding-right: 14px !important;
+    }
   }
 
   /* Dot Matrix Corner Accents */
@@ -298,42 +321,45 @@
   <div class="container py-2">
     @php
       $bgPoster = $about?->visimisi_background_url;
+      $isDefaultBg = empty($about?->visimisi_background) || str_contains($bgPoster ?? '', 'visimisi-default-bg');
     @endphp
 
     <div class="row justify-content-center">
       <div class="col-xl-9 col-lg-10 col-12" data-aos="fade-up" data-aos-delay="100">
         
-        <div class="visimisi-poster-banner w-100 d-flex flex-column" 
-             style="@if($bgPoster) background-image: linear-gradient(135deg, rgba(14, 114, 46, 0.85) 0%, rgba(2, 56, 20, 0.92) 100%), url('{{ $bgPoster }}'); @endif">
+        <div class="visimisi-poster-banner w-100 d-flex flex-column {{ $isDefaultBg ? 'using-default-bg' : '' }}" 
+             style="@if($bgPoster) background-image: url('{{ $bgPoster }}'); @endif">
           
-          {{-- Dot Matrix Accents --}}
-          <div class="visimisi-dot-matrix top-left"></div>
-          <div class="visimisi-dot-matrix top-right"></div>
+          @if(!$isDefaultBg)
+            {{-- Dot Matrix Accents --}}
+            <div class="visimisi-dot-matrix top-left"></div>
+            <div class="visimisi-dot-matrix top-right"></div>
 
-          {{-- Header Poster: 4 Logos --}}
-          <div class="visimisi-header-logos">
-            <div class="d-flex align-items-center gap-2">
-              <img src="{{ asset('assets/img/logouis.png') }}" alt="Logo UIS" class="logo-uis-mini">
-              <div class="brand-text-mini">
-                <span class="d-block fw-bold text-white lh-1">UNIVERSITAS</span>
-                <span class="d-block fw-bold text-warning lh-1">IBNU SINA</span>
+            {{-- Header Poster: 4 Logos --}}
+            <div class="visimisi-header-logos">
+              <div class="d-flex align-items-center gap-2">
+                <img src="{{ asset('assets/img/logouis.png') }}" alt="Logo UIS" class="logo-uis-mini">
+                <div class="brand-text-mini">
+                  <span class="d-block fw-bold text-white lh-1">UNIVERSITAS</span>
+                  <span class="d-block fw-bold text-warning lh-1">IBNU SINA</span>
+                </div>
               </div>
+              <img src="{{ asset('assets/img/layanan-terkait/kemdikbud.svg') }}" alt="Kemdikbud" class="logo-kemdikbud-mini">
+              <div class="badge-humas-mini">
+                <span>HUMAS</span>
+                <span>UNIVERSITAS</span>
+                <span>IBNU SINA</span>
+              </div>
+              <img src="{{ asset('assets/img/layanan-terkait/diktisaintek.svg') }}" alt="Diktisaintek Berdampak" class="logo-dikti-mini">
             </div>
-            <img src="{{ asset('assets/img/layanan-terkait/kemdikbud.svg') }}" alt="Kemdikbud" class="logo-kemdikbud-mini">
-            <div class="badge-humas-mini">
-              <span>HUMAS</span>
-              <span>UNIVERSITAS</span>
-              <span>IBNU SINA</span>
-            </div>
-            <img src="{{ asset('assets/img/layanan-terkait/diktisaintek.svg') }}" alt="Diktisaintek Berdampak" class="logo-dikti-mini">
-          </div>
 
-          {{-- Header Poster: Main Title --}}
-          <div class="visimisi-header-titles">
-            <h2 class="visimisi-univ-title">
-              UNIVERSITAS <span class="highlight-gold">IBNU SINA</span>
-            </h2>
-          </div>
+            {{-- Header Poster: Main Title --}}
+            <div class="visimisi-header-titles">
+              <h2 class="visimisi-univ-title">
+                UNIVERSITAS <span class="highlight-gold">IBNU SINA</span>
+              </h2>
+            </div>
+          @endif
 
           {{-- ═══════════════════════════════════════════════
                BAGIAN 1: VISI
@@ -448,29 +474,31 @@
             </div>
           </div>
 
-          {{-- Bottom Humas Pill --}}
-          <div class="text-center my-3">
-            <div class="visimisi-humas-pill">
-              {{ $about?->visimisi_badge_humas ?? 'HUMAS UNIVERSITAS IBNU SINA' }}
+          @if(!$isDefaultBg)
+            {{-- Bottom Humas Pill --}}
+            <div class="text-center my-3">
+              <div class="visimisi-humas-pill">
+                {{ $about?->visimisi_badge_humas ?? 'HUMAS UNIVERSITAS IBNU SINA' }}
+              </div>
             </div>
-          </div>
 
-          {{-- Bottom White Footer Bar --}}
-          <div class="visimisi-card-footer-bar">
-            <div class="footer-social-item">
-              <i class="bi bi-youtube text-danger fs-6"></i>
-              <i class="bi bi-facebook text-primary fs-6"></i>
-              <span>{{ $about?->visimisi_footer_fb ?? 'Universitas Ibnu Sina' }}</span>
+            {{-- Bottom White Footer Bar --}}
+            <div class="visimisi-card-footer-bar">
+              <div class="footer-social-item">
+                <i class="bi bi-youtube text-danger fs-6"></i>
+                <i class="bi bi-facebook text-primary fs-6"></i>
+                <span>{{ $about?->visimisi_footer_fb ?? 'Universitas Ibnu Sina' }}</span>
+              </div>
+              <div class="footer-social-item">
+                <i class="bi bi-instagram fs-6" style="color: #e1306c;"></i>
+                <i class="bi bi-tiktok text-dark fs-6"></i>
+                <span>{{ $about?->visimisi_footer_ig ?? 'Official.uisbatam' }}</span>
+              </div>
+              <a href="{{ $about?->visimisi_footer_url ?? 'https://uis.ac.id' }}" target="_blank" class="footer-url-pill">
+                {{ $about?->visimisi_footer_url ?? 'https://uis.ac.id' }}
+              </a>
             </div>
-            <div class="footer-social-item">
-              <i class="bi bi-instagram fs-6" style="color: #e1306c;"></i>
-              <i class="bi bi-tiktok text-dark fs-6"></i>
-              <span>{{ $about?->visimisi_footer_ig ?? 'Official.uisbatam' }}</span>
-            </div>
-            <a href="{{ $about?->visimisi_footer_url ?? 'https://uis.ac.id' }}" target="_blank" class="footer-url-pill">
-              {{ $about?->visimisi_footer_url ?? 'https://uis.ac.id' }}
-            </a>
-          </div>
+          @endif
 
         </div>
 

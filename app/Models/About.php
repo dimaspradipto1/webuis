@@ -138,19 +138,29 @@ class About extends Model
      */
     public function getVisimisiBackgroundUrlAttribute(): ?string
     {
-        if (empty($this->visimisi_background)) {
-            return null;
+        if (!empty($this->visimisi_background)) {
+            $raw = trim($this->visimisi_background);
+
+            if (str_starts_with($raw, 'http://') || str_starts_with($raw, 'https://')) {
+                return $raw;
+            }
+
+            $cleanPath = ltrim(preg_replace('#^(public/|storage/)#', '', $raw), '/');
+
+            if (file_exists(public_path('storage/' . $cleanPath))) {
+                return asset('storage/' . $cleanPath);
+            }
+            if (file_exists(public_path($cleanPath))) {
+                return asset($cleanPath);
+            }
         }
 
-        $raw = trim($this->visimisi_background);
-
-        if (str_starts_with($raw, 'http://') || str_starts_with($raw, 'https://')) {
-            return $raw;
+        // Default background gambar Visi Misi resmi UIS
+        if (file_exists(public_path('assets/img/visimisi-default-bg.jpg'))) {
+            return asset('assets/img/visimisi-default-bg.jpg');
         }
 
-        $cleanPath = ltrim(preg_replace('#^(public/|storage/)#', '', $raw), '/');
-
-        return asset('storage/' . $cleanPath);
+        return null;
     }
 
     /**

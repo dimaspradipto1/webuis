@@ -69,10 +69,14 @@
                                  onerror="this.style.display='none'; document.getElementById('bgFallbackStandard').classList.remove('d-none'); document.getElementById('bgOverlayBar').classList.add('d-none');">
                         @endif
                         <div id="bgOverlayBar" class="position-absolute bottom-0 start-0 end-0 p-2 d-flex align-items-center justify-content-between @if(!$about->visimisi_background_url) d-none @endif" style="background: rgba(0,0,0,0.65);">
-                            <span class="badge bg-success" style="font-size: 10.5px;"><i class="bi bi-check-circle me-1"></i>Kustom Aktif</span>
-                            <button type="button" class="btn btn-danger btn-sm py-0 px-2" style="font-size: 11px;" onclick="document.getElementById('formDeleteBackground').submit();" title="Hapus Background Kustom">
-                                <i class="bi bi-trash me-1"></i>Hapus
-                            </button>
+                            <span class="badge @if($about->visimisi_background) bg-success @else bg-primary @endif" style="font-size: 10.5px;">
+                                <i class="bi bi-check-circle me-1"></i>{{ $about->visimisi_background ? 'Kustom Aktif' : 'Default Resmi Aktif' }}
+                            </span>
+                            @if($about->visimisi_background)
+                                <button type="button" class="btn btn-danger btn-sm py-0 px-2" style="font-size: 11px;" onclick="document.getElementById('formDeleteBackground').submit();" title="Kembalikan ke Background Default">
+                                    <i class="bi bi-arrow-counterclockwise me-1"></i>Reset
+                                </button>
+                            @endif
                         </div>
                         <div id="bgFallbackStandard" class="d-flex flex-column align-items-center justify-content-center h-100 text-white text-center p-3 @if($about->visimisi_background_url) d-none @endif" style="background: linear-gradient(135deg, #13883a 0%, #034b1a 100%);">
                             <i class="bi bi-palette fs-2 mb-1 text-warning"></i>
