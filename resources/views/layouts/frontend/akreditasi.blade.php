@@ -233,7 +233,7 @@
                 <th style="min-width: 130px;">Lembaga</th>
                 <th style="min-width: 120px;">Peringkat</th>
                 <th style="min-width: 220px;">Nomor SK & Masa Berlaku</th>
-                <th class="text-center pe-4" style="min-width: 160px;">Dokumen / Link Drive</th>
+                <th class="text-center pe-4" style="min-width: 160px;">Dokumen</th>
               </tr>
             </thead>
             <tbody id="akreditasiTableBody">
@@ -324,15 +324,16 @@
                   {{-- Link Google Drive / Aksi Dokumen --}}
                   <td class="text-center pe-4">
                     @if($item->link_gdrive)
-                      <a href="{{ $item->link_gdrive }}" target="_blank" class="btn btn-sm btn-outline-success rounded-pill px-3 py-1.5 fw-bold shadow-sm d-inline-flex align-items-center gap-1.5" style="border-color: #046B26; color: #046B26;" title="Buka Dokumen Google Drive">
+                      <a href="{{ $item->link_gdrive }}" target="_blank" class="btn btn-sm btn-outline-success rounded-pill px-3 py-1.5 fw-bold shadow-sm d-inline-flex align-items-center gap-1.5" style="border-color: #046B26; color: #046B26;" title="Lihat Dokumen Akreditasi">
                         <i class="bi bi-google text-primary"></i>
-                        <span>Buka Drive</span>
+                        <span>Lihat Dokumen</span>
                         <i class="bi bi-box-arrow-up-right small ms-0.5"></i>
                       </a>
                     @elseif($item->file_sertifikat)
-                      <a href="{{ $item->file_url }}" target="_blank" class="btn btn-sm btn-outline-success rounded-pill px-3 py-1.5 fw-bold shadow-sm d-inline-flex align-items-center gap-1.5" title="Unduh File Sertifikat">
+                      <a href="{{ $item->file_url }}" target="_blank" class="btn btn-sm btn-outline-success rounded-pill px-3 py-1.5 fw-bold shadow-sm d-inline-flex align-items-center gap-1.5" title="Lihat Dokumen Akreditasi">
                         <i class="bi bi-file-earmark-pdf-fill text-danger"></i>
-                        <span>Unduh PDF</span>
+                        <span>Lihat Dokumen</span>
+                        <i class="bi bi-box-arrow-up-right small ms-0.5"></i>
                       </a>
                     @else
                       <span class="badge bg-light text-muted border rounded-pill px-2.5 py-1 small">

@@ -144,7 +144,7 @@
                         <th>Lembaga</th>
                         <th>Peringkat</th>
                         <th>Nomor SK & Masa Berlaku</th>
-                        <th class="text-center">Dokumen / GDrive</th>
+                        <th class="text-center">Dokumen</th>
                         <th class="text-center">Status</th>
                         <th class="text-end pe-4" style="width: 140px;">Aksi</th>
                     </tr>
@@ -188,12 +188,12 @@
                             </td>
                             <td class="text-center">
                                 @if($item->link_gdrive)
-                                    <a href="{{ $item->link_gdrive }}" target="_blank" class="btn btn-sm btn-outline-success rounded-pill px-2.5 py-1 shadow-sm" title="Buka Dokumen Google Drive">
-                                        <i class="bi bi-google me-1"></i> Buka GDrive
+                                    <a href="{{ $item->link_gdrive }}" target="_blank" class="btn btn-sm btn-outline-success rounded-pill px-2.5 py-1 shadow-sm" title="Lihat Dokumen Google Drive">
+                                        <i class="bi bi-google me-1"></i> Lihat Dokumen
                                     </a>
                                 @elseif($item->file_sertifikat)
-                                    <a href="{{ $item->file_url }}" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-2.5 py-1" title="Lihat / Unduh Dokumen Lokal">
-                                        <i class="bi bi-file-earmark-pdf-fill me-1 text-danger"></i> Unduh
+                                    <a href="{{ $item->file_url }}" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-2.5 py-1" title="Lihat Dokumen">
+                                        <i class="bi bi-file-earmark-pdf-fill me-1 text-danger"></i> Lihat Dokumen
                                     </a>
                                 @else
                                     <span class="badge bg-secondary-subtle text-muted rounded-pill px-2 py-1 small">Belum Ada</span>
