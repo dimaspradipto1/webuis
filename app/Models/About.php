@@ -148,21 +148,49 @@ class About extends Model
             }
 
             $cleanPath = ltrim(preg_replace('#^(public/|storage/)#', '', $raw), '/');
+            $baseName = basename($cleanPath);
 
+            // 1. Cek di public/assets/img/ (paling cepat & aman tanpa ketergantungan symlink)
+            if (file_exists(public_path('assets/img/' . $baseName))) {
+                $ver = filemtime(public_path('assets/img/' . $baseName));
+                return asset('assets/img/' . $baseName) . '?v=' . $ver;
+            }
+
+            // 2. Cek di public/storage/
             if (file_exists(public_path('storage/' . $cleanPath))) {
-                return asset('storage/' . $cleanPath);
+                $ver = filemtime(public_path('storage/' . $cleanPath));
+                return asset('storage/' . $cleanPath) . '?v=' . $ver;
             }
+
+            // 3. Cek di public root
             if (file_exists(public_path($cleanPath))) {
-                return asset($cleanPath);
+                $ver = filemtime(public_path($cleanPath));
+                return asset($cleanPath) . '?v=' . $ver;
             }
+
+            // 4. Cek di Storage disk public
+            try {
+                if (\Illuminate\Support\Facades\Storage::disk('public')->exists($cleanPath)) {
+                    return \Illuminate\Support\Facades\Storage::disk('public')->url($cleanPath);
+                }
+            } catch (\Throwable $e) {}
+
+            // 5. Fallback jika ada data file kustom di DB tapi file_exists server gagal:
+            // Tetap arahkan ke asset kustom agar browser me-request file kustom (bukan revert ke default!)
+            if (str_contains($cleanPath, '/')) {
+                return asset('storage/' . $cleanPath) . '?v=' . time();
+            }
+            return asset('assets/img/' . $baseName) . '?v=' . time();
         }
 
         // Default background gambar Visi Misi resmi UIS (bersih tanpa teks)
         if (file_exists(public_path('assets/img/visimisi-campus-clean-bg.jpg'))) {
-            return asset('assets/img/visimisi-campus-clean-bg.jpg');
+            $ver = filemtime(public_path('assets/img/visimisi-campus-clean-bg.jpg'));
+            return asset('assets/img/visimisi-campus-clean-bg.jpg') . '?v=' . $ver;
         }
         if (file_exists(public_path('assets/img/visimisi-default-bg.jpg'))) {
-            return asset('assets/img/visimisi-default-bg.jpg');
+            $ver = filemtime(public_path('assets/img/visimisi-default-bg.jpg'));
+            return asset('assets/img/visimisi-default-bg.jpg') . '?v=' . $ver;
         }
 
         return null;

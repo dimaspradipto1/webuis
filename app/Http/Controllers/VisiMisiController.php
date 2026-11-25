@@ -73,16 +73,53 @@ class VisiMisiController extends Controller
         }
 
         if ($request->hasFile('visimisi_background')) {
-            if ($about->visimisi_background) {
-                $oldPath = ltrim(preg_replace('#^(public/|storage/)#', '', $about->visimisi_background), '/');
-                if (Storage::disk('public')->exists($oldPath)) {
-                    Storage::disk('public')->delete($oldPath);
+            $file = $request->file('visimisi_background');
+            $ext = strtolower($file->getClientOriginalExtension() ?: 'jpg');
+            $filename = 'visimisi_bg_' . time() . '_' . uniqid() . '.' . $ext;
+
+            // 1. Simpan ke Storage disk public standar Laravel
+            $storedPath = $file->storeAs('visi-misi', $filename, 'public');
+
+            // 2. Simpan juga langsung ke public/assets/img/ agar 100% langsung bisa diakses tanpa ketergantungan symlink storage
+            try {
+                $publicImgDir = public_path('assets/img');
+                if (!file_exists($publicImgDir)) {
+                    @mkdir($publicImgDir, 0755, true);
                 }
-                if (file_exists(public_path('storage/' . $oldPath))) {
-                    @unlink(public_path('storage/' . $oldPath));
-                }
+                @copy($file->getRealPath(), $publicImgDir . '/' . $filename);
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::warning('Copy visimisi bg to assets/img failed: ' . $e->getMessage());
             }
-            $updateData['visimisi_background'] = $request->file('visimisi_background')->store('visi-misi', 'public');
+
+            // 3. Simpan juga ke public/storage/visi-misi jika folder public/storage ada
+            try {
+                $publicStorageDir = public_path('storage/visi-misi');
+                if (!file_exists($publicStorageDir)) {
+                    @mkdir($publicStorageDir, 0755, true);
+                }
+                @copy($file->getRealPath(), $publicStorageDir . '/' . $filename);
+            } catch (\Throwable $e) {}
+
+            // Hapus file lama jika ada
+            if ($about->visimisi_background) {
+                $oldRaw = $about->visimisi_background;
+                $oldClean = ltrim(preg_replace('#^(public/|storage/)#', '', $oldRaw), '/');
+                $oldBase = basename($oldClean);
+
+                try {
+                    if (Storage::disk('public')->exists($oldClean)) {
+                        Storage::disk('public')->delete($oldClean);
+                    }
+                    if (file_exists(public_path('storage/' . $oldClean))) {
+                        @unlink(public_path('storage/' . $oldClean));
+                    }
+                    if (file_exists(public_path('assets/img/' . $oldBase))) {
+                        @unlink(public_path('assets/img/' . $oldBase));
+                    }
+                } catch (\Throwable $e) {}
+            }
+
+            $updateData['visimisi_background'] = $filename;
         }
 
         if (!empty($updateData)) {
@@ -226,13 +263,21 @@ class VisiMisiController extends Controller
         $about = About::firstOrCreate(['id' => 1]);
 
         if ($about->visimisi_background) {
-            $clean = ltrim(preg_replace('#^(public/|storage/)#', '', $about->visimisi_background), '/');
-            if (Storage::disk('public')->exists($clean)) {
-                Storage::disk('public')->delete($clean);
-            }
-            if (file_exists(public_path('storage/' . $clean))) {
-                @unlink(public_path('storage/' . $clean));
-            }
+            $raw = $about->visimisi_background;
+            $clean = ltrim(preg_replace('#^(public/|storage/)#', '', $raw), '/');
+            $base = basename($clean);
+
+            try {
+                if (Storage::disk('public')->exists($clean)) {
+                    Storage::disk('public')->delete($clean);
+                }
+                if (file_exists(public_path('storage/' . $clean))) {
+                    @unlink(public_path('storage/' . $clean));
+                }
+                if (file_exists(public_path('assets/img/' . $base))) {
+                    @unlink(public_path('assets/img/' . $base));
+                }
+            } catch (\Throwable $e) {}
         }
 
         $about->visimisi_background = null;
