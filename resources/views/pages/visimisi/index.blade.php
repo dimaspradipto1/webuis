@@ -53,33 +53,30 @@
     @method('PUT')
 
     <div class="card shadow-sm border-0 mb-4" style="border-radius: 12px;">
-        <div class="card-header bg-white py-3 px-4 d-flex align-items-center justify-content-between" style="border-top: 3px solid #046B26; border-radius: 12px 12px 0 0;">
-            <div class="d-flex align-items-center gap-2">
-                <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; background-color: #e8f5e9; color: #046B26;">
+        <div class="card-header bg-white py-3 px-4 d-flex align-items-center justify-content-between flex-wrap gap-2" style="border-top: 3px solid #046B26; border-radius: 12px 12px 0 0;">
+            <div class="d-flex align-items-center gap-3">
+                <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; background-color: #e8f5e9; color: #046B26;">
                     <i class="bi bi-card-text fs-5"></i>
                 </div>
                 <div>
-                    <h5 class="mb-0 fw-bold" style="color: #2b2f32; font-size: 16px;">Konten Teks Visi, Misi & Tata Nilai UIS</h5>
-                    <small class="text-muted">Kelola isi teks Visi, Misi dan Tata Nilai yang tampil di halaman frontend dalam format teks dinamis</small>
+                    <h5 class="mb-0 fw-bold" style="color: #1e293b; font-size: 16px;">Konten Teks Visi, Misi & Tata Nilai UIS</h5>
+                    <small class="text-muted">Kelola isi teks Visi Institusi, butir-butir Misi, dan Tata Nilai Budaya UIS yang tampil pada halaman profil frontend.</small>
                 </div>
             </div>
             <span class="badge" style="background-color: #046B26; color: #ffffff; font-size: 11.5px; font-weight: 700; padding: 6px 14px; border-radius: 6px;">
                 <i class="bi bi-fonts me-1"></i> Teks Dinamis
             </span>
         </div>
-        <div class="card-body pt-3 pb-4">
+        <div class="card-body p-4">
             <div class="row g-4">
                 {{-- Kolom 1: Visi UIS --}}
                 <div class="col-lg-4 col-12">
                     <div class="p-3 rounded-3 border h-100" style="background: #fbfdfb; border-color: #d1e7dd !important;">
-                        <div class="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom">
-                            <span class="badge rounded-circle p-2" style="background: #046B26; color: #fff;">
-                                <i class="bi bi-eye-fill"></i>
+                        <div class="d-flex align-items-center justify-content-between mb-3 pb-2 border-bottom">
+                            <span class="badge" style="background: #fed802; color: #024618; font-weight: 800; font-size: 12px; padding: 6px 14px; border-radius: 50px; letter-spacing: 0.5px;">
+                                <i class="bi bi-eye-fill me-1"></i> VISI:
                             </span>
-                            <div>
-                                <h6 class="fw-bold mb-0 text-success">Kartu 1: Visi UIS</h6>
-                                <small class="text-muted" style="font-size: 11px;">Tagline & teks visi institusi</small>
-                            </div>
+                            <small class="text-muted fw-semibold" style="font-size: 11.5px;">Tagline Visi Institusi</small>
                         </div>
 
                         <div class="mb-3">
@@ -91,7 +88,7 @@
                                       name="visimisi_tagline_visi" 
                                       rows="8">{!! old('visimisi_tagline_visi', !empty(trim(strip_tags($about->visimisi_tagline_visi ?? ''))) ? $about->visimisi_tagline_visi : '<p>Unggul, Berintegritas, Berjiwa Entrepreneurship</p>') !!}</textarea>
                             <div class="form-text text-muted small mt-1">
-                                Teks ini akan tampil besar dan elegan di tengah kartu Visi.
+                                Teks ini akan tampil besar dan elegan pada kartu Visi di halaman frontend.
                             </div>
                             @error('visimisi_tagline_visi')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -103,14 +100,11 @@
                 {{-- Kolom 2: Misi UIS --}}
                 <div class="col-lg-4 col-12">
                     <div class="p-3 rounded-3 border h-100" style="background: #fbfdfb; border-color: #d1e7dd !important;">
-                        <div class="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom">
-                            <span class="badge rounded-circle p-2" style="background: #046B26; color: #fff;">
-                                <i class="bi bi-bullseye"></i>
+                        <div class="d-flex align-items-center justify-content-between mb-3 pb-2 border-bottom">
+                            <span class="badge" style="background: #fed802; color: #024618; font-weight: 800; font-size: 12px; padding: 6px 14px; border-radius: 50px; letter-spacing: 0.5px;">
+                                <i class="bi bi-bullseye me-1"></i> MISI:
                             </span>
-                            <div>
-                                <h6 class="fw-bold mb-0 text-success">Kartu 2: Misi UIS</h6>
-                                <small class="text-muted" style="font-size: 11px;">Daftar butir-butir misi</small>
-                            </div>
+                            <small class="text-muted fw-semibold" style="font-size: 11.5px;">Butir-Butir Misi UIS</small>
                         </div>
 
                         <div class="mb-3">
@@ -123,7 +117,7 @@
                                       rows="11" 
                                       style="font-size: 12.5px; line-height: 1.5;">{!! old('visimisi_misi_items', !empty(trim(strip_tags($about->visimisi_misi_items ?? ''))) ? $about->visimisi_misi_items : "<ol>\n<li>Menyelenggarakan pendidikan tinggi yang unggul dengan mengintegrasikan nilai-nilai integritas dan kewirausahaan dalam proses pembelajaran, penelitian, dan pengabdian kepada Masyarakat.</li>\n<li>Mengembangkan penelitian inovatif dan relevan yang berkontribusi pada kemajuan ilmu pengetahuan, teknologi, dan pemecahan masalah di masyarakat.</li>\n<li>Membangun ekosistem kewirausahaan yang mendorong kreativitas, inovasi, dan kemandirian di kalangan civitas akademika dan masyarakat luas.</li>\n<li>Menerapkan tata kelola universitas yang kredibel, transparan, akuntabel, bertanggungjawab dan berintegritas tinggi untuk mendukung pencapaian keunggulan institusi.</li>\n<li>Menjalin kerjasama strategis dengan berbagai pemangku kepentingan untuk meningkatkan daya saing, reputasi, dan kontribusi universitas di tingkat nasional dan internasional.</li>\n</ol>") !!}</textarea>
                             <div class="form-text text-muted small mt-1">
-                                Tuliskan setiap butir misi (bisa menggunakan fitur Numbered List di editor).
+                                Tuliskan setiap butir misi (bisa menggunakan fitur penomoran Numbered List di editor).
                             </div>
                             @error('visimisi_misi_items')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -135,14 +129,11 @@
                 {{-- Kolom 3: Tata Nilai UIS CIP --}}
                 <div class="col-lg-4 col-12">
                     <div class="p-3 rounded-3 border h-100" style="background: #fbfdfb; border-color: #d1e7dd !important;">
-                        <div class="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom">
-                            <span class="badge rounded-circle p-2" style="background: #046B26; color: #fff;">
-                                <i class="bi bi-gem"></i>
+                        <div class="d-flex align-items-center justify-content-between mb-3 pb-2 border-bottom">
+                            <span class="badge" style="background: #fed802; color: #024618; font-weight: 800; font-size: 12px; padding: 6px 14px; border-radius: 50px; letter-spacing: 0.5px;">
+                                <i class="bi bi-gem me-1"></i> TATA NILAI "CIP":
                             </span>
-                            <div>
-                                <h6 class="fw-bold mb-0 text-success">Kartu 3: Tata Nilai UIS</h6>
-                                <small class="text-muted" style="font-size: 11px;">Budaya nilai "CIP"</small>
-                            </div>
+                            <small class="text-muted fw-semibold" style="font-size: 11.5px;">Budaya Nilai UIS</small>
                         </div>
 
                         <div class="mb-3">
