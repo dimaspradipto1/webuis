@@ -92,12 +92,12 @@
                                 </div>
 
                                 <div class="col-md-5">
-                                    <label for="video_file" class="form-label fw-semibold small">Atau Upload File Video (MP4 / WebM)</label>
+                                    <label for="video_file" class="form-label fw-semibold small">Atau Upload File (MP4 / WebM)</label>
                                     <input type="file" id="video_file" name="video_file" class="form-control @error('video_file') is-invalid @enderror" accept="video/mp4,video/webm,video/ogg">
                                     @error('video_file')
                                         <div class="text-danger small mt-1">{{ $message }}</div>
                                     @enderror
-                                    <div class="form-text small">Maksimal 50 MB (format MP4/WebM).</div>
+                                    <div class="form-text small">Maksimal 20 MB (format MP4/WebM).</div>
                                 </div>
                             </div>
 
@@ -114,7 +114,7 @@
                                                 <div class="form-check mt-2">
                                                     <input class="form-check-input" type="checkbox" name="delete_video_file" id="delete_video_file" value="1">
                                                     <label class="form-check-label text-danger small" for="delete_video_file">
-                                                        Hapus file video yang diunggah
+                                                        Hapus file yang diunggah
                                                     </label>
                                                 </div>
                                             @elseif($about->youtube_embed_url)

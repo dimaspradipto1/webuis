@@ -18,7 +18,7 @@ class AboutRequest extends FormRequest
             'deskripsi_profil_1' => ['nullable', 'string'],
             'deskripsi_profil_2' => ['nullable', 'string'],
             'video_url' => ['nullable', 'string', 'max:1000'],
-            'video_file' => ['nullable', 'file', 'mimes:mp4,webm,mov,ogg', 'max:102400'],
+            'video_file' => ['nullable', 'file', 'mimes:mp4,webm,mov,ogg', 'max:20480'],
             'dokumen_file' => ['nullable', 'file', 'mimes:pdf,doc,docx,ppt,pptx,zip', 'max:25600'],
             'dokumen_nama' => ['nullable', 'string', 'max:255'],
             'dokumen_link' => ['nullable', 'string', 'max:1000'],
@@ -49,6 +49,8 @@ class AboutRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'video_file.max' => 'Ukuran file maksimal 20 MB.',
+            'video_file.mimes' => 'Format file harus berupa MP4, WebM, MOV, atau OGG.',
             'dokumen_file.mimes' => 'Format file dokumen harus PDF, DOC, DOCX, PPT, PPTX, atau ZIP.',
             'dokumen_file.max' => 'Ukuran file dokumen maksimal 25 MB.',
             'judul_profil.max' => 'Judul profil maksimal 255 karakter.',
