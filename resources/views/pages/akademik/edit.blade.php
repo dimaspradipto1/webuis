@@ -90,6 +90,142 @@
                             <textarea id="deskripsi" name="deskripsi" class="form-control tinymce-editor @error('deskripsi') is-invalid @enderror" rows="10" placeholder="Tuliskan detail informasi, panduan, jadwal, atau instruksi akademik di sini...">{{ old('deskripsi', $item->deskripsi) }}</textarea>
                         </div>
 
+                        @if($tipe === 'kalender')
+                        {{-- Pengelola Linimasa Agenda Kalender Akademik (Interaktif) --}}
+                        <div class="card border-0 shadow-sm rounded-4 mb-4" style="background: #fbfdfc; border: 1px solid #d4edda !important;">
+                            <div class="card-header bg-white py-3 border-bottom d-flex align-items-center justify-content-between flex-wrap gap-2">
+                                <div>
+                                    <h6 class="fw-bold text-dark mb-0 d-flex align-items-center gap-2">
+                                        <i class="bi bi-calendar-week-fill text-success"></i>
+                                        Linimasa Agenda Akademik (Ditampilkan di Kalender Web)
+                                    </h6>
+                                    <div class="small text-muted">Agenda di bawah akan membentuk kalender visual dan jadwal semester di halaman depan.</div>
+                                </div>
+                                <button type="button" class="btn btn-sm btn-success rounded-pill px-3" onclick="tambahBarisAgenda()" style="background: #046B26; border-color: #046B26;">
+                                    <i class="bi bi-plus-circle me-1"></i> Tambah Agenda
+                                </button>
+                            </div>
+                            <div class="card-body p-3">
+                                <div class="table-responsive">
+                                    <table class="table table-sm table-bordered align-middle mb-0" id="tabelAgendaKalender">
+                                        <thead class="table-light text-muted small text-uppercase">
+                                            <tr>
+                                                <th style="width: 120px;">Semester</th>
+                                                <th>Nama Kegiatan Akademik</th>
+                                                <th style="width: 140px;">Tgl Mulai</th>
+                                                <th style="width: 140px;">Tgl Selesai</th>
+                                                <th style="width: 140px;">Kategori</th>
+                                                <th>Keterangan / Lokasi</th>
+                                                <th class="text-center" style="width: 50px;">Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="tbodyAgenda">
+                                            @php
+                                                $agendas = old('agenda_items', $item->agenda_items ?? []);
+                                                if (empty($agendas)) {
+                                                    $agendas = [];
+                                                }
+                                            @endphp
+                                            @forelse($agendas as $i => $ag)
+                                                <tr>
+                                                    <td>
+                                                        <select name="agenda_items[{{ $i }}][semester]" class="form-select form-select-sm">
+                                                            <option value="Ganjil" {{ ($ag['semester'] ?? '') === 'Ganjil' ? 'selected' : '' }}>Ganjil</option>
+                                                            <option value="Genap" {{ ($ag['semester'] ?? '') === 'Genap' ? 'selected' : '' }}>Genap</option>
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="agenda_items[{{ $i }}][kegiatan]" class="form-control form-control-sm" value="{{ $ag['kegiatan'] ?? '' }}" placeholder="Contoh: Registrasi Ulang & KRS" required>
+                                                    </td>
+                                                    <td>
+                                                        <input type="date" name="agenda_items[{{ $i }}][tanggal_mulai]" class="form-control form-control-sm" value="{{ $ag['tanggal_mulai'] ?? '' }}" required>
+                                                    </td>
+                                                    <td>
+                                                        <input type="date" name="agenda_items[{{ $i }}][tanggal_selesai]" class="form-control form-control-sm" value="{{ $ag['tanggal_selesai'] ?? '' }}">
+                                                    </td>
+                                                    <td>
+                                                        <select name="agenda_items[{{ $i }}][kategori]" class="form-select form-select-sm">
+                                                            @foreach(['Akademik', 'Registrasi', 'Perkuliahan', 'Ujian', 'Libur', 'Wisuda', 'Kemahasiswaan'] as $kat)
+                                                                <option value="{{ $kat }}" {{ ($ag['kategori'] ?? '') === $kat ? 'selected' : '' }}>{{ $kat }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="agenda_items[{{ $i }}][keterangan]" class="form-control form-control-sm" value="{{ $ag['keterangan'] ?? '' }}" placeholder="Catatan / Info portal">
+                                                    </td>
+                                                    <td class="text-center">
+                                                        <button type="button" class="btn btn-sm btn-outline-danger p-1 rounded-2" onclick="hapusBarisAgenda(this)" title="Hapus baris">
+                                                            <i class="bi bi-trash"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            @empty
+                                                <tr id="emptyRowAgenda">
+                                                    <td colspan="7" class="text-center py-3 text-muted small">
+                                                        Belum ada linimasa agenda. Klik "Tambah Agenda" untuk menambahkan jadwal.
+                                                    </td>
+                                                </tr>
+                                            @endforelse
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <script>
+                        let agendaIndex = {{ count($agendas) }};
+                        function tambahBarisAgenda() {
+                            const emptyRow = document.getElementById('emptyRowAgenda');
+                            if (emptyRow) emptyRow.remove();
+
+                            const tbody = document.getElementById('tbodyAgenda');
+                            const tr = document.createElement('tr');
+                            tr.innerHTML = `
+                                <td>
+                                    <select name="agenda_items[${agendaIndex}][semester]" class="form-select form-select-sm">
+                                        <option value="Ganjil">Ganjil</option>
+                                        <option value="Genap">Genap</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" name="agenda_items[${agendaIndex}][kegiatan]" class="form-control form-control-sm" placeholder="Nama kegiatan" required>
+                                </td>
+                                <td>
+                                    <input type="date" name="agenda_items[${agendaIndex}][tanggal_mulai]" class="form-control form-control-sm" required>
+                                </td>
+                                <td>
+                                    <input type="date" name="agenda_items[${agendaIndex}][tanggal_selesai]" class="form-control form-control-sm">
+                                </td>
+                                <td>
+                                    <select name="agenda_items[${agendaIndex}][kategori]" class="form-select form-select-sm">
+                                        <option value="Akademik">Akademik</option>
+                                        <option value="Registrasi">Registrasi</option>
+                                        <option value="Perkuliahan">Perkuliahan</option>
+                                        <option value="Ujian">Ujian</option>
+                                        <option value="Libur">Libur</option>
+                                        <option value="Wisuda">Wisuda</option>
+                                        <option value="Kemahasiswaan">Kemahasiswaan</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" name="agenda_items[${agendaIndex}][keterangan]" class="form-control form-control-sm" placeholder="Catatan / Info portal">
+                                </td>
+                                <td class="text-center">
+                                    <button type="button" class="btn btn-sm btn-outline-danger p-1 rounded-2" onclick="hapusBarisAgenda(this)" title="Hapus baris">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+                                </td>
+                            `;
+                            tbody.appendChild(tr);
+                            agendaIndex++;
+                        }
+
+                        function hapusBarisAgenda(btn) {
+                            btn.closest('tr').remove();
+                        }
+                        </script>
+                        @endif
+
                         <hr class="my-4 text-muted opacity-25">
 
                         {{-- Upload Dokumen & Banner --}}

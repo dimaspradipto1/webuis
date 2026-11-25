@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AlumniTestimonialRequest;
 use App\Models\About;
 use App\Models\Akademik;
+use App\Models\Akreditasi;
 use App\Models\Banner;
 use App\Models\Contact;
 use App\Models\DesainGrafis;
@@ -291,8 +292,26 @@ class FrontendController extends Controller
             'is_active' => true,
         ]);
         $pageTitle = 'Kalender Akademik';
+        $agendaItems = $item->agenda_items ?? [];
 
-        return view('layouts.frontend.akademik', compact('item', 'pageTitle'));
+        return view('layouts.frontend.kalender-akademik', compact('item', 'pageTitle', 'agendaItems'));
+    }
+
+    public function akreditasi(Request $request)
+    {
+        $univAkreditasi = Akreditasi::active()->universitas()->first();
+        $fakultasAkreditasis = Akreditasi::active()->fakultas()->orderBy('urutan')->get();
+        $prodiAkreditasis = Akreditasi::active()->prodi()->orderBy('urutan')->get();
+        $groupedProdis = $prodiAkreditasis->groupBy('kategori_label');
+        $pageTitle = 'Sertifikat Akreditasi';
+
+        return view('layouts.frontend.akreditasi', compact(
+            'univAkreditasi',
+            'fakultasAkreditasis',
+            'prodiAkreditasis',
+            'groupedProdis',
+            'pageTitle'
+        ));
     }
 
     public function pedomanAkademik()

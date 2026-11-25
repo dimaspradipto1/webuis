@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AkademikController;
+use App\Http\Controllers\AkreditasiController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BackupController;
 use App\Http\Controllers\BahasaSettingController;
@@ -73,6 +74,7 @@ Route::controller(FrontendController::class)->group(function () {
     Route::get('/kalender-akademik', 'kalenderAkademik')->name('homepage.kalender-akademik');
     Route::get('/pedoman-akademik', 'pedomanAkademik')->name('homepage.pedoman-akademik');
     Route::get('/sistem-akademik', 'sistemAkademik')->name('homepage.sistem-akademik');
+    Route::get('/akreditasi', 'akreditasi')->name('homepage.akreditasi');
     Route::get('/program-studi', 'programStudi')->name('homepage.program-studi');
     Route::get('/fakultas', 'programStudi')->name('homepage.fakultas');
     Route::get('/program-studi/{slug}', 'programStudiDetail')->name('homepage.program-studi.detail');
@@ -206,6 +208,11 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
         Route::get('sistem', [AkademikController::class, 'sistem'])->name('sistem');
         Route::put('{tipe}', [AkademikController::class, 'update'])->name('update');
     });
+
+    // Sertifikat Akreditasi Routes
+    Route::resource('admin-akreditasi', AkreditasiController::class)
+        ->parameters(['admin-akreditasi' => 'akreditasi'])
+        ->names('akreditasi');
 
     Route::post('milestone/setting', [MilestoneController::class, 'updateSetting'])->name('milestone.update-setting');
     Route::resource('milestone', MilestoneController::class);

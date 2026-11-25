@@ -30,6 +30,7 @@ class AkademikRequest extends FormRequest
             'file_nama' => ['nullable', 'string', 'max:255'],
             'file_dokumen' => ['nullable', 'file', 'mimes:pdf,doc,docx,xls,xlsx,zip,rar', 'max:102400'],
             'gambar' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:20480'],
+            'agenda_items' => ['nullable'],
             'is_active' => ['nullable', 'boolean'],
         ];
     }

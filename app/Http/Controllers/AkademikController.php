@@ -117,10 +117,20 @@ class AkademikController extends Controller
                 Storage::disk('public')->delete($item->file_dokumen);
             }
             $file = $request->file('file_dokumen');
-            $validated['file_dokumen'] = $file->store('akademik/dokumen', 'public');
+            $cleanName = time() . '_' . preg_replace('/[^a-zA-Z0-9_\.-]/', '_', $file->getClientOriginalName());
+            $validated['file_dokumen'] = $file->storeAs('akademik/dokumen', $cleanName, 'public');
             if (empty($validated['file_nama'])) {
                 $validated['file_nama'] = $file->getClientOriginalName();
             }
+
+            // Direct copy to public for reliability
+            $targetDir = public_path('assets/dokumen/akademik');
+            if (!\Illuminate\Support\Facades\File::isDirectory($targetDir)) {
+                \Illuminate\Support\Facades\File::makeDirectory($targetDir, 0755, true, true);
+            }
+            try {
+                \Illuminate\Support\Facades\File::copy($file->getRealPath(), $targetDir . DIRECTORY_SEPARATOR . $cleanName);
+            } catch (\Throwable $e) {}
         }
 
         // Upload Gambar Banner/Cover
@@ -128,7 +138,43 @@ class AkademikController extends Controller
             if ($item->gambar && Storage::disk('public')->exists($item->gambar)) {
                 Storage::disk('public')->delete($item->gambar);
             }
-            $validated['gambar'] = $request->file('gambar')->store('akademik/gambar', 'public');
+            $imgFile = $request->file('gambar');
+            $imgCleanName = time() . '_' . preg_replace('/[^a-zA-Z0-9_\.-]/', '_', $imgFile->getClientOriginalName());
+            $validated['gambar'] = $imgFile->storeAs('akademik/gambar', $imgCleanName, 'public');
+
+            // Direct copy to public for reliability
+            $targetDirImg = public_path('assets/img/akademik');
+            if (!\Illuminate\Support\Facades\File::isDirectory($targetDirImg)) {
+                \Illuminate\Support\Facades\File::makeDirectory($targetDirImg, 0755, true, true);
+            }
+            try {
+                \Illuminate\Support\Facades\File::copy($imgFile->getRealPath(), $targetDirImg . DIRECTORY_SEPARATOR . $imgCleanName);
+            } catch (\Throwable $e) {}
+        }
+
+        // Handle agenda_items for kalender
+        if ($tipe === 'kalender') {
+            if ($request->has('agenda_items') && is_array($request->input('agenda_items'))) {
+                $filteredItems = [];
+                foreach ($request->input('agenda_items') as $agenda) {
+                    if (!empty($agenda['kegiatan']) || !empty($agenda['tanggal_mulai'])) {
+                        $filteredItems[] = [
+                            'semester' => trim($agenda['semester'] ?? 'Ganjil'),
+                            'kegiatan' => trim($agenda['kegiatan'] ?? ''),
+                            'tanggal_mulai' => trim($agenda['tanggal_mulai'] ?? ''),
+                            'tanggal_selesai' => trim($agenda['tanggal_selesai'] ?? ''),
+                            'kategori' => trim($agenda['kategori'] ?? 'Akademik'),
+                            'keterangan' => trim($agenda['keterangan'] ?? ''),
+                        ];
+                    }
+                }
+                $validated['agenda_items'] = $filteredItems;
+            } elseif ($request->has('agenda_items_json')) {
+                $decoded = json_decode($request->input('agenda_items_json'), true);
+                if (is_array($decoded)) {
+                    $validated['agenda_items'] = $decoded;
+                }
+            }
         }
 
         $item->update($validated);

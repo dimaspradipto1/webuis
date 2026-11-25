@@ -18,6 +18,7 @@ class Akademik extends Model
         'judul',
         'subjudul',
         'deskripsi',
+        'agenda_items',
         'file_dokumen',
         'file_nama',
         'link_url',
@@ -27,5 +28,32 @@ class Akademik extends Model
 
     protected $casts = [
         'is_active' => 'boolean',
+        'agenda_items' => 'array',
     ];
+
+    public function getFileDokumenUrlAttribute(): ?string
+    {
+        if (empty($this->file_dokumen)) {
+            return null;
+        }
+
+        if (str_starts_with($this->file_dokumen, 'http://') || str_starts_with($this->file_dokumen, 'https://')) {
+            return $this->file_dokumen;
+        }
+
+        return asset('storage/' . ltrim($this->file_dokumen, '/'));
+    }
+
+    public function getGambarUrlAttribute(): ?string
+    {
+        if (empty($this->gambar)) {
+            return null;
+        }
+
+        if (str_starts_with($this->gambar, 'http://') || str_starts_with($this->gambar, 'https://')) {
+            return $this->gambar;
+        }
+
+        return asset('storage/' . ltrim($this->gambar, '/'));
+    }
 }
