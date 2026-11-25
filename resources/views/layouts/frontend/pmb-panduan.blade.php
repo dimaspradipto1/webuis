@@ -131,33 +131,16 @@
     </div>
 
     <div class="row align-items-center g-4">
-      <div class="col-lg-8">
+      <div class="col-12">
         <div class="d-inline-flex align-items-center gap-2 px-3 py-1 rounded-pill mb-2 fw-bold" style="background: rgba(254, 216, 2, 0.2); border: 1px solid #FED802; color: #FED802; font-size: 12px;">
           <i class="bi bi-file-earmark-pdf-fill"></i> Dokumen Resmi Admisi PMB
         </div>
         <h1 class="fw-bold mb-2 text-white" style="font-size: clamp(24px, 3.2vw, 34px); letter-spacing: -0.3px;">
           Buku Panduan PMB (PDF) Universitas Ibnu Sina
         </h1>
-        <p class="text-white-50 mb-3" style="font-size: 14.5px; max-width: 760px; line-height: 1.6;">
+        <p class="text-white-50 mb-0" style="font-size: 14.5px; max-width: 820px; line-height: 1.6;">
           Unduh dan pelajari dokumen resmi buku panduan admisi mahasiswa baru Tahun Akademik 2026/2027 yang memuat alur pendaftaran, rincian biaya, tata tertib, dan kontak panitia.
         </p>
-
-        <div class="d-flex flex-wrap align-items-center gap-2">
-          <a href="{{ route('homepage.informasi-pmb') }}" class="btn btn-outline-light rounded-pill btn-sm px-3 py-2 fw-semibold">
-            <i class="bi bi-arrow-left me-1"></i> Kembali ke Informasi PMB
-          </a>
-          <a href="{{ route('homepage.pmb-brosur') }}" class="btn btn-outline-warning rounded-pill btn-sm px-3 py-2 fw-semibold text-warning">
-            <i class="bi bi-images me-1"></i> Halaman Brosur & Poster
-          </a>
-        </div>
-      </div>
-
-      <div class="col-lg-4 text-lg-end d-none d-lg-block">
-        <div class="p-4 rounded-4" style="background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(254, 216, 2, 0.3);">
-          <i class="bi bi-file-earmark-arrow-down-fill text-warning fs-1 mb-2 d-block"></i>
-          <h6 class="text-white fw-bold mb-1">Salinan Resmi PDF</h6>
-          <p class="text-white-50 small mb-0">Dokumen dapat dibuka langsung di browser atau diunduh ke perangkat Anda.</p>
-        </div>
       </div>
     </div>
   </div>
