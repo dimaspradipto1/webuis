@@ -7,163 +7,274 @@
 @push('styles')
 <style>
   /* ═══════════════════════════════════════════════
-     STYLING KONTEN VISI, MISI & TATA NILAI UIS
-     (Format Bersih, Elegan & Modern Sesuai Standar Profil UIS)
+     KONSEP POSTER / BANNER VISI, MISI & TATA NILAI UIS
+     (Format Banner Tunggal Panjang ke Bawah Berbasis Background Image)
   ═══════════════════════════════════════════════ */
-  .visimisi-content-card {
-    background: #ffffff;
-    border-radius: 16px;
-    border: 1px solid #e2e8f0;
-    border-left: 5px solid var(--uis-green, #046B26) !important;
-    box-shadow: 0 10px 30px rgba(4, 107, 38, 0.05);
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-  }
-  .visimisi-content-card:hover {
-    box-shadow: 0 14px 35px rgba(4, 107, 38, 0.08);
+  .visimisi-poster-banner {
+    background-color: #046B26;
+    background-image: linear-gradient(135deg, rgba(14, 114, 46, 0.88) 0%, rgba(2, 56, 20, 0.94) 100%);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    border-radius: 20px;
+    padding: 34px 32px 26px 32px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 16px 40px rgba(0, 40, 15, 0.28);
+    border: 2px solid rgba(254, 216, 2, 0.5);
+    max-width: 900px;
+    margin: 0 auto;
   }
 
-  .visimisi-card-icon {
-    width: 48px;
-    height: 48px;
-    background: #edf6f0;
-    color: var(--uis-green, #046B26);
-    font-size: 22px;
-    border: 1px solid #cce5d4;
-    border-radius: 12px;
+  /* Dot Matrix Corner Accents */
+  .visimisi-dot-matrix {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    pointer-events: none;
+    opacity: 0.35;
+    background-image: radial-gradient(#ffffff 1.5px, transparent 1.5px);
+    background-size: 8px 8px;
+    z-index: 1;
+  }
+  .visimisi-dot-matrix.top-left {
+    top: 14px;
+    left: 16px;
+  }
+  .visimisi-dot-matrix.top-right {
+    top: 14px;
+    right: 16px;
+  }
+
+  /* Header Poster: 4 Logos Row */
+  .visimisi-header-logos {
     display: flex;
     align-items: center;
-    justify-content: center;
-    flex-shrink: 0;
+    justify-content: space-between;
+    gap: 12px;
+    padding-bottom: 16px;
+    border-bottom: 1.5px solid rgba(255, 255, 255, 0.22);
+    margin-bottom: 22px;
+    position: relative;
+    z-index: 2;
+    flex-wrap: wrap;
   }
 
-  .visimisi-badge-label {
-    background: #edf6f0;
-    color: var(--uis-green, #046B26);
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    padding: 4px 12px;
-    border-radius: 50px;
-    display: inline-block;
+  .logo-uis-mini {
+    width: 38px;
+    height: 38px;
+    object-fit: contain;
   }
-
-  .visimisi-card-title {
-    font-family: 'Plus Jakarta Sans', sans-serif;
-    color: #0a2313;
-    font-size: 20px;
-    font-weight: 700;
-    margin-bottom: 0;
-    margin-top: 4px;
-    letter-spacing: -0.2px;
+  .brand-text-mini {
+    font-size: 10px;
+    line-height: 1.15;
   }
-
-  /* Styling Teks Visi */
-  .visi-highlight-box {
-    background: #f8faf9;
-    border: 1px solid #eef5f0;
-    border-radius: 12px;
-    padding: 24px;
-  }
-  .visi-text-content {
-    font-size: 1.18rem;
-    font-weight: 600;
-    color: #0a2313;
-    line-height: 1.75;
-    font-style: italic;
-  }
-  .visi-text-content p {
-    margin-bottom: 0.5rem;
-  }
-  .visi-text-content p:last-child {
-    margin-bottom: 0;
-  }
-
-  /* Styling Misi & Tata Nilai HTML List */
-  .misi-html-formatted,
-  .tatanilai-html-formatted {
-    font-size: 15px;
-    line-height: 1.85;
-    color: #334155;
-  }
-  .misi-html-formatted ol, .misi-html-formatted ul,
-  .tatanilai-html-formatted ol, .tatanilai-html-formatted ul {
-    padding-left: 1.5rem;
-    margin-bottom: 0;
-  }
-  .misi-html-formatted li,
-  .tatanilai-html-formatted li {
-    margin-bottom: 0.75rem;
-    line-height: 1.8;
-    text-align: justify;
-  }
-  .misi-html-formatted li:last-child,
-  .tatanilai-html-formatted li:last-child {
-    margin-bottom: 0;
-  }
-  .misi-html-formatted p,
-  .tatanilai-html-formatted p {
-    margin-bottom: 0.5rem;
-  }
-  .misi-html-formatted p:last-child,
-  .tatanilai-html-formatted p:last-child {
-    margin-bottom: 0;
-  }
-  .tatanilai-html-formatted strong,
-  .tatanilai-html-formatted b {
-    color: var(--uis-green, #046B26);
-  }
-
-  /* Tata Nilai CIP Grid Cards */
-  .cip-card-item {
-    background: #f8faf9;
-    border: 1px solid #eef5f0;
-    border-top: 4px solid var(--uis-green, #046B26);
-    border-radius: 12px;
-    padding: 20px;
-    height: 100%;
-    transition: transform 0.2s ease;
-  }
-  .cip-card-item:hover {
-    transform: translateY(-2px);
-  }
-  .cip-letter-badge {
+  .logo-kemdikbud-mini {
     width: 32px;
     height: 32px;
-    background: var(--uis-green, #046B26);
-    color: #ffffff;
-    border-radius: 50%;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
+    object-fit: contain;
+  }
+  .badge-humas-mini {
+    font-size: 8.5px;
     font-weight: 800;
-    font-size: 14px;
-    flex-shrink: 0;
+    color: #fed802;
+    text-align: center;
+    line-height: 1.15;
+    border: 1px solid rgba(254, 216, 2, 0.7);
+    padding: 3px 8px;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.25);
   }
-  .cip-card-title {
+  .badge-humas-mini span {
+    display: block;
+  }
+  .logo-dikti-mini {
+    height: 26px;
+    width: auto;
+    object-fit: contain;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 3px 6px;
+    border-radius: 5px;
+  }
+
+  /* Judul Utama Poster */
+  .visimisi-univ-title {
+    font-size: 26px;
+    font-weight: 900;
+    color: #ffffff;
+    letter-spacing: 0.6px;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    margin-bottom: 18px;
+    text-align: center;
+  }
+  .visimisi-univ-title .highlight-gold {
+    color: #fed802;
+    font-style: italic;
+  }
+
+  /* Section Headings: VISI:, MISI:, TATA NILAI: (Teks Bersih Sesuai Konsep Poster) */
+  .visimisi-section-heading {
+    color: #ffffff;
+    font-weight: 800;
+    font-size: 19px;
+    text-align: center;
+    letter-spacing: 0.8px;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  /* Kotak Konten Transparan Menyatu dengan Background Image */
+  .visimisi-content-box {
+    background: rgba(0, 40, 15, 0.45);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 14px;
+    padding: 18px 24px;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    color: #ffffff;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 2;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.18);
+  }
+
+  /* Tipografi Teks Visi */
+  .visi-text-highlight {
+    font-size: 19px;
     font-weight: 700;
-    font-size: 16px;
-    color: var(--uis-green, #046B26);
-    margin-bottom: 0;
-    letter-spacing: 0.2px;
+    color: #ffffff;
+    font-style: italic;
+    line-height: 1.65;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+    letter-spacing: 0.3px;
   }
-  .cip-card-desc {
-    color: #475569;
-    font-size: 14px;
-    line-height: 1.6;
+  .visi-text-highlight p {
     margin-bottom: 0;
+  }
+
+  /* Tipografi Butir Misi & Tata Nilai */
+  .visimisi-content-box p {
+    margin-bottom: 8px;
+    color: #f8fafc;
+    font-size: 14px;
+    line-height: 1.75;
+  }
+  .visimisi-content-box p:last-child {
+    margin-bottom: 0;
+  }
+  .visimisi-content-box ol, .visimisi-content-box ul {
+    padding-left: 22px;
+    margin-bottom: 0;
+    color: #f8fafc;
+  }
+  .visimisi-content-box li {
+    margin-bottom: 10px;
+    line-height: 1.75;
+    text-align: justify;
+    color: #f8fafc;
+    font-size: 14px;
+  }
+  .visimisi-content-box li:last-child {
+    margin-bottom: 0;
+  }
+  .visimisi-content-box strong, .visimisi-content-box b {
+    color: #fed802 !important;
+  }
+
+  /* Tata Nilai Items */
+  .tatanilai-item-row {
+    font-size: 14px;
+    line-height: 1.7;
+    margin-bottom: 8px;
+    color: #ffffff;
+  }
+  .tatanilai-item-row:last-child {
+    margin-bottom: 0;
+  }
+  .tatanilai-key {
+    font-weight: 800;
+    color: #fed802;
+    margin-right: 4px;
+  }
+
+  /* Pill Kuning Humas UIS */
+  .visimisi-humas-pill {
+    background: linear-gradient(180deg, #ffe066 0%, #fed802 100%);
+    color: #023814;
+    font-weight: 800;
+    font-size: 12px;
+    border-radius: 50px;
+    padding: 7px 24px;
+    display: inline-block;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.25);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* Ribbon Putih Sosial Media di Footer Banner */
+  .visimisi-card-footer-bar {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 11px;
+    font-weight: 600;
+    color: #1e293b;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+    position: relative;
+    z-index: 2;
+    flex-wrap: wrap;
+  }
+  .footer-social-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+  }
+  .footer-url-pill {
+    background: #fed802;
+    color: #111111;
+    font-weight: 700;
+    font-size: 11px;
+    padding: 4px 12px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+  }
+  .footer-url-pill:hover {
+    background: #e6c200;
+    color: #000;
   }
 
   @media (max-width: 576px) {
-    .visimisi-card-title {
-      font-size: 18px;
+    .visimisi-poster-banner {
+      padding: 20px 14px 16px 14px;
+      border-radius: 14px;
     }
-    .visi-text-content {
-      font-size: 1.05rem;
+    .visimisi-univ-title {
+      font-size: 19px;
     }
-    .misi-html-formatted,
-    .tatanilai-html-formatted {
-      font-size: 14px;
+    .visimisi-section-heading {
+      font-size: 16px;
+    }
+    .visi-text-highlight {
+      font-size: 16px;
+    }
+    .visimisi-content-box {
+      padding: 14px 16px;
+    }
+    .visimisi-card-footer-bar {
+      flex-direction: column;
+      gap: 6px;
+      text-align: center;
     }
   }
 </style>
@@ -180,165 +291,187 @@
 ])
 
 <!-- ═══════════════════════════════════════════════
-     KONTEN VISI, MISI & TATA NILAI UIS
-     (Tampilan Bersih, Ringan & Elegan Tanpa Background Poster)
+     BANNER POSTER VISI, MISI & TATA NILAI UIS
+     (Sesuai Konsep Poster Resmi dengan Background Image)
 ═══════════════════════════════════════════════ -->
-<section class="section-bg-white py-5" style="background: #ffffff;">
+<section class="py-5" style="background: #ffffff;">
   <div class="container py-2">
-    
-    {{-- Section Header --}}
-    <div class="text-center mb-5" data-aos="fade-up">
-      <div class="section-label mx-auto">Landasan & Orientasi Institusi</div>
-      <h2 class="section-title">Visi, Misi & <em>Tata Nilai UIS</em></h2>
-      <div class="divider-line centered"></div>
-      <p class="section-desc mx-auto" style="max-width: 720px;">
-        Landasan arah gerak, cita-cita luhur, dan komitmen seluruh civitas akademika Universitas Ibnu Sina dalam menyelenggarakan tridharma perguruan tinggi yang bermutu.
-      </p>
-    </div>
+    @php
+      $bgPoster = $about?->visimisi_background_url;
+    @endphp
 
     <div class="row justify-content-center">
-      <div class="col-xl-9 col-lg-10 col-12">
+      <div class="col-xl-9 col-lg-10 col-12" data-aos="fade-up" data-aos-delay="100">
+        
+        <div class="visimisi-poster-banner w-100 d-flex flex-column" 
+             style="@if($bgPoster) background-image: linear-gradient(135deg, rgba(14, 114, 46, 0.85) 0%, rgba(2, 56, 20, 0.92) 100%), url('{{ $bgPoster }}'); @endif">
+          
+          {{-- Dot Matrix Accents --}}
+          <div class="visimisi-dot-matrix top-left"></div>
+          <div class="visimisi-dot-matrix top-right"></div>
 
-        {{-- ═══════════════════════════════════════════════
-             1. VISI UNIVERSITAS IBNU SINA
-             ═══════════════════════════════════════════════ --}}
-        <div class="visimisi-content-card p-4 p-md-5 mb-4" data-aos="fade-up">
-          <div class="d-flex align-items-center gap-3 mb-3">
-            <div class="visimisi-card-icon">
-              <i class="bi bi-eye-fill"></i>
+          {{-- Header Poster: 4 Logos --}}
+          <div class="visimisi-header-logos">
+            <div class="d-flex align-items-center gap-2">
+              <img src="{{ asset('assets/img/logouis.png') }}" alt="Logo UIS" class="logo-uis-mini">
+              <div class="brand-text-mini">
+                <span class="d-block fw-bold text-white lh-1">UNIVERSITAS</span>
+                <span class="d-block fw-bold text-warning lh-1">IBNU SINA</span>
+              </div>
             </div>
-            <div>
-              <span class="visimisi-badge-label">Visi Institusi</span>
-              <h3 class="visimisi-card-title">Visi Universitas Ibnu Sina</h3>
+            <img src="{{ asset('assets/img/layanan-terkait/kemdikbud.svg') }}" alt="Kemdikbud" class="logo-kemdikbud-mini">
+            <div class="badge-humas-mini">
+              <span>HUMAS</span>
+              <span>UNIVERSITAS</span>
+              <span>IBNU SINA</span>
             </div>
+            <img src="{{ asset('assets/img/layanan-terkait/diktisaintek.svg') }}" alt="Diktisaintek Berdampak" class="logo-dikti-mini">
           </div>
 
-          <div class="visi-highlight-box mt-3">
-            @php
-              $rawVisi = $about?->visimisi_tagline_visi ?? $about?->visi ?? '';
-              $hasVisi = !empty(trim(strip_tags($rawVisi)));
-            @endphp
-            @if($hasVisi)
-              @if(strip_tags($rawVisi) !== $rawVisi)
-                <div class="visi-text-content mb-0">
-                  {!! $rawVisi !!}
-                </div>
+          {{-- Header Poster: Main Title --}}
+          <div class="visimisi-header-titles">
+            <h2 class="visimisi-univ-title">
+              UNIVERSITAS <span class="highlight-gold">IBNU SINA</span>
+            </h2>
+          </div>
+
+          {{-- ═══════════════════════════════════════════════
+               BAGIAN 1: VISI
+               ═══════════════════════════════════════════════ --}}
+          <div class="visimisi-section-block">
+            <h3 class="visimisi-section-heading">VISI:</h3>
+            <div class="visimisi-content-box text-center">
+              @php
+                $rawVisi = $about?->visimisi_tagline_visi ?? $about?->visi ?? '';
+                $hasVisi = !empty(trim(strip_tags($rawVisi)));
+              @endphp
+              @if($hasVisi)
+                @if(strip_tags($rawVisi) !== $rawVisi)
+                  <div class="visi-text-highlight mb-0">
+                    {!! $rawVisi !!}
+                  </div>
+                @else
+                  <p class="visi-text-highlight mb-0">
+                    "{{ $rawVisi }}"
+                  </p>
+                @endif
               @else
-                <p class="visi-text-content mb-0">
-                  "{{ $rawVisi }}"
+                <p class="visi-text-highlight mb-0">
+                  "Unggul, Berintegritas, Berjiwa Entrepreneurship"
                 </p>
               @endif
-            @else
-              <p class="visi-text-content mb-0">
-                "Unggul, Berintegritas, Berjiwa Entrepreneurship"
-              </p>
-            @endif
-          </div>
-        </div>
-
-        {{-- ═══════════════════════════════════════════════
-             2. MISI UNIVERSITAS IBNU SINA
-             ═══════════════════════════════════════════════ --}}
-        <div class="visimisi-content-card p-4 p-md-5 mb-4" data-aos="fade-up" data-aos-delay="100">
-          <div class="d-flex align-items-center gap-3 mb-4">
-            <div class="visimisi-card-icon">
-              <i class="bi bi-bullseye"></i>
-            </div>
-            <div>
-              <span class="visimisi-badge-label">Misi Institusi</span>
-              <h3 class="visimisi-card-title">Misi Universitas Ibnu Sina</h3>
             </div>
           </div>
 
-          <div class="misi-clean-wrap">
-            @php
-              $rawMisi = $about?->visimisi_misi_items ?? $about?->misi ?? '';
-              $hasMisi = !empty(trim(strip_tags($rawMisi)));
-            @endphp
-            @if($hasMisi)
-              @if(strip_tags($rawMisi) !== $rawMisi)
-                <div class="misi-html-formatted">
+          {{-- ═══════════════════════════════════════════════
+               BAGIAN 2: MISI
+               ═══════════════════════════════════════════════ --}}
+          <div class="visimisi-section-block">
+            <h3 class="visimisi-section-heading">MISI:</h3>
+            <div class="visimisi-content-box">
+              @php
+                $rawMisi = $about?->visimisi_misi_items ?? $about?->misi ?? '';
+                $hasMisi = !empty(trim(strip_tags($rawMisi)));
+              @endphp
+              @if($hasMisi)
+                @if(strip_tags($rawMisi) !== $rawMisi)
                   {!! $rawMisi !!}
-                </div>
+                @else
+                  <ol class="ps-3 mb-0">
+                    @foreach(preg_split('/\r\n|\r|\n/', trim($rawMisi)) as $line)
+                      @if(trim($line))
+                        <li>{{ preg_replace('/^\d+[\.\)]\s*/', '', trim($line)) }}</li>
+                      @endif
+                    @endforeach
+                  </ol>
+                @endif
               @else
-                <ol class="misi-html-formatted ps-3 mb-0">
-                  @foreach(preg_split('/\r\n|\r|\n/', trim($rawMisi)) as $line)
-                    @if(trim($line))
-                      <li>{{ preg_replace('/^\d+[\.\)]\s*/', '', trim($line)) }}</li>
-                    @endif
-                  @endforeach
+                <ol class="ps-3 mb-0">
+                  <li>Menyelenggarakan pendidikan tinggi yang unggul dengan mengintegrasikan nilai-nilai integritas dan kewirausahaan dalam proses pembelajaran, penelitian, dan pengabdian kepada Masyarakat.</li>
+                  <li>Mengembangkan penelitian inovatif dan relevan yang berkontribusi pada kemajuan ilmu pengetahuan, teknologi, dan pemecahan masalah di masyarakat.</li>
+                  <li>Membangun ekosistem kewirausahaan yang mendorong kreativitas, inovasi, dan kemandirian di kalangan civitas akademika dan masyarakat luas.</li>
+                  <li>Menerapkan tata kelola universitas yang kredibel, transparan, akuntabel, bertanggungjawab dan berintegritas tinggi untuk mendukung pencapaian keunggulan institusi.</li>
+                  <li>Menjalin kerjasama strategis dengan berbagai pemangku kepentingan untuk meningkatkan daya saing, reputasi, dan kontribusi universitas di tingkat nasional dan internasional.</li>
                 </ol>
               @endif
-            @else
-              <ol class="misi-html-formatted ps-3 mb-0">
-                <li>Menyelenggarakan pendidikan tinggi yang unggul dengan mengintegrasikan nilai-nilai integritas dan kewirausahaan dalam proses pembelajaran, penelitian, dan pengabdian kepada Masyarakat.</li>
-                <li>Mengembangkan penelitian inovatif dan relevan yang berkontribusi pada kemajuan ilmu pengetahuan, teknologi, dan pemecahan masalah di masyarakat.</li>
-                <li>Membangun ekosistem kewirausahaan yang mendorong kreativitas, inovasi, dan kemandirian di kalangan civitas akademika dan masyarakat luas.</li>
-                <li>Menerapkan tata kelola universitas yang kredibel, transparan, akuntabel, bertanggungjawab dan berintegritas tinggi untuk mendukung pencapaian keunggulan institusi.</li>
-                <li>Menjalin kerjasama strategis dengan berbagai pemangku kepentingan untuk meningkatkan daya saing, reputasi, dan kontribusi universitas di tingkat nasional dan internasional.</li>
-              </ol>
-            @endif
-          </div>
-        </div>
-
-        {{-- ═══════════════════════════════════════════════
-             3. TATA NILAI UIS "CIP"
-             ═══════════════════════════════════════════════ --}}
-        <div class="visimisi-content-card p-4 p-md-5" data-aos="fade-up" data-aos-delay="200">
-          <div class="d-flex align-items-center gap-3 mb-4">
-            <div class="visimisi-card-icon">
-              <i class="bi bi-gem"></i>
-            </div>
-            <div>
-              <span class="visimisi-badge-label">Budaya Nilai Institusi</span>
-              <h3 class="visimisi-card-title">
-                {{ $about?->visimisi_tatanilai_judul ?: 'TATA NILAI UIS "CIP"' }}
-              </h3>
             </div>
           </div>
 
-          <div class="tatanilai-clean-wrap">
-            @php
-              $rawTataNilai = $about?->visimisi_tatanilai_items ?? '';
-              $hasTataNilai = !empty(trim(strip_tags($rawTataNilai)));
-            @endphp
-            @if($hasTataNilai && strip_tags($rawTataNilai) !== $rawTataNilai)
-              <div class="tatanilai-html-formatted">
-                {!! $rawTataNilai !!}
-              </div>
-            @else
-              {{-- Standard 3 CIP Cards --}}
-              <div class="row g-3">
-                <div class="col-md-4 col-12">
-                  <div class="cip-card-item">
-                    <div class="d-flex align-items-center gap-2 mb-2">
-                      <span class="cip-letter-badge">C</span>
-                      <h4 class="cip-card-title">CERDAS</h4>
-                    </div>
-                    <p class="cip-card-desc">Spiritual, intelektual dan emosional</p>
+          {{-- ═══════════════════════════════════════════════
+               BAGIAN 3: TATA NILAI UIS "CIP"
+               ═══════════════════════════════════════════════ --}}
+          <div class="visimisi-section-block">
+            <h3 class="visimisi-section-heading">{{ $about?->visimisi_tatanilai_judul ?? 'TATA NILAI UIS "CIP"' }}:</h3>
+            <div class="visimisi-content-box">
+              @php
+                $rawTataNilai = $about?->visimisi_tatanilai_items ?? '';
+                $hasTataNilai = !empty(trim(strip_tags($rawTataNilai)));
+              @endphp
+              @if($hasTataNilai)
+                @if(strip_tags($rawTataNilai) !== $rawTataNilai)
+                  {!! $rawTataNilai !!}
+                @else
+                  <div class="tatanilai-items-wrap">
+                    @foreach(preg_split('/\r\n|\r|\n/', trim($rawTataNilai)) as $tn)
+                      @if(trim($tn))
+                        @php
+                          $parts = explode(':', trim($tn), 2);
+                        @endphp
+                        <div class="tatanilai-item-row">
+                          @if(count($parts) === 2)
+                            <strong class="tatanilai-key">{{ trim($parts[0]) }}:</strong>
+                            <span>{{ trim($parts[1]) }}</span>
+                          @else
+                            <span>{{ $tn }}</span>
+                          @endif
+                        </div>
+                      @endif
+                    @endforeach
+                  </div>
+                @endif
+              @else
+                <div class="tatanilai-items-wrap">
+                  <div class="tatanilai-item-row">
+                    <strong class="tatanilai-key">(C) CERDAS:</strong>
+                    <span>Spiritual, intelektual dan emosional</span>
+                  </div>
+                  <div class="tatanilai-item-row">
+                    <strong class="tatanilai-key">(I) INTEGRITAS:</strong>
+                    <span>Jujur, disiplin, Komitmen dan bertanggung jawab</span>
+                  </div>
+                  <div class="tatanilai-item-row">
+                    <strong class="tatanilai-key">(P) PROFESIONAL:</strong>
+                    <span>Objektif, Adil dan Transparan</span>
                   </div>
                 </div>
-                <div class="col-md-4 col-12">
-                  <div class="cip-card-item">
-                    <div class="d-flex align-items-center gap-2 mb-2">
-                      <span class="cip-letter-badge">I</span>
-                      <h4 class="cip-card-title">INTEGRITAS</h4>
-                    </div>
-                    <p class="cip-card-desc">Jujur, disiplin, komitmen dan bertanggung jawab</p>
-                  </div>
-                </div>
-                <div class="col-md-4 col-12">
-                  <div class="cip-card-item">
-                    <div class="d-flex align-items-center gap-2 mb-2">
-                      <span class="cip-letter-badge">P</span>
-                      <h4 class="cip-card-title">PROFESIONAL</h4>
-                    </div>
-                    <p class="cip-card-desc">Objektif, adil dan transparan</p>
-                  </div>
-                </div>
-              </div>
-            @endif
+              @endif
+            </div>
           </div>
+
+          {{-- Bottom Humas Pill --}}
+          <div class="text-center my-3">
+            <div class="visimisi-humas-pill">
+              {{ $about?->visimisi_badge_humas ?? 'HUMAS UNIVERSITAS IBNU SINA' }}
+            </div>
+          </div>
+
+          {{-- Bottom White Footer Bar --}}
+          <div class="visimisi-card-footer-bar">
+            <div class="footer-social-item">
+              <i class="bi bi-youtube text-danger fs-6"></i>
+              <i class="bi bi-facebook text-primary fs-6"></i>
+              <span>{{ $about?->visimisi_footer_fb ?? 'Universitas Ibnu Sina' }}</span>
+            </div>
+            <div class="footer-social-item">
+              <i class="bi bi-instagram fs-6" style="color: #e1306c;"></i>
+              <i class="bi bi-tiktok text-dark fs-6"></i>
+              <span>{{ $about?->visimisi_footer_ig ?? 'Official.uisbatam' }}</span>
+            </div>
+            <a href="{{ $about?->visimisi_footer_url ?? 'https://uis.ac.id' }}" target="_blank" class="footer-url-pill">
+              {{ $about?->visimisi_footer_url ?? 'https://uis.ac.id' }}
+            </a>
+          </div>
+
         </div>
 
       </div>
