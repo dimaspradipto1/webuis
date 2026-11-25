@@ -5,25 +5,20 @@
 
 @section('content')
 <!-- ═══════════════════════════════════════════════
-     HEADER & BREADCRUMB
+     HEADER & BREADCRUMB (TERHUBUNG KE PENGATURAN BREADCRUMB)
 ═══════════════════════════════════════════════ -->
-<section class="py-3 border-bottom" style="background-color: #ffffff;">
-  <div class="container-fluid px-lg-5">
-    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
-      <div>
-        <h4 class="fw-bold mb-0 text-dark">Kalender Akademik</h4>
-        <div class="text-muted small">Tahun Akademik 2026/2027 Universitas Ibnu Sina</div>
-      </div>
-      <nav aria-label="breadcrumb">
-        <ol class="breadcrumb mb-0 small">
-          <li class="breadcrumb-item"><a href="{{ route('homepage') }}" class="text-decoration-none text-muted">Beranda</a></li>
-          <li class="breadcrumb-item"><a href="{{ route('homepage.kalender-akademik') }}" class="text-decoration-none text-muted">Akademik</a></li>
-          <li class="breadcrumb-item active text-success fw-semibold" aria-current="page">Kalender</li>
-        </ol>
-      </nav>
-    </div>
-  </div>
-</section>
+@include('layouts.frontend.components.breadcrumb-hero', [
+    'pageKey' => 'kalender-akademik',
+    'heroClass' => 'kalender-hero',
+    'defaultTitle' => 'Kalender <em>Akademik</em>',
+    'defaultSubtitle' => 'Jadwal linimasa registrasi ulang, KRS, UTS, UAS, yudisium, dan wisuda sarjana serta magister.',
+    'defaultBadge' => 'Agenda Perkuliahan',
+    'defaultItem1' => 'Beranda',
+    'defaultUrl1' => route('homepage'),
+    'parentTitle' => 'Informasi',
+    'parentUrl' => route('homepage.kalender-akademik'),
+    'defaultActive' => 'Kalender Akademik'
+])
 
 <!-- ═══════════════════════════════════════════════
      MAIN CALENDAR DASHBOARD (PERSIS SEPERTI GAMBAR)

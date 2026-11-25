@@ -134,6 +134,7 @@
   .layanan-hero, .galeri-hero, .fasilitas-hero, .kontak-hero, .faq-hero,
   .kerjasama-hero, .tracer-hero, .download-hero, .kurikulum-hero, .hero-subpage,
   .page-hero-banner, .akademik-hero, .sambutan-hero, .struktur-hero,
+  .kalender-hero, .akreditasi-hero,
   .testimoni-hero, .humas-hero, .organisasi-hero, .pmb-hero, .profil-hero {
     background: {{ $heroBg }} !important;
     border-bottom: 3px solid {{ $heroBorder }} !important;
