@@ -70,74 +70,81 @@
   /* Gallery Card */
   .gallery-brosur-card {
     background: #ffffff;
-    border-radius: 20px;
+    border-radius: 16px;
     border: 1px solid #e5e7eb;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.04);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
     overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
   }
   .gallery-brosur-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 16px 34px rgba(4, 107, 38, 0.12);
+    transform: translateY(-4px);
+    box-shadow: 0 14px 28px rgba(4, 107, 38, 0.12);
     border-color: #046B26;
   }
   .gallery-img-wrapper {
     position: relative;
-    background: #f1f5f9;
+    background: #0b1320;
     overflow: hidden;
     cursor: pointer;
-    aspect-ratio: 3 / 4;
+    height: 290px;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 6px;
+    border-radius: 12px;
+    margin: 8px 8px 0 8px;
   }
   .gallery-img-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.4s ease;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 6px;
+    transition: transform 0.3s ease;
   }
   .gallery-brosur-card:hover .gallery-img-wrapper img {
-    transform: scale(1.03);
+    transform: scale(1.02);
   }
   .gallery-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(4, 107, 38, 0.5);
+    background: rgba(4, 107, 38, 0.4);
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 0;
-    transition: opacity 0.25s ease;
+    transition: opacity 0.2s ease;
+    border-radius: 12px;
   }
   .gallery-brosur-card:hover .gallery-overlay {
     opacity: 1;
   }
   .gallery-overlay-badge {
-    background: rgba(0, 0, 0, 0.75);
+    background: rgba(0, 0, 0, 0.8);
     color: #ffffff;
-    padding: 8px 16px;
+    padding: 6px 14px;
     border-radius: 50px;
-    font-size: 12px;
+    font-size: 11.5px;
     font-weight: 700;
     backdrop-filter: blur(4px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   }
 
   .btn-download-action {
     background: linear-gradient(135deg, #046B26 0%, #024719 100%);
     color: #ffffff !important;
     font-weight: 700;
-    border-radius: 12px;
-    padding: 10px 16px;
-    font-size: 13px;
+    border-radius: 10px;
+    padding: 8px 12px;
+    font-size: 12px;
     transition: all 0.2s ease;
     border: none;
-    box-shadow: 0 4px 12px rgba(4, 107, 38, 0.2);
+    box-shadow: 0 3px 8px rgba(4, 107, 38, 0.2);
     display: inline-flex;
     align-items: center;
     justify-content: center;
@@ -146,21 +153,21 @@
   .btn-download-action:hover {
     background: linear-gradient(135deg, #03531e 0%, #012d10 100%);
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(4, 107, 38, 0.3);
+    box-shadow: 0 5px 12px rgba(4, 107, 38, 0.3);
   }
   .btn-pdf-action {
     background: #fef2f2;
     color: #dc2626 !important;
     border: 1.5px solid #fca5a5;
     font-weight: 700;
-    border-radius: 12px;
-    padding: 9px 14px;
-    font-size: 12.5px;
+    border-radius: 10px;
+    padding: 7px 10px;
+    font-size: 11.5px;
     transition: all 0.2s ease;
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    gap: 5px;
+    gap: 4px;
   }
   .btn-pdf-action:hover {
     background: #dc2626;
@@ -173,9 +180,9 @@
     color: #046B26 !important;
     border: 1.5px solid #046B26;
     font-weight: 700;
-    border-radius: 12px;
-    padding: 9px 14px;
-    font-size: 12.5px;
+    border-radius: 10px;
+    padding: 7px 11px;
+    font-size: 12px;
     transition: all 0.2s ease;
   }
   .btn-preview-action:hover {
@@ -189,7 +196,7 @@
 
 @php
   $cleanWa = $pmb->clean_wa ?? '6282283958644';
-  $pmbPortalUrl = $pmb->link_pendaftaran ?: ($pmbSetting->tombol_link_1 ?? 'https://pmb.uis.ac.id');
+  $pmbPortalUrl = ($pmb?->link_pendaftaran) ?: ($pmbSetting->tombol_link_1 ?? 'https://pmb.uis.ac.id');
   if (!str_starts_with($pmbPortalUrl, 'http://') && !str_starts_with($pmbPortalUrl, 'https://')) {
       $pmbPortalUrl = 'https://' . $pmbPortalUrl;
   }
@@ -274,8 +281,8 @@
         @endforeach
       </div>
 
-      {{-- GRID GALERI POSTER & BROSUR --}}
-      <div class="row g-4 mb-5" id="galleryBrosurGrid">
+      {{-- GRID GALERI POSTER & BROSUR (Rasio Kompak 4 Kolom) --}}
+      <div class="row g-3 g-md-4 mb-5" id="galleryBrosurGrid">
         @foreach($brosurs as $b)
           @php
             $slugCat = \Illuminate\Support\Str::slug($b->kategori_fakultas ?: 'universitas');
@@ -287,42 +294,43 @@
                 default => 'background:#046B26;color:#ffffff;',
             };
           @endphp
-          <div class="col-xl-4 col-md-6 gallery-item" data-category="{{ $slugCat }}">
+          <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 gallery-item" data-category="{{ $slugCat }}">
             <div class="gallery-brosur-card">
               <div>
                 {{-- Header Card: Fakultas & Tahun --}}
-                <div class="p-3 border-bottom d-flex align-items-center justify-content-between bg-white">
-                  <span class="badge rounded-pill px-3 py-1.5 fw-bold" style="{{ $badgeColor }} font-size: 11px;">
+                <div class="p-2.5 px-3 border-bottom d-flex align-items-center justify-content-between bg-white">
+                  <span class="badge rounded-pill px-2.5 py-1 fw-bold text-truncate" style="{{ $badgeColor }} font-size: 10.5px; max-width: 170px;">
                     <i class="bi bi-bookmark-fill me-1"></i> {{ $b->kategori_fakultas ?: 'Universitas' }}
                   </span>
                   @if($b->tahun_akademik)
-                    <span class="text-muted small fw-semibold" style="font-size: 11.5px;">
+                    <span class="text-muted fw-semibold" style="font-size: 11px;">
                       TA: {{ $b->tahun_akademik }}
                     </span>
                   @endif
                 </div>
 
-                {{-- Gambar Cover Brosur (Aspect Ratio 3:4) --}}
+                {{-- Gambar Cover Brosur (Object-Fit Contain & Full View) --}}
                 <div class="gallery-img-wrapper btn-trigger-lightbox" 
                      data-title="{{ $b->judul }}" 
                      data-kategori="{{ $b->kategori_fakultas }}" 
                      data-img="{{ $b->gambar_url }}" 
-                     data-pdf="{{ $b->pdf_url ?? '' }}">
+                     data-pdf="{{ $b->pdf_url ?? '' }}"
+                     title="Klik untuk melihat & memperbesar">
                   <img src="{{ $b->gambar_url }}" alt="{{ $b->judul }}" loading="lazy">
                   <div class="gallery-overlay">
                     <span class="gallery-overlay-badge">
-                      <i class="bi bi-arrows-fullscreen me-1"></i> Klik untuk Memperbesar
+                      <i class="bi bi-zoom-in me-1"></i> Zoom In
                     </span>
                   </div>
                 </div>
 
                 {{-- Deskripsi & Judul Brosur --}}
-                <div class="p-3.5 p-md-4">
-                  <h5 class="fw-bold text-dark mb-1" style="font-size: 17px; line-height: 1.4;">
+                <div class="p-3">
+                  <h6 class="fw-bold text-dark mb-1 text-truncate" style="font-size: 14.5px; line-height: 1.4;" title="{{ $b->judul }}">
                     {{ $b->judul }}
-                  </h5>
+                  </h6>
                   @if(!empty($b->deskripsi))
-                    <p class="text-muted small mb-0 mt-2" style="line-height: 1.6; font-size: 12.5px;">
+                    <p class="text-muted small mb-0 mt-1" style="line-height: 1.5; font-size: 11.5px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
                       {{ $b->deskripsi }}
                     </p>
                   @endif
@@ -330,10 +338,10 @@
               </div>
 
               {{-- Tombol Aksi di Bawah Card --}}
-              <div class="p-3.5 p-md-4 pt-0">
-                <div class="d-flex flex-wrap gap-2">
+              <div class="p-3 pt-0">
+                <div class="d-flex align-items-center gap-2">
                   <a href="{{ $b->gambar_url }}" download class="btn-download-action flex-fill">
-                    <i class="bi bi-download"></i> Unduh Poster (HD)
+                    <i class="bi bi-download"></i> Unduh Poster
                   </a>
 
                   @if($b->file_pdf)
@@ -347,8 +355,8 @@
                           data-kategori="{{ $b->kategori_fakultas }}" 
                           data-img="{{ $b->gambar_url }}" 
                           data-pdf="{{ $b->pdf_url ?? '' }}" 
-                          title="Pratinjau Layar Penuh">
-                    <i class="bi bi-eye"></i>
+                          title="Zoom In / Pratinjau">
+                    <i class="bi bi-zoom-in"></i>
                   </button>
                 </div>
               </div>
@@ -382,31 +390,58 @@
   </div>
 </main>
 
-{{-- MODAL LIGHTBOX / ZOOM POSTER BROSUR --}}
-<div class="modal fade" id="modalLightboxBrosur" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-xl">
-    <div class="modal-content rounded-4 border-0 overflow-hidden shadow-lg">
-      <div class="modal-header bg-dark text-white py-2.5 px-3 border-0">
-        <div class="d-flex align-items-center gap-2">
-          <i class="bi bi-image text-warning fs-5"></i>
-          <div>
-            <h6 class="modal-title fw-bold small mb-0 text-white" id="lightboxTitle">Judul Brosur</h6>
+{{-- MODAL LIGHTBOX / ZOOM POSTER BROSUR INTERAKTIF --}}
+<div class="modal fade" id="modalLightboxBrosur" tabindex="-1" aria-hidden="true" data-bs-backdrop="true">
+  <div class="modal-dialog modal-dialog-centered modal-xl modal-dialog-scrollable">
+    <div class="modal-content rounded-4 border-0 overflow-hidden shadow-2xl bg-dark text-white">
+      {{-- Header dengan Toolbar Zoom --}}
+      <div class="modal-header bg-dark border-bottom border-secondary py-2.5 px-3 d-flex align-items-center justify-content-between flex-wrap gap-2">
+        <div class="d-flex align-items-center gap-2 overflow-hidden me-2" style="max-width: 50%;">
+          <i class="bi bi-image text-warning fs-5 flex-shrink-0"></i>
+          <div class="text-truncate">
+            <h6 class="modal-title fw-bold small mb-0 text-white text-truncate" id="lightboxTitle">Judul Brosur</h6>
             <span class="text-white-50" style="font-size: 11px;" id="lightboxKategori">Universitas</span>
           </div>
         </div>
-        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        
+        {{-- ZOOM CONTROLS TOOLBAR --}}
+        <div class="d-flex align-items-center gap-1.5 flex-shrink-0 ms-auto">
+          <button type="button" class="btn btn-sm btn-outline-light py-1 px-2.5 rounded-pill" id="btnZoomOut" title="Perkecil Zoom (-)">
+            <i class="bi bi-dash-lg"></i>
+          </button>
+          <span class="badge bg-secondary px-2.5 py-1 text-light font-monospace" id="zoomLevelBadge" style="font-size: 11px; min-width: 48px; border: 1px solid rgba(255,255,255,0.2);">100%</span>
+          <button type="button" class="btn btn-sm btn-outline-light py-1 px-2.5 rounded-pill" id="btnZoomIn" title="Perbesar Zoom (+)">
+            <i class="bi bi-plus-lg"></i>
+          </button>
+          <button type="button" class="btn btn-sm btn-outline-warning py-1 px-2.5 rounded-pill ms-1" id="btnZoomReset" title="Reset Ukuran (100%)">
+            <i class="bi bi-arrow-counterclockwise me-1"></i>Reset
+          </button>
+          <button type="button" class="btn-close btn-close-white ms-2" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
       </div>
-      <div class="modal-body p-0 text-center bg-dark" style="min-height: 300px;">
-        <img id="lightboxImg" src="" alt="Pratinjau Brosur" class="img-fluid" style="max-height: 85vh; object-fit: contain;">
+      
+      {{-- MODAL BODY WITH INTERACTIVE SCROLL & ZOOM VIEWPORT --}}
+      <div class="modal-body p-0 text-center position-relative" id="lightboxViewport" style="background: #0b111e; min-height: 420px; max-height: 74vh; overflow: auto; cursor: zoom-in;">
+        <div id="zoomContainer" style="display: inline-block; min-width: 100%; padding: 20px 10px; transition: transform 0.2s cubic-bezier(0.2, 0, 0, 1); transform-origin: center top;">
+          <img id="lightboxImg" src="" alt="Pratinjau Brosur" class="img-fluid rounded shadow-lg" style="max-height: 68vh; width: auto; object-fit: contain; pointer-events: auto;">
+        </div>
+        <div class="position-absolute bottom-0 start-50 translate-middle-x mb-2 px-3 py-1 rounded-pill text-white-50 small bg-dark bg-opacity-75" style="font-size: 11px; z-index: 10; pointer-events: none;">
+          <i class="bi bi-info-circle me-1 text-warning"></i> Klik gambar untuk Zoom In / Out, atau gunakan tombol di atas
+        </div>
       </div>
-      <div class="modal-footer bg-white py-2.5 px-3 d-flex justify-content-between flex-wrap gap-2">
-        <span class="text-muted small">Universitas Ibnu Sina (UIS) Batam</span>
+
+      {{-- Footer Modal --}}
+      <div class="modal-footer bg-dark border-top border-secondary py-2 px-3 d-flex justify-content-between flex-wrap gap-2">
+        <span class="text-white-50 small"><i class="bi bi-shield-check text-success me-1"></i> Materi Resmi Admisi & PMB UIS</span>
         <div class="d-flex align-items-center gap-2">
+          <a id="lightboxNewTabBtn" href="#" target="_blank" class="btn btn-outline-light btn-sm px-3 rounded-pill fw-semibold">
+            <i class="bi bi-box-arrow-up-right me-1"></i> Buka Gambar Penuh
+          </a>
           <a id="lightboxPdfBtn" href="#" target="_blank" class="btn btn-outline-danger btn-sm px-3 fw-bold rounded-pill" style="display: none;">
             <i class="bi bi-file-earmark-pdf-fill me-1"></i> Buka PDF
           </a>
           <a id="lightboxDownloadBtn" href="#" download class="btn btn-success btn-sm px-4 fw-bold rounded-pill" style="background-color: #046B26;">
-            <i class="bi bi-download me-1"></i> Unduh Poster Ini (HD)
+            <i class="bi bi-download me-1"></i> Unduh Poster (HD)
           </a>
         </div>
       </div>
@@ -440,17 +475,82 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-  // 2. LIGHTBOX MODAL
+  // 2. LIGHTBOX MODAL & INTERACTIVE ZOOM
   const lightboxModalEl = document.getElementById('modalLightboxBrosur');
+  // Pastikan modal berada langsung di body agar terhindar dari z-index/overflow clipping
+  if (lightboxModalEl && lightboxModalEl.parentElement !== document.body) {
+    document.body.appendChild(lightboxModalEl);
+  }
+
   const lightboxModal = new bootstrap.Modal(lightboxModalEl);
   const lightboxImg = document.getElementById('lightboxImg');
   const lightboxTitle = document.getElementById('lightboxTitle');
   const lightboxKategori = document.getElementById('lightboxKategori');
   const lightboxDownloadBtn = document.getElementById('lightboxDownloadBtn');
+  const lightboxNewTabBtn = document.getElementById('lightboxNewTabBtn');
   const lightboxPdfBtn = document.getElementById('lightboxPdfBtn');
+  const lightboxViewport = document.getElementById('lightboxViewport');
+  const zoomContainer = document.getElementById('zoomContainer');
+  const zoomLevelBadge = document.getElementById('zoomLevelBadge');
+  const btnZoomIn = document.getElementById('btnZoomIn');
+  const btnZoomOut = document.getElementById('btnZoomOut');
+  const btnZoomReset = document.getElementById('btnZoomReset');
 
+  let currentZoom = 1.0;
+  const minZoom = 0.6;
+  const maxZoom = 3.0;
+  const zoomStep = 0.25;
+
+  function updateZoom(newZoom) {
+    currentZoom = Math.min(Math.max(newZoom, minZoom), maxZoom);
+    if (zoomContainer) {
+      zoomContainer.style.transform = `scale(${currentZoom})`;
+    }
+    if (zoomLevelBadge) {
+      zoomLevelBadge.textContent = Math.round(currentZoom * 100) + '%';
+    }
+    if (lightboxViewport) {
+      lightboxViewport.style.cursor = currentZoom > 1.05 ? 'zoom-out' : 'zoom-in';
+    }
+  }
+
+  if (btnZoomIn) {
+    btnZoomIn.addEventListener('click', function (e) {
+      e.stopPropagation();
+      updateZoom(currentZoom + zoomStep);
+    });
+  }
+
+  if (btnZoomOut) {
+    btnZoomOut.addEventListener('click', function (e) {
+      e.stopPropagation();
+      updateZoom(currentZoom - zoomStep);
+    });
+  }
+
+  if (btnZoomReset) {
+    btnZoomReset.addEventListener('click', function (e) {
+      e.stopPropagation();
+      updateZoom(1.0);
+    });
+  }
+
+  // Klik gambar poster untuk toggle zoom in / zoom out
+  if (lightboxImg) {
+    lightboxImg.addEventListener('click', function (e) {
+      e.stopPropagation();
+      if (currentZoom <= 1.05) {
+        updateZoom(1.8);
+      } else {
+        updateZoom(1.0);
+      }
+    });
+  }
+
+  // Event listener tombol buka lightbox
   document.querySelectorAll('.btn-trigger-lightbox').forEach(el => {
-    el.addEventListener('click', function () {
+    el.addEventListener('click', function (e) {
+      e.preventDefault();
       const title = this.getAttribute('data-title') || 'Brosur PMB UIS';
       const kategori = this.getAttribute('data-kategori') || 'Universitas';
       const imgSrc = this.getAttribute('data-img') || '';
@@ -460,6 +560,7 @@ document.addEventListener('DOMContentLoaded', function () {
       lightboxKategori.innerText = kategori;
       lightboxImg.src = imgSrc;
       lightboxDownloadBtn.href = imgSrc;
+      if (lightboxNewTabBtn) lightboxNewTabBtn.href = imgSrc;
 
       if (pdfSrc) {
         lightboxPdfBtn.href = pdfSrc;
@@ -468,8 +569,14 @@ document.addEventListener('DOMContentLoaded', function () {
         lightboxPdfBtn.style.display = 'none';
       }
 
+      updateZoom(1.0);
       lightboxModal.show();
     });
+  });
+
+  // Reset zoom saat modal ditutup
+  lightboxModalEl.addEventListener('hidden.bs.modal', function () {
+    updateZoom(1.0);
   });
 });
 </script>
