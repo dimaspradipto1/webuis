@@ -184,7 +184,7 @@
                             <td class="text-center pe-4">
                                 <div class="d-flex align-items-center justify-content-center gap-1">
                                     <a href="{{ route('breadcrumb-setting.edit', $item->id) }}" 
-                                       class="btn btn-sm btn-primary rounded-circle d-inline-flex align-items-center justify-content-center shadow-sm" 
+                                       class="btn btn-sm btn-warning rounded-circle d-inline-flex align-items-center justify-content-center shadow-sm" 
                                        style="width: 34px; height: 34px;" 
                                        title="Edit Breadcrumb & Hero Banner" 
                                        data-bs-toggle="tooltip">
