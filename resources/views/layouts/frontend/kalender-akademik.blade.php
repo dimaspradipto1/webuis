@@ -50,37 +50,6 @@
           @endif
         </div>
 
-        {{-- Mini Calendar Card --}}
-        <div class="card border-0 shadow-sm rounded-4 mb-3 bg-white p-3">
-          <div class="d-flex align-items-center justify-content-between mb-2">
-            <h6 class="fw-bold mb-0 text-dark small" id="miniCalTitle">November 2026</h6>
-            <div class="d-flex align-items-center gap-1">
-              <button type="button" class="btn btn-sm btn-light p-1 rounded-2 text-muted" onclick="miniPrevMonth()" title="Bulan sebelumnya">
-                <i class="bi bi-chevron-left" style="font-size: 12px;"></i>
-              </button>
-              <button type="button" class="btn btn-sm btn-light p-1 rounded-2 text-muted" onclick="miniNextMonth()" title="Bulan berikutnya">
-                <i class="bi bi-chevron-right" style="font-size: 12px;"></i>
-              </button>
-            </div>
-          </div>
-
-          {{-- Mini Calendar Day Headers --}}
-          <div class="row g-0 text-center text-muted fw-bold mb-1" style="font-size: 11px;">
-            <div class="col text-danger">S</div>
-            <div class="col">M</div>
-            <div class="col">T</div>
-            <div class="col">W</div>
-            <div class="col">T</div>
-            <div class="col">F</div>
-            <div class="col">S</div>
-          </div>
-
-          {{-- Mini Calendar Grid --}}
-          <div class="row g-1 text-center" id="miniCalendarDays">
-            <!-- Di-generate via JavaScript -->
-          </div>
-        </div>
-
         {{-- Categories Card --}}
         <div class="card border-0 shadow-sm rounded-4 mb-3 bg-white p-3">
           <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
@@ -302,46 +271,6 @@
   transform: translateY(-1px);
 }
 
-.mini-day-col {
-  height: 28px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 11.5px;
-  border-radius: 50%;
-  cursor: pointer;
-  color: #374151;
-}
-
-.mini-day-col:hover {
-  background-color: #e2e8f0;
-}
-
-.mini-day-col.other {
-  color: #cbd5e1;
-}
-
-.mini-day-col.today {
-  background-color: #046B26;
-  color: #ffffff;
-  font-weight: bold;
-}
-
-.mini-day-col.has-event {
-  font-weight: bold;
-  position: relative;
-}
-
-.mini-day-col.has-event::after {
-  content: '';
-  position: absolute;
-  bottom: 2px;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background-color: #046B26;
-}
-
 .category-filter-item {
   display: flex;
   align-items: center;
@@ -392,7 +321,6 @@ const categoryConfigs = {
 
 let currentView = 'month'; // 'month', 'week', 'day'
 let activeDate = new Date(); // Date state
-let miniDate = new Date(activeDate.getFullYear(), activeDate.getMonth(), 1);
 let activeCategoryFilters = new Set(Object.keys(categoryConfigs));
 
 const monthNamesEng = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -402,7 +330,6 @@ const dayNamesId = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabt
 
 function init() {
   renderCategories();
-  renderMiniCalendar();
   renderUpcomingEvents();
   renderMainCalendar();
 }
@@ -450,61 +377,6 @@ function resetCategories() {
   activeCategoryFilters = new Set(Object.keys(categoryConfigs));
   renderCategories();
   renderMainCalendar();
-}
-
-// ─── MINI CALENDAR (SIDEBAR KIRI) ───
-function renderMiniCalendar() {
-  const y = miniDate.getFullYear();
-  const m = miniDate.getMonth();
-
-  const titleEl = document.getElementById('miniCalTitle');
-  if (titleEl) titleEl.innerText = `${monthNamesEng[m]} ${y}`;
-
-  const grid = document.getElementById('miniCalendarDays');
-  if (!grid) return;
-  grid.innerHTML = '';
-
-  const firstDay = new Date(y, m, 1).getDay();
-  const totalDays = new Date(y, m + 1, 0).getDate();
-  const prevTotalDays = new Date(y, m, 0).getDate();
-
-  const today = new Date();
-
-  // Previous month padding
-  for (let i = firstDay; i > 0; i--) {
-    const col = document.createElement('div');
-    col.className = 'col mini-day-col other';
-    col.innerText = prevTotalDays - i + 1;
-    grid.appendChild(col);
-  }
-
-  // Current month days
-  for (let d = 1; d <= totalDays; d++) {
-    const col = document.createElement('div');
-    const isToday = (today.getFullYear() === y && today.getMonth() === m && today.getDate() === d);
-    
-    const dateStr = `${y}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
-    const hasEvent = rawAgendaData.some(ev => dateStr >= ev.tanggal_mulai && dateStr <= (ev.tanggal_selesai || ev.tanggal_mulai));
-
-    col.className = `col mini-day-col ${isToday ? 'today' : ''} ${hasEvent ? 'has-event' : ''}`;
-    col.innerText = d;
-    col.onclick = () => {
-      activeDate = new Date(y, m, d);
-      renderMainCalendar();
-    };
-
-    grid.appendChild(col);
-  }
-}
-
-function miniPrevMonth() {
-  miniDate.setMonth(miniDate.getMonth() - 1);
-  renderMiniCalendar();
-}
-
-function miniNextMonth() {
-  miniDate.setMonth(miniDate.getMonth() + 1);
-  renderMiniCalendar();
 }
 
 // ─── UPCOMING EVENTS (SIDEBAR KIRI) ───
@@ -561,10 +433,6 @@ function renderMainCalendar() {
       titleEl.innerText = `${dayNamesEng[activeDate.getDay()]}, ${monthNamesEng[m]} ${d}, ${y}`;
     }
   }
-
-  // Sync mini date with active date month
-  miniDate = new Date(y, m, 1);
-  renderMiniCalendar();
 
   if (currentView === 'month') {
     renderMonthView(y, m);
