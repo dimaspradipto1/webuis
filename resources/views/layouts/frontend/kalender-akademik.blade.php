@@ -30,6 +30,15 @@
 ═══════════════════════════════════════════════ -->
 <section class="py-4" style="background-color: #f3f5f8; min-height: 80vh;">
   <div class="container-fluid px-lg-5">
+    @if(!$item->is_active)
+      <div class="alert alert-warning border-0 rounded-4 shadow-sm p-4 mb-4 d-flex align-items-center gap-3">
+        <i class="bi bi-exclamation-triangle-fill fs-2 text-warning"></i>
+        <div>
+          <h6 class="fw-bold mb-1 text-dark">Kalender Akademik Dalam Proses Penyesuaian</h6>
+          <div class="small text-muted">Jadwal dan linimasa perkuliahan sedang dalam proses peninjauan / pembaruan resmi oleh Biro Administrasi Akademik UIS.</div>
+        </div>
+      </div>
+    @endif
     <div class="row g-4">
       
       {{-- ══════════════════════════════════════════════
@@ -316,7 +325,8 @@ const categoryConfigs = {
   'Ujian':        { color: '#f59e0b', textColor: '#ffffff', bgLight: '#fef3c7', label: 'Ujian (UTS / UAS)' },
   'Libur':        { color: '#ef4444', textColor: '#ffffff', bgLight: '#fee2e2', label: 'Libur Semester' },
   'Wisuda':       { color: '#8b5cf6', textColor: '#ffffff', bgLight: '#ede9fe', label: 'Wisuda / Yudisium' },
-  'Akademik':     { color: '#06b6d4', textColor: '#ffffff', bgLight: '#cffafe', label: 'Kegiatan Akademik' }
+  'Akademik':     { color: '#06b6d4', textColor: '#ffffff', bgLight: '#cffafe', label: 'Kegiatan Akademik' },
+  'Kemahasiswaan': { color: '#ec4899', textColor: '#ffffff', bgLight: '#fce7f3', label: 'Kemahasiswaan' }
 };
 
 let currentView = 'month'; // 'month', 'week', 'day'

@@ -292,7 +292,14 @@ class FrontendController extends Controller
             'is_active' => true,
         ]);
         $pageTitle = 'Kalender Akademik';
-        $agendaItems = $item->agenda_items ?? [];
+
+        // Filter hanya agenda yang statusnya AKTIF (is_active)
+        $agendaItems = collect($item->agenda_items ?? [])
+            ->filter(function ($ag) {
+                return !isset($ag['is_active']) || $ag['is_active'] === true || $ag['is_active'] === '1' || $ag['is_active'] === 1;
+            })
+            ->values()
+            ->toArray();
 
         return view('layouts.frontend.kalender-akademik', compact('item', 'pageTitle', 'agendaItems'));
     }

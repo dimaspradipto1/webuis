@@ -55,9 +55,14 @@
                             <i class="bi {{ $iconClass }} fs-4"></i>
                             <h5 class="card-title mb-0 p-0 fw-bold text-dark">Formulir Informasi {{ $pageTitle }}</h5>
                         </div>
-                        <div class="form-check form-switch mb-0">
-                            <input class="form-check-input" type="checkbox" role="switch" id="is_active" name="is_active" value="1" {{ old('is_active', $item->is_active) ? 'checked' : '' }}>
-                            <label class="form-check-label fw-semibold small text-muted" for="is_active">Tampilkan di Menu</label>
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="form-check form-switch mb-0">
+                                <input class="form-check-input" type="checkbox" role="switch" id="is_active" name="is_active" value="1" {{ old('is_active', $item->is_active) ? 'checked' : '' }} onchange="updateKalenderStatusBadge(this.checked)">
+                            </div>
+                            <span id="kalenderStatusBadge" class="badge rounded-pill px-3 py-1.5 {{ old('is_active', $item->is_active) ? 'bg-success text-white' : 'bg-secondary text-white' }}">
+                                <i class="bi {{ old('is_active', $item->is_active) ? 'bi-check-circle-fill' : 'bi-x-circle-fill' }} me-1"></i>
+                                {{ old('is_active', $item->is_active) ? 'Status: Aktif di Web' : 'Status: Nonaktif' }}
+                            </span>
                         </div>
                     </div>
 
@@ -91,43 +96,73 @@
                         </div>
 
                         @if($tipe === 'kalender')
-                        {{-- Pengelola Linimasa Agenda Kalender Akademik (Interaktif) --}}
+                        {{-- Pengelola Linimasa Agenda Kalender Akademik (Interaktif & Best Practice) --}}
+                        @php
+                            $agendas = old('agenda_items', $item->agenda_items ?? []);
+                            if (empty($agendas)) {
+                                $agendas = [];
+                            }
+                            $countTotal = count($agendas);
+                            $countAktif = collect($agendas)->filter(fn($a) => ($a['is_active'] ?? true))->count();
+                            $countNonaktif = $countTotal - $countAktif;
+                        @endphp
+
                         <div class="card border-0 shadow-sm rounded-4 mb-4" style="background: #fbfdfc; border: 1px solid #d4edda !important;">
                             <div class="card-header bg-white py-3 border-bottom d-flex align-items-center justify-content-between flex-wrap gap-2">
                                 <div>
-                                    <h6 class="fw-bold text-dark mb-0 d-flex align-items-center gap-2">
-                                        <i class="bi bi-calendar-week-fill text-success"></i>
-                                        Linimasa Agenda Akademik (Ditampilkan di Kalender Web)
-                                    </h6>
-                                    <div class="small text-muted">Agenda di bawah akan membentuk kalender visual dan jadwal semester di halaman depan.</div>
+                                    <div class="d-flex align-items-center gap-2 mb-1">
+                                        <h6 class="fw-bold text-dark mb-0 d-flex align-items-center gap-2">
+                                            <i class="bi bi-calendar-week-fill text-success"></i>
+                                            Linimasa Agenda Kalender Akademik (Sifat: Is Active)
+                                        </h6>
+                                    </div>
+                                    <div class="small text-muted">Setiap agenda memiliki sakelar status <strong>Aktif / Nonaktif</strong> agar hanya kegiatan yang disetujui yang tampil pada kalender frontend.</div>
                                 </div>
-                                <button type="button" class="btn btn-sm btn-success rounded-pill px-3" onclick="tambahBarisAgenda()" style="background: #046B26; border-color: #046B26;">
-                                    <i class="bi bi-plus-circle me-1"></i> Tambah Agenda
-                                </button>
+                                <div class="d-flex align-items-center gap-2 flex-wrap">
+                                    <span class="badge bg-light text-dark border rounded-pill px-2.5 py-1 small fw-semibold">
+                                        Total: <strong id="statTotalAgenda">{{ $countTotal }}</strong>
+                                    </span>
+                                    <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-2.5 py-1 small fw-semibold">
+                                        Aktif: <strong id="statAktifAgenda">{{ $countAktif }}</strong>
+                                    </span>
+                                    <span class="badge bg-secondary-subtle text-muted rounded-pill px-2.5 py-1 small fw-semibold">
+                                        Nonaktif: <strong id="statNonaktifAgenda">{{ $countNonaktif }}</strong>
+                                    </span>
+                                    <button type="button" class="btn btn-sm btn-success rounded-pill px-3 ms-1 fw-bold" onclick="tambahBarisAgenda()" style="background: #046B26; border-color: #046B26;">
+                                        <i class="bi bi-plus-circle me-1"></i> Tambah Agenda
+                                    </button>
+                                </div>
                             </div>
                             <div class="card-body p-3">
                                 <div class="table-responsive">
                                     <table class="table table-sm table-bordered align-middle mb-0" id="tabelAgendaKalender">
                                         <thead class="table-light text-muted small text-uppercase">
                                             <tr>
-                                                <th style="width: 120px;">Semester</th>
+                                                <th class="text-center" style="width: 75px;">Status</th>
+                                                <th style="width: 105px;">Semester</th>
                                                 <th>Nama Kegiatan Akademik</th>
-                                                <th style="width: 140px;">Tgl Mulai</th>
-                                                <th style="width: 140px;">Tgl Selesai</th>
-                                                <th style="width: 140px;">Kategori</th>
+                                                <th style="width: 135px;">Tgl Mulai</th>
+                                                <th style="width: 135px;">Tgl Selesai</th>
+                                                <th style="width: 160px;">Kategori Warna</th>
                                                 <th>Keterangan / Lokasi</th>
                                                 <th class="text-center" style="width: 50px;">Aksi</th>
                                             </tr>
                                         </thead>
                                         <tbody id="tbodyAgenda">
-                                            @php
-                                                $agendas = old('agenda_items', $item->agenda_items ?? []);
-                                                if (empty($agendas)) {
-                                                    $agendas = [];
-                                                }
-                                            @endphp
                                             @forelse($agendas as $i => $ag)
-                                                <tr>
+                                                @php
+                                                    $isRowActive = ($ag['is_active'] ?? true) == true;
+                                                @endphp
+                                                <tr class="{{ $isRowActive ? '' : 'table-light opacity-75' }}">
+                                                    <td class="text-center">
+                                                        <div class="form-check form-switch d-inline-block mb-0">
+                                                            <input type="hidden" name="agenda_items[{{ $i }}][is_active]" value="0">
+                                                            <input class="form-check-input" type="checkbox" role="switch" name="agenda_items[{{ $i }}][is_active]" value="1" {{ $isRowActive ? 'checked' : '' }} onchange="toggleRowActive(this)" title="Aktifkan / Nonaktifkan Agenda Ini">
+                                                        </div>
+                                                        <div class="small fw-semibold status-row-label" style="font-size: 10px; color: {{ $isRowActive ? '#046B26' : '#6c757d' }};">
+                                                            {{ $isRowActive ? 'Aktif' : 'Nonaktif' }}
+                                                        </div>
+                                                    </td>
                                                     <td>
                                                         <select name="agenda_items[{{ $i }}][semester]" class="form-select form-select-sm">
                                                             <option value="Ganjil" {{ ($ag['semester'] ?? '') === 'Ganjil' ? 'selected' : '' }}>Ganjil</option>
@@ -145,8 +180,19 @@
                                                     </td>
                                                     <td>
                                                         <select name="agenda_items[{{ $i }}][kategori]" class="form-select form-select-sm">
-                                                            @foreach(['Akademik', 'Registrasi', 'Perkuliahan', 'Ujian', 'Libur', 'Wisuda', 'Kemahasiswaan'] as $kat)
-                                                                <option value="{{ $kat }}" {{ ($ag['kategori'] ?? '') === $kat ? 'selected' : '' }}>{{ $kat }}</option>
+                                                            @php
+                                                                $katOptions = [
+                                                                    'Perkuliahan' => '🟢 Perkuliahan',
+                                                                    'Registrasi' => '🔵 Registrasi & KRS',
+                                                                    'Ujian' => '🟠 Ujian (UTS/UAS)',
+                                                                    'Libur' => '🔴 Libur Semester',
+                                                                    'Wisuda' => '🟣 Wisuda / Yudisium',
+                                                                    'Akademik' => '🔷 Kegiatan Akademik',
+                                                                    'Kemahasiswaan' => '🔶 Kemahasiswaan'
+                                                                ];
+                                                            @endphp
+                                                            @foreach($katOptions as $kVal => $kLabel)
+                                                                <option value="{{ $kVal }}" {{ ($ag['kategori'] ?? '') === $kVal ? 'selected' : '' }}>{{ $kLabel }}</option>
                                                             @endforeach
                                                         </select>
                                                     </td>
@@ -161,8 +207,8 @@
                                                 </tr>
                                             @empty
                                                 <tr id="emptyRowAgenda">
-                                                    <td colspan="7" class="text-center py-3 text-muted small">
-                                                        Belum ada linimasa agenda. Klik "Tambah Agenda" untuk menambahkan jadwal.
+                                                    <td colspan="8" class="text-center py-3 text-muted small">
+                                                        Belum ada linimasa agenda. Klik "Tambah Agenda" untuk menambahkan jadwal kegiatan.
                                                     </td>
                                                 </tr>
                                             @endforelse
@@ -174,6 +220,53 @@
 
                         <script>
                         let agendaIndex = {{ count($agendas) }};
+
+                        function updateKalenderStatusBadge(checked) {
+                            const badge = document.getElementById('kalenderStatusBadge');
+                            if (checked) {
+                                badge.className = 'badge rounded-pill px-3 py-1.5 bg-success text-white';
+                                badge.innerHTML = '<i class="bi bi-check-circle-fill me-1"></i> Status: Aktif di Web';
+                            } else {
+                                badge.className = 'badge rounded-pill px-3 py-1.5 bg-secondary text-white';
+                                badge.innerHTML = '<i class="bi bi-x-circle-fill me-1"></i> Status: Nonaktif';
+                            }
+                        }
+
+                        function toggleRowActive(switchEl) {
+                            const tr = switchEl.closest('tr');
+                            const label = tr.querySelector('.status-row-label');
+                            if (switchEl.checked) {
+                                tr.classList.remove('table-light', 'opacity-75');
+                                if (label) {
+                                    label.innerText = 'Aktif';
+                                    label.style.color = '#046B26';
+                                }
+                            } else {
+                                tr.classList.add('table-light', 'opacity-75');
+                                if (label) {
+                                    label.innerText = 'Nonaktif';
+                                    label.style.color = '#6c757d';
+                                }
+                            }
+                            recountStats();
+                        }
+
+                        function recountStats() {
+                            const rows = document.querySelectorAll('#tbodyAgenda tr:not(#emptyRowAgenda)');
+                            let total = rows.length;
+                            let aktif = 0;
+                            rows.forEach(r => {
+                                const sw = r.querySelector('input[type="checkbox"]');
+                                if (sw && sw.checked) aktif++;
+                            });
+                            const statTotal = document.getElementById('statTotalAgenda');
+                            const statAktif = document.getElementById('statAktifAgenda');
+                            const statNonaktif = document.getElementById('statNonaktifAgenda');
+                            if (statTotal) statTotal.innerText = total;
+                            if (statAktif) statAktif.innerText = aktif;
+                            if (statNonaktif) statNonaktif.innerText = (total - aktif);
+                        }
+
                         function tambahBarisAgenda() {
                             const emptyRow = document.getElementById('emptyRowAgenda');
                             if (emptyRow) emptyRow.remove();
@@ -181,6 +274,13 @@
                             const tbody = document.getElementById('tbodyAgenda');
                             const tr = document.createElement('tr');
                             tr.innerHTML = `
+                                <td class="text-center">
+                                    <div class="form-check form-switch d-inline-block mb-0">
+                                        <input type="hidden" name="agenda_items[${agendaIndex}][is_active]" value="0">
+                                        <input class="form-check-input" type="checkbox" role="switch" name="agenda_items[${agendaIndex}][is_active]" value="1" checked onchange="toggleRowActive(this)" title="Aktifkan / Nonaktifkan Agenda Ini">
+                                    </div>
+                                    <div class="small fw-semibold status-row-label" style="font-size: 10px; color: #046B26;">Aktif</div>
+                                </td>
                                 <td>
                                     <select name="agenda_items[${agendaIndex}][semester]" class="form-select form-select-sm">
                                         <option value="Ganjil">Ganjil</option>
@@ -198,13 +298,13 @@
                                 </td>
                                 <td>
                                     <select name="agenda_items[${agendaIndex}][kategori]" class="form-select form-select-sm">
-                                        <option value="Akademik">Akademik</option>
-                                        <option value="Registrasi">Registrasi</option>
-                                        <option value="Perkuliahan">Perkuliahan</option>
-                                        <option value="Ujian">Ujian</option>
-                                        <option value="Libur">Libur</option>
-                                        <option value="Wisuda">Wisuda</option>
-                                        <option value="Kemahasiswaan">Kemahasiswaan</option>
+                                        <option value="Perkuliahan">🟢 Perkuliahan</option>
+                                        <option value="Registrasi">🔵 Registrasi & KRS</option>
+                                        <option value="Ujian">🟠 Ujian (UTS/UAS)</option>
+                                        <option value="Libur">🔴 Libur Semester</option>
+                                        <option value="Wisuda">🟣 Wisuda / Yudisium</option>
+                                        <option value="Akademik" selected>🔷 Kegiatan Akademik</option>
+                                        <option value="Kemahasiswaan">🔶 Kemahasiswaan</option>
                                     </select>
                                 </td>
                                 <td>
@@ -218,10 +318,12 @@
                             `;
                             tbody.appendChild(tr);
                             agendaIndex++;
+                            recountStats();
                         }
 
                         function hapusBarisAgenda(btn) {
                             btn.closest('tr').remove();
+                            recountStats();
                         }
                         </script>
                         @endif

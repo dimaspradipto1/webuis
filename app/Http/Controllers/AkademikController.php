@@ -162,9 +162,10 @@ class AkademikController extends Controller
                             'semester' => trim($agenda['semester'] ?? 'Ganjil'),
                             'kegiatan' => trim($agenda['kegiatan'] ?? ''),
                             'tanggal_mulai' => trim($agenda['tanggal_mulai'] ?? ''),
-                            'tanggal_selesai' => trim($agenda['tanggal_selesai'] ?? ''),
+                            'tanggal_selesai' => !empty($agenda['tanggal_selesai']) ? trim($agenda['tanggal_selesai']) : trim($agenda['tanggal_mulai'] ?? ''),
                             'kategori' => trim($agenda['kategori'] ?? 'Akademik'),
                             'keterangan' => trim($agenda['keterangan'] ?? ''),
+                            'is_active' => isset($agenda['is_active']) && ($agenda['is_active'] === '1' || $agenda['is_active'] === 1 || $agenda['is_active'] === true),
                         ];
                     }
                 }
