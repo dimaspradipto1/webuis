@@ -198,17 +198,17 @@
 </section>
 
 {{-- MODAL DETAIL EVENT AKADEMIK --}}
-<div class="modal fade" id="eventDetailModal" tabindex="-1" aria-labelledby="eventDetailModalLabel" aria-hidden="true" style="z-index: 1060;" onclick="if(event.target === this) closeEventModal()">
+<div class="modal fade" id="eventDetailModal" tabindex="-1" aria-labelledby="eventDetailModalLabel" aria-hidden="true" style="z-index: 1065;">
   <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content rounded-4 border-0 shadow">
-      <div class="modal-header border-bottom py-3 px-4">
-        <h6 class="modal-title fw-bold text-dark d-flex align-items-center gap-2" id="eventDetailModalLabel">
+    <div class="modal-content rounded-4 border-0 shadow-lg">
+      <div class="modal-header border-bottom py-3 px-4 bg-white">
+        <h6 class="modal-title fw-bold text-dark d-flex align-items-center gap-2 mb-0" id="eventDetailModalLabel">
           <i class="bi bi-calendar-event text-success fs-5"></i>
           Detail Kegiatan Akademik
         </h6>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeEventModal()"></button>
+        <button type="button" class="btn-close shadow-none" aria-label="Close" onclick="closeEventModal()"></button>
       </div>
-      <div class="modal-body p-4">
+      <div class="modal-body p-4 bg-white">
         <div class="d-flex align-items-center justify-content-between mb-3">
           <span class="badge rounded-pill px-3 py-1.5 fw-bold" id="modalEventBadge">Kategori</span>
           <span class="badge bg-light text-muted border rounded-pill px-2.5 py-1 small" id="modalEventSemester">Semester Gasal</span>
@@ -229,8 +229,10 @@
           </div>
         </div>
       </div>
-      <div class="modal-footer border-top py-2 px-4">
-        <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal" onclick="closeEventModal()">Tutup</button>
+      <div class="modal-footer border-top py-2 px-4 bg-light">
+        <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-4 fw-semibold" onclick="closeEventModal()">
+          <i class="bi bi-x-lg me-1"></i> Tutup
+        </button>
       </div>
     </div>
   </div>
@@ -379,6 +381,18 @@
   border-radius: 50%;
   display: block;
   margin-top: 1px;
+}
+
+/* Pastikan Modal Berada di Lapisan Teratas dan Tidak Terhalang Backdrop */
+#eventDetailModal {
+  z-index: 1065 !important;
+}
+#eventDetailModal .modal-dialog {
+  z-index: 1066 !important;
+  position: relative;
+}
+.modal-backdrop {
+  z-index: 1060 !important;
 }
 </style>
 
@@ -974,9 +988,17 @@ function switchView(viewName) {
 // ─── MODAL DETAIL EVENT ───
 let detailModalInstance = null;
 
+function ensureModalInBody() {
+  const el = document.getElementById('eventDetailModal');
+  if (el && el.parentNode !== document.body) {
+    document.body.appendChild(el);
+  }
+}
+
 function getDetailModalInstance() {
   const el = document.getElementById('eventDetailModal');
   if (!el) return null;
+  ensureModalInBody();
   if (!detailModalInstance) {
     if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
       if (bootstrap.Modal.getOrCreateInstance) {
@@ -991,6 +1013,8 @@ function getDetailModalInstance() {
 
 function openEventModal(ev) {
   if (!ev) return;
+  ensureModalInBody();
+
   const conf = categoryConfigs[ev.kategori] || categoryConfigs['Akademik'];
   
   const modalBadge = document.getElementById('modalEventBadge');
@@ -1021,34 +1045,77 @@ function openEventModal(ev) {
     modal.show();
   } else if (window.$) {
     $('#eventDetailModal').modal('show');
+  } else {
+    // Fallback jika bootstrap modal belum siap
+    const el = document.getElementById('eventDetailModal');
+    if (el) {
+      el.style.display = 'block';
+      el.classList.add('show');
+      document.body.classList.add('modal-open');
+    }
   }
 }
 
 function closeEventModal() {
-  const modal = getDetailModalInstance();
-  if (modal) {
-    modal.hide();
-  } else if (window.$) {
-    $('#eventDetailModal').modal('hide');
+  const el = document.getElementById('eventDetailModal');
+  if (el) {
+    try {
+      if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+        const inst = bootstrap.Modal.getInstance(el);
+        if (inst) {
+          inst.hide();
+        }
+      }
+    } catch (e) {}
+
+    try {
+      if (window.$ && typeof $(el).modal === 'function') {
+        $(el).modal('hide');
+      }
+    } catch (e) {}
+
+    // Fallback paksa sembunyikan modal agar tidak pernah stuck di layar
+    el.classList.remove('show');
+    el.style.display = 'none';
+    el.setAttribute('aria-hidden', 'true');
+    el.removeAttribute('aria-modal');
   }
 
-  // Bersihkan backdrop dan pastikan scroll body kembali aktif normal
-  setTimeout(() => {
-    document.querySelectorAll('.modal-backdrop').forEach(b => b.remove());
-    document.body.classList.remove('modal-open');
-    document.body.style.removeProperty('padding-right');
-    document.body.style.removeProperty('overflow');
-  }, 100);
+  // Bersihkan semua backdrop dan kembalikan scrolling normal
+  document.querySelectorAll('.modal-backdrop').forEach(b => b.remove());
+  document.body.classList.remove('modal-open');
+  document.body.style.removeProperty('padding-right');
+  document.body.style.removeProperty('overflow');
 }
 
 document.addEventListener('DOMContentLoaded', () => {
+  ensureModalInBody();
   init();
+
   const modalEl = document.getElementById('eventDetailModal');
   if (modalEl) {
+    // Tutup jika klik area backdrop (di luar modal-content)
+    modalEl.addEventListener('click', function (e) {
+      if (e.target === this) {
+        closeEventModal();
+      }
+    });
+
+    // Cleanup saat event hidden bootstrap terpanggil
     modalEl.addEventListener('hidden.bs.modal', function () {
-      closeEventModal();
+      document.querySelectorAll('.modal-backdrop').forEach(b => b.remove());
+      document.body.classList.remove('modal-open');
+      document.body.style.removeProperty('padding-right');
+      document.body.style.removeProperty('overflow');
     });
   }
+
+  // Tutup dengan tombol keyboard ESC
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' || e.key === 'Esc' || e.keyCode === 27) {
+      closeEventModal();
+    }
+  });
 });
 </script>
 @endsection
