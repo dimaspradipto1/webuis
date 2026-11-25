@@ -116,7 +116,7 @@
                 </div>
                 <div>
                     <h5 class="mb-0 fw-bold" style="color: #2b2f32; font-size: 16px;">Konten Teks Visi, Misi & Tata Nilai UIS</h5>
-                    <small class="text-muted">Kelola isi teks Visi, Misi dan Tata Nilai yang tampil di dalam banner utama dalam bentuk teks dinamis (bukan gambar mati)</small>
+                    <small class="text-muted">Kelola isi teks Visi, Misi dan Tata Nilai yang tampil di halaman frontend dalam format teks dinamis (bukan gambar mati)</small>
                 </div>
             </div>
             <span class="badge" style="background-color: #fed802; color: #111111; font-size: 11.5px; font-weight: 700; padding: 6px 12px; border-radius: 6px;">
