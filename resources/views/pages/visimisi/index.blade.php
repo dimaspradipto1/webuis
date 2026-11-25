@@ -35,35 +35,6 @@
     </div>
 </div>
 
-{{-- ═══════════════════════════════════════════════════════════════
-     TABEL CRUD GAMBAR VISI & MISI
-     ═══════════════════════════════════════════════════════════════ --}}
-<div class="card shadow-sm border-0 mb-4" style="border-radius: 12px;">
-    <div class="card-header bg-white py-3 d-flex flex-wrap align-items-center justify-content-between gap-2" style="border-top: 3px solid #046B26; border-radius: 12px 12px 0 0;">
-        <div class="d-flex align-items-center gap-2">
-            <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; background-color: #e8f5e9; color: #046B26;">
-                <i class="bi bi-images fs-5"></i>
-            </div>
-            <div>
-                <h5 class="mb-0 fw-bold" style="color: #2b2f32; font-size: 16px;">Daftar Gambar Visi & Misi</h5>
-                <small class="text-muted">Kelola gambar visi misi (upload baru, urutan, status aktif, edit & hapus)</small>
-            </div>
-        </div>
-        <div class="d-flex align-items-center gap-2">
-            <a href="{{ route('visimisi.create') }}" class="btn btn-success btn-sm fw-semibold" style="background-color: #046B26; border-color: #046B26;">
-                <i class="bi bi-cloud-arrow-up-fill me-1"></i> Upload Gambar Baru
-            </a>
-        </div>
-    </div>
-    <div class="card-body pt-3">
-        <div class="table-responsive">
-            {{ $dataTable->table([
-                'class' => 'table table-hover table-bordered align-middle',
-                'style' => 'width:100%',
-            ]) }}
-        </div>
-    </div>
-</div>
 
 {{-- ═══════════════════════════════════════════════════════════════
      KARTU 1: UPLOAD BACKGROUND UTAMA VISI MISI (FORM KHUSUS)
@@ -315,13 +286,6 @@
 @endsection
 
 @push('scripts')
-    @if(isset($dataTable))
-        @if(app()->environment('production'))
-            {!! str_replace('http:', 'https:', $dataTable->scripts()) !!}
-        @else
-            {!! $dataTable->scripts() !!}
-        @endif
-    @endif
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
