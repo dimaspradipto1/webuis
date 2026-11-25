@@ -57,8 +57,8 @@
         {{-- Categories Card --}}
         <div class="card border-0 shadow-sm rounded-4 mb-3 bg-white p-3">
           <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
-            <h6 class="fw-bold mb-0 text-dark small">Categories</h6>
-            <span class="text-muted small" style="font-size: 11px;" id="resetCategoryFilterBtn" onclick="resetCategories()" style="cursor: pointer;">Semua</span>
+            <h6 class="fw-bold mb-0 text-dark small">Kategori Agenda</h6>
+            <span class="text-muted small" style="font-size: 11px; cursor: pointer;" id="resetCategoryFilterBtn" onclick="resetCategories()">Semua</span>
           </div>
           <div class="d-flex flex-column gap-2" id="categoriesList">
             <!-- Di-generate via JavaScript -->
@@ -68,7 +68,7 @@
         {{-- Upcoming Events Card --}}
         <div class="card border-0 shadow-sm rounded-4 bg-white p-3">
           <div class="d-flex align-items-center justify-content-between mb-3 border-bottom pb-2">
-            <h6 class="fw-bold mb-0 text-dark small">Upcoming Events</h6>
+            <h6 class="fw-bold mb-0 text-dark small">Agenda Terdekat</h6>
             <span class="badge bg-light text-muted small rounded-pill" id="upcomingCountBadge">0</span>
           </div>
           <div class="d-flex flex-column gap-2.5 overflow-auto" style="max-height: 380px;" id="upcomingEventsList">
@@ -84,7 +84,7 @@
       <div class="col-xl-9 col-lg-8">
         <div class="card border-0 shadow-sm rounded-4 bg-white overflow-hidden">
           
-          {{-- Toolbar Atas: < Today > Wednesday, November 25, 2026 ... Day | Week | Month --}}
+          {{-- Toolbar Atas: Navigasi, Hari Ini, Pilihan Tahun, View Switcher --}}
           <div class="card-header bg-white py-3 px-4 border-bottom d-flex flex-wrap align-items-center justify-content-between gap-3">
             
             {{-- Navigasi & Judul Tanggal --}}
@@ -93,8 +93,8 @@
                 <button type="button" class="btn btn-sm btn-outline-secondary px-2.5 rounded-start-3" onclick="mainPrev()" title="Sebelumnya">
                   <i class="bi bi-chevron-left"></i>
                 </button>
-                <button type="button" class="btn btn-sm btn-outline-secondary px-3 fw-semibold" onclick="mainToday()">
-                  Today
+                <button type="button" class="btn btn-sm btn-outline-secondary px-3 fw-semibold" onclick="mainToday()" title="Lompat ke Hari Ini">
+                  Hari Ini
                 </button>
                 <button type="button" class="btn btn-sm btn-outline-secondary px-2.5 rounded-end-3" onclick="mainNext()" title="Selanjutnya">
                   <i class="bi bi-chevron-right"></i>
@@ -110,23 +110,23 @@
               </select>
 
               <h5 class="mb-0 fw-bold text-dark ms-1" id="mainCalendarTitle">
-                Wednesday, November 25, 2026
+                <!-- Terisi otomatis tanggal Indonesia -->
               </h5>
             </div>
 
-            {{-- View Switcher: Day | Week | Month | Year --}}
+            {{-- View Switcher: Hari | Minggu | Bulan | Tahun --}}
             <div class="btn-group shadow-xs rounded-3 overflow-hidden" role="group">
               <button type="button" class="btn btn-sm btn-outline-secondary px-3 py-1.5 fw-semibold view-btn" id="btnViewDay" onclick="switchView('day')">
-                Day
+                Hari
               </button>
               <button type="button" class="btn btn-sm btn-outline-secondary px-3 py-1.5 fw-semibold view-btn" id="btnViewWeek" onclick="switchView('week')">
-                Week
+                Minggu
               </button>
               <button type="button" class="btn btn-sm px-3 py-1.5 fw-bold view-btn active text-white" id="btnViewMonth" style="background-color: #046B26; border-color: #046B26;" onclick="switchView('month')">
-                Month
+                Bulan
               </button>
               <button type="button" class="btn btn-sm btn-outline-secondary px-3 py-1.5 fw-semibold view-btn" id="btnViewYear" onclick="switchView('year')">
-                Year
+                Tahun
               </button>
             </div>
 
@@ -140,13 +140,13 @@
               
               {{-- Header Hari --}}
               <div class="row g-0 text-center fw-semibold text-muted py-2 border-bottom bg-light" style="font-size: 13px;">
-                <div class="col" style="color: #dc3545;">Sun</div>
-                <div class="col">Mon</div>
-                <div class="col">Tue</div>
-                <div class="col">Wed</div>
-                <div class="col">Thu</div>
-                <div class="col">Fri</div>
-                <div class="col">Sat</div>
+                <div class="col" style="color: #dc3545;">Min</div>
+                <div class="col">Sen</div>
+                <div class="col">Sel</div>
+                <div class="col">Rab</div>
+                <div class="col">Kam</div>
+                <div class="col">Jum</div>
+                <div class="col">Sab</div>
               </div>
 
               {{-- Grid Hari Bulan --}}
@@ -266,15 +266,16 @@
 }
 
 .calendar-day-cell.is-today {
-  background-color: #f0fdf4;
+  background-color: #fffdf0;
+  box-shadow: inset 0 0 0 2px #FED802;
 }
 
 .day-number-badge {
   font-size: 13px;
   font-weight: 600;
   color: #374151;
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -283,9 +284,10 @@
 }
 
 .day-number-badge.today {
-  background-color: #046B26;
-  color: #ffffff;
-  font-weight: 700;
+  background-color: #FED802 !important;
+  color: #111827 !important;
+  font-weight: 800 !important;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
 }
 
 .event-bar-pill {
@@ -372,8 +374,10 @@
   cursor: pointer;
 }
 .year-mini-cell.is-today {
-  border: 1px solid #046B26;
-  font-weight: bold;
+  background-color: #FED802 !important;
+  color: #111827 !important;
+  font-weight: 800 !important;
+  border-radius: 4px;
 }
 .year-dot-indicator {
   width: 4px;
@@ -486,7 +490,7 @@ function renderUpcomingEvents() {
     const conf = categoryConfigs[ev.kategori] || categoryConfigs['Akademik'];
     const parts = ev.tanggal_mulai.split('-');
     const day = parts[2] || '01';
-    const monthEng = monthNamesEng[parseInt(parts[1] || '1', 10) - 1].substring(0, 3).toUpperCase();
+    const monthIdStr = monthNamesId[parseInt(parts[1] || '1', 10) - 1].substring(0, 3).toUpperCase();
 
     const item = document.createElement('div');
     item.className = 'd-flex align-items-center gap-2.5 p-2 rounded-3 border-0 bg-light';
@@ -496,7 +500,7 @@ function renderUpcomingEvents() {
     item.innerHTML = `
       <div class="upcoming-date-box text-center shadow-xs" style="border-left: 3px solid ${conf.color};">
         <div class="fw-bolder fs-6 text-dark">${day}</div>
-        <div class="text-muted fw-bold" style="font-size: 9px;">${monthEng}</div>
+        <div class="text-muted fw-bold" style="font-size: 9px;">${monthIdStr}</div>
       </div>
       <div class="overflow-hidden">
         <div class="fw-bold text-dark text-truncate" style="font-size: 13px;">${ev.kegiatan}</div>
@@ -522,13 +526,13 @@ function renderMainCalendar() {
   const titleEl = document.getElementById('mainCalendarTitle');
   if (titleEl) {
     if (currentView === 'month') {
-      titleEl.innerText = `${dayNamesEng[activeDate.getDay()]}, ${monthNamesEng[m]} ${d}, ${y}`;
+      titleEl.innerText = `${dayNamesId[activeDate.getDay()]}, ${d} ${monthNamesId[m]} ${y}`;
     } else if (currentView === 'week') {
-      titleEl.innerText = `Week of ${monthNamesEng[m]} ${d}, ${y}`;
+      titleEl.innerText = `Pekan: ${d} ${monthNamesId[m]} ${y}`;
     } else if (currentView === 'year') {
       titleEl.innerText = `Tahun Akademik ${y}`;
     } else {
-      titleEl.innerText = `${dayNamesEng[activeDate.getDay()]}, ${monthNamesEng[m]} ${d}, ${y}`;
+      titleEl.innerText = `${dayNamesId[activeDate.getDay()]}, ${d} ${monthNamesId[m]} ${y}`;
     }
   }
 
@@ -628,7 +632,7 @@ function createDayCell(y, m, d, isOtherMonth) {
     moreLink.className = 'small text-muted fw-bold mt-1';
     moreLink.style.fontSize = '10px';
     moreLink.style.cursor = 'pointer';
-    moreLink.innerText = `+${events.length - maxVisible} more`;
+    moreLink.innerText = `+${events.length - maxVisible} lainnya`;
     moreLink.onclick = (e) => {
       e.stopPropagation();
       activeDate = new Date(y, m, d);
@@ -684,9 +688,9 @@ function renderWeekView(year, month, day) {
     const col = document.createElement('div');
     col.className = 'col-md';
     col.innerHTML = `
-      <div class="card h-100 border rounded-4 p-3 ${isToday ? 'bg-light border-success' : 'bg-white'}">
+      <div class="card h-100 border rounded-4 p-3 ${isToday ? 'border-warning shadow-sm' : 'bg-white'}" style="${isToday ? 'background-color: #fffdf0;' : ''}">
         <div class="d-flex align-items-center justify-content-between mb-2 pb-2 border-bottom">
-          <span class="small fw-bold text-muted text-uppercase">${dayNamesEng[i].substring(0, 3)}</span>
+          <span class="small fw-bold ${isToday ? 'text-dark' : 'text-muted'} text-uppercase">${dayNamesId[i].substring(0, 3)}</span>
           <span class="day-number-badge ${isToday ? 'today' : ''}">${cd}</span>
         </div>
         <div class="d-flex flex-column gap-1.5 overflow-auto" style="min-height: 220px;">
@@ -875,13 +879,13 @@ function renderYearView(year) {
         </div>
         <div class="card-body p-3">
           <div class="year-mini-grid text-muted fw-semibold mb-1" style="font-size: 10px;">
-            <div style="color: #dc3545;">S</div>
-            <div>M</div>
-            <div>T</div>
-            <div>W</div>
-            <div>T</div>
-            <div>F</div>
-            <div>S</div>
+            <div style="color: #dc3545;">Min</div>
+            <div>Sen</div>
+            <div>Sel</div>
+            <div>Rab</div>
+            <div>Kam</div>
+            <div>Jum</div>
+            <div>Sab</div>
           </div>
           <div class="year-mini-grid mb-3">
             ${miniCellsHtml}
