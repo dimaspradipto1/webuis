@@ -214,7 +214,7 @@
                   <p class="text-muted small mb-3" style="max-width: 500px; margin: 0 auto;">
                     Salinan resmi Surat Keputusan (SK) Kalender Akademik Tahun Akademik 2026/2027 sedang dalam proses finalisasi arsip digital oleh Biro Administrasi Akademik & Kemahasiswaan (BAAK) UIS.
                   </p>
-                  <a href="{{ route('homepage.contact') }}" class="btn btn-sm btn-outline-success rounded-pill px-4 fw-semibold">
+                  <a href="{{ route('homepage.kontak') }}" class="btn btn-sm btn-outline-success rounded-pill px-4 fw-semibold">
                     Hubungi Bagian Akademik
                   </a>
                 </div>
@@ -369,7 +369,7 @@
           <p class="text-muted small mb-3" style="font-size: 11px;">
             Ada pertanyaan mengenai jadwal dispensasi, revisi KRS, atau pendaftaran yudisium?
           </p>
-          <a href="{{ route('homepage.contact') }}" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1.5 w-100">
+          <a href="{{ route('homepage.kontak') }}" class="btn btn-sm btn-outline-secondary rounded-pill px-3 py-1.5 w-100">
             Hubungi Bagian Akademik
           </a>
         </div>
