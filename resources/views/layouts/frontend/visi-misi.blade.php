@@ -143,23 +143,9 @@
     background-position: center top;
     background-repeat: repeat-y;
     padding-top: 32px;
-    padding-bottom: 32px;
+    padding-bottom: 48px;
     position: relative;
     z-index: 2;
-  }
-
-  /* 3. Footer Grafis Resmi Fullwidth (Humas Pill & Ribbon Media Sosial) */
-  .visimisi-fw-footer {
-    width: 100%;
-    line-height: 0;
-    position: relative;
-    z-index: 2;
-  }
-  .visimisi-fw-footer img {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: cover;
   }
 
   /* Section Badge Pills: VISI:, MISI:, TATA NILAI UIS "CIP": */
@@ -517,11 +503,6 @@
         </div>
       </div>
     </div>
-  </div>
-
-  {{-- 3. FOOTER GRAFIS RESMI FULLWIDTH (Humas Pill & Bar Sosial Media) --}}
-  <div class="visimisi-fw-footer w-100">
-    <img src="{{ asset('assets/img/visimisi-banner-footer.jpg') }}" alt="Humas Universitas Ibnu Sina" class="w-100 d-block">
   </div>
 
 </div>
