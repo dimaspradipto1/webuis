@@ -2,12 +2,12 @@
 
 @section('content')
 <div class="pagetitle mb-4">
-    <h1 class="mb-1">Edit Sertifikat Akreditasi</h1>
+    <h1 class="mb-1">Edit Dokumen Akreditasi</h1>
     <nav>
         <ol class="breadcrumb mb-0">
             <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-            <li class="breadcrumb-item"><a href="{{ route('akreditasi.index') }}">Sertifikat Akreditasi</a></li>
-            <li class="breadcrumb-item active">Edit Data</li>
+            <li class="breadcrumb-item"><a href="{{ route('akreditasi.index') }}">Akreditasi</a></li>
+            <li class="breadcrumb-item active">Edit Dokumen</li>
         </ol>
     </nav>
 </div>
@@ -109,26 +109,49 @@
                     </div>
                 </div>
 
-                <div class="p-3 rounded-3 bg-light border">
-                    <h6 class="fw-bold text-dark mb-2">
-                        <i class="bi bi-file-earmark-pdf-fill text-danger me-1"></i> File Sertifikat Resmi (PDF / Foto)
+                <div class="p-3.5 rounded-4 bg-light border mb-3">
+                    <div class="d-flex align-items-center justify-content-between mb-2">
+                        <label for="link_gdrive" class="form-label fw-bold text-dark mb-0 d-flex align-items-center gap-2">
+                            <i class="bi bi-google text-primary fs-5"></i> Link Dokumen Google Drive <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-2 py-0.5 small">Direkomendasikan</span>
+                        </label>
+                        @if($akreditasi->link_gdrive)
+                            <a href="{{ $akreditasi->link_gdrive }}" target="_blank" class="btn btn-sm btn-outline-success rounded-pill px-3 py-0.5 small">
+                                <i class="bi bi-box-arrow-up-right me-1"></i> Buka Tautan Drive
+                            </a>
+                        @endif
+                    </div>
+                    <p class="text-muted small mb-2">
+                        Tautan file atau folder dokumen sertifikat di Google Drive. Pastikan izin sharing diatur ke <strong>"Siapa saja yang memiliki link (Anyone with the link)"</strong>.
+                    </p>
+                    <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0 text-success"><i class="bi bi-link-45deg fs-5"></i></span>
+                        <input type="url" id="link_gdrive" name="link_gdrive" class="form-control border-start-0 ps-0 @error('link_gdrive') is-invalid @enderror" value="{{ old('link_gdrive', $akreditasi->link_gdrive) }}" placeholder="https://drive.google.com/file/d/.../view?usp=sharing">
+                    </div>
+                    @error('link_gdrive')
+                        <div class="text-danger small mt-1">{{ $message }}</div>
+                    @enderror
+                </div>
+
+                <div class="p-3 rounded-3 bg-white border">
+                    <h6 class="fw-bold text-secondary mb-1 small d-flex align-items-center gap-2">
+                        <i class="bi bi-file-earmark-arrow-up text-secondary"></i> Opsi Alternatif: Upload Berkas Fisik (Opsional)
                     </h6>
 
                     @if($akreditasi->file_sertifikat)
-                        <div class="d-flex align-items-center justify-content-between p-2 mb-3 bg-white rounded border">
+                        <div class="d-flex align-items-center justify-content-between p-2 mb-2 bg-light rounded border">
                             <div class="d-flex align-items-center gap-2">
                                 <i class="bi bi-file-earmark-check-fill text-success fs-5"></i>
                                 <span class="small fw-semibold text-truncate" style="max-width: 280px;">{{ basename($akreditasi->file_sertifikat) }}</span>
                             </div>
-                            <a href="{{ $akreditasi->file_url }}" target="_blank" class="btn btn-sm btn-outline-success px-3 rounded-pill">
-                                <i class="bi bi-box-arrow-up-right me-1"></i> Lihat Dokumen
+                            <a href="{{ $akreditasi->file_url }}" target="_blank" class="btn btn-sm btn-outline-secondary px-3 rounded-pill">
+                                <i class="bi bi-box-arrow-up-right me-1"></i> Lihat Berkas Fisik
                             </a>
                         </div>
                     @endif
 
-                    <label for="file_sertifikat" class="form-label fw-semibold small text-dark">Upload / Ganti File Sertifikat Baru (Opsional)</label>
+                    <label for="file_sertifikat" class="form-label fw-semibold small text-dark mt-1">Upload / Ganti Berkas Fisik Baru</label>
                     <input type="file" id="file_sertifikat" name="file_sertifikat" class="form-control @error('file_sertifikat') is-invalid @enderror" accept=".pdf,image/*">
-                    <div class="form-text small text-muted mt-1">Format: PDF, JPG, PNG, WEBP. Maksimal ukuran file 20 MB. Kosongkan jika tidak ingin mengganti file.</div>
+                    <div class="form-text small text-muted mt-1">Format: PDF, JPG, PNG, WEBP. Maksimal ukuran file 20 MB. Biarkan kosong jika tidak ingin mengubah.</div>
                 </div>
             </div>
         </div>

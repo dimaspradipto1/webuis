@@ -210,7 +210,7 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
         Route::put('{tipe}', [AkademikController::class, 'update'])->name('update');
     });
 
-    // Sertifikat Akreditasi Routes
+    // Akreditasi Routes
     Route::resource('admin-akreditasi', AkreditasiController::class)
         ->parameters(['admin-akreditasi' => 'akreditasi'])
         ->names('akreditasi');

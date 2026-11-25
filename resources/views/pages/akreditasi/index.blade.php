@@ -3,12 +3,12 @@
 @section('content')
 <div class="pagetitle d-flex flex-wrap align-items-center justify-content-between gap-2 mb-4">
     <div>
-        <h1 class="mb-1">Kelola Sertifikat Akreditasi</h1>
+        <h1 class="mb-1">Kelola Dokumen Akreditasi</h1>
         <nav>
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
                 <li class="breadcrumb-item">Informasi</li>
-                <li class="breadcrumb-item active">Sertifikat Akreditasi</li>
+                <li class="breadcrumb-item active">Akreditasi</li>
             </ol>
         </nav>
     </div>
@@ -17,7 +17,7 @@
             <i class="bi bi-box-arrow-up-right me-1"></i> Pratinjau di Web
         </a>
         <a href="{{ route('akreditasi.create') }}" class="btn btn-success rounded-3 px-3 shadow-sm" style="background: #046B26; border-color: #046B26;">
-            <i class="bi bi-plus-circle-fill me-1"></i> Tambah Sertifikat
+            <i class="bi bi-plus-circle-fill me-1"></i> Tambah Dokumen
         </a>
     </div>
 </div>
@@ -144,7 +144,7 @@
                         <th>Lembaga</th>
                         <th>Peringkat</th>
                         <th>Nomor SK & Masa Berlaku</th>
-                        <th class="text-center">Sertifikat</th>
+                        <th class="text-center">Dokumen / GDrive</th>
                         <th class="text-center">Status</th>
                         <th class="text-end pe-4" style="width: 140px;">Aksi</th>
                     </tr>
@@ -187,12 +187,16 @@
                                 <div class="small text-muted"><i class="bi bi-clock me-1"></i>{{ $item->masa_berlaku ?: ($item->tahun_sk ? 'Tahun ' . $item->tahun_sk : '-') }}</div>
                             </td>
                             <td class="text-center">
-                                @if($item->file_sertifikat)
-                                    <a href="{{ $item->file_url }}" target="_blank" class="btn btn-sm btn-outline-success rounded-pill px-2.5 py-1" title="Lihat / Unduh Dokumen">
+                                @if($item->link_gdrive)
+                                    <a href="{{ $item->link_gdrive }}" target="_blank" class="btn btn-sm btn-outline-success rounded-pill px-2.5 py-1 shadow-sm" title="Buka Dokumen Google Drive">
+                                        <i class="bi bi-google me-1"></i> Buka GDrive
+                                    </a>
+                                @elseif($item->file_sertifikat)
+                                    <a href="{{ $item->file_url }}" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-2.5 py-1" title="Lihat / Unduh Dokumen Lokal">
                                         <i class="bi bi-file-earmark-pdf-fill me-1 text-danger"></i> Unduh
                                     </a>
                                 @else
-                                    <span class="badge bg-secondary-subtle text-muted rounded-pill px-2 py-1 small">Belum Upload</span>
+                                    <span class="badge bg-secondary-subtle text-muted rounded-pill px-2 py-1 small">Belum Ada</span>
                                 @endif
                             </td>
                             <td class="text-center">

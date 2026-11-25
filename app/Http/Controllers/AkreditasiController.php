@@ -107,10 +107,12 @@ class AkreditasiController extends Controller
             'nomor_sk' => 'nullable|string|max:255',
             'tahun_sk' => 'nullable|string|max:20',
             'masa_berlaku' => 'nullable|string|max:100',
+            'link_gdrive' => 'nullable|url|max:500',
             'file_sertifikat' => 'nullable|file|mimes:pdf,jpg,jpeg,png,webp|max:20480',
             'urutan' => 'nullable|integer',
             'is_active' => 'nullable|boolean',
         ], [
+            'link_gdrive.url' => 'Tautan Google Drive harus berupa format URL yang valid (https://...).',
             'file_sertifikat.mimes' => 'Format file sertifikat harus berupa PDF, JPG, PNG, atau WEBP.',
             'file_sertifikat.max' => 'Ukuran file sertifikat maksimal 20 MB.',
         ]);
@@ -179,10 +181,12 @@ class AkreditasiController extends Controller
             'nomor_sk' => 'nullable|string|max:255',
             'tahun_sk' => 'nullable|string|max:20',
             'masa_berlaku' => 'nullable|string|max:100',
+            'link_gdrive' => 'nullable|url|max:500',
             'file_sertifikat' => 'nullable|file|mimes:pdf,jpg,jpeg,png,webp|max:20480',
             'urutan' => 'nullable|integer',
             'is_active' => 'nullable|boolean',
         ], [
+            'link_gdrive.url' => 'Tautan Google Drive harus berupa format URL yang valid (https://...).',
             'file_sertifikat.mimes' => 'Format file sertifikat harus berupa PDF, JPG, PNG, atau WEBP.',
             'file_sertifikat.max' => 'Ukuran file sertifikat maksimal 20 MB.',
         ]);

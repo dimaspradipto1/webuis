@@ -201,7 +201,7 @@
                   </li>
                   <li>
                       <a href="{{ route('akreditasi.index') }}" class="{{ Route::is('akreditasi.*') ? 'active' : '' }}">
-                          <i class="bi bi-circle"></i><span>Sertifikat Akreditasi</span>
+                          <i class="bi bi-circle"></i><span>Akreditasi</span>
                       </a>
                   </li>
                   @endif

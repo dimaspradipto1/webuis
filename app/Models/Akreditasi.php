@@ -22,6 +22,7 @@ class Akreditasi extends Model
         'nomor_sk',
         'tahun_sk',
         'masa_berlaku',
+        'link_gdrive',
         'file_sertifikat',
         'urutan',
         'is_active',
@@ -54,6 +55,11 @@ class Akreditasi extends Model
 
     public function getFileUrlAttribute(): ?string
     {
+        // 1. Prioritaskan tautan Google Drive / Cloud Link resmi
+        if (!empty($this->link_gdrive)) {
+            return trim($this->link_gdrive);
+        }
+
         if (empty($this->file_sertifikat)) {
             return null;
         }

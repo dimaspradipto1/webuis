@@ -24,6 +24,7 @@ class AkreditasiSeeder extends Seeder
                 'nomor_sk' => '198/SK/BAN-PT/Ak/PT/III/2023',
                 'tahun_sk' => '2023',
                 'masa_berlaku' => '15 Maret 2023 - 15 Maret 2028',
+                'link_gdrive' => 'https://drive.google.com/drive/folders/1uis-akreditasi-institusi-resmi',
                 'urutan' => 1,
                 'is_active' => true,
             ]
@@ -84,6 +85,7 @@ class AkreditasiSeeder extends Seeder
                     'nomor_sk' => $fak['nomor_sk'],
                     'tahun_sk' => $fak['tahun_sk'],
                     'masa_berlaku' => $fak['masa_berlaku'],
+                    'link_gdrive' => 'https://drive.google.com/drive/folders/1uis-akreditasi-' . \Illuminate\Support\Str::slug($fak['nama']),
                     'urutan' => $fak['urutan'],
                     'is_active' => true,
                 ]
@@ -117,6 +119,7 @@ class AkreditasiSeeder extends Seeder
                     'nomor_sk' => ($p->id * 112) . '/SK/' . str_replace(' ', '-', $lembaga) . '/Ak/' . ($p->jenjang ?: 'S1') . '/2023',
                     'tahun_sk' => '2023',
                     'masa_berlaku' => '2023 - 2028',
+                    'link_gdrive' => 'https://drive.google.com/drive/folders/1uis-akreditasi-' . \Illuminate\Support\Str::slug($p->nama),
                     'urutan' => $urutanProdi++,
                     'is_active' => true,
                 ]

@@ -312,17 +312,27 @@ class FrontendController extends Controller
 
     public function akreditasi(Request $request)
     {
-        $univAkreditasi = Akreditasi::active()->universitas()->first();
-        $fakultasAkreditasis = Akreditasi::active()->fakultas()->orderBy('urutan')->get();
-        $prodiAkreditasis = Akreditasi::active()->prodi()->orderBy('urutan')->get();
+        $allAkreditasis = Akreditasi::active()
+            ->orderByRaw("FIELD(tingkat, 'universitas', 'fakultas', 'prodi')")
+            ->orderBy('urutan')
+            ->orderBy('id')
+            ->get();
+
+        $univAkreditasi = $allAkreditasis->firstWhere('tingkat', 'universitas');
+        $fakultasAkreditasis = $allAkreditasis->where('tingkat', 'fakultas');
+        $prodiAkreditasis = $allAkreditasis->where('tingkat', 'prodi');
         $groupedProdis = $prodiAkreditasis->groupBy('kategori_label');
-        $pageTitle = 'Sertifikat Akreditasi';
+
+        $lembagaList = $allAkreditasis->pluck('lembaga')->unique()->filter()->values();
+        $pageTitle = 'Akreditasi';
 
         return view('layouts.frontend.akreditasi', compact(
+            'allAkreditasis',
             'univAkreditasi',
             'fakultasAkreditasis',
             'prodiAkreditasis',
             'groupedProdis',
+            'lembagaList',
             'pageTitle'
         ));
     }

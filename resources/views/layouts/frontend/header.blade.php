@@ -107,7 +107,7 @@
             <li><a class="dropdown-item dropdown-item-custom {{ request()->routeIs('homepage.pengumuman-agenda*') && request('tipe') === 'agenda' ? 'active' : '' }}" href="{{ route('homepage.pengumuman-agenda', ['tipe' => 'agenda']) }}"><i class="bi bi-calendar-event"></i> Agenda</a></li>
             <li><a class="dropdown-item dropdown-item-custom" href="{{ route('homepage.news') }}"><i class="bi bi-card-text"></i> Artikel</a></li>
             <li><a class="dropdown-item dropdown-item-custom {{ request()->routeIs('homepage.kalender-akademik') ? 'active' : '' }}" href="{{ route('homepage.kalender-akademik') }}"><i class="bi bi-calendar-check"></i> Kalender Akademik</a></li>
-            <li><a class="dropdown-item dropdown-item-custom {{ request()->routeIs('homepage.akreditasi') ? 'active' : '' }}" href="{{ route('homepage.akreditasi') }}"><i class="bi bi-patch-check"></i> Sertifikat Akreditasi</a></li>
+            <li><a class="dropdown-item dropdown-item-custom {{ request()->routeIs('homepage.akreditasi') ? 'active' : '' }}" href="{{ route('homepage.akreditasi') }}"><i class="bi bi-patch-check"></i> Akreditasi</a></li>
             <li><a class="dropdown-item dropdown-item-custom {{ request()->routeIs('homepage.faq') ? 'active' : '' }}" href="{{ route('homepage.faq') }}"><i class="bi bi-question-circle"></i> FAQ Informasi</a></li>
             <li><a class="dropdown-item dropdown-item-custom {{ request()->routeIs('homepage.kerjasama') ? 'active' : '' }}" href="{{ route('homepage.kerjasama') }}"><i class="bi bi-buildings"></i> Mitra Kerjasama</a></li>
           </ul>
