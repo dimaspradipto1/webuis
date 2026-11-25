@@ -35,12 +35,11 @@
     </div>
 </div>
 
-<form action="{{ route('visimisi.update-content') }}" method="POST" enctype="multipart/form-data">
+{{-- ═══════════════════════════════════════════════════════════════
+     KARTU 1: UPLOAD BACKGROUND UTAMA VISI MISI (FORM KHUSUS)
+     ═══════════════════════════════════════════════════════════════ --}}
+<form action="{{ route('visimisi.update-background') }}" method="POST" enctype="multipart/form-data">
     @csrf
-
-    {{-- ═══════════════════════════════════════════════════════════════
-         KARTU 1: UPLOAD BACKGROUND UTAMA VISI MISI
-         ═══════════════════════════════════════════════════════════════ --}}
     <div class="card shadow-sm border-0 mb-4" style="border-radius: 12px;">
         <div class="card-header bg-white py-3 d-flex align-items-center justify-content-between" style="border-top: 3px solid #046B26; border-radius: 12px 12px 0 0;">
             <div class="d-flex align-items-center gap-2">
@@ -88,22 +87,36 @@
                     <label for="visimisi_background" class="form-label fw-bold text-dark small">
                         Pilih Gambar Background Baru <small class="text-muted fw-normal">(JPG, PNG, WEBP, Maks. 5MB)</small>
                     </label>
-                    <input type="file" 
-                           class="form-control @error('visimisi_background') is-invalid @enderror" 
-                           id="visimisi_background" 
-                           name="visimisi_background" 
-                           accept="image/jpeg,image/png,image/jpg,image/webp">
+                    <div class="input-group">
+                        <input type="file" 
+                               class="form-control @error('visimisi_background') is-invalid @enderror" 
+                               id="visimisi_background" 
+                               name="visimisi_background" 
+                               accept="image/jpeg,image/png,image/jpg,image/webp" 
+                               required>
+                        <button type="submit" class="btn btn-success fw-semibold px-3" style="background-color: #046B26; border-color: #046B26;">
+                            <i class="bi bi-cloud-arrow-up-fill me-1"></i> Upload Background
+                        </button>
+                    </div>
                     <div class="form-text text-muted small mt-2" style="line-height: 1.5;">
                         <i class="bi bi-info-circle me-1 text-success"></i>
-                        Disarankan menggunakan foto lanskap gedung/aktivitas kampus dengan resolusi minimal <strong>1920 × 1080 piksel</strong>. Sistem akan otomatis memadukan gambar dengan overlay hijau khas UIS agar teks tetap mudah dibaca.
+                        Pilih gambar lalu klik tombol <strong>Upload Background</strong>. Foto akan otomatis dijadikan latar utama banner Visi & Misi di frontend.
                     </div>
                     @error('visimisi_background')
-                        <div class="invalid-feedback">{{ $message }}</div>
+                        <div class="invalid-feedback d-block">{{ $message }}</div>
                     @enderror
                 </div>
             </div>
         </div>
     </div>
+</form>
+
+{{-- ═══════════════════════════════════════════════════════════════
+     KARTU 2: KELOLA KONTEN TEKS VISI, MISI, TATA NILAI
+     ═══════════════════════════════════════════════════════════════ --}}
+<form action="{{ route('visimisi.update-content') }}" method="POST">
+    @csrf
+    @method('PUT')
 
     {{-- ═══════════════════════════════════════════════════════════════
          KARTU 2: KELOLA KONTEN TEKS 3 KARTU (VISI, MISI, TATA NILAI)
@@ -279,13 +292,16 @@
                                    placeholder="Official.uisbatam">
                         </div>
                         <div class="col-md-6 col-12">
-                            <label for="visimisi_footer_url" class="form-label fw-bold small text-dark">Tautan Website Utama</label>
-                            <input type="text" 
-                                   class="form-control" 
-                                   id="visimisi_footer_url" 
-                                   name="visimisi_footer_url" 
-                                   value="{{ old('visimisi_footer_url', $about->visimisi_footer_url ?? 'https://uis.ac.id') }}" 
-                                   placeholder="https://uis.ac.id">
+                            <label for="visimisi_footer_url" class="form-label fw-bold small text-dark">Domain / Tautan Website Utama</label>
+                            <div class="input-group">
+                                <span class="input-group-text small bg-light text-muted">https://</span>
+                                <input type="text" 
+                                       class="form-control" 
+                                       id="visimisi_footer_url" 
+                                       name="visimisi_footer_url" 
+                                       value="{{ old('visimisi_footer_url', str_replace(['https://', 'http://'], '', $about->visimisi_footer_url ?? 'uis.ac.id')) }}" 
+                                       placeholder="uis.ac.id">
+                            </div>
                         </div>
                     </div>
                 </div>

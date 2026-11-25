@@ -50,6 +50,46 @@ class VisiMisiController extends Controller
     }
 
     /**
+     * Upload dan simpan khusus Background Utama Visi Misi
+     */
+    public function updateBackground(Request $request): RedirectResponse
+    {
+        $this->ensureSchemaExists();
+
+        $request->validate([
+            'visimisi_background' => ['required', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'],
+        ]);
+
+        $about = About::firstOrCreate(['id' => 1]);
+
+        if ($request->hasFile('visimisi_background')) {
+            if ($about->visimisi_background) {
+                $oldPath = ltrim(preg_replace('#^(public/|storage/)#', '', $about->visimisi_background), '/');
+                if (Storage::disk('public')->exists($oldPath)) {
+                    Storage::disk('public')->delete($oldPath);
+                }
+                if (file_exists(public_path('storage/' . $oldPath))) {
+                    @unlink(public_path('storage/' . $oldPath));
+                }
+            }
+            $path = $request->file('visimisi_background')->store('visi-misi', 'public');
+
+            if (!Schema::hasColumn('abouts', 'visimisi_background')) {
+                try {
+                    \Illuminate\Support\Facades\DB::statement("ALTER TABLE `abouts` ADD COLUMN `visimisi_background` VARCHAR(255) NULL AFTER `visimisi_deskripsi`");
+                } catch (\Throwable $e) {
+                    \Illuminate\Support\Facades\Log::error('Auto add column visimisi_background failed: ' . $e->getMessage());
+                }
+            }
+
+            $about->update(['visimisi_background' => $path]);
+        }
+
+        alert()->success('Berhasil!', 'Background utama Visi & Misi berhasil diunggah dan disimpan.');
+        return redirect()->route('visimisi.index');
+    }
+
+    /**
      * Update konten teks Visi, Misi, Tata Nilai dan Upload Background Utama
      */
     public function updateContent(Request $request): RedirectResponse
@@ -67,6 +107,15 @@ class VisiMisiController extends Controller
             'visimisi_footer_ig' => ['nullable', 'string', 'max:255'],
             'visimisi_footer_url' => ['nullable', 'string', 'max:255'],
         ]);
+
+        if (!empty($validated['visimisi_footer_url'])) {
+            $url = trim($validated['visimisi_footer_url']);
+            if (!preg_match('#^https?://#i', $url)) {
+                $validated['visimisi_footer_url'] = 'https://' . ltrim($url, '/');
+            } else {
+                $validated['visimisi_footer_url'] = $url;
+            }
+        }
 
         $about = About::firstOrCreate(['id' => 1]);
 
