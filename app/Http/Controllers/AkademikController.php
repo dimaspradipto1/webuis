@@ -154,6 +154,8 @@ class AkademikController extends Controller
 
         // Handle agenda_items for kalender
         if ($tipe === 'kalender') {
+            $parsedEvents = [];
+
             // Jika ada file dokumen diunggah, otomatis baca konten berkas untuk ditempatkan ke dalam kalender
             if ($request->hasFile('file_dokumen')) {
                 try {
@@ -165,30 +167,34 @@ class AkademikController extends Controller
                     if (!empty($parsedEvents)) {
                         $validated['agenda_items'] = $parsedEvents;
                     }
-                } catch (\Throwable $e) {}
+                } catch (\Throwable $e) {
+                    \Illuminate\Support\Facades\Log::error('Kalender parse file error: ' . $e->getMessage());
+                }
             }
 
-            // Jika ada perubahan dari tabel agenda di form admin, simpan perubahan tersebut
-            if ($request->has('agenda_items') && is_array($request->input('agenda_items'))) {
-                $filteredItems = [];
-                foreach ($request->input('agenda_items') as $agenda) {
-                    if (!empty($agenda['kegiatan']) || !empty($agenda['tanggal_mulai'])) {
-                        $filteredItems[] = [
-                            'semester' => trim($agenda['semester'] ?? 'Ganjil'),
-                            'kegiatan' => trim($agenda['kegiatan'] ?? ''),
-                            'tanggal_mulai' => trim($agenda['tanggal_mulai'] ?? ''),
-                            'tanggal_selesai' => !empty($agenda['tanggal_selesai']) ? trim($agenda['tanggal_selesai']) : trim($agenda['tanggal_mulai'] ?? ''),
-                            'kategori' => trim($agenda['kategori'] ?? 'Akademik'),
-                            'keterangan' => trim($agenda['keterangan'] ?? ''),
-                            'is_active' => isset($agenda['is_active']) && ($agenda['is_active'] === '1' || $agenda['is_active'] === 1 || $agenda['is_active'] === true),
-                        ];
+            // HANYA jika tidak ada file dokumen baru yang diunggah, simpan perubahan dari tabel formulir admin
+            if (empty($parsedEvents)) {
+                if ($request->has('agenda_items') && is_array($request->input('agenda_items'))) {
+                    $filteredItems = [];
+                    foreach ($request->input('agenda_items') as $agenda) {
+                        if (!empty($agenda['kegiatan']) || !empty($agenda['tanggal_mulai'])) {
+                            $filteredItems[] = [
+                                'semester' => trim($agenda['semester'] ?? 'Ganjil'),
+                                'kegiatan' => trim($agenda['kegiatan'] ?? ''),
+                                'tanggal_mulai' => trim($agenda['tanggal_mulai'] ?? ''),
+                                'tanggal_selesai' => !empty($agenda['tanggal_selesai']) ? trim($agenda['tanggal_selesai']) : trim($agenda['tanggal_mulai'] ?? ''),
+                                'kategori' => trim($agenda['kategori'] ?? 'Akademik'),
+                                'keterangan' => trim($agenda['keterangan'] ?? ''),
+                                'is_active' => isset($agenda['is_active']) && ($agenda['is_active'] === '1' || $agenda['is_active'] === 1 || $agenda['is_active'] === true),
+                            ];
+                        }
                     }
-                }
-                $validated['agenda_items'] = $filteredItems;
-            } elseif ($request->has('agenda_items_json')) {
-                $decoded = json_decode($request->input('agenda_items_json'), true);
-                if (is_array($decoded)) {
-                    $validated['agenda_items'] = $decoded;
+                    $validated['agenda_items'] = $filteredItems;
+                } elseif ($request->has('agenda_items_json')) {
+                    $decoded = json_decode($request->input('agenda_items_json'), true);
+                    if (is_array($decoded)) {
+                        $validated['agenda_items'] = $decoded;
+                    }
                 }
             }
         }

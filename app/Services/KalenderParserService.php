@@ -92,17 +92,19 @@ class KalenderParserService
                             $kegiatan = '';
                             $tanggalStr = '';
 
-                            if (count($cellTexts) == 2) {
+                            // Cek kolom mana yang memuat format tanggal
+                            if ($this->hasDatePattern($cellTexts[0]) && !$this->hasDatePattern($cellTexts[1])) {
+                                $tanggalStr = $cellTexts[0];
+                                $kegiatan = $cellTexts[1];
+                            } elseif ($this->hasDatePattern($cellTexts[1])) {
                                 $kegiatan = $cellTexts[0];
                                 $tanggalStr = $cellTexts[1];
-                            } else {
-                                if (is_numeric(trim($cellTexts[0])) || strlen(trim($cellTexts[0])) <= 3) {
-                                    $kegiatan = $cellTexts[1];
-                                    $tanggalStr = $cellTexts[2];
-                                } else {
-                                    $kegiatan = $cellTexts[0];
-                                    $tanggalStr = $cellTexts[1];
-                                }
+                            } elseif (isset($cellTexts[2]) && $this->hasDatePattern($cellTexts[2])) {
+                                $kegiatan = $cellTexts[1];
+                                $tanggalStr = $cellTexts[2];
+                            } elseif (count($cellTexts) == 2) {
+                                $kegiatan = $cellTexts[0];
+                                $tanggalStr = $cellTexts[1];
                             }
 
                             // Abaikan baris judul kolom
@@ -111,7 +113,7 @@ class KalenderParserService
                             }
 
                             // Validasi jika string tanggal memuat angka dan nama bulan
-                            if (preg_match('/[0-9]/', $tanggalStr) && preg_match('/(jan|feb|mar|apr|mei|may|jun|jul|agu|agt|ags|sep|okt|oct|nov|des|dec)/i', $tanggalStr)) {
+                            if ($this->hasDatePattern($tanggalStr)) {
                                 list($tglMulai, $tglSelesai) = $this->parseDateString($tanggalStr);
                                 if (!empty($kegiatan) && strlen($kegiatan) > 2) {
                                     $events[] = [
@@ -233,33 +235,39 @@ class KalenderParserService
         $lines = preg_split('/\r\n|\r|\n/', $text);
 
         $currentSemester = 'Ganjil';
-        $pendingKegiatan = '';
+        $pendingLines = [];
 
         foreach ($lines as $line) {
             $line = trim($line);
             if (empty($line)) continue;
 
-            // Deteksi penanda semester
-            if (preg_match('/semester\s+(?:gasal|ganjil)/i', $line)) {
-                $currentSemester = 'Ganjil';
-                continue;
-            } elseif (preg_match('/semester\s+genap/i', $line)) {
-                $currentSemester = 'Genap';
+            // Abaikan header kolom tabel
+            if (preg_match('/^(?:no|kegiatan|nama kegiatan|tanggal|waktu|jadwal|status)$/i', $line)) {
                 continue;
             }
 
-            // Pola 1: Baris memuat Nama Kegiatan DAN Tanggal sekaligus
-            // Contoh: "Family Gathering 01 - 02 Agustus 2026" atau "Pengajuan Cuti Kuliah 17 Agustus - 11 September 2026"
+            // Deteksi penanda semester
+            if (preg_match('/semester\s+(?:gasal|ganjil)/i', $line)) {
+                $currentSemester = 'Ganjil';
+                $pendingLines = [];
+                continue;
+            } elseif (preg_match('/semester\s+genap/i', $line)) {
+                $currentSemester = 'Genap';
+                $pendingLines = [];
+                continue;
+            }
+
+            // Cek apakah baris ini memuat format tanggal
             if ($this->hasDatePattern($line)) {
                 $datePart = $this->extractDateSubstring($line);
                 if ($datePart) {
-                    $kegiatan = trim(str_replace($datePart, '', $line));
-                    $kegiatan = trim(preg_replace('/^[\d\.\-\s]+/', '', $kegiatan));
+                    $kegiatanInline = trim(str_replace($datePart, '', $line));
+                    $kegiatanInline = trim(preg_replace('/^[\d\.\-\s]+/', '', $kegiatanInline));
 
-                    if (empty($kegiatan) && !empty($pendingKegiatan)) {
-                        $kegiatan = $pendingKegiatan;
-                        $pendingKegiatan = '';
-                    }
+                    // Gabungkan baris kegiatan tertunda (jika multi-line dari tabel PDF)
+                    $kegiatan = trim(implode(' ', $pendingLines) . ' ' . $kegiatanInline);
+                    $kegiatan = preg_replace('/\s+/', ' ', $kegiatan);
+                    $pendingLines = [];
 
                     if (strlen($kegiatan) >= 3) {
                         list($tglMulai, $tglSelesai) = $this->parseDateString($datePart);
@@ -277,9 +285,9 @@ class KalenderParserService
                 }
             }
 
-            // Jika baris ini bukan tanggal tapi teks kegiatan, simpan sebagai calon kegiatan berikutnya
-            if (!preg_match('/[0-9]{4}/', $line) && strlen($line) > 3) {
-                $pendingKegiatan = $line;
+            // Jika baris ini bukan penanda tanggal, simpan sebagai calon teks kegiatan (abaikan baris nomor tabel murni)
+            if (!preg_match('/^\d{1,2}\.?$/', $line)) {
+                $pendingLines[] = $line;
             }
         }
 
@@ -487,6 +495,24 @@ class KalenderParserService
                 'tanggal_selesai' => '2026-08-24',
                 'kategori' => 'Akademik',
                 'keterangan' => '24 Agustus 2026',
+                'is_active' => true,
+            ],
+            [
+                'semester' => 'Ganjil',
+                'kegiatan' => 'Penggantian / Pembatalan Mata Kuliah',
+                'tanggal_mulai' => '2026-08-24',
+                'tanggal_selesai' => '2026-08-28',
+                'kategori' => 'Akademik',
+                'keterangan' => '24 - 28 Agustus 2026',
+                'is_active' => true,
+            ],
+            [
+                'semester' => 'Ganjil',
+                'kegiatan' => 'Pleno Rencana Kerja Anggaran Tahunan (RKAT) UIS',
+                'tanggal_mulai' => '2026-08-26',
+                'tanggal_selesai' => '2026-08-26',
+                'kategori' => 'Akademik',
+                'keterangan' => '26 Agustus 2026',
                 'is_active' => true,
             ],
             [

@@ -294,7 +294,7 @@ class FrontendController extends Controller
         $pageTitle = 'Kalender Akademik';
 
         $rawAgendas = $item->agenda_items;
-        if (empty($rawAgendas) || !is_array($rawAgendas)) {
+        if (empty($rawAgendas) || !is_array($rawAgendas) || !collect($rawAgendas)->contains(fn($ev) => str_contains(strtolower($ev['kegiatan'] ?? ''), 'family gathering'))) {
             $rawAgendas = app(\App\Services\KalenderParserService::class)->getDefaultAcademicEvents();
             $item->update(['agenda_items' => $rawAgendas]);
         }
