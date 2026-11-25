@@ -358,56 +358,7 @@
       </div>
     @endif
 
-    {{-- ══════════════════════════════════════════════════════
-         3. INFO BANTUAN & PANDUAN PENDAFTARAN
-         ══════════════════════════════════════════════════════ --}}
-    <div class="row g-4 align-items-stretch mb-4">
-      <div class="col-lg-7">
-        <div class="h-100 p-4 p-md-4 bg-white rounded-4 border shadow-sm d-flex flex-column justify-content-between">
-          <div>
-            <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3 py-1 fw-bold mb-2" style="font-size: 11.5px;">
-              Informasi Umum PMB UIS
-            </span>
-            <h5 class="fw-bold text-dark mb-2">Mengapa Memilih Universitas Ibnu Sina?</h5>
-            <p class="text-muted small mb-3" style="line-height: 1.7;">
-              Sebagai perguruan tinggi swasta terkemuka di Kota Batam, UIS mengintegrasikan keunggulan akademik dengan nilai-nilai kemandirian, integritas, dan kesiapan karir internasional.
-            </p>
-            <div class="row g-2 small">
-              <div class="col-sm-6 d-flex align-items-center gap-2 text-dark">
-                <i class="bi bi-check-circle-fill text-success"></i> Akreditasi Institusi "Baik Sekali" oleh BAN-PT
-              </div>
-              <div class="col-sm-6 d-flex align-items-center gap-2 text-dark">
-                <i class="bi bi-check-circle-fill text-success"></i> Biaya Kuliah Terjangkau & Bisa Diangsur Bulanan
-              </div>
-              <div class="col-sm-6 d-flex align-items-center gap-2 text-dark">
-                <i class="bi bi-check-circle-fill text-success"></i> Pilihan Kelas Reguler Pagi & Kelas Karyawan Malam
-              </div>
-              <div class="col-sm-6 d-flex align-items-center gap-2 text-dark">
-                <i class="bi bi-check-circle-fill text-success"></i> Lokasi Strategis di Pusat Kota Batam
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      <div class="col-lg-5">
-        <div class="h-100 p-4 rounded-4 shadow-sm text-white d-flex flex-column justify-content-between" style="background: linear-gradient(135deg, #03521d 0%, #01280d 100%); border-left: 5px solid #FED802;">
-          <div>
-            <h5 class="fw-bold mb-2 text-white d-flex align-items-center gap-2">
-              <i class="bi bi-book-half text-warning fs-4"></i> Butuh Dokumen Panduan Lengkap?
-            </h5>
-            <p class="text-white-50 small mb-4" style="line-height: 1.7;">
-              Untuk membaca petunjuk teknis admisi, rincian biaya pendaftaran per semester, serta jadwal ujian CBT, Anda dapat membuka halaman khusus Dokumen Panduan PMB (PDF).
-            </p>
-          </div>
-          <div>
-            <a href="{{ route('homepage.pmb-panduan') }}" class="btn w-100 fw-bold py-2.5 rounded-3 d-flex align-items-center justify-content-center gap-2" style="background-color: #FED802; color: #111827;">
-              <i class="bi bi-file-earmark-pdf-fill"></i> Buka Dokumen Panduan PDF <i class="bi bi-arrow-right"></i>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
 
     {{-- Banner CTA Pendaftaran Online --}}
     <div class="p-4 p-md-5 rounded-4 shadow-sm text-white text-center mt-4" style="background: linear-gradient(135deg, #046B26 0%, #023814 100%); border: 2px solid #FED802;">
