@@ -139,11 +139,10 @@
                             <label for="visimisi_tagline_visi" class="form-label fw-bold small text-dark">
                                 Teks / Tagline Utama Visi <span class="text-danger">*</span>
                             </label>
-                            <textarea class="form-control @error('visimisi_tagline_visi') is-invalid @enderror" 
+                            <textarea class="form-control tinymce-visimisi @error('visimisi_tagline_visi') is-invalid @enderror" 
                                       id="visimisi_tagline_visi" 
                                       name="visimisi_tagline_visi" 
                                       rows="8" 
-                                      required 
                                       placeholder="Contoh: 'Unggul, Berintegritas, Berjiwa Entrepreneurship'">{{ old('visimisi_tagline_visi', $about->visimisi_tagline_visi ?? 'Unggul, Berintegritas, Berjiwa Entrepreneurship') }}</textarea>
                             <div class="form-text text-muted small mt-1">
                                 Teks ini akan tampil besar dan elegan di tengah kartu Visi.
@@ -172,15 +171,14 @@
                             <label for="visimisi_misi_items" class="form-label fw-bold small text-dark">
                                 Butir-Butir Misi UIS <span class="text-danger">*</span>
                             </label>
-                            <textarea class="form-control @error('visimisi_misi_items') is-invalid @enderror" 
+                            <textarea class="form-control tinymce-visimisi @error('visimisi_misi_items') is-invalid @enderror" 
                                       id="visimisi_misi_items" 
                                       name="visimisi_misi_items" 
                                       rows="11" 
-                                      required 
                                       style="font-size: 12.5px; line-height: 1.5;"
                                       placeholder="1. Menyelenggarakan pendidikan tinggi yang unggul...&#10;2. Mengembangkan penelitian inovatif...&#10;3. Membangun ekosistem kewirausahaan...">{{ old('visimisi_misi_items', $about->visimisi_misi_items) }}</textarea>
                             <div class="form-text text-muted small mt-1">
-                                Tuliskan setiap butir misi (pisahkan dengan baris baru).
+                                Tuliskan setiap butir misi (bisa menggunakan fitur Numbered List di editor).
                             </div>
                             @error('visimisi_misi_items')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -221,15 +219,14 @@
                             <label for="visimisi_tatanilai_items" class="form-label fw-bold small text-dark">
                                 Butir Tata Nilai CIP <span class="text-danger">*</span>
                             </label>
-                            <textarea class="form-control @error('visimisi_tatanilai_items') is-invalid @enderror" 
+                            <textarea class="form-control tinymce-visimisi @error('visimisi_tatanilai_items') is-invalid @enderror" 
                                       id="visimisi_tatanilai_items" 
                                       name="visimisi_tatanilai_items" 
                                       rows="7" 
-                                      required 
                                       style="font-size: 12.5px; line-height: 1.5;"
                                       placeholder="(C) CERDAS: Spiritual, intelektual dan emosional&#10;(I) INTEGRITAS: Jujur, disiplin, Komitmen dan bertanggung jawab&#10;(P) PROFESIONAL: Objektif, Adil dan Transparan">{{ old('visimisi_tatanilai_items', $about->visimisi_tatanilai_items) }}</textarea>
                             <div class="form-text text-muted small mt-1">
-                                Format: <code>(C) CERDAS: Penjelasan</code> (1 baris per nilai).
+                                Format: <code>(C) CERDAS: Penjelasan</code> (gunakan format Bold atau warna untuk label).
                             </div>
                             @error('visimisi_tatanilai_items')
                                 <div class="invalid-feedback">{{ $message }}</div>
@@ -322,3 +319,26 @@
     @method('DELETE')
 </form>
 @endsection
+
+@push('scripts')
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        if (typeof tinymce !== 'undefined') {
+            tinymce.init({
+                selector: 'textarea.tinymce-visimisi',
+                height: 320,
+                menubar: false,
+                branding: false,
+                plugins: 'advlist autolink lists link code wordcount',
+                toolbar: 'undo redo | bold italic underline | forecolor backcolor | bullist numlist | alignleft aligncenter alignright | removeformat code',
+                content_style: 'body { font-family: "Plus Jakarta Sans", Arial, sans-serif; font-size: 13.5px; line-height: 1.6; color: #1e293b; } ol, ul { padding-left: 20px; } p { margin-bottom: 6px; } strong, b { font-weight: 700; }',
+                setup: function (editor) {
+                    editor.on('change', function () {
+                        editor.save();
+                    });
+                }
+            });
+        }
+    });
+</script>
+@endpush

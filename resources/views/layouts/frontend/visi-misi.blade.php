@@ -148,6 +148,29 @@
     font-style: italic;
     text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
   }
+  .misi-html-content, .tatanilai-html-content, .visi-html-content {
+    color: #f8fafc;
+    font-size: 12.5px;
+    line-height: 1.6;
+  }
+  .misi-html-content ol, .misi-html-content ul,
+  .tatanilai-html-content ol, .tatanilai-html-content ul {
+    padding-left: 18px;
+    margin-bottom: 0;
+  }
+  .misi-html-content li, .tatanilai-html-content li {
+    margin-bottom: 7px;
+    text-align: justify;
+  }
+  .misi-html-content p, .tatanilai-html-content p {
+    margin-bottom: 6px;
+  }
+  .misi-html-content p:last-child, .tatanilai-html-content p:last-child {
+    margin-bottom: 0;
+  }
+  .tatanilai-html-content strong, .tatanilai-html-content b {
+    color: #fed802 !important;
+  }
   .misi-ordered-list {
     font-size: 12px;
     line-height: 1.5;
@@ -298,12 +321,18 @@
 
           {{-- Middle Content Box (Glassmorphism) --}}
           <div class="visimisi-glass-content flex-grow-1 d-flex flex-column justify-content-center text-center">
-            <div class="mb-2">
-              <i class="bi bi-quote fs-1 text-warning opacity-75"></i>
-            </div>
-            <p class="visi-text-highlight mb-0">
-              "{{ $about?->visimisi_tagline_visi ?? 'Unggul, Berintegritas, Berjiwa Entrepreneurship' }}"
-            </p>
+            @if(strip_tags($about?->visimisi_tagline_visi) !== $about?->visimisi_tagline_visi)
+              <div class="visi-html-content mb-0">
+                {!! $about->visimisi_tagline_visi !!}
+              </div>
+            @else
+              <div class="mb-2">
+                <i class="bi bi-quote fs-1 text-warning opacity-75"></i>
+              </div>
+              <p class="visi-text-highlight mb-0">
+                "{{ $about?->visimisi_tagline_visi ?? 'Unggul, Berintegritas, Berjiwa Entrepreneurship' }}"
+              </p>
+            @endif
           </div>
 
           {{-- Bottom Humas Pill --}}
@@ -372,23 +401,29 @@
 
           {{-- Middle Content Box (Glassmorphism) --}}
           <div class="visimisi-glass-content flex-grow-1 d-flex flex-column justify-content-center">
-            <ol class="misi-ordered-list mb-0 ps-3">
-              @php
-                $misiItems = $about?->misi_list ?? [];
-                if (empty($misiItems)) {
-                    $misiItems = [
-                        'Menyelenggarakan pendidikan tinggi yang unggul dengan mengintegrasikan nilai-nilai integritas dan kewirausahaan dalam proses pembelajaran, penelitian, dan pengabdian kepada Masyarakat.',
-                        'Mengembangkan penelitian inovatif dan relevan yang berkontribusi pada kemajuan ilmu pengetahuan, teknologi, dan pemecahan masalah di masyarakat.',
-                        'Membangun ekosistem kewirausahaan yang mendorong kreativitas, inovasi, dan kemandirian di kalangan civitas akademika dan masyarakat luas.',
-                        'Menerapkan tata kelola universitas yang kredibel, transparan, akuntabel, bertanggungjawab dan berintegritas tinggi untuk mendukung pencapaian keunggulan institusi.',
-                        'Menjalin kerjasama strategis dengan berbagai pemangku kepentingan untuk meningkatkan daya saing, reputasi, dan kontribusi universitas di tingkat nasional dan internasional.'
-                    ];
-                }
-              @endphp
-              @foreach($misiItems as $misi)
-                <li>{{ preg_replace('/^\d+[\.\)]\s*/', '', $misi) }}</li>
-              @endforeach
-            </ol>
+            @if(strip_tags($about?->visimisi_misi_items) !== $about?->visimisi_misi_items)
+              <div class="misi-html-content">
+                {!! $about->visimisi_misi_items !!}
+              </div>
+            @else
+              <ol class="misi-ordered-list mb-0 ps-3">
+                @php
+                  $misiItems = $about?->misi_list ?? [];
+                  if (empty($misiItems)) {
+                      $misiItems = [
+                          'Menyelenggarakan pendidikan tinggi yang unggul dengan mengintegrasikan nilai-nilai integritas dan kewirausahaan dalam proses pembelajaran, penelitian, dan pengabdian kepada Masyarakat.',
+                          'Mengembangkan penelitian inovatif dan relevan yang berkontribusi pada kemajuan ilmu pengetahuan, teknologi, dan pemecahan masalah di masyarakat.',
+                          'Membangun ekosistem kewirausahaan yang mendorong kreativitas, inovasi, dan kemandirian di kalangan civitas akademika dan masyarakat luas.',
+                          'Menerapkan tata kelola universitas yang kredibel, transparan, akuntabel, bertanggungjawab dan berintegritas tinggi untuk mendukung pencapaian keunggulan institusi.',
+                          'Menjalin kerjasama strategis dengan berbagai pemangku kepentingan untuk meningkatkan daya saing, reputasi, dan kontribusi universitas di tingkat nasional dan internasional.'
+                      ];
+                  }
+                @endphp
+                @foreach($misiItems as $misi)
+                  <li>{{ preg_replace('/^\d+[\.\)]\s*/', '', $misi) }}</li>
+                @endforeach
+              </ol>
+            @endif
           </div>
 
           {{-- Bottom Humas Pill --}}
@@ -457,31 +492,37 @@
 
           {{-- Middle Content Box (Glassmorphism) --}}
           <div class="visimisi-glass-content flex-grow-1 d-flex flex-column justify-content-center">
-            <div class="tatanilai-items-wrap">
-              @php
-                $tataNilaiItems = $about?->tata_nilai_list ?? [];
-                if (empty($tataNilaiItems)) {
-                    $tataNilaiItems = [
-                        '(C) CERDAS: Spiritual, intelektual dan emosional',
-                        '(I) INTEGRITAS: Jujur, disiplin, Komitmen dan bertanggung jawab',
-                        '(P) PROFESIONAL: Objektif, Adil dan Transparan'
-                    ];
-                }
-              @endphp
-              @foreach($tataNilaiItems as $tn)
+            @if(strip_tags($about?->visimisi_tatanilai_items) !== $about?->visimisi_tatanilai_items)
+              <div class="tatanilai-html-content">
+                {!! $about->visimisi_tatanilai_items !!}
+              </div>
+            @else
+              <div class="tatanilai-items-wrap">
                 @php
-                  $parts = explode(':', $tn, 2);
+                  $tataNilaiItems = $about?->tata_nilai_list ?? [];
+                  if (empty($tataNilaiItems)) {
+                      $tataNilaiItems = [
+                          '(C) CERDAS: Spiritual, intelektual dan emosional',
+                          '(I) INTEGRITAS: Jujur, disiplin, Komitmen dan bertanggung jawab',
+                          '(P) PROFESIONAL: Objektif, Adil dan Transparan'
+                      ];
+                  }
                 @endphp
-                <div class="tatanilai-item mb-3">
-                  @if(count($parts) === 2)
-                    <strong class="tatanilai-label d-block mb-1">{{ trim($parts[0]) }}:</strong>
-                    <span class="tatanilai-desc">{{ trim($parts[1]) }}</span>
-                  @else
-                    <span class="tatanilai-desc">{{ $tn }}</span>
-                  @endif
-                </div>
-              @endforeach
-            </div>
+                @foreach($tataNilaiItems as $tn)
+                  @php
+                    $parts = explode(':', $tn, 2);
+                  @endphp
+                  <div class="tatanilai-item mb-3">
+                    @if(count($parts) === 2)
+                      <strong class="tatanilai-label d-block mb-1">{{ trim($parts[0]) }}:</strong>
+                      <span class="tatanilai-desc">{{ trim($parts[1]) }}</span>
+                    @else
+                      <span class="tatanilai-desc">{{ $tn }}</span>
+                    @endif
+                  </div>
+                @endforeach
+              </div>
+            @endif
           </div>
 
           {{-- Bottom Humas Pill --}}
