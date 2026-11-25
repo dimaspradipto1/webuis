@@ -15,23 +15,31 @@
 {{-- ═══════════════════════════════════════════════════════════════
      INFORMASI PENGATURAN BREADCRUMB & HERO BANNER TERPUSAT
      ═══════════════════════════════════════════════════════════════ --}}
-<div class="alert alert-light border shadow-sm d-flex flex-wrap align-items-center justify-content-between p-3 mb-4 rounded-3" style="border-left: 4px solid #046B26 !important; background: #ffffff;">
-    <div class="d-flex align-items-center gap-3">
-        <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 44px; height: 44px; background: #e8f5e9; color: #046B26; flex-shrink: 0;">
-            <i class="bi bi-compass fs-4"></i>
+<div class="card border-0 shadow-sm mb-4" style="border-radius: 12px; border-left: 5px solid #046B26 !important;">
+    <div class="card-body p-3 p-md-4">
+        <div class="row align-items-center g-3">
+            <div class="col-xl-8 col-lg-7 col-12">
+                <div class="d-flex align-items-center gap-3">
+                    <div class="rounded-circle d-flex align-items-center justify-content-center flex-shrink-0" style="width: 48px; height: 48px; background: #e8f5e9; color: #046B26;">
+                        <i class="bi bi-compass fs-4"></i>
+                    </div>
+                    <div>
+                        <h6 class="fw-bold text-dark mb-1" style="font-size: 15px;">Pengaturan Judul & Hero Banner Halaman Terpusat di Breadcrumb</h6>
+                        <p class="text-muted small mb-0" style="line-height: 1.5;">Teks judul hero banner, label badge kategori, kalimat pengantar, dan jejak breadcrumb navigasi dikelola secara terpusat di modul Breadcrumb.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-4 col-lg-5 col-12 text-lg-end">
+                <div class="d-flex align-items-center justify-content-lg-end gap-2 flex-wrap">
+                    <a href="{{ route('breadcrumb-setting.edit', $breadcrumb->id ?? 2) }}" class="btn btn-sm btn-outline-success fw-semibold px-3 py-2">
+                        <i class="bi bi-pencil-square me-1"></i> Edit Breadcrumb & Hero Banner
+                    </a>
+                    <a href="{{ route('homepage.visi-misi') }}" target="_blank" class="btn btn-sm btn-success fw-semibold px-3 py-2" style="background-color: #046B26; border-color: #046B26;">
+                        <i class="bi bi-box-arrow-up-right me-1"></i> Pratinjau Frontend
+                    </a>
+                </div>
+            </div>
         </div>
-        <div>
-            <div class="fw-bold text-dark" style="font-size: 15px;">Pengaturan Judul & Hero Banner Halaman Terpusat di Breadcrumb</div>
-            <div class="text-muted small" style="line-height: 1.4;">Teks judul hero banner, label badge kategori, kalimat pengantar, dan jejak breadcrumb navigasi dikelola secara terpusat di modul Breadcrumb.</div>
-        </div>
-    </div>
-    <div class="d-flex align-items-center gap-2 mt-2 mt-lg-0">
-        <a href="{{ route('breadcrumb-setting.edit', $breadcrumb->id ?? 2) }}" class="btn btn-sm btn-outline-success fw-semibold">
-            <i class="bi bi-pencil-square me-1"></i> Edit Breadcrumb & Hero Banner
-        </a>
-        <a href="{{ route('homepage.visi-misi') }}" target="_blank" class="btn btn-sm btn-success fw-semibold" style="background-color: #046B26; border-color: #046B26;">
-            <i class="bi bi-box-arrow-up-right me-1"></i> Pratinjau Frontend
-        </a>
     </div>
 </div>
 
@@ -45,20 +53,17 @@
     @method('PUT')
 
     <div class="card shadow-sm border-0 mb-4" style="border-radius: 12px;">
-        <div class="card-header bg-white py-3 d-flex align-items-center justify-content-between" style="border-top: 3px solid #046B26; border-radius: 12px 12px 0 0;">
+        <div class="card-header bg-white py-3 px-4 d-flex align-items-center justify-content-between" style="border-top: 3px solid #046B26; border-radius: 12px 12px 0 0;">
             <div class="d-flex align-items-center gap-2">
                 <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; background-color: #e8f5e9; color: #046B26;">
                     <i class="bi bi-card-text fs-5"></i>
                 </div>
                 <div>
                     <h5 class="mb-0 fw-bold" style="color: #2b2f32; font-size: 16px;">Konten Teks Visi, Misi & Tata Nilai UIS</h5>
-                    <small class="text-muted">Kelola isi teks Visi, Misi dan Tata Nilai yang tampil di halaman frontend dalam format teks dinamis (banner dikelola secara murni codingan HTML/CSS best practice)</small>
+                    <small class="text-muted">Kelola isi teks Visi, Misi dan Tata Nilai yang tampil di halaman frontend dalam format teks dinamis</small>
                 </div>
             </div>
-            <span class="badge" style="background-color: #fed802; color: #111111; font-size: 11.5px; font-weight: 700; padding: 6px 12px; border-radius: 6px;">
-                <i class="bi bi-code-slash me-1"></i> Murni Codingan
-            </span>
-        </div>
+            <span class="badge" style="background-color: #046B26; color: #ffffff; font-size: 11.5px; font-weight: 700; padding: 6px 14px; border-radius: 6px;">
                 <i class="bi bi-fonts me-1"></i> Teks Dinamis
             </span>
         </div>
@@ -183,15 +188,16 @@
          TOMBOL SIMPAN UTAMA
          ═══════════════════════════════════════════════════════════════ --}}
     <div class="card shadow-sm border-0 mb-4" style="border-radius: 12px;">
-        <div class="card-body py-3 d-flex flex-wrap align-items-center justify-content-between gap-3">
-            <div class="text-muted small">
-                <i class="bi bi-shield-check text-success me-1"></i> Perubahan teks Visi, Misi & Tata Nilai akan langsung diterapkan secara realtime di halaman Visi & Misi frontend.
+        <div class="card-body py-3 px-4 d-flex flex-wrap align-items-center justify-content-between gap-3">
+            <div class="text-muted small d-flex align-items-center gap-2">
+                <i class="bi bi-shield-check text-success fs-5"></i>
+                <span>Perubahan teks Visi, Misi & Tata Nilai akan langsung diterapkan secara realtime di halaman Visi & Misi frontend.</span>
             </div>
             <div class="d-flex align-items-center gap-2">
-                <a href="{{ route('homepage.visi-misi') }}" target="_blank" class="btn btn-outline-success fw-semibold">
+                <a href="{{ route('homepage.visi-misi') }}" target="_blank" class="btn btn-outline-success fw-semibold px-3 py-2">
                     <i class="bi bi-box-arrow-up-right me-1"></i> Lihat Frontend
                 </a>
-                <button type="submit" class="btn fw-semibold px-4 shadow-sm" style="background-color: #046B26; color: #ffffff; border-color: #046B26;">
+                <button type="submit" class="btn fw-semibold px-4 py-2 shadow-sm" style="background-color: #046B26; color: #ffffff; border-color: #046B26;">
                     <i class="bi bi-floppy-fill me-1"></i> Simpan Visi, Misi & Tata Nilai
                 </button>
             </div>
