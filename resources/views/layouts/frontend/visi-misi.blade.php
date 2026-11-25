@@ -56,80 +56,23 @@
     right: 24px;
   }
 
-  /* Baris Brand Fleksibel Sesuai Desain Acuan */
-  .visimisi-brand-row {
-    position: relative;
-    z-index: 3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 36px;
-    flex-wrap: wrap;
-    margin-bottom: 32px;
-  }
-
-  .brand-item {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
-
-  .brand-logo-uis {
-    height: 50px;
-    width: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 2px 5px rgba(0,0,0,0.45));
-  }
-
-  .brand-logo-kemdikbud {
-    height: 44px;
-    width: 44px;
-    object-fit: contain;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.35));
-  }
-
-  .brand-logo-dikti {
-    height: 42px;
-    width: auto;
-    object-fit: contain;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
-  }
-
-  .brand-text {
-    display: flex;
-    flex-direction: column;
-    line-height: 1.15;
-    font-family: 'Plus Jakarta Sans', Arial, sans-serif;
-    color: #ffffff;
-  }
-  .brand-text .humas {
-    font-size: 11px;
-    font-weight: 800;
-    letter-spacing: 0.6px;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
-  }
-  .brand-text .univ {
-    font-size: 12.5px;
-    font-weight: 800;
-    letter-spacing: 0.6px;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
-  }
-  .brand-text .name {
-    font-size: 16.5px;
-    font-weight: 900;
-    letter-spacing: 0.8px;
-    text-shadow: 0 1px 3px rgba(0,0,0,0.6);
-  }
-
-  /* Garis Pemisah Vertikal Antar Brand */
-  .brand-divider {
-    width: 2px;
-    height: 38px;
-    background: rgba(255, 255, 255, 0.7);
-    border-radius: 2px;
-  }
-
   /* Section Badge Pills: VISI:, MISI:, TATA NILAI UIS "CIP": */
+  .visimisi-pill-badge {
+    background: #fed802;
+    color: #024618;
+    font-size: 14px;
+    font-weight: 800;
+    border-radius: 50px;
+    padding: 7px 26px;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.42);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+  }
   .visimisi-pill-badge {
     background: #fed802;
     color: #024618;
