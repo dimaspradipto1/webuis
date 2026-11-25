@@ -37,95 +37,13 @@
 
 
 {{-- ═══════════════════════════════════════════════════════════════
-     KARTU 1: UPLOAD BACKGROUND UTAMA VISI MISI (FORM KHUSUS)
-     ═══════════════════════════════════════════════════════════════ --}}
-<form action="{{ route('visimisi.update-background') }}" method="POST" enctype="multipart/form-data">
-    @csrf
-    <div class="card shadow-sm border-0 mb-4" style="border-radius: 12px;">
-        <div class="card-header bg-white py-3 d-flex align-items-center justify-content-between" style="border-top: 3px solid #046B26; border-radius: 12px 12px 0 0;">
-            <div class="d-flex align-items-center gap-2">
-                <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 36px; height: 36px; background-color: #e8f5e9; color: #046B26;">
-                    <i class="bi bi-image fs-5"></i>
-                </div>
-                <div>
-                    <h5 class="mb-0 fw-bold" style="color: #2b2f32; font-size: 16px;">Background Utama Banner Visi Misi</h5>
-                    <small class="text-muted">Unggah foto latar belakang (contoh: foto gedung kampus UIS / motif institusi) sebagai background utama banner</small>
-                </div>
-            </div>
-            <span class="badge" style="background-color: #046B26; color: #ffffff; font-size: 11.5px; font-weight: 700; padding: 6px 12px; border-radius: 6px;">
-                <i class="bi bi-layers me-1"></i> Background Banner Utama
-            </span>
-        </div>
-        <div class="card-body pt-3 pb-4">
-            <div class="row g-4 align-items-center">
-                {{-- Preview Background Aktif --}}
-                <div class="col-lg-4 col-md-5 col-12">
-                    <label class="form-label fw-bold text-dark small mb-2">Preview Background Saat Ini</label>
-                    <div class="position-relative rounded-3 overflow-hidden border shadow-sm" style="height: 160px; background: #046B26;">
-                        @if($about->visimisi_background_url)
-                            <img src="{{ $about->visimisi_background_url }}" 
-                                 alt="Background Visi Misi" 
-                                 id="currentBgPreviewImg"
-                                 style="width: 100%; height: 100%; object-fit: cover;"
-                                 onerror="this.style.display='none'; document.getElementById('bgFallbackStandard').classList.remove('d-none'); document.getElementById('bgOverlayBar').classList.add('d-none');">
-                        @endif
-                        <div id="bgOverlayBar" class="position-absolute bottom-0 start-0 end-0 p-2 d-flex align-items-center justify-content-between @if(!$about->visimisi_background_url) d-none @endif" style="background: rgba(0,0,0,0.65);">
-                            <span class="badge @if($about->visimisi_background) bg-success @else bg-primary @endif" style="font-size: 10.5px;">
-                                <i class="bi bi-check-circle me-1"></i>{{ $about->visimisi_background ? 'Kustom Aktif' : 'Default Resmi Aktif' }}
-                            </span>
-                            @if($about->visimisi_background)
-                                <button type="button" class="btn btn-danger btn-sm py-0 px-2" style="font-size: 11px;" onclick="document.getElementById('formDeleteBackground').submit();" title="Kembalikan ke Background Default">
-                                    <i class="bi bi-arrow-counterclockwise me-1"></i>Reset
-                                </button>
-                            @endif
-                        </div>
-                        <div id="bgFallbackStandard" class="d-flex flex-column align-items-center justify-content-center h-100 text-white text-center p-3 @if($about->visimisi_background_url) d-none @endif" style="background: linear-gradient(135deg, #13883a 0%, #034b1a 100%);">
-                            <i class="bi bi-palette fs-2 mb-1 text-warning"></i>
-                            <span class="fw-bold small">Latar Standar Gradasi Hijau UIS</span>
-                            <small class="text-white-50" style="font-size: 11px;">Belum ada foto background kustom</small>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Upload File Baru --}}
-                <div class="col-lg-8 col-md-7 col-12">
-                    <label for="visimisi_background" class="form-label fw-bold text-dark small">
-                        Pilih Gambar Background Baru <small class="text-muted fw-normal">(JPG, PNG, WEBP, Maks. 5MB)</small>
-                    </label>
-                    <div class="input-group">
-                        <input type="file" 
-                               class="form-control @error('visimisi_background') is-invalid @enderror" 
-                               id="visimisi_background" 
-                               name="visimisi_background" 
-                               accept="image/jpeg,image/png,image/jpg,image/webp" 
-                               required>
-                        <button type="submit" class="btn btn-success fw-semibold px-3" style="background-color: #046B26; border-color: #046B26;">
-                            <i class="bi bi-cloud-arrow-up-fill me-1"></i> Upload Background
-                        </button>
-                    </div>
-                    <div class="form-text text-muted small mt-2" style="line-height: 1.5;">
-                        <i class="bi bi-info-circle me-1 text-success"></i>
-                        Pilih gambar lalu klik tombol <strong>Upload Background</strong>. Foto akan otomatis dijadikan latar utama banner Visi & Misi di frontend.
-                    </div>
-                    @error('visimisi_background')
-                        <div class="invalid-feedback d-block">{{ $message }}</div>
-                    @enderror
-                </div>
-            </div>
-        </div>
-    </div>
-</form>
-
-{{-- ═══════════════════════════════════════════════════════════════
-     KARTU 2: KELOLA KONTEN TEKS VISI, MISI, TATA NILAI
+     FORM KELOLA KONTEN TEKS VISI, MISI & TATA NILAI UIS
+     (Format Murni Teks Dinamis — Best Practice Codingan)
      ═══════════════════════════════════════════════════════════════ --}}
 <form action="{{ route('visimisi.update-content') }}" method="POST">
     @csrf
     @method('PUT')
 
-    {{-- ═══════════════════════════════════════════════════════════════
-         KARTU 2: KELOLA KONTEN TEKS 3 KARTU (VISI, MISI, TATA NILAI)
-         ═══════════════════════════════════════════════════════════════ --}}
     <div class="card shadow-sm border-0 mb-4" style="border-radius: 12px;">
         <div class="card-header bg-white py-3 d-flex align-items-center justify-content-between" style="border-top: 3px solid #046B26; border-radius: 12px 12px 0 0;">
             <div class="d-flex align-items-center gap-2">
@@ -134,10 +52,13 @@
                 </div>
                 <div>
                     <h5 class="mb-0 fw-bold" style="color: #2b2f32; font-size: 16px;">Konten Teks Visi, Misi & Tata Nilai UIS</h5>
-                    <small class="text-muted">Kelola isi teks Visi, Misi dan Tata Nilai yang tampil di halaman frontend dalam format teks dinamis (bukan gambar mati)</small>
+                    <small class="text-muted">Kelola isi teks Visi, Misi dan Tata Nilai yang tampil di halaman frontend dalam format teks dinamis (banner dikelola secara murni codingan HTML/CSS best practice)</small>
                 </div>
             </div>
             <span class="badge" style="background-color: #fed802; color: #111111; font-size: 11.5px; font-weight: 700; padding: 6px 12px; border-radius: 6px;">
+                <i class="bi bi-code-slash me-1"></i> Murni Codingan
+            </span>
+        </div>
                 <i class="bi bi-fonts me-1"></i> Teks Dinamis
             </span>
         </div>
@@ -264,7 +185,7 @@
     <div class="card shadow-sm border-0 mb-4" style="border-radius: 12px;">
         <div class="card-body py-3 d-flex flex-wrap align-items-center justify-content-between gap-3">
             <div class="text-muted small">
-                <i class="bi bi-shield-check text-success me-1"></i> Perubahan teks dan background akan langsung diterapkan secara realtime di halaman Visi & Misi frontend.
+                <i class="bi bi-shield-check text-success me-1"></i> Perubahan teks Visi, Misi & Tata Nilai akan langsung diterapkan secara realtime di halaman Visi & Misi frontend.
             </div>
             <div class="d-flex align-items-center gap-2">
                 <a href="{{ route('homepage.visi-misi') }}" target="_blank" class="btn btn-outline-success fw-semibold">
@@ -277,53 +198,11 @@
         </div>
     </div>
 </form>
-
-{{-- Form Tersembunyi untuk Hapus Background --}}
-<form id="formDeleteBackground" action="{{ route('visimisi.delete-background') }}" method="POST" style="display: none;">
-    @csrf
-    @method('DELETE')
-</form>
 @endsection
 
 @push('scripts')
-
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Live Preview saat memilih file background baru
-        const inputBg = document.getElementById('visimisi_background');
-        if (inputBg) {
-            inputBg.addEventListener('change', function (e) {
-                const file = e.target.files && e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function (evt) {
-                        let img = document.getElementById('currentBgPreviewImg');
-                        const fallback = document.getElementById('bgFallbackStandard');
-                        const overlay = document.getElementById('bgOverlayBar');
-                        const container = fallback ? fallback.parentElement : null;
-
-                        if (!img && container) {
-                            img = document.createElement('img');
-                            img.id = 'currentBgPreviewImg';
-                            img.alt = 'Background Visi Misi';
-                            img.style.width = '100%';
-                            img.style.height = '100%';
-                            img.style.objectFit = 'cover';
-                            container.prepend(img);
-                        }
-
-                        if (img) {
-                            img.src = evt.target.result;
-                            img.style.display = 'block';
-                        }
-                        if (fallback) fallback.classList.add('d-none');
-                        if (overlay) overlay.classList.remove('d-none');
-                    };
-                    reader.readAsDataURL(file);
-                }
-            });
-        }
-
         if (typeof tinymce !== 'undefined') {
             tinymce.init({
                 selector: 'textarea.tinymce-visimisi',
