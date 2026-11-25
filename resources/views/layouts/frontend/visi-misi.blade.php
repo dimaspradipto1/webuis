@@ -7,41 +7,61 @@
 @push('styles')
 <style>
   /* ═══════════════════════════════════════════════
-     KONSEP POSTER BANNER MODULAR VISI, MISI & TATA NILAI UIS
-     (Struktur Seamless: Header Grafis + Konten Kampus Tengah + Footer Grafis)
+     KONSEP POSTER BANNER VISI, MISI & TATA NILAI UIS
+     (Background Responsif 1920x780 Menyesuaikan Dinamis Saat Konten Panjang ke Bawah)
   ═══════════════════════════════════════════════ */
   .visimisi-poster-banner {
     background-color: #046B26;
+    background-size: 100% 100%;
+    background-position: center top;
+    background-repeat: no-repeat;
     border-radius: 20px;
     position: relative;
     overflow: hidden;
     box-shadow: 0 16px 42px rgba(0, 40, 15, 0.32);
     border: 2.5px solid rgba(254, 216, 2, 0.65);
-    max-width: 920px;
+    max-width: 960px;
     margin: 0 auto;
+    
+    /* Ruang padding atas presisi agar seluruh konten berada tepat DI BAWAH tulisan UNIVERSITAS IBNU SINA */
+    padding-top: 230px;
+    padding-bottom: 110px;
+    padding-left: 36px;
+    padding-right: 36px;
+    
+    transition: all 0.3s ease;
   }
 
-  /* Middle Konten (Background Kampus & Konten Teks Dinamis) */
-  .visimisi-banner-middle {
-    background-size: cover;
-    background-position: center top;
-    background-repeat: repeat-y;
-    padding: 34px 36px 24px 36px;
-    position: relative;
-    z-index: 2;
+  /* Tablet */
+  @media (max-width: 991px) {
+    .visimisi-poster-banner {
+      padding-top: 180px;
+      padding-bottom: 90px;
+      padding-left: 28px;
+      padding-right: 28px;
+    }
   }
 
-  /* 3. Footer Bagian Bawah (Pill Humas & Ribbon Media Sosial) */
-  .visimisi-banner-footer {
-    width: 100%;
-    position: relative;
-    z-index: 2;
-    line-height: 0;
+  /* Small Tablet / Large Mobile */
+  @media (max-width: 768px) {
+    .visimisi-poster-banner {
+      padding-top: 150px;
+      padding-bottom: 75px;
+      padding-left: 20px;
+      padding-right: 20px;
+    }
   }
-  .visimisi-banner-footer img {
-    width: 100%;
-    height: auto;
-    display: block;
+
+  /* Mobile */
+  @media (max-width: 576px) {
+    .visimisi-poster-banner {
+      border-radius: 14px;
+      border-width: 1.5px;
+      padding-top: 120px;
+      padding-bottom: 60px;
+      padding-left: 14px;
+      padding-right: 14px;
+    }
   }
 
   /* Section Headings: VISI:, MISI:, TATA NILAI UIS "CIP": */
@@ -60,15 +80,15 @@
 
   /* Kotak Konten Transparan Menyatu dengan Background Foto Kampus */
   .visimisi-content-box {
-    background: rgba(0, 36, 14, 0.52);
-    border: 1px solid rgba(255, 255, 255, 0.22);
+    background: rgba(0, 36, 14, 0.58);
+    border: 1px solid rgba(255, 255, 255, 0.24);
     border-radius: 14px;
-    padding: 18px 24px;
+    padding: 20px 26px;
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
     color: #ffffff;
-    margin-bottom: 22px;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
+    margin-bottom: 24px;
+    box-shadow: 0 4px 18px rgba(0, 0, 0, 0.22);
   }
 
   /* Tipografi Teks Visi */
@@ -130,20 +150,7 @@
     margin-right: 4px;
   }
 
-  @media (max-width: 768px) {
-    .visimisi-banner-middle {
-      padding: 24px 20px 20px 20px;
-    }
-  }
-
   @media (max-width: 576px) {
-    .visimisi-poster-banner {
-      border-radius: 14px;
-      border-width: 1.5px;
-    }
-    .visimisi-banner-middle {
-      padding: 18px 14px 16px 14px;
-    }
     .visimisi-section-heading {
       font-size: 16px;
       margin-bottom: 8px;
@@ -152,7 +159,7 @@
       font-size: 16px;
     }
     .visimisi-content-box {
-      padding: 12px 14px;
+      padding: 14px 16px;
       margin-bottom: 16px;
       border-radius: 10px;
     }
@@ -178,16 +185,13 @@
   <div class="container py-2">
     @php
       $customBg = !empty($about?->visimisi_background) ? $about->visimisi_background_url : null;
-      $middleBg = $customBg ?: asset('assets/img/visimisi-banner-middle.jpg');
+      $bannerBg = $customBg ?: asset('assets/img/visimisi-default-bg.jpg');
     @endphp
 
     <div class="row justify-content-center">
       <div class="col-xl-9 col-lg-10 col-12" data-aos="fade-up" data-aos-delay="100">
         
-        <div class="visimisi-poster-banner w-100 d-flex flex-column">
-          
-          {{-- KONTEN UTAMA VISI, MISI, TATA NILAI DENGAN BACKGROUND KAMPUS --}}
-          <div class="visimisi-banner-middle" style="background-image: url('{{ $middleBg }}');">
+        <div class="visimisi-poster-banner w-100" style="background-image: url('{{ $bannerBg }}');">
             
             {{-- ═══════════════════════════════════════════════
                  BAGIAN 1: VISI
@@ -301,13 +305,6 @@
                 @endif
               </div>
             </div>
-
-          </div>
-
-          {{-- 3. BAGIAN FOOTER BAWAH (Pill Humas & Bar Media Sosial) --}}
-          <div class="visimisi-banner-footer">
-            <img src="{{ asset('assets/img/visimisi-banner-footer.jpg') }}" alt="Footer Humas Universitas Ibnu Sina" class="w-100 d-block">
-          </div>
 
         </div>
 
