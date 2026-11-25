@@ -308,27 +308,15 @@
                     </div>
 
                     {{-- ═══════════════════════════════════════════════════════════════
-                         SEKSI 4: JADWAL GELOMBANG & PERSYARATAN
+                         SEKSI 4: PERSYARATAN BERKAS PENDAFTARAN
                          ═══════════════════════════════════════════════════════════════ --}}
                     <div class="card border border-light-subtle bg-light p-3 p-md-4 mb-4" style="border-radius: 10px;">
                         <h6 class="fw-bold text-dark border-bottom pb-2 mb-3">
-                            <i class="bi bi-calendar-check-fill text-success me-1"></i> 4. Jadwal Gelombang & Persyaratan Berkas
+                            <i class="bi bi-file-earmark-check-fill text-success me-1"></i> 4. Persyaratan Berkas Pendaftaran PMB
                         </h6>
 
                         <div class="row g-3">
-                            <div class="col-md-6 col-12">
-                                <label for="gelombang_info" class="form-label fw-bold text-dark small">
-                                    Jadwal Gelombang Pendaftaran
-                                </label>
-                                <textarea id="gelombang_info"
-                                          name="gelombang_info"
-                                          rows="5"
-                                          class="form-control @error('gelombang_info') is-invalid @enderror"
-                                          placeholder="• Gelombang I : Januari - Maret 2026&#10;• Gelombang II : April - Juni 2026...">{{ old('gelombang_info', $pmb->gelombang_info) }}</textarea>
-                                <div class="form-text small text-muted">Bisa gunakan baris baru atau poin bullet.</div>
-                            </div>
-
-                            <div class="col-md-6 col-12">
+                            <div class="col-12">
                                 <label for="persyaratan_info" class="form-label fw-bold text-dark small">
                                     Persyaratan Berkas Pendaftaran
                                 </label>

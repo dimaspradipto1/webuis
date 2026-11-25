@@ -575,18 +575,6 @@
           </div>
         </div>
       </div>
-
-      {{-- Catatan Jadwal dari Database --}}
-      @if(!empty($pmb->gelombang_info))
-        <div class="card border-0 shadow-sm rounded-4 p-4 bg-white">
-          <h6 class="fw-bold text-dark mb-2 d-flex align-items-center gap-2">
-            <i class="bi bi-info-circle text-success"></i> Catatan Jadwal Gelombang Panitia PMB
-          </h6>
-          <div class="text-dark small" style="line-height: 1.8; white-space: pre-line;">
-            {{ $pmb->gelombang_info }}
-          </div>
-        </div>
-      @endif
     </section>
 
     {{-- ═════════════════════════════════════════════════════
