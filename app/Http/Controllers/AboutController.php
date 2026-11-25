@@ -4,17 +4,62 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\AboutRequest;
 use App\Models\About;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class AboutController extends Controller
 {
     /**
+     * Pastikan kolom dokumen profil otomatis dibuat jika belum ada di database (misal di cPanel / hosting).
+     */
+    private function ensureDokumenColumnsExist(): void
+    {
+        try {
+            if (! Schema::hasTable('abouts')) {
+                return;
+            }
+
+            $neededColumns = [
+                'dokumen_file' => 'VARCHAR(255) NULL',
+                'dokumen_nama' => 'VARCHAR(255) NULL',
+                'dokumen_link' => 'VARCHAR(1000) NULL',
+            ];
+
+            foreach ($neededColumns as $col => $def) {
+                if (! Schema::hasColumn('abouts', $col)) {
+                    try {
+                        DB::statement("ALTER TABLE `abouts` ADD COLUMN `{$col}` {$def}");
+                    } catch (\Throwable $e) {
+                        try {
+                            Schema::table('abouts', function (Blueprint $table) use ($col) {
+                                if ($col === 'dokumen_link') {
+                                    $table->string($col, 1000)->nullable();
+                                } else {
+                                    $table->string($col)->nullable();
+                                }
+                            });
+                        } catch (\Throwable $e2) {
+                            Log::error("Failed to add column {$col} to abouts: " . $e2->getMessage());
+                        }
+                    }
+                }
+            }
+        } catch (\Throwable $ex) {
+            Log::error("ensureDokumenColumnsExist error: " . $ex->getMessage());
+        }
+    }
+
+    /**
      * Profil "Tentang UIS" hanya satu data, jadi menu langsung membuka form sunting.
      */
     public function index(): View
     {
+        $this->ensureDokumenColumnsExist();
         $about = $this->singleton();
 
         return view('pages.about.edit', compact('about'));
@@ -41,6 +86,7 @@ class AboutController extends Controller
 
     public function store(AboutRequest $request): RedirectResponse
     {
+        $this->ensureDokumenColumnsExist();
         $data = $request->validated();
 
         if ($request->hasFile('video_file')) {
@@ -59,6 +105,10 @@ class AboutController extends Controller
             $data['video_url'] = $raw;
         }
 
+        // Filter kolom agar tidak error jika ada kolom yang belum ada di database
+        $existingColumns = Schema::getColumnListing('abouts');
+        $data = array_intersect_key($data, array_flip($existingColumns));
+
         About::create($data);
 
         return redirect()
@@ -73,6 +123,7 @@ class AboutController extends Controller
 
     public function update(AboutRequest $request, About $about): RedirectResponse
     {
+        $this->ensureDokumenColumnsExist();
         $data = $request->validated();
 
         // Hapus video file jika diminta
@@ -112,6 +163,10 @@ class AboutController extends Controller
             }
             $data['video_url'] = $raw;
         }
+
+        // Filter kolom agar tidak error jika ada kolom yang belum ada di database
+        $existingColumns = Schema::getColumnListing('abouts');
+        $data = array_intersect_key($data, array_flip($existingColumns));
 
         $about->update($data);
 
