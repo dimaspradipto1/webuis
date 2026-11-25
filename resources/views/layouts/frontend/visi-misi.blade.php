@@ -129,17 +129,15 @@
     gap: 5px;
   }
 
-  /* Kotak Konten Tengah (Glassmorphism Semi-Gelap Transparan) */
+  /* Kotak Konten (Transparan Menyatu Tanpa Background Kotak Gelap) */
   .visimisi-glass-content {
-    background: rgba(0, 32, 12, 0.64);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    border: 1px solid rgba(255, 255, 255, 0.18);
-    border-radius: 14px;
-    padding: 16px 20px;
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    padding: 6px 10px;
     position: relative;
     z-index: 2;
-    box-shadow: inset 0 1px 2px rgba(255,255,255,0.1), 0 6px 16px rgba(0,0,0,0.2);
+    box-shadow: none;
   }
 
   /* Typography Spesifik */
@@ -288,13 +286,10 @@
      1 BANNER TUNGGAL VISI, MISI & TATA NILAI UIS
      (Format Teks Dinamis + Background Gambar Panjang ke Bawah)
 ═══════════════════════════════════════════════ -->
-<section class="section-bg-sand py-5">
+<section class="py-5" style="background: #ffffff;">
   <div class="container py-2">
     @php
-      $globalBg = $about?->visimisi_background_url;
-      $fallbackBg1 = \App\Models\VisiMisi::where('urutan', 1)->value('gambar');
-      $fallbackBg2 = \App\Models\VisiMisi::where('urutan', 2)->value('gambar');
-      $bgPoster = $globalBg ?: ($fallbackBg1 ? asset('storage/' . $fallbackBg1) : ($fallbackBg2 ? asset('storage/' . $fallbackBg2) : null));
+      $bgPoster = $about?->visimisi_background_url;
     @endphp
 
     <div class="row justify-content-center">
