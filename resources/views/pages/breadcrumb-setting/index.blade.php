@@ -52,38 +52,58 @@
 </div>
 
 <div class="card shadow-sm border-0 rounded-4">
-    <div class="card-header bg-white py-3 px-4 border-0 d-flex flex-wrap align-items-center justify-content-between gap-3">
-        {{-- Filter Kategori Tabs --}}
-        <div class="d-flex flex-wrap align-items-center gap-1">
-            <a href="{{ route('breadcrumb-setting.index', ['kategori' => 'all', 'q' => $search]) }}" 
-               class="btn btn-sm rounded-pill px-3 fw-semibold {{ empty($kategori) || $kategori === 'all' ? 'btn-success text-white' : 'btn-outline-secondary' }}">
-                Semua ({{ $totalItems }})
-            </a>
-            @foreach($categories as $cat)
-                <a href="{{ route('breadcrumb-setting.index', ['kategori' => $cat, 'q' => $search]) }}" 
-                   class="btn btn-sm rounded-pill px-3 fw-semibold {{ $kategori === $cat ? 'btn-success text-white' : 'btn-outline-secondary' }}">
-                    {{ $cat }}
+    <div class="card-header bg-white py-3 px-4 border-bottom">
+        <div class="d-flex flex-column flex-xl-row align-items-xl-center justify-content-between gap-3">
+            {{-- Filter Kategori Tabs (Pill Buttons) --}}
+            <div class="d-flex flex-wrap align-items-center gap-2">
+                <a href="{{ route('breadcrumb-setting.index', ['kategori' => 'all', 'q' => $search]) }}" 
+                   class="btn btn-sm rounded-pill px-3 py-1.5 fw-semibold d-inline-flex align-items-center gap-1 transition-all"
+                   style="{{ empty($kategori) || $kategori === 'all' 
+                       ? 'background-color: #046b26; border: 1.5px solid #046b26; color: #ffffff !important; box-shadow: 0 2px 6px rgba(4,107,38,0.25);' 
+                       : 'background-color: #f8fafc; border: 1.5px solid #e2e8f0; color: #475569;' }}">
+                    Semua <span class="badge rounded-pill ms-1" style="{{ empty($kategori) || $kategori === 'all' ? 'background: rgba(255,255,255,0.25); color: #fff;' : 'background: #e2e8f0; color: #475569;' }}">{{ $totalItems }}</span>
                 </a>
-            @endforeach
-        </div>
-
-        {{-- Form Pencarian --}}
-        <form action="{{ route('breadcrumb-setting.index') }}" method="GET" class="d-flex align-items-center gap-2">
-            @if(!empty($kategori))
-                <input type="hidden" name="kategori" value="{{ $kategori }}">
-            @endif
-            <div class="input-group input-group-sm" style="width: 240px;">
-                <input type="text" name="q" value="{{ $search }}" class="form-control rounded-start-pill ps-3" placeholder="Cari menu / judul...">
-                <button class="btn btn-success rounded-end-pill px-3" type="submit">
-                    <i class="bi bi-search"></i>
-                </button>
+                @foreach($categories as $cat)
+                    @php $isActiveCat = ($kategori === $cat); @endphp
+                    <a href="{{ route('breadcrumb-setting.index', ['kategori' => $cat, 'q' => $search]) }}" 
+                       class="btn btn-sm rounded-pill px-3 py-1.5 fw-semibold transition-all"
+                       style="{{ $isActiveCat 
+                           ? 'background-color: #046b26; border: 1.5px solid #046b26; color: #ffffff !important; box-shadow: 0 2px 6px rgba(4,107,38,0.25);' 
+                           : 'background-color: #f8fafc; border: 1.5px solid #e2e8f0; color: #475569;' }}">
+                        {{ $cat }}
+                    </a>
+                @endforeach
             </div>
-            @if(!empty($search))
-                <a href="{{ route('breadcrumb-setting.index', ['kategori' => $kategori]) }}" class="btn btn-sm btn-outline-danger rounded-pill" title="Reset Pencarian">
-                    <i class="bi bi-x-lg"></i>
-                </a>
-            @endif
-        </form>
+
+            {{-- Form Pencarian Elegan & Rapi --}}
+            <div class="d-flex align-items-center gap-2 flex-shrink-0 ms-xl-auto">
+                <form action="{{ route('breadcrumb-setting.index') }}" method="GET" class="d-flex align-items-center gap-2 m-0">
+                    @if(!empty($kategori))
+                        <input type="hidden" name="kategori" value="{{ $kategori }}">
+                    @endif
+                    <div class="position-relative" style="width: 250px;">
+                        <input type="text" name="q" value="{{ $search }}" 
+                               class="form-control form-control-sm rounded-pill ps-3 pe-5 py-1.5" 
+                               placeholder="Cari menu / judul..." 
+                               style="border: 1.5px solid #cbd5e1; font-size: 13px;">
+                        <button class="btn btn-sm btn-success rounded-circle position-absolute end-0 top-50 translate-middle-y me-1 d-flex align-items-center justify-content-center" 
+                                type="submit" 
+                                style="width: 26px; height: 26px; padding: 0; background: #046b26; border: none;" 
+                                title="Cari">
+                            <i class="bi bi-search" style="font-size: 11px;"></i>
+                        </button>
+                    </div>
+                    @if(!empty($search))
+                        <a href="{{ route('breadcrumb-setting.index', ['kategori' => $kategori]) }}" 
+                           class="btn btn-sm btn-outline-danger rounded-circle d-flex align-items-center justify-content-center" 
+                           style="width: 28px; height: 28px; padding: 0;"
+                           title="Reset Pencarian">
+                            <i class="bi bi-x-lg" style="font-size: 11px;"></i>
+                        </a>
+                    @endif
+                </form>
+            </div>
+        </div>
     </div>
 
     <div class="card-body p-0">
