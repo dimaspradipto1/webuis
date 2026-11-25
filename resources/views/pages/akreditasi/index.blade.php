@@ -1,6 +1,35 @@
 @extends('layouts.dashboard.template')
 
 @section('content')
+<style>
+  .btn-doc-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 5px 14px;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: #046B26;
+    background-color: #ffffff;
+    border: 1.5px solid #046B26;
+    border-radius: 50px;
+    text-decoration: none !important;
+    white-space: nowrap;
+    box-shadow: 0 1px 3px rgba(4, 107, 38, 0.08);
+    transition: all 0.2s ease;
+  }
+  .btn-doc-link:hover, .btn-doc-link:focus {
+    color: #ffffff !important;
+    background-color: #046B26 !important;
+    border-color: #046B26 !important;
+    box-shadow: 0 4px 10px rgba(4, 107, 38, 0.25) !important;
+    transform: translateY(-1px);
+  }
+  .btn-doc-link:hover .bi, .btn-doc-link:focus .bi {
+    color: #ffffff !important;
+  }
+</style>
 <div class="pagetitle d-flex flex-wrap align-items-center justify-content-between gap-2 mb-4">
     <div>
         <h1 class="mb-1">Kelola Dokumen Akreditasi</h1>
@@ -186,17 +215,17 @@
                                 <div class="small fw-semibold text-dark">{{ $item->nomor_sk ?: '-' }}</div>
                                 <div class="small text-muted"><i class="bi bi-clock me-1"></i>{{ $item->masa_berlaku ?: ($item->tahun_sk ? 'Tahun ' . $item->tahun_sk : '-') }}</div>
                             </td>
-                            <td class="text-center">
+                            <td class="text-center" style="white-space: nowrap; width: 1%;">
                                 @if($item->link_gdrive)
-                                    <a href="{{ $item->link_gdrive }}" target="_blank" class="btn btn-sm btn-outline-success rounded-pill px-2.5 py-1 shadow-sm" title="Lihat Dokumen Google Drive">
-                                        <i class="bi bi-google me-1"></i> Lihat Dokumen
+                                    <a href="{{ $item->link_gdrive }}" target="_blank" class="btn-doc-link" title="Lihat Dokumen Google Drive">
+                                        <i class="bi bi-google text-primary"></i> <span>Lihat Dokumen</span>
                                     </a>
                                 @elseif($item->file_sertifikat)
-                                    <a href="{{ $item->file_url }}" target="_blank" class="btn btn-sm btn-outline-primary rounded-pill px-2.5 py-1" title="Lihat Dokumen">
-                                        <i class="bi bi-file-earmark-pdf-fill me-1 text-danger"></i> Lihat Dokumen
+                                    <a href="{{ $item->file_url }}" target="_blank" class="btn-doc-link" title="Lihat Dokumen Fisik">
+                                        <i class="bi bi-file-earmark-pdf-fill text-danger"></i> <span>Lihat Dokumen</span>
                                     </a>
                                 @else
-                                    <span class="badge bg-secondary-subtle text-muted rounded-pill px-2 py-1 small">Belum Ada</span>
+                                    <span class="badge bg-secondary-subtle text-muted rounded-pill px-2.5 py-1 small">Belum Ada</span>
                                 @endif
                             </td>
                             <td class="text-center">

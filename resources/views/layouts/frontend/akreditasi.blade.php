@@ -4,6 +4,71 @@
 @section('meta_description', 'Informasi resmi status dokumen akreditasi institusi, fakultas, dan seluruh program studi Universitas Ibnu Sina (UIS) oleh BAN-PT dan Lembaga Akreditasi Mandiri (LAM).')
 
 @section('content')
+<style>
+  .btn-doc-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 7px 18px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #046B26;
+    background-color: #ffffff;
+    border: 1.5px solid #046B26;
+    border-radius: 50px;
+    text-decoration: none !important;
+    white-space: nowrap;
+    box-shadow: 0 2px 5px rgba(4, 107, 38, 0.08);
+    transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+  }
+
+  .btn-doc-link .btn-doc-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+  }
+
+  .btn-doc-link .btn-doc-arrow {
+    font-size: 11.5px;
+    opacity: 0.75;
+    transition: transform 0.2s ease, opacity 0.2s ease, color 0.2s ease;
+  }
+
+  .btn-doc-link:hover,
+  .btn-doc-link:focus {
+    color: #ffffff !important;
+    background-color: #046B26 !important;
+    border-color: #046B26 !important;
+    box-shadow: 0 5px 15px rgba(4, 107, 38, 0.28) !important;
+    transform: translateY(-2px);
+  }
+
+  .btn-doc-link:hover .btn-doc-icon,
+  .btn-doc-link:focus .btn-doc-icon {
+    transform: scale(1.12);
+  }
+
+  .btn-doc-link:hover .btn-doc-arrow,
+  .btn-doc-link:focus .btn-doc-arrow {
+    opacity: 1;
+    transform: translate(2px, -2px);
+    color: #ffffff !important;
+  }
+
+  /* Khusus icon Google & PDF saat dihover agar tetap kontras & bersih (putih) */
+  .btn-doc-link:hover .bi,
+  .btn-doc-link:focus .bi {
+    color: #ffffff !important;
+  }
+
+  .btn-doc-link:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 6px rgba(4, 107, 38, 0.2) !important;
+  }
+</style>
 <!-- ═══════════════════════════════════════════════
      HERO HEADER
 ═══════════════════════════════════════════════ -->
@@ -154,7 +219,7 @@
                 <th style="min-width: 130px;">Lembaga</th>
                 <th style="min-width: 120px;">Peringkat</th>
                 <th style="min-width: 220px;">Nomor SK & Masa Berlaku</th>
-                <th class="text-center pe-4" style="min-width: 160px;">Dokumen</th>
+                <th class="text-center pe-4" style="min-width: 180px; white-space: nowrap;">Dokumen</th>
               </tr>
             </thead>
             <tbody id="akreditasiTableBody">
@@ -243,21 +308,21 @@
                   </td>
 
                   {{-- Link Google Drive / Aksi Dokumen --}}
-                  <td class="text-center pe-4">
+                  <td class="text-center pe-4" style="white-space: nowrap; width: 1%;">
                     @if($item->link_gdrive)
-                      <a href="{{ $item->link_gdrive }}" target="_blank" class="btn btn-sm btn-outline-success rounded-pill px-3 py-1.5 fw-bold shadow-sm d-inline-flex align-items-center gap-1.5" style="border-color: #046B26; color: #046B26;" title="Lihat Dokumen Akreditasi">
-                        <i class="bi bi-google text-primary"></i>
+                      <a href="{{ $item->link_gdrive }}" target="_blank" class="btn-doc-link" title="Buka Dokumen Akreditasi di Google Drive">
+                        <span class="btn-doc-icon"><i class="bi bi-google text-primary fs-6"></i></span>
                         <span>Lihat Dokumen</span>
-                        <i class="bi bi-box-arrow-up-right small ms-0.5"></i>
+                        <i class="bi bi-box-arrow-up-right btn-doc-arrow"></i>
                       </a>
                     @elseif($item->file_sertifikat)
-                      <a href="{{ $item->file_url }}" target="_blank" class="btn btn-sm btn-outline-success rounded-pill px-3 py-1.5 fw-bold shadow-sm d-inline-flex align-items-center gap-1.5" title="Lihat Dokumen Akreditasi">
-                        <i class="bi bi-file-earmark-pdf-fill text-danger"></i>
+                      <a href="{{ $item->file_url }}" target="_blank" class="btn-doc-link" title="Unduh Berkas Akreditasi Resmi">
+                        <span class="btn-doc-icon"><i class="bi bi-file-earmark-pdf-fill text-danger fs-6"></i></span>
                         <span>Lihat Dokumen</span>
-                        <i class="bi bi-box-arrow-up-right small ms-0.5"></i>
+                        <i class="bi bi-box-arrow-up-right btn-doc-arrow"></i>
                       </a>
                     @else
-                      <span class="badge bg-light text-muted border rounded-pill px-2.5 py-1 small">
+                      <span class="badge bg-light text-muted border rounded-pill px-3 py-1.5 small fw-semibold">
                         <i class="bi bi-shield-check text-success me-1"></i> Terakreditasi
                       </span>
                     @endif
