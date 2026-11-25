@@ -48,12 +48,12 @@
                     <i class="bi bi-image fs-5"></i>
                 </div>
                 <div>
-                    <h5 class="mb-0 fw-bold" style="color: #2b2f32; font-size: 16px;">Background Utama Visi Misi</h5>
-                    <small class="text-muted">Unggah foto latar belakang (contoh: foto gedung kampus UIS / motif institusi) sebagai background utama ketiga kartu</small>
+                    <h5 class="mb-0 fw-bold" style="color: #2b2f32; font-size: 16px;">Background Utama Banner Visi Misi</h5>
+                    <small class="text-muted">Unggah foto latar belakang (contoh: foto gedung kampus UIS / motif institusi) sebagai background utama banner</small>
                 </div>
             </div>
             <span class="badge" style="background-color: #046B26; color: #ffffff; font-size: 11.5px; font-weight: 700; padding: 6px 12px; border-radius: 6px;">
-                <i class="bi bi-layers me-1"></i> Background 3 Kartu
+                <i class="bi bi-layers me-1"></i> Background Banner Utama
             </span>
         </div>
         <div class="card-body pt-3 pb-4">
@@ -116,7 +116,7 @@
                 </div>
                 <div>
                     <h5 class="mb-0 fw-bold" style="color: #2b2f32; font-size: 16px;">Konten Teks Visi, Misi & Tata Nilai UIS</h5>
-                    <small class="text-muted">Kelola isi teks masing-masing kartu secara mandiri dalam bentuk teks dinamis (bukan gambar mati)</small>
+                    <small class="text-muted">Kelola isi teks Visi, Misi dan Tata Nilai yang tampil di dalam banner utama dalam bentuk teks dinamis (bukan gambar mati)</small>
                 </div>
             </div>
             <span class="badge" style="background-color: #fed802; color: #111111; font-size: 11.5px; font-weight: 700; padding: 6px 12px; border-radius: 6px;">
