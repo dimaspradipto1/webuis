@@ -71,96 +71,67 @@
                             <div class="form-text text-muted">Deskripsi profil universitas dalam satu narasi utuh yang ditampilkan di beranda dan halaman tentang.</div>
                         </div>
 
-                        <!-- VIDEO PROFIL SECTION -->
+                        <!-- VIDEO PROFIL (YOUTUBE LINK) -->
                         <div class="card bg-light border-0 p-3 rounded-3 mt-3">
-                            <h6 class="fw-bold text-dark mb-3">
-                                <i class="bi bi-camera-video-fill me-2 text-danger"></i>Video Profil Universitas
+                            <h6 class="fw-bold text-dark mb-2">
+                                <i class="bi bi-youtube me-2 text-danger"></i>Video Profil Universitas (YouTube)
                             </h6>
-                            <div class="row g-3">
-                                <div class="col-md-7">
-                                    <label for="video_url" class="form-label fw-semibold small">Link Video (YouTube / External URL)</label>
-                                    <div class="input-group">
-                                        <span class="input-group-text bg-white"><i class="bi bi-link-45deg"></i></span>
-                                        <input type="text" id="video_url" name="video_url" class="form-control @error('video_url') is-invalid @enderror" value="{{ old('video_url', $about->video_url) }}" placeholder="Tempel link (Salin) atau kode sematan (Sematkan) dari YouTube">
-                                    </div>
-                                    @error('video_url')
-                                        <div class="text-danger small mt-1">{{ $message }}</div>
-                                    @enderror
-                                    <div class="form-text small text-muted">
-                                        <i class="bi bi-info-circle me-1 text-success"></i>Bisa pakai link <strong>Salin</strong> (<code>https://youtu.be/...</code>) maupun kode <strong>Sematkan</strong> (<code>&lt;iframe...&gt;</code>). Sistem otomatis merapikannya.
-                                    </div>
-                                </div>
-
-                                <div class="col-md-5">
-                                    <label for="video_file" class="form-label fw-semibold small">Atau Upload File (MP4 / WebM)</label>
-                                    <input type="file" id="video_file" name="video_file" class="form-control @error('video_file') is-invalid @enderror" accept="video/mp4,video/webm,video/ogg">
-                                    @error('video_file')
-                                        <div class="text-danger small mt-1">{{ $message }}</div>
-                                    @enderror
-                                    <div class="form-text small">Maksimal 20 MB (format MP4/WebM).</div>
-                                </div>
+                            <label for="video_url" class="form-label fw-semibold small">Link Video YouTube / External URL</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white"><i class="bi bi-link-45deg"></i></span>
+                                <input type="text" id="video_url" name="video_url" class="form-control @error('video_url') is-invalid @enderror" value="{{ old('video_url', $about->video_url) }}" placeholder="Tempel link YouTube (https://youtu.be/... atau https://www.youtube.com/watch?v=...)">
+                            </div>
+                            @error('video_url')
+                                <div class="text-danger small mt-1">{{ $message }}</div>
+                            @enderror
+                            <div class="form-text small text-muted">
+                                <i class="bi bi-info-circle me-1 text-success"></i>Bisa gunakan link <strong>Salin</strong> maupun kode <strong>Sematkan</strong> dari YouTube. Sistem otomatis merapikannya.
                             </div>
 
-                            @if($about->hasVideo())
+                            @if($about->youtube_embed_url)
                                 <div class="mt-3 pt-3 border-top">
-                                    <div class="fw-semibold small text-muted mb-2"><i class="bi bi-play-circle-fill me-1 text-success"></i>Video Profil Saat Ini:</div>
-                                    <div class="row align-items-center">
-                                        <div class="col-md-6">
-                                            @if($about->video_file)
-                                                <video controls class="w-100 rounded-3 shadow-sm" style="max-height: 220px; background: #000;">
-                                                    <source src="{{ asset('storage/' . $about->video_file) }}">
-                                                    Browser Anda tidak mendukung tag video.
-                                                </video>
-                                                <div class="form-check mt-2">
-                                                    <input class="form-check-input" type="checkbox" name="delete_video_file" id="delete_video_file" value="1">
-                                                    <label class="form-check-label text-danger small" for="delete_video_file">
-                                                        Hapus file yang diunggah
-                                                    </label>
-                                                </div>
-                                            @elseif($about->youtube_embed_url)
-                                                <div class="ratio ratio-16x9 rounded-3 overflow-hidden shadow-sm" style="max-height: 240px;">
-                                                    <iframe 
-                                                        src="{{ $about->youtube_embed_url }}" 
-                                                        title="Video Profil UIS" 
-                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-                                                        referrerpolicy="strict-origin-when-cross-origin" 
-                                                        allowfullscreen>
-                                                    </iframe>
-                                                </div>
-                                            @endif
-                                        </div>
-                                        <div class="col-md-6 mt-2 mt-md-0">
-                                            @if($about->video_url)
-                                                <p class="mb-1 small"><strong>Link Aktif:</strong> <a href="{{ $about->video_url }}" target="_blank" rel="noopener" class="text-primary">{{ $about->video_url }}</a></p>
-                                            @endif
-                                            @if($about->video_file)
-                                                <p class="mb-0 small"><strong>File Aktif:</strong> <span class="badge bg-secondary">{{ basename($about->video_file) }}</span></p>
-                                            @endif
-                                        </div>
+                                    <div class="fw-semibold small text-muted mb-2"><i class="bi bi-play-circle-fill me-1 text-success"></i>Video Aktif Saat Ini:</div>
+                                    <div class="ratio ratio-16x9 rounded-3 overflow-hidden shadow-sm" style="max-height: 240px; max-width: 420px;">
+                                        <iframe 
+                                            src="{{ $about->youtube_embed_url }}" 
+                                            title="Video Profil UIS" 
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                            referrerpolicy="strict-origin-when-cross-origin" 
+                                            allowfullscreen>
+                                        </iframe>
                                     </div>
                                 </div>
                             @endif
                         </div>
 
-                        <!-- DOKUMEN PROFIL & PANDUAN KAMPUS SECTION -->
+                        <!-- DOKUMEN PROFIL KAMPUS (PDF) SECTION -->
                         <div class="card bg-light border-0 p-3 rounded-3 mt-4">
                             <h6 class="fw-bold text-dark mb-1">
-                                <i class="bi bi-file-earmark-pdf-fill me-2 text-danger"></i>Dokumen Profil Universitas / Statuta / Brosur Kampus
+                                <i class="bi bi-file-earmark-pdf-fill me-2 text-danger"></i>Upload Dokumen Profil Universitas (PDF)
                             </h6>
                             <p class="text-muted small mb-3">Dokumen ini akan dibuka saat pengunjung mengklik tombol <strong>"Baca Selengkapnya"</strong> pada section Profil / Tentang Universitas di beranda dan halaman profil.</p>
                             
                             <div class="row g-3">
+                                <div class="col-12">
+                                    <label for="dokumen_file" class="form-label fw-semibold small">Upload File Dokumen Resmi (Hanya PDF, Maksimal 20 MB)</label>
+                                    <input type="file" id="dokumen_file" name="dokumen_file" class="form-control @error('dokumen_file') is-invalid @enderror" accept=".pdf,application/pdf">
+                                    @error('dokumen_file')
+                                        <div class="text-danger small mt-1">{{ $message }}</div>
+                                    @enderror
+                                    <div class="form-text small text-muted">Hanya menerima format <strong>PDF</strong>. Maksimal ukuran file <strong>20 MB</strong>.</div>
+                                </div>
+
                                 <div class="col-md-6">
-                                    <label for="dokumen_nama" class="form-label fw-semibold small">Label / Nama Dokumen</label>
+                                    <label for="dokumen_nama" class="form-label fw-semibold small">Label / Nama Tombol Dokumen</label>
                                     <input type="text" id="dokumen_nama" name="dokumen_nama" class="form-control @error('dokumen_nama') is-invalid @enderror" value="{{ old('dokumen_nama', $about->dokumen_nama) }}" placeholder="Contoh: Dokumen Profil Lengkap Universitas Ibnu Sina">
                                     @error('dokumen_nama')
                                         <div class="text-danger small mt-1">{{ $message }}</div>
                                     @enderror
-                                    <div class="form-text small text-muted">Opsional. Jika dikosongkan, tombol di frontend akan tertulis <em>"Baca Selengkapnya"</em>.</div>
+                                    <div class="form-text small text-muted">Opsional. Default jika kosong: <em>"Baca Selengkapnya"</em>.</div>
                                 </div>
 
                                 <div class="col-md-6">
-                                    <label for="dokumen_link" class="form-label fw-semibold small">Atau Link Google Drive / Cloud URL Dokumen</label>
+                                    <label for="dokumen_link" class="form-label fw-semibold small">Atau Link Google Drive Dokumen</label>
                                     <div class="input-group">
                                         <span class="input-group-text bg-white"><i class="bi bi-link-45deg"></i></span>
                                         <input type="text" id="dokumen_link" name="dokumen_link" class="form-control @error('dokumen_link') is-invalid @enderror" value="{{ old('dokumen_link', $about->dokumen_link) }}" placeholder="https://drive.google.com/file/d/.../view?usp=sharing">
@@ -168,16 +139,7 @@
                                     @error('dokumen_link')
                                         <div class="text-danger small mt-1">{{ $message }}</div>
                                     @enderror
-                                    <div class="form-text small text-muted">Gunakan tautan Google Drive jika berkas dokumen berukuran sangat besar.</div>
-                                </div>
-
-                                <div class="col-12">
-                                    <label for="dokumen_file" class="form-label fw-semibold small">Upload File Dokumen Resmi (PDF / DOCX)</label>
-                                    <input type="file" id="dokumen_file" name="dokumen_file" class="form-control @error('dokumen_file') is-invalid @enderror" accept=".pdf,.doc,.docx,.ppt,.pptx">
-                                    @error('dokumen_file')
-                                        <div class="text-danger small mt-1">{{ $message }}</div>
-                                    @enderror
-                                    <div class="form-text small text-muted">Format yang didukung: PDF, DOCX, PPTX (Maksimal 25 MB).</div>
+                                    <div class="form-text small text-muted">Gunakan tautan Google Drive jika berkas disimpan di cloud.</div>
                                 </div>
                             </div>
 
@@ -216,52 +178,9 @@
                         </div>
                     </div>
 
-                    <!-- SECTION 2: VISI & MISI -->
+                    <!-- SECTION 2: NILAI UTAMA KAMI -->
                     <div class="border-bottom pb-3 mb-4">
-                        <h6 class="fw-bold text-primary mb-3"><i class="bi bi-eye me-2"></i>2. Visi & Misi</h6>
-
-                        <div class="row mb-3">
-                            <div class="col-md-8">
-                                <label for="visi_judul" class="form-label fw-semibold">Judul Kartu Visi</label>
-                                <input type="text" id="visi_judul" name="visi_judul" class="form-control" value="{{ old('visi_judul', $about->visi_judul) }}" placeholder="Visi Kami">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="visi_icon" class="form-label fw-semibold">Icon Visi <small class="text-muted">(Bootstrap Icon Class)</small></label>
-                                <input type="text" id="visi_icon" name="visi_icon" class="form-control" value="{{ old('visi_icon', $about->visi_icon) }}" placeholder="bi-eye">
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="visi" class="form-label fw-semibold">Deskripsi Visi</label>
-                            <textarea id="visi" name="visi" rows="3" class="form-control @error('visi') is-invalid @enderror" placeholder="Pernyataan Visi Perusahaan">{{ old('visi', $about->visi) }}</textarea>
-                            @error('visi')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-
-                        <div class="row mb-3">
-                            <div class="col-md-8">
-                                <label for="misi_judul" class="form-label fw-semibold">Judul Kartu Misi</label>
-                                <input type="text" id="misi_judul" name="misi_judul" class="form-control" value="{{ old('misi_judul', $about->misi_judul) }}" placeholder="Misi Kami">
-                            </div>
-                            <div class="col-md-4">
-                                <label for="misi_icon" class="form-label fw-semibold">Icon Misi <small class="text-muted">(Bootstrap Icon Class)</small></label>
-                                <input type="text" id="misi_icon" name="misi_icon" class="form-control" value="{{ old('misi_icon', $about->misi_icon) }}" placeholder="bi-rocket-takeoff">
-                            </div>
-                        </div>
-
-                        <div class="mb-3">
-                            <label for="misi" class="form-label fw-semibold">Poin-Poin Misi <small class="text-muted">(Gunakan tombol Enter untuk memisahkan setiap poin misi)</small></label>
-                            <textarea id="misi" name="misi" rows="5" class="form-control @error('misi') is-invalid @enderror" placeholder="Contoh:&#10;Menyediakan produk berkualitas tinggi.&#10;Memberikan layanan terbaik.">{{ old('misi', $about->misi) }}</textarea>
-                            @error('misi')
-                                <div class="invalid-feedback">{{ $message }}</div>
-                            @enderror
-                        </div>
-                    </div>
-
-                    <!-- SECTION 3: NILAI UTAMA KAMI -->
-                    <div class="border-bottom pb-3 mb-4">
-                        <h6 class="fw-bold text-primary mb-3"><i class="bi bi-award me-2"></i>3. Nilai Utama Kami (Values)</h6>
+                        <h6 class="fw-bold text-primary mb-3"><i class="bi bi-award me-2"></i>2. Nilai Utama Kami (Values)</h6>
 
                         <div class="row mb-3">
                             <div class="col-md-6">
