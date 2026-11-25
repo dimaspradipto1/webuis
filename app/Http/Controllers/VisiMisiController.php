@@ -7,8 +7,10 @@ use App\Http\Requests\VisiMisiRequest;
 use App\Models\About;
 use App\Models\Breadcrumb;
 use App\Models\VisiMisi;
+use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
@@ -16,6 +18,8 @@ class VisiMisiController extends Controller
 {
     public function index(): View
     {
+        $this->ensureSchemaExists();
+
         $about = About::firstOrCreate(['id' => 1]);
         $breadcrumb = Breadcrumb::getForPage('visi-misi');
 
@@ -27,12 +31,14 @@ class VisiMisiController extends Controller
      */
     public function updateContent(Request $request): RedirectResponse
     {
+        $this->ensureSchemaExists();
+
         $validated = $request->validate([
             'visimisi_background' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'],
-            'visimisi_tagline_visi' => ['nullable', 'string', 'max:500'],
-            'visimisi_misi_items' => ['nullable', 'string', 'max:5000'],
+            'visimisi_tagline_visi' => ['nullable', 'string', 'max:5000'],
+            'visimisi_misi_items' => ['nullable', 'string', 'max:10000'],
             'visimisi_tatanilai_judul' => ['nullable', 'string', 'max:255'],
-            'visimisi_tatanilai_items' => ['nullable', 'string', 'max:5000'],
+            'visimisi_tatanilai_items' => ['nullable', 'string', 'max:10000'],
             'visimisi_badge_humas' => ['nullable', 'string', 'max:255'],
             'visimisi_footer_fb' => ['nullable', 'string', 'max:255'],
             'visimisi_footer_ig' => ['nullable', 'string', 'max:255'],
@@ -56,11 +62,60 @@ class VisiMisiController extends Controller
             $validated['misi'] = $validated['visimisi_misi_items'];
         }
 
-        $about->update($validated);
+        // Hanya simpan field yang benar-benar ada di tabel database untuk mencegah Column not found 1054
+        $existingColumns = Schema::getColumnListing('abouts');
+        $safeData = array_intersect_key($validated, array_flip($existingColumns));
+
+        $about->update($safeData);
 
         alert()->success('Berhasil!', 'Konten teks Visi, Misi, Tata Nilai dan background berhasil disimpan.');
 
         return redirect()->route('visimisi.index');
+    }
+
+    /**
+     * Memastikan seluruh kolom kustom Visi & Misi di tabel abouts tersedia secara otomatis
+     */
+    private function ensureSchemaExists(): void
+    {
+        if (!Schema::hasTable('abouts')) {
+            return;
+        }
+
+        $neededColumns = [
+            'visimisi_background' => 'string',
+            'visimisi_tagline_visi' => 'text',
+            'visimisi_misi_items' => 'text',
+            'visimisi_tatanilai_judul' => 'string',
+            'visimisi_tatanilai_items' => 'text',
+            'visimisi_badge_humas' => 'string',
+            'visimisi_footer_fb' => 'string',
+            'visimisi_footer_ig' => 'string',
+            'visimisi_footer_url' => 'string',
+        ];
+
+        $missing = [];
+        foreach ($neededColumns as $col => $type) {
+            if (!Schema::hasColumn('abouts', $col)) {
+                $missing[$col] = $type;
+            }
+        }
+
+        if (!empty($missing)) {
+            try {
+                Schema::table('abouts', function (Blueprint $table) use ($missing) {
+                    foreach ($missing as $col => $type) {
+                        if ($type === 'string') {
+                            $table->string($col)->nullable();
+                        } else {
+                            $table->text($col)->nullable();
+                        }
+                    }
+                });
+            } catch (\Throwable $e) {
+                // Ignore jika kolom sudah dibuat paralel
+            }
+        }
     }
 
     /**
