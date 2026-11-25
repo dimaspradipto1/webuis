@@ -44,20 +44,37 @@
             --uis-purple-dark: {{ $themeSetting->admin_primary_color ?? '#03521d' }};
             --uis-orange: {{ $themeSetting->admin_accent_color ?? '#FED802' }};
             --uis-orange-dark: {{ $themeSetting->admin_accent_color ?? '#e5c302' }};
+            --admin-hdr-h: {{ $themeSetting->admin_header_height ?? 78 }}px;
         }
         /* Header — Dynamic Admin Theme */
         .header {
-            height: {{ $themeSetting->admin_header_height ?? 78 }}px !important;
+            height: var(--admin-hdr-h, 78px) !important;
             background-color: {{ $themeSetting->admin_header_bg_color ?? '#046B26' }} !important;
             border-bottom: 3px solid {{ $themeSetting->admin_header_border_color ?? '#FED802' }} !important;
             box-shadow: 0 2px 14px rgba(0, 0, 0, 0.16) !important;
         }
         #main {
-            margin-top: {{ $themeSetting->admin_header_height ?? 78 }}px !important;
+            margin-top: calc(var(--admin-hdr-h, 78px) + 3px) !important;
+            padding: 24px 30px !important;
         }
         .sidebar {
-            top: {{ $themeSetting->admin_header_height ?? 78 }}px !important;
+            top: calc(var(--admin-hdr-h, 78px) + 3px) !important;
             background-color: {{ $themeSetting->admin_sidebar_bg_color ?? '#ffffff' }} !important;
+        }
+        .pagetitle {
+            margin-bottom: 18px !important;
+            padding-top: 6px !important;
+        }
+        .pagetitle h1 {
+            color: {{ $themeSetting->admin_primary_color ?? '#046B26' }} !important;
+            font-size: 24px !important;
+            font-weight: 700 !important;
+            line-height: 1.35 !important;
+            margin-bottom: 4px !important;
+        }
+        .pagetitle .breadcrumb {
+            margin-bottom: 0 !important;
+            font-size: 13px !important;
         }
         .header .logo img {
             max-height: 46px !important;
@@ -238,9 +255,6 @@
             .toggle-sidebar .sidebar {
                 left: -250px !important;
             }
-            .header {
-                height: 56px !important;
-            }
             .header .logo img {
                 max-height: 28px !important;
             }
@@ -291,11 +305,13 @@
 
         @media (max-height: 800px) and (min-width: 992px) {
             #main {
-                margin-top: 56px !important;
-                padding-top: 14px !important;
+                margin-top: calc(var(--admin-hdr-h, 78px) + 3px) !important;
+                padding-top: 18px !important;
+                padding-bottom: 20px !important;
             }
             .pagetitle {
-                margin-bottom: 8px !important;
+                margin-bottom: 12px !important;
+                padding-top: 4px !important;
             }
             .card {
                 margin-bottom: 16px !important;
@@ -669,6 +685,7 @@
                         --uis-purple-dark: ${t.admin_primary_color || '#03521d'};
                         --uis-orange: ${t.admin_accent_color || '#FED802'};
                         --uis-orange-dark: ${t.admin_accent_color || '#e5c302'};
+                        --admin-hdr-h: ${hH}px;
                     }
                     .header {
                         height: ${hH}px !important;
@@ -676,10 +693,23 @@
                         border-bottom: 3px solid ${t.admin_header_border_color || '#FED802'} !important;
                         box-shadow: 0 2px 14px rgba(0, 0, 0, 0.16) !important;
                     }
-                    #main { margin-top: ${hH}px !important; }
+                    #main {
+                        margin-top: calc(${hH}px + 3px) !important;
+                        padding-top: 24px !important;
+                    }
                     .sidebar {
-                        top: ${hH}px !important;
+                        top: calc(${hH}px + 3px) !important;
                         background-color: ${t.admin_sidebar_bg_color || '#ffffff'} !important;
+                    }
+                    .pagetitle {
+                        margin-bottom: 18px !important;
+                        padding-top: 6px !important;
+                    }
+                    .pagetitle h1 {
+                        color: ${t.admin_primary_color || '#046B26'} !important;
+                        font-size: 24px !important;
+                        font-weight: 700 !important;
+                        line-height: 1.35 !important;
                     }
                     .header .logo span {
                         color: ${t.admin_header_brand_color || '#FED802'} !important;
