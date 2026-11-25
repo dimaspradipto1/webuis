@@ -203,7 +203,7 @@
 </section>
 
 {{-- MODAL DETAIL EVENT AKADEMIK --}}
-<div class="modal fade" id="eventDetailModal" tabindex="-1" aria-labelledby="eventDetailModalLabel" aria-hidden="true">
+<div class="modal fade" id="eventDetailModal" tabindex="-1" aria-labelledby="eventDetailModalLabel" aria-hidden="true" style="z-index: 1060;" onclick="if(event.target === this) closeEventModal()">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content rounded-4 border-0 shadow">
       <div class="modal-header border-bottom py-3 px-4">
@@ -211,12 +211,12 @@
           <i class="bi bi-calendar-event text-success fs-5"></i>
           Detail Kegiatan Akademik
         </h6>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeEventModal()"></button>
       </div>
       <div class="modal-body p-4">
         <div class="d-flex align-items-center justify-content-between mb-3">
           <span class="badge rounded-pill px-3 py-1.5 fw-bold" id="modalEventBadge">Kategori</span>
-          <span class="badge bg-light text-muted border rounded-pill px-2.5 py-1 small" id="modalEventSemester">Semester Ganjil</span>
+          <span class="badge bg-light text-muted border rounded-pill px-2.5 py-1 small" id="modalEventSemester">Semester Gasal</span>
         </div>
 
         <h5 class="fw-bold text-dark mb-3" id="modalEventTitle">Nama Kegiatan</h5>
@@ -235,7 +235,7 @@
         </div>
       </div>
       <div class="modal-footer border-top py-2 px-4">
-        <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal">Tutup</button>
+        <button type="button" class="btn btn-sm btn-outline-secondary rounded-pill px-4" data-bs-dismiss="modal" onclick="closeEventModal()">Tutup</button>
       </div>
     </div>
   </div>
@@ -977,28 +977,83 @@ function switchView(viewName) {
 }
 
 // ─── MODAL DETAIL EVENT ───
+let detailModalInstance = null;
+
+function getDetailModalInstance() {
+  const el = document.getElementById('eventDetailModal');
+  if (!el) return null;
+  if (!detailModalInstance) {
+    if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+      if (bootstrap.Modal.getOrCreateInstance) {
+        detailModalInstance = bootstrap.Modal.getOrCreateInstance(el);
+      } else {
+        detailModalInstance = bootstrap.Modal.getInstance(el) || new bootstrap.Modal(el);
+      }
+    }
+  }
+  return detailModalInstance;
+}
+
 function openEventModal(ev) {
+  if (!ev) return;
   const conf = categoryConfigs[ev.kategori] || categoryConfigs['Akademik'];
   
   const modalBadge = document.getElementById('modalEventBadge');
-  modalBadge.style.backgroundColor = conf.color;
-  modalBadge.style.color = conf.textColor;
-  modalBadge.innerText = conf.label;
+  if (modalBadge) {
+    modalBadge.style.backgroundColor = conf.color;
+    modalBadge.style.color = conf.textColor;
+    modalBadge.innerText = conf.label;
+  }
 
-  document.getElementById('modalEventSemester').innerText = `Semester ${ev.semester || 'Ganjil'}`;
-  document.getElementById('modalEventTitle').innerText = ev.kegiatan;
+  const semEl = document.getElementById('modalEventSemester');
+  if (semEl) semEl.innerText = `Semester ${ev.semester || 'Gasal'}`;
+
+  const titleEl = document.getElementById('modalEventTitle');
+  if (titleEl) titleEl.innerText = ev.kegiatan;
   
   let dateText = ev.tanggal_mulai;
   if (ev.tanggal_selesai && ev.tanggal_selesai !== ev.tanggal_mulai) {
     dateText = `${ev.tanggal_mulai} s/d ${ev.tanggal_selesai}`;
   }
-  document.getElementById('modalEventDate').innerText = dateText;
-  document.getElementById('modalEventDesc').innerText = ev.keterangan || 'Agenda kegiatan resmi kalender akademik Universitas Ibnu Sina.';
+  const dateEl = document.getElementById('modalEventDate');
+  if (dateEl) dateEl.innerText = dateText;
 
-  const modal = new bootstrap.Modal(document.getElementById('eventDetailModal'));
-  modal.show();
+  const descEl = document.getElementById('modalEventDesc');
+  if (descEl) descEl.innerText = ev.keterangan || 'Agenda kegiatan resmi kalender akademik Universitas Ibnu Sina.';
+
+  const modal = getDetailModalInstance();
+  if (modal) {
+    modal.show();
+  } else if (window.$) {
+    $('#eventDetailModal').modal('show');
+  }
 }
 
-document.addEventListener('DOMContentLoaded', init);
+function closeEventModal() {
+  const modal = getDetailModalInstance();
+  if (modal) {
+    modal.hide();
+  } else if (window.$) {
+    $('#eventDetailModal').modal('hide');
+  }
+
+  // Bersihkan backdrop dan pastikan scroll body kembali aktif normal
+  setTimeout(() => {
+    document.querySelectorAll('.modal-backdrop').forEach(b => b.remove());
+    document.body.classList.remove('modal-open');
+    document.body.style.removeProperty('padding-right');
+    document.body.style.removeProperty('overflow');
+  }, 100);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  init();
+  const modalEl = document.getElementById('eventDetailModal');
+  if (modalEl) {
+    modalEl.addEventListener('hidden.bs.modal', function () {
+      closeEventModal();
+    });
+  }
+});
 </script>
 @endsection
