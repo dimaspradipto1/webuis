@@ -100,43 +100,11 @@
           </li>
 
 
-          <!-- 4. Program Studi (Sesuai Urutan Header) -->
+          <!-- 4. Fakultas (Sesuai Urutan Header Navbar, Langsung tanpa Dropdown) -->
           <li class="nav-item">
-            <a class="nav-link {{ Route::is('program-studi.*') ? '' : 'collapsed' }}" data-bs-target="#prodi-nav" data-bs-toggle="collapse" href="#">
-              <i class="bi bi-journal-bookmark-fill"></i><span>Program Studi</span><i class="bi bi-chevron-down ms-auto"></i>
+            <a class="nav-link {{ Route::is('program-studi.*') ? '' : 'collapsed' }}" href="{{ route('program-studi.index') }}">
+              <i class="bi bi-mortarboard"></i><span>Fakultas</span>
             </a>
-            <ul id="prodi-nav" class="nav-content collapse {{ Route::is('program-studi.*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
-              <li>
-                <a href="{{ route('program-studi.index') }}" class="{{ Route::is('program-studi.index') && !request('fakultas') ? 'active' : '' }}">
-                  <i class="bi bi-circle"></i><span>Semua Program Studi</span>
-                </a>
-              </li>
-              <li>
-                <a href="{{ route('program-studi.index', ['fakultas' => 'Program Pascasarjana']) }}" class="{{ Route::is('program-studi.index') && request('fakultas') === 'Program Pascasarjana' ? 'active' : '' }}">
-                  <i class="bi bi-circle"></i><span>Pascasarjana (S2)</span>
-                </a>
-              </li>
-              <li>
-                <a href="{{ route('program-studi.index', ['fakultas' => 'Fakultas Ekonomi dan Bisnis']) }}" class="{{ Route::is('program-studi.index') && request('fakultas') === 'Fakultas Ekonomi dan Bisnis' ? 'active' : '' }}">
-                  <i class="bi bi-circle"></i><span>Prodi FEB (S1)</span>
-                </a>
-              </li>
-              <li>
-                <a href="{{ route('program-studi.index', ['fakultas' => 'Fakultas Sains dan Teknologi']) }}" class="{{ Route::is('program-studi.index') && request('fakultas') === 'Fakultas Sains dan Teknologi' ? 'active' : '' }}">
-                  <i class="bi bi-circle"></i><span>Prodi FST / Teknik (S1)</span>
-                </a>
-              </li>
-              <li>
-                <a href="{{ route('program-studi.index', ['fakultas' => 'Fakultas Ilmu Kesehatan']) }}" class="{{ Route::is('program-studi.index') && request('fakultas') === 'Fakultas Ilmu Kesehatan' ? 'active' : '' }}">
-                  <i class="bi bi-circle"></i><span>Prodi FIKES (S1)</span>
-                </a>
-              </li>
-              <li>
-                <a href="{{ route('program-studi.create') }}" class="{{ Route::is('program-studi.create') ? 'active' : '' }}">
-                  <i class="bi bi-circle"></i><span>Tambah Program Studi</span>
-                </a>
-              </li>
-            </ul>
           </li>
 
           <!-- 5. Kemahasiswaan (Sesuai Urutan Header) -->

@@ -3,17 +3,17 @@
 @section('content')
 <div class="pagetitle d-flex flex-wrap align-items-center justify-content-between gap-2 mb-4">
     <div>
-        <h1 class="mb-1">Manajemen Program Studi & Detail Prodi</h1>
+        <h1 class="mb-1">Manajemen Fakultas & Program Studi</h1>
         <nav>
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                <li class="breadcrumb-item active">Program Studi</li>
+                <li class="breadcrumb-item active">Fakultas</li>
             </ol>
         </nav>
     </div>
     <div class="d-flex flex-wrap gap-2">
         <a href="{{ route('homepage.program-studi') }}" target="_blank" class="btn btn-outline-success rounded-3 px-3">
-            <i class="bi bi-box-arrow-up-right me-1"></i> Lihat Halaman Program Studi
+            <i class="bi bi-box-arrow-up-right me-1"></i> Lihat Halaman Fakultas
         </a>
         <a href="{{ route('program-studi.create', ['fakultas' => $fakultas]) }}" class="btn btn-success rounded-3 px-3 shadow-sm" style="background: #046B26; border-color: #046B26;">
             <i class="bi bi-plus-circle-fill me-1"></i> Tambah Program Studi
