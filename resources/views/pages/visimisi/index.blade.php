@@ -51,6 +51,21 @@
 <form action="{{ route('visimisi.update-background') }}" method="POST" enctype="multipart/form-data">
     @csrf
 
+    @if ($errors->any())
+        <div class="alert alert-danger alert-dismissible fade show shadow-sm mb-4" role="alert" style="border-radius: 12px; border-left: 5px solid #dc3545;">
+            <div class="d-flex align-items-center gap-2">
+                <i class="bi bi-exclamation-octagon-fill fs-5 text-danger"></i>
+                <strong class="text-danger">Peringatan! Gambar atau input tidak sesuai:</strong>
+            </div>
+            <ul class="mb-0 mt-2 ps-3 small text-danger">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     {{-- KARTU 1: PENGATURAN BACKGROUND BANNER & MARGIN/PADDING KONTEN --}}
     <div class="card shadow-sm border-0 mb-4" style="border-radius: 12px;">
         <div class="card-header bg-white py-3 px-4 d-flex align-items-center justify-content-between flex-wrap gap-2" style="border-top: 3px solid #046B26; border-radius: 12px 12px 0 0;">
@@ -113,6 +128,9 @@
                         @error('visimisi_background')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
+
+                        {{-- Kotak Peringatan / Validasi Realtime Otomatis --}}
+                        <div id="bg-file-feedback" class="mt-2" style="display: none;"></div>
                     </div>
                 </div>
 
@@ -183,7 +201,7 @@
         </div>
         <div class="card-footer bg-white py-3 px-4 d-flex justify-content-between align-items-center flex-wrap gap-2 border-top">
             <span class="small text-muted"><i class="bi bi-info-circle me-1"></i> Klik simpan untuk menerapkan gambar background baru dan pengaturan jarak spacing.</span>
-            <button type="submit" class="btn btn-success fw-semibold px-4 py-2 shadow-sm">
+            <button type="submit" id="btn-submit-bg" class="btn btn-success fw-semibold px-4 py-2 shadow-sm">
                 <i class="bi bi-cloud-arrow-up-fill me-1"></i> Simpan Background & Jarak
             </button>
         </div>
@@ -382,16 +400,113 @@
 
         const bgInput = document.getElementById('visimisi_background');
         const bgPreview = document.getElementById('preview-bg-img');
-        if (bgInput && bgPreview) {
+        const bgFeedback = document.getElementById('bg-file-feedback');
+        const bgSubmitBtn = document.getElementById('btn-submit-bg');
+
+        if (bgInput) {
             bgInput.addEventListener('change', function (e) {
                 const file = e.target.files && e.target.files[0];
-                if (file) {
-                    const reader = new FileReader();
-                    reader.onload = function (evt) {
-                        bgPreview.src = evt.target.result;
-                    };
-                    reader.readAsDataURL(file);
+                if (!file) {
+                    if (bgFeedback) {
+                        bgFeedback.style.display = 'none';
+                        bgFeedback.innerHTML = '';
+                    }
+                    if (bgSubmitBtn) bgSubmitBtn.disabled = false;
+                    return;
                 }
+
+                const maxBytes = 5 * 1024 * 1024; // 5 MB
+                const fileSizeMB = (file.size / (1024 * 1024)).toFixed(2);
+                const fileSizeKB = (file.size / 1024).toFixed(0);
+                const sizeDisplay = file.size >= 1024 * 1024 ? `${fileSizeMB} MB` : `${fileSizeKB} KB`;
+
+                // 1. Cek Tipe Ekstensi File
+                const validTypes = ['image/jpeg', 'image/png', 'image/jpg', 'image/webp'];
+                if (!validTypes.includes(file.type)) {
+                    if (bgFeedback) {
+                        bgFeedback.style.display = 'block';
+                        bgFeedback.innerHTML = `
+                            <div class="alert alert-danger d-flex align-items-start gap-2 py-2 px-3 mb-0 small" style="border-radius: 8px;">
+                                <i class="bi bi-x-octagon-fill fs-5 text-danger flex-shrink-0 mt-1"></i>
+                                <div>
+                                    <strong>Peringatan Format File:</strong> Format file <code>${file.name.split('.').pop() || 'tidak dikenal'}</code> tidak didukung.<br>
+                                    Harap gunakan format gambar yang valid: <strong>JPG, JPEG, PNG, atau WEBP</strong>.
+                                </div>
+                            </div>`;
+                    }
+                    if (bgSubmitBtn) bgSubmitBtn.disabled = true;
+                    return;
+                }
+
+                // 2. Cek Ukuran File (> 5 MB)
+                if (file.size > maxBytes) {
+                    if (bgFeedback) {
+                        bgFeedback.style.display = 'block';
+                        bgFeedback.innerHTML = `
+                            <div class="alert alert-danger d-flex align-items-start gap-2 py-2 px-3 mb-0 small" style="border-radius: 8px;">
+                                <i class="bi bi-exclamation-triangle-fill fs-5 text-danger flex-shrink-0 mt-1"></i>
+                                <div>
+                                    <strong>Peringatan Ukuran File Terlalu Besar:</strong> File gambar berukuran <strong>${sizeDisplay}</strong>, melebihi batas maksimal <strong>5 MB (5.120 KB)</strong>.<br>
+                                    Silakan kompres gambar terlebih dahulu atau gunakan gambar lain agar dapat disimpan.
+                                </div>
+                            </div>`;
+                    }
+                    if (bgSubmitBtn) bgSubmitBtn.disabled = true;
+                    return;
+                }
+
+                // 3. Cek Dimensi dan Rasio Gambar
+                const objectUrl = URL.createObjectURL(file);
+                const img = new Image();
+
+                img.onload = function () {
+                    const width = img.naturalWidth;
+                    const height = img.naturalHeight;
+
+                    // Perbarui pratinjau gambar seketika
+                    if (bgPreview) {
+                        bgPreview.src = objectUrl;
+                    }
+
+                    if (bgFeedback) {
+                        bgFeedback.style.display = 'block';
+                        if (width < 1200 || height < 400) {
+                            bgFeedback.innerHTML = `
+                                <div class="alert alert-warning d-flex align-items-start gap-2 py-2 px-3 mb-0 small text-dark" style="border-radius: 8px; background-color: #fff8e1; border-color: #ffe082;">
+                                    <i class="bi bi-exclamation-triangle-fill fs-5 text-warning flex-shrink-0 mt-1"></i>
+                                    <div>
+                                        <strong>Peringatan Dimensi / Ukuran Banner:</strong> Dimensi gambar adalah <strong>${width} x ${height} px</strong> (${sizeDisplay}).<br>
+                                        Rekomendasi lebar minimal <strong>1200 px</strong> (ideal <strong>1920x780</strong> atau <strong>1920x1080 px</strong>) agar tidak buram di layar monitor/desktop. Anda tetap dapat menyimpannya jika dirasa sudah pas.
+                                    </div>
+                                </div>`;
+                        } else {
+                            bgFeedback.innerHTML = `
+                                <div class="alert alert-success d-flex align-items-start gap-2 py-2 px-3 mb-0 small" style="border-radius: 8px; background-color: #e8f5e9; border-color: #c8e6c9; color: #1b5e20;">
+                                    <i class="bi bi-check-circle-fill fs-5 text-success flex-shrink-0 mt-1"></i>
+                                    <div>
+                                        <strong>Dimensi & Ukuran File Sesuai!</strong> Resolusi: <strong>${width} x ${height} px</strong> | Ukuran File: <strong>${sizeDisplay}</strong>.<br>
+                                        Gambar tajam dan siap diterapkan sebagai background banner Visi & Misi.
+                                    </div>
+                                </div>`;
+                        }
+                    }
+
+                    if (bgSubmitBtn) bgSubmitBtn.disabled = false;
+                };
+
+                img.onerror = function () {
+                    if (bgFeedback) {
+                        bgFeedback.style.display = 'block';
+                        bgFeedback.innerHTML = `
+                            <div class="alert alert-danger d-flex align-items-start gap-2 py-2 px-3 mb-0 small" style="border-radius: 8px;">
+                                <i class="bi bi-x-circle-fill fs-5 text-danger flex-shrink-0 mt-1"></i>
+                                <div><strong>File Rusak:</strong> Gambar tidak dapat dibaca oleh browser. Silakan pilih file gambar lain.</div>
+                            </div>`;
+                    }
+                    if (bgSubmitBtn) bgSubmitBtn.disabled = true;
+                };
+
+                img.src = objectUrl;
             });
         }
     });

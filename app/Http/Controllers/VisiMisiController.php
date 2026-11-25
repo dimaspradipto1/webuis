@@ -60,6 +60,16 @@ class VisiMisiController extends Controller
             'visimisi_background' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'],
             'visimisi_padding_top' => ['nullable', 'integer', 'min:0', 'max:500'],
             'visimisi_padding_bottom' => ['nullable', 'integer', 'min:0', 'max:500'],
+        ], [
+            'visimisi_background.image' => 'File yang diunggah harus berupa file gambar valid.',
+            'visimisi_background.mimes' => 'Format file gambar tidak didukung. Gunakan format JPG, JPEG, PNG, atau WEBP.',
+            'visimisi_background.max' => 'Ukuran file gambar melebihi batas maksimal 5 MB (5.120 KB). Silakan kompres atau pilih gambar lain.',
+            'visimisi_padding_top.integer' => 'Batas atas konten (padding top) harus berupa angka piksel (px).',
+            'visimisi_padding_top.min' => 'Batas atas konten minimal 0 px.',
+            'visimisi_padding_top.max' => 'Batas atas konten maksimal 500 px.',
+            'visimisi_padding_bottom.integer' => 'Batas bawah konten (padding bottom) harus berupa angka piksel (px).',
+            'visimisi_padding_bottom.min' => 'Batas bawah konten minimal 0 px.',
+            'visimisi_padding_bottom.max' => 'Batas bawah konten maksimal 500 px.',
         ]);
 
         $about = About::firstOrCreate(['id' => 1]);
