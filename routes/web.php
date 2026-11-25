@@ -270,6 +270,8 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
         Route::delete('/program/{program}', [KampusBerdampakController::class, 'destroyProgram'])->name('program.destroy');
     });
     Route::put('visimisi-header', [VisiMisiController::class, 'updateHeader'])->name('visimisi.update-header');
+    Route::post('visimisi/update-content', [VisiMisiController::class, 'updateContent'])->name('visimisi.update-content');
+    Route::delete('visimisi/delete-background', [VisiMisiController::class, 'deleteBackground'])->name('visimisi.delete-background');
     Route::resource('visimisi', VisiMisiController::class);
     Route::resource('nilaiperusahaan', NilaiPerusahaanController::class);
     Route::resource('faculty-stat', FacultyStatController::class);

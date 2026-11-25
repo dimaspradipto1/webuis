@@ -14,13 +14,72 @@ use Illuminate\View\View;
 
 class VisiMisiController extends Controller
 {
-    public function index(VisiMisiDataTable $dataTable)
+    public function index(): View
     {
-        $about = About::first() ?? new About();
-        $totalGambar = VisiMisi::whereNotNull('gambar')->count();
+        $about = About::firstOrCreate(['id' => 1]);
         $breadcrumb = Breadcrumb::getForPage('visi-misi');
 
-        return $dataTable->render('pages.visimisi.index', compact('about', 'totalGambar', 'breadcrumb'));
+        return view('pages.visimisi.index', compact('about', 'breadcrumb'));
+    }
+
+    /**
+     * Update konten teks Visi, Misi, Tata Nilai dan Upload Background Utama
+     */
+    public function updateContent(Request $request): RedirectResponse
+    {
+        $validated = $request->validate([
+            'visimisi_background' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'],
+            'visimisi_tagline_visi' => ['nullable', 'string', 'max:500'],
+            'visimisi_misi_items' => ['nullable', 'string', 'max:5000'],
+            'visimisi_tatanilai_judul' => ['nullable', 'string', 'max:255'],
+            'visimisi_tatanilai_items' => ['nullable', 'string', 'max:5000'],
+            'visimisi_badge_humas' => ['nullable', 'string', 'max:255'],
+            'visimisi_footer_fb' => ['nullable', 'string', 'max:255'],
+            'visimisi_footer_ig' => ['nullable', 'string', 'max:255'],
+            'visimisi_footer_url' => ['nullable', 'string', 'max:255'],
+        ]);
+
+        $about = About::firstOrCreate(['id' => 1]);
+
+        if ($request->hasFile('visimisi_background')) {
+            if ($about->visimisi_background && Storage::disk('public')->exists($about->visimisi_background)) {
+                Storage::disk('public')->delete($about->visimisi_background);
+            }
+            $validated['visimisi_background'] = $request->file('visimisi_background')->store('visi-misi', 'public');
+        }
+
+        // Simpan juga ke kolom visi dan misi standar About agar sinkron
+        if (!empty($validated['visimisi_tagline_visi'])) {
+            $validated['visi'] = $validated['visimisi_tagline_visi'];
+        }
+        if (!empty($validated['visimisi_misi_items'])) {
+            $validated['misi'] = $validated['visimisi_misi_items'];
+        }
+
+        $about->update($validated);
+
+        alert()->success('Berhasil!', 'Konten teks Visi, Misi, Tata Nilai dan background berhasil disimpan.');
+
+        return redirect()->route('visimisi.index');
+    }
+
+    /**
+     * Hapus background utama dan gunakan latar default sistem
+     */
+    public function deleteBackground(): RedirectResponse
+    {
+        $about = About::firstOrCreate(['id' => 1]);
+
+        if ($about->visimisi_background && Storage::disk('public')->exists($about->visimisi_background)) {
+            Storage::disk('public')->delete($about->visimisi_background);
+        }
+
+        $about->visimisi_background = null;
+        $about->save();
+
+        alert()->success('Berhasil!', 'Background utama visi misi berhasil direset ke latar standar.');
+
+        return redirect()->route('visimisi.index');
     }
 
     public function updateHeader(Request $request): RedirectResponse

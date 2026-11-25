@@ -22,6 +22,15 @@ class About extends Model
         'visimisi_label',
         'visimisi_judul',
         'visimisi_deskripsi',
+        'visimisi_background',
+        'visimisi_tagline_visi',
+        'visimisi_misi_items',
+        'visimisi_tatanilai_judul',
+        'visimisi_tatanilai_items',
+        'visimisi_badge_humas',
+        'visimisi_footer_fb',
+        'visimisi_footer_ig',
+        'visimisi_footer_url',
         'misi',
         'misi_judul',
         'misi_icon',
@@ -122,5 +131,47 @@ class About extends Model
         }
 
         return ! empty($this->video_url) ? trim($this->video_url) : null;
+    }
+
+    /**
+     * URL background gambar utama visi misi.
+     */
+    public function getVisimisiBackgroundUrlAttribute(): ?string
+    {
+        if (empty($this->visimisi_background)) {
+            return null;
+        }
+
+        if (str_starts_with($this->visimisi_background, 'http://') || str_starts_with($this->visimisi_background, 'https://')) {
+            return $this->visimisi_background;
+        }
+
+        return asset('storage/' . $this->visimisi_background);
+    }
+
+    /**
+     * Daftar butir-butir Misi dalam bentuk array.
+     */
+    public function getMisiListAttribute(): array
+    {
+        if (empty($this->visimisi_misi_items)) {
+            return [];
+        }
+
+        $lines = preg_split('/\r\n|\r|\n/', trim($this->visimisi_misi_items));
+        return array_values(array_filter(array_map('trim', $lines)));
+    }
+
+    /**
+     * Daftar butir-butir Tata Nilai UIS CIP dalam bentuk array.
+     */
+    public function getTataNilaiListAttribute(): array
+    {
+        if (empty($this->visimisi_tatanilai_items)) {
+            return [];
+        }
+
+        $lines = preg_split('/\r\n|\r|\n/', trim($this->visimisi_tatanilai_items));
+        return array_values(array_filter(array_map('trim', $lines)));
     }
 }
