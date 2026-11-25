@@ -106,12 +106,20 @@
                 </button>
               </div>
 
-              <h5 class="mb-0 fw-bold text-dark ms-2" id="mainCalendarTitle">
+              {{-- Pilihan Tahun Cepat (Tampilkan by Tahun) --}}
+              <select class="form-select form-select-sm fw-bold border-secondary-subtle rounded-3 shadow-xs" id="selectYearJump" onchange="jumpToYear(this.value)" style="width: 95px; cursor: pointer;" title="Pilih Tahun">
+                <option value="2025">2025</option>
+                <option value="2026" selected>2026</option>
+                <option value="2027">2027</option>
+                <option value="2028">2028</option>
+              </select>
+
+              <h5 class="mb-0 fw-bold text-dark ms-1" id="mainCalendarTitle">
                 Wednesday, November 25, 2026
               </h5>
             </div>
 
-            {{-- View Switcher: Day | Week | Month --}}
+            {{-- View Switcher: Day | Week | Month | Year --}}
             <div class="btn-group shadow-xs rounded-3 overflow-hidden" role="group">
               <button type="button" class="btn btn-sm btn-outline-secondary px-3 py-1.5 fw-semibold view-btn" id="btnViewDay" onclick="switchView('day')">
                 Day
@@ -121,6 +129,9 @@
               </button>
               <button type="button" class="btn btn-sm px-3 py-1.5 fw-bold view-btn active text-white" id="btnViewMonth" style="background-color: #046B26; border-color: #046B26;" onclick="switchView('month')">
                 Month
+              </button>
+              <button type="button" class="btn btn-sm btn-outline-secondary px-3 py-1.5 fw-semibold view-btn" id="btnViewYear" onclick="switchView('year')">
+                Year
               </button>
             </div>
 
@@ -160,6 +171,25 @@
             <div id="viewDayContainer" class="d-none p-4">
               <div id="dayEventsContent">
                 <!-- Di-generate via JavaScript -->
+              </div>
+            </div>
+
+            {{-- VIEW TAHUN (12 BULAN GRID LENGKAP) --}}
+            <div id="viewYearContainer" class="d-none p-4">
+              <div class="d-flex align-items-center justify-content-between mb-4 pb-2 border-bottom flex-wrap gap-2">
+                <div>
+                  <h5 class="fw-bold text-dark mb-1">
+                    <i class="bi bi-calendar3-range text-success me-2"></i>
+                    Tinjauan Kalender Akademik Tahun <span id="yearViewHeaderYear">2026</span>
+                  </h5>
+                  <p class="text-muted small mb-0">Klik pada salah satu bulan untuk melihat detail kalender harian.</p>
+                </div>
+                <div class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3 py-1.5 fw-semibold" id="yearTotalEventsBadge">
+                  0 Total Kegiatan
+                </div>
+              </div>
+              <div class="row g-4" id="yearGridMonths">
+                <!-- Di-generate via JavaScript: 12 Bulan -->
               </div>
             </div>
 
@@ -312,6 +342,49 @@
   justify-content: center;
   line-height: 1;
 }
+
+/* Styles khusus Tampilan Tahun (Year View) */
+.year-month-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  border-radius: 12px;
+}
+.year-month-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+}
+.year-mini-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+  text-align: center;
+}
+.year-mini-cell {
+  font-size: 11px;
+  height: 22px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  user-select: none;
+}
+.year-mini-cell.has-event {
+  background-color: #ecfdf5;
+  font-weight: 700;
+  color: #046B26;
+  cursor: pointer;
+}
+.year-mini-cell.is-today {
+  border: 1px solid #046B26;
+  font-weight: bold;
+}
+.year-dot-indicator {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  display: block;
+  margin-top: 1px;
+}
 </style>
 
 {{-- JAVASCRIPT ENGINE FULLCALENDAR (PERSIS FITUR GAMBAR) --}}
@@ -432,13 +505,19 @@ function renderMainCalendar() {
   const m = activeDate.getMonth();
   const d = activeDate.getDate();
 
-  // Header Title: Wednesday, November 25, 2026
+  // Update Year Selector dropdown
+  const yearSelect = document.getElementById('selectYearJump');
+  if (yearSelect) yearSelect.value = y;
+
+  // Header Title
   const titleEl = document.getElementById('mainCalendarTitle');
   if (titleEl) {
     if (currentView === 'month') {
       titleEl.innerText = `${dayNamesEng[activeDate.getDay()]}, ${monthNamesEng[m]} ${d}, ${y}`;
     } else if (currentView === 'week') {
       titleEl.innerText = `Week of ${monthNamesEng[m]} ${d}, ${y}`;
+    } else if (currentView === 'year') {
+      titleEl.innerText = `Tahun Akademik ${y}`;
     } else {
       titleEl.innerText = `${dayNamesEng[activeDate.getDay()]}, ${monthNamesEng[m]} ${d}, ${y}`;
     }
@@ -448,6 +527,8 @@ function renderMainCalendar() {
     renderMonthView(y, m);
   } else if (currentView === 'week') {
     renderWeekView(y, m, d);
+  } else if (currentView === 'year') {
+    renderYearView(y);
   } else {
     renderDayView(y, m, d);
   }
@@ -457,6 +538,8 @@ function renderMonthView(year, month) {
   document.getElementById('viewMonthContainer').classList.remove('d-none');
   document.getElementById('viewWeekContainer').classList.add('d-none');
   document.getElementById('viewDayContainer').classList.add('d-none');
+  const viewYr = document.getElementById('viewYearContainer');
+  if (viewYr) viewYr.classList.add('d-none');
 
   const grid = document.getElementById('mainCalendarMonthGrid');
   if (!grid) return;
@@ -560,6 +643,8 @@ function renderWeekView(year, month, day) {
   document.getElementById('viewMonthContainer').classList.add('d-none');
   document.getElementById('viewWeekContainer').classList.remove('d-none');
   document.getElementById('viewDayContainer').classList.add('d-none');
+  const viewYr = document.getElementById('viewYearContainer');
+  if (viewYr) viewYr.classList.add('d-none');
 
   const container = document.getElementById('weekGridDays');
   if (!container) return;
@@ -618,6 +703,8 @@ function renderDayView(year, month, day) {
   document.getElementById('viewMonthContainer').classList.add('d-none');
   document.getElementById('viewWeekContainer').classList.add('d-none');
   document.getElementById('viewDayContainer').classList.remove('d-none');
+  const viewYr = document.getElementById('viewYearContainer');
+  if (viewYr) viewYr.classList.add('d-none');
 
   const container = document.getElementById('dayEventsContent');
   if (!container) return;
@@ -683,9 +770,166 @@ function renderDayView(year, month, day) {
   container.appendChild(list);
 }
 
+// ─── YEAR VIEW (TAMPILAN 12 BULAN GRID LENGKAP) ───
+function renderYearView(year) {
+  document.getElementById('viewMonthContainer').classList.add('d-none');
+  document.getElementById('viewWeekContainer').classList.add('d-none');
+  document.getElementById('viewDayContainer').classList.add('d-none');
+  const viewYr = document.getElementById('viewYearContainer');
+  if (viewYr) viewYr.classList.remove('d-none');
+
+  const headerYear = document.getElementById('yearViewHeaderYear');
+  if (headerYear) headerYear.innerText = year;
+
+  // Filter kegiatan pada tahun ini
+  const yearEvents = rawAgendaData.filter(ev => {
+    if (!activeCategoryFilters.has(ev.kategori || 'Akademik')) return false;
+    const startY = parseInt(ev.tanggal_mulai.substring(0, 4), 10);
+    const endY = parseInt((ev.tanggal_selesai || ev.tanggal_mulai).substring(0, 4), 10);
+    return year >= startY && year <= endY;
+  });
+
+  const totalBadge = document.getElementById('yearTotalEventsBadge');
+  if (totalBadge) totalBadge.innerText = `${yearEvents.length} Total Kegiatan`;
+
+  const container = document.getElementById('yearGridMonths');
+  if (!container) return;
+  container.innerHTML = '';
+
+  const today = new Date();
+
+  // Iterasi 12 Bulan (0: Januari s/d 11: Desember)
+  for (let m = 0; m < 12; m++) {
+    const monthEvents = yearEvents.filter(ev => {
+      const startParts = ev.tanggal_mulai.split('-');
+      const endParts = (ev.tanggal_selesai || ev.tanggal_mulai).split('-');
+      const sY = parseInt(startParts[0], 10);
+      const sM = parseInt(startParts[1], 10) - 1;
+      const eY = parseInt(endParts[0], 10);
+      const eM = parseInt(endParts[1], 10) - 1;
+
+      const eventStart = new Date(sY, sM, 1);
+      const eventEnd = new Date(eY, eM + 1, 0);
+      const currentMonthStart = new Date(year, m, 1);
+      const currentMonthEnd = new Date(year, m + 1, 0);
+
+      return (currentMonthStart <= eventEnd && currentMonthEnd >= eventStart);
+    });
+
+    const firstDay = new Date(year, m, 1).getDay();
+    const lastDate = new Date(year, m + 1, 0).getDate();
+
+    let miniCellsHtml = '';
+    // Padding hari sebelum tanggal 1
+    for (let p = 0; p < firstDay; p++) {
+      miniCellsHtml += `<div class="year-mini-cell text-muted opacity-25"></div>`;
+    }
+
+    // Hari-hari dalam bulan m
+    for (let d = 1; d <= lastDate; d++) {
+      const dateStr = `${year}-${String(m + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+      const dayEvs = monthEvents.filter(ev => dateStr >= ev.tanggal_mulai && dateStr <= (ev.tanggal_selesai || ev.tanggal_mulai));
+      const isToday = (today.getFullYear() === year && today.getMonth() === m && today.getDate() === d);
+      const hasEv = dayEvs.length > 0;
+
+      let dotHtml = '';
+      if (hasEv) {
+        const conf = categoryConfigs[dayEvs[0].kategori] || categoryConfigs['Akademik'];
+        dotHtml = `<span class="year-dot-indicator" style="background-color: ${conf.color};"></span>`;
+      }
+
+      miniCellsHtml += `
+        <div class="year-mini-cell ${hasEv ? 'has-event' : 'text-dark'} ${isToday ? 'is-today' : ''}" 
+             ${hasEv ? `onclick='openEventModal(${JSON.stringify(dayEvs[0])})' title="${dayEvs[0].kegiatan}"` : ''}>
+          <span>${d}</span>
+          ${dotHtml}
+        </div>
+      `;
+    }
+
+    const col = document.createElement('div');
+    col.className = 'col-lg-4 col-md-6';
+    col.innerHTML = `
+      <div class="card h-100 border year-month-card bg-white shadow-xs">
+        <div class="card-header bg-light border-bottom d-flex align-items-center justify-content-between py-2 px-3">
+          <h6 class="fw-bold mb-0 text-dark">
+            <i class="bi bi-calendar3 me-1.5 text-success"></i> ${monthNamesId[m]} ${year}
+          </h6>
+          <div class="d-flex align-items-center gap-1.5">
+            <span class="badge ${monthEvents.length > 0 ? 'bg-success' : 'bg-light text-muted border'} rounded-pill" style="font-size: 11px;">
+              ${monthEvents.length}
+            </span>
+            <button type="button" class="btn btn-sm btn-outline-success rounded-pill px-2 py-0.5" style="font-size: 11px;" onclick="openMonthFromYear(${year}, ${m})" title="Buka Kalender Bulan Ini">
+              Buka <i class="bi bi-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body p-3">
+          <div class="year-mini-grid text-muted fw-semibold mb-1" style="font-size: 10px;">
+            <div style="color: #dc3545;">S</div>
+            <div>M</div>
+            <div>T</div>
+            <div>W</div>
+            <div>T</div>
+            <div>F</div>
+            <div>S</div>
+          </div>
+          <div class="year-mini-grid mb-3">
+            ${miniCellsHtml}
+          </div>
+
+          <div class="border-top pt-2">
+            <div class="fw-semibold text-muted text-uppercase mb-1.5" style="font-size: 10px; letter-spacing: 0.5px;">Agenda ${monthNamesId[m]}:</div>
+            ${monthEvents.length === 0 ? '<div class="text-muted small py-1" style="font-size: 11px;">- Tidak ada agenda -</div>' : ''}
+            <div class="d-flex flex-column gap-1">
+              ${monthEvents.slice(0, 3).map(ev => {
+                const conf = categoryConfigs[ev.kategori] || categoryConfigs['Akademik'];
+                return `
+                  <div class="p-1.5 rounded-2 d-flex align-items-center justify-content-between gap-1 text-truncate" 
+                       style="background-color: ${conf.bgLight}; cursor: pointer;" 
+                       onclick='openEventModal(${JSON.stringify(ev)})' 
+                       title="${ev.kegiatan}">
+                    <span class="text-truncate fw-semibold" style="font-size: 11px; color: #1e293b;">
+                      <span style="color: ${conf.color};">●</span> ${ev.kegiatan}
+                    </span>
+                    <span class="text-muted" style="font-size: 9px; white-space: nowrap;">${ev.tanggal_mulai.substring(5)}</span>
+                  </div>
+                `;
+              }).join('')}
+              ${monthEvents.length > 3 ? `
+                <div class="text-center mt-1">
+                  <a href="javascript:void(0)" class="small fw-bold text-success text-decoration-none" style="font-size: 11px;" onclick="openMonthFromYear(${year}, ${m})">
+                    +${monthEvents.length - 3} agenda lainnya <i class="bi bi-chevron-right"></i>
+                  </a>
+                </div>
+              ` : ''}
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
+    container.appendChild(col);
+  }
+}
+
+function openMonthFromYear(year, monthIdx) {
+  activeDate = new Date(year, monthIdx, 1);
+  switchView('month');
+}
+
+function jumpToYear(val) {
+  const y = parseInt(val, 10);
+  if (!isNaN(y)) {
+    activeDate.setFullYear(y);
+    renderMainCalendar();
+  }
+}
+
 // ─── NAVIGASI TOOLBAR ───
 function mainPrev() {
-  if (currentView === 'month') {
+  if (currentView === 'year') {
+    activeDate.setFullYear(activeDate.getFullYear() - 1);
+  } else if (currentView === 'month') {
     activeDate.setMonth(activeDate.getMonth() - 1);
   } else if (currentView === 'week') {
     activeDate.setDate(activeDate.getDate() - 7);
@@ -696,7 +940,9 @@ function mainPrev() {
 }
 
 function mainNext() {
-  if (currentView === 'month') {
+  if (currentView === 'year') {
+    activeDate.setFullYear(activeDate.getFullYear() + 1);
+  } else if (currentView === 'month') {
     activeDate.setMonth(activeDate.getMonth() + 1);
   } else if (currentView === 'week') {
     activeDate.setDate(activeDate.getDate() + 7);
