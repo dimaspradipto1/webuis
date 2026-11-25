@@ -68,13 +68,13 @@
                                  id="currentBgPreviewImg"
                                  style="width: 100%; height: 100%; object-fit: cover;"
                                  onerror="this.style.display='none'; document.getElementById('bgFallbackStandard').classList.remove('d-none'); document.getElementById('bgOverlayBar').classList.add('d-none');">
-                            <div id="bgOverlayBar" class="position-absolute bottom-0 start-0 end-0 p-2 d-flex align-items-center justify-content-between" style="background: rgba(0,0,0,0.65);">
-                                <span class="badge bg-success" style="font-size: 10.5px;"><i class="bi bi-check-circle me-1"></i>Kustom Aktif</span>
-                                <button type="button" class="btn btn-danger btn-sm py-0 px-2" style="font-size: 11px;" onclick="document.getElementById('formDeleteBackground').submit();" title="Hapus Background Kustom">
-                                    <i class="bi bi-trash me-1"></i>Hapus
-                                </button>
-                            </div>
                         @endif
+                        <div id="bgOverlayBar" class="position-absolute bottom-0 start-0 end-0 p-2 d-flex align-items-center justify-content-between @if(!$about->visimisi_background_url) d-none @endif" style="background: rgba(0,0,0,0.65);">
+                            <span class="badge bg-success" style="font-size: 10.5px;"><i class="bi bi-check-circle me-1"></i>Kustom Aktif</span>
+                            <button type="button" class="btn btn-danger btn-sm py-0 px-2" style="font-size: 11px;" onclick="document.getElementById('formDeleteBackground').submit();" title="Hapus Background Kustom">
+                                <i class="bi bi-trash me-1"></i>Hapus
+                            </button>
+                        </div>
                         <div id="bgFallbackStandard" class="d-flex flex-column align-items-center justify-content-center h-100 text-white text-center p-3 @if($about->visimisi_background_url) d-none @endif" style="background: linear-gradient(135deg, #13883a 0%, #034b1a 100%);">
                             <i class="bi bi-palette fs-2 mb-1 text-warning"></i>
                             <span class="fw-bold small">Latar Standar Gradasi Hijau UIS</span>

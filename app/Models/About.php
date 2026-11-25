@@ -150,16 +150,6 @@ class About extends Model
 
         $cleanPath = ltrim(preg_replace('#^(public/|storage/)#', '', $raw), '/');
 
-        // Pastikan file fisik benar-benar ada di disk public atau direktori public
-        $disk = \Illuminate\Support\Facades\Storage::disk('public');
-        $exists = $disk->exists($cleanPath)
-            || file_exists(public_path('storage/' . $cleanPath))
-            || file_exists(public_path($cleanPath));
-
-        if (! $exists) {
-            return null;
-        }
-
         return asset('storage/' . $cleanPath);
     }
 

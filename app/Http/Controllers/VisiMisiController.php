@@ -58,6 +58,9 @@ class VisiMisiController extends Controller
                 }
             }
             $validated['visimisi_background'] = $request->file('visimisi_background')->store('visi-misi', 'public');
+        } else {
+            // PENTING: Jangan overwrite visimisi_background dengan null jika user tidak mengunggah file baru
+            unset($validated['visimisi_background']);
         }
 
         // Simpan juga ke kolom visi dan misi standar About agar sinkron
@@ -68,9 +71,23 @@ class VisiMisiController extends Controller
             $validated['misi'] = $validated['visimisi_misi_items'];
         }
 
+        // Pastikan kolom visimisi_background pasti ada di tabel database jika ada file yang diunggah
+        if (isset($validated['visimisi_background']) && !Schema::hasColumn('abouts', 'visimisi_background')) {
+            try {
+                \Illuminate\Support\Facades\DB::statement("ALTER TABLE `abouts` ADD COLUMN `visimisi_background` VARCHAR(255) NULL AFTER `visimisi_deskripsi`");
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::error('Auto add column visimisi_background failed: ' . $e->getMessage());
+            }
+        }
+
         // Hanya simpan field yang benar-benar ada di tabel database untuk mencegah Column not found 1054
         $existingColumns = Schema::getColumnListing('abouts');
         $safeData = array_intersect_key($validated, array_flip($existingColumns));
+
+        // Pastikan visimisi_background pasti disertakan jika baru saja diunggah
+        if (isset($validated['visimisi_background']) && Schema::hasColumn('abouts', 'visimisi_background')) {
+            $safeData['visimisi_background'] = $validated['visimisi_background'];
+        }
 
         $about->update($safeData);
 
@@ -89,37 +106,34 @@ class VisiMisiController extends Controller
         }
 
         $neededColumns = [
-            'visimisi_background' => 'string',
-            'visimisi_tagline_visi' => 'text',
-            'visimisi_misi_items' => 'text',
-            'visimisi_tatanilai_judul' => 'string',
-            'visimisi_tatanilai_items' => 'text',
-            'visimisi_badge_humas' => 'string',
-            'visimisi_footer_fb' => 'string',
-            'visimisi_footer_ig' => 'string',
-            'visimisi_footer_url' => 'string',
+            'visimisi_background' => 'VARCHAR(255) NULL',
+            'visimisi_tagline_visi' => 'TEXT NULL',
+            'visimisi_misi_items' => 'TEXT NULL',
+            'visimisi_tatanilai_judul' => 'VARCHAR(255) NULL',
+            'visimisi_tatanilai_items' => 'TEXT NULL',
+            'visimisi_badge_humas' => 'VARCHAR(255) NULL',
+            'visimisi_footer_fb' => 'VARCHAR(255) NULL',
+            'visimisi_footer_ig' => 'VARCHAR(255) NULL',
+            'visimisi_footer_url' => 'VARCHAR(255) NULL',
         ];
 
-        $missing = [];
-        foreach ($neededColumns as $col => $type) {
+        foreach ($neededColumns as $col => $def) {
             if (!Schema::hasColumn('abouts', $col)) {
-                $missing[$col] = $type;
-            }
-        }
-
-        if (!empty($missing)) {
-            try {
-                Schema::table('abouts', function (Blueprint $table) use ($missing) {
-                    foreach ($missing as $col => $type) {
-                        if ($type === 'string') {
-                            $table->string($col)->nullable();
-                        } else {
-                            $table->text($col)->nullable();
-                        }
+                try {
+                    \Illuminate\Support\Facades\DB::statement("ALTER TABLE `abouts` ADD COLUMN `{$col}` {$def}");
+                } catch (\Throwable $e) {
+                    try {
+                        Schema::table('abouts', function (Blueprint $table) use ($col, $def) {
+                            if (str_starts_with($def, 'TEXT')) {
+                                $table->text($col)->nullable();
+                            } else {
+                                $table->string($col)->nullable();
+                            }
+                        });
+                    } catch (\Throwable $e2) {
+                        \Illuminate\Support\Facades\Log::error("Failed to add column {$col} to abouts: " . $e2->getMessage());
                     }
-                });
-            } catch (\Throwable $e) {
-                // Ignore jika kolom sudah dibuat paralel
+                }
             }
         }
     }
