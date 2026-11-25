@@ -21,25 +21,12 @@
     margin: 0 auto;
   }
 
-  /* 1. Header Bagian Atas (Logos & Title Universitas Ibnu Sina) */
-  .visimisi-banner-header {
-    width: 100%;
-    position: relative;
-    z-index: 2;
-    line-height: 0;
-  }
-  .visimisi-banner-header img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
-
-  /* 2. Middle Konten (Background Kampus & Konten Teks Dinamis) */
+  /* Middle Konten (Background Kampus & Konten Teks Dinamis) */
   .visimisi-banner-middle {
     background-size: cover;
     background-position: center top;
     background-repeat: repeat-y;
-    padding: 18px 36px 20px 36px;
+    padding: 34px 36px 24px 36px;
     position: relative;
     z-index: 2;
   }
@@ -145,7 +132,7 @@
 
   @media (max-width: 768px) {
     .visimisi-banner-middle {
-      padding: 14px 22px 14px 22px;
+      padding: 24px 20px 20px 20px;
     }
   }
 
@@ -155,7 +142,7 @@
       border-width: 1.5px;
     }
     .visimisi-banner-middle {
-      padding: 10px 14px 10px 14px;
+      padding: 18px 14px 16px 14px;
     }
     .visimisi-section-heading {
       font-size: 16px;
@@ -199,12 +186,7 @@
         
         <div class="visimisi-poster-banner w-100 d-flex flex-column">
           
-          {{-- 1. BAGIAN HEADER ATAS (Logo-Logo & UNIVERSITAS IBNU SINA) --}}
-          <div class="visimisi-banner-header">
-            <img src="{{ asset('assets/img/visimisi-banner-header.jpg') }}" alt="Header Universitas Ibnu Sina" class="w-100 d-block">
-          </div>
-
-          {{-- 2. BAGIAN TENGAH (Background Foto Kampus & Konten Dinamis Visi, Misi, Tata Nilai) --}}
+          {{-- KONTEN UTAMA VISI, MISI, TATA NILAI DENGAN BACKGROUND KAMPUS --}}
           <div class="visimisi-banner-middle" style="background-image: url('{{ $middleBg }}');">
             
             {{-- ═══════════════════════════════════════════════
