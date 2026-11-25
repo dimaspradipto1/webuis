@@ -210,7 +210,51 @@
           @endif
 
           @if($isAdmin)
-          <!-- 8. Laboratorium & Fasilitas (Di Bawah Menu Informasi) -->
+          <!-- PMB (Penerimaan Mahasiswa Baru) - Di Bawah Menu Informasi -->
+          <li class="nav-item">
+              <a class="nav-link {{ Route::is('admin.pmb.*') || Route::is('beasiswa.admin*') ? '' : 'collapsed' }}" data-bs-target="#pmb-admin-nav" data-bs-toggle="collapse" href="#">
+                  <i class="bi bi-mortarboard-fill"></i><span>PMB</span><i class="bi bi-chevron-down ms-auto"></i>
+              </a>
+              <ul id="pmb-admin-nav" class="nav-content collapse {{ Route::is('admin.pmb.*') || Route::is('beasiswa.admin*') ? 'show' : '' }}" data-bs-parent="#sidebar-nav">
+                  <li>
+                      <a href="{{ route('admin.pmb.index') }}" class="{{ Route::is('admin.pmb.index') ? 'active' : '' }}">
+                          <i class="bi bi-circle"></i><span>Informasi PMB</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="{{ route('admin.pmb.gelombang') }}" class="{{ Route::is('admin.pmb.gelombang') ? 'active' : '' }}">
+                          <i class="bi bi-circle"></i><span>Jadwal Gelombang</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="{{ route('admin.pmb.syarat') }}" class="{{ Route::is('admin.pmb.syarat') ? 'active' : '' }}">
+                          <i class="bi bi-circle"></i><span>Syarat Pendaftaran</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="{{ route('beasiswa.admin') }}" class="{{ Route::is('beasiswa.admin*') ? 'active' : '' }}">
+                          <i class="bi bi-circle"></i><span>Program Beasiswa</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="{{ route('admin.pmb.brosur') }}" class="{{ Route::is('admin.pmb.brosur') ? 'active' : '' }}">
+                          <i class="bi bi-circle"></i><span>Brosur & Poster PMB</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="{{ route('admin.pmb.dokumen') }}" class="{{ Route::is('admin.pmb.dokumen') ? 'active' : '' }}">
+                          <i class="bi bi-circle"></i><span>Dokumen Panduan (PDF)</span>
+                      </a>
+                  </li>
+                  <li>
+                      <a href="{{ route('admin.pmb.link-daftar') }}" class="{{ Route::is('admin.pmb.link-daftar') ? 'active' : '' }}">
+                          <i class="bi bi-circle"></i><span>Daftar Online (Link PMB)</span>
+                      </a>
+                  </li>
+              </ul>
+          </li>
+
+          <!-- 8. Laboratorium & Fasilitas -->
           <li class="nav-item">
               <a class="nav-link {{ Route::is('sarana.*') ? '' : 'collapsed' }}" data-bs-target="#fasilitas-lab-nav" data-bs-toggle="collapse" href="#">
                   <i class="bi bi-cpu"></i><span>Laboratorium & Fasilitas</span><i class="bi bi-chevron-down ms-auto"></i>

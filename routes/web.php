@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AkademikController;
 use App\Http\Controllers\AkreditasiController;
+use App\Http\Controllers\AdminPmbController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BackupController;
 use App\Http\Controllers\BahasaSettingController;
@@ -214,6 +215,22 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::resource('admin-akreditasi', AkreditasiController::class)
         ->parameters(['admin-akreditasi' => 'akreditasi'])
         ->names('akreditasi');
+
+    // Modul PMB Admin Routes
+    Route::prefix('admin-pmb')->name('admin.pmb.')->controller(AdminPmbController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+        Route::put('/informasi', 'updateInformasi')->name('informasi.update');
+        Route::get('/gelombang', 'gelombang')->name('gelombang');
+        Route::put('/gelombang', 'updateGelombang')->name('gelombang.update');
+        Route::get('/syarat', 'syarat')->name('syarat');
+        Route::put('/syarat', 'updateSyarat')->name('syarat.update');
+        Route::get('/brosur', 'brosur')->name('brosur');
+        Route::put('/brosur', 'updateBrosur')->name('brosur.update');
+        Route::get('/dokumen', 'dokumen')->name('dokumen');
+        Route::put('/dokumen', 'updateDokumen')->name('dokumen.update');
+        Route::get('/link-daftar', 'linkDaftar')->name('link-daftar');
+        Route::put('/link-daftar', 'updateLinkDaftar')->name('link-daftar.update');
+    });
 
     Route::post('milestone/setting', [MilestoneController::class, 'updateSetting'])->name('milestone.update-setting');
     Route::resource('milestone', MilestoneController::class);
