@@ -82,8 +82,8 @@
                             <img src="{{ asset('storage/' . $organisasiMahasiswa->logo) }}" alt="Logo" class="rounded shadow-sm" style="height: 60px; object-fit: contain;">
                         </div>
                     @endif
-                    <input type="file" name="logo" id="logo" class="form-control @error('logo') is-invalid @enderror" accept="image/*">
-                    <small class="text-muted">Biarkan kosong jika tidak ingin mengubah logo. Format: JPG, PNG, WEBP, SVG (Maks. 20 MB).</small>
+                    <input type="file" name="logo" id="logo" class="form-control @error('logo') is-invalid @enderror" accept="image/*" data-max-size="5">
+                    <small class="text-muted">Biarkan kosong jika tidak ingin mengubah logo. Format: JPG, PNG, WEBP, SVG (Maks. 5 MB). Peringatan otomatis akan muncul jika melebihi batas.</small>
                     @error('logo')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -96,8 +96,8 @@
                             <img src="{{ asset('storage/' . $organisasiMahasiswa->foto_kegiatan) }}" alt="Foto Kegiatan" class="rounded shadow-sm" style="height: 60px; object-fit: cover;">
                         </div>
                     @endif
-                    <input type="file" name="foto_kegiatan" id="foto_kegiatan" class="form-control @error('foto_kegiatan') is-invalid @enderror" accept="image/*">
-                    <small class="text-muted">Biarkan kosong jika tidak ingin mengubah foto kegiatan. Format: JPG, PNG, WEBP (Maks. 20 MB).</small>
+                    <input type="file" name="foto_kegiatan" id="foto_kegiatan" class="form-control @error('foto_kegiatan') is-invalid @enderror" accept="image/*" data-max-size="5">
+                    <small class="text-muted">Biarkan kosong jika tidak ingin mengubah foto kegiatan. Format: JPG, PNG, WEBP (Maks. 5 MB). Peringatan otomatis akan muncul jika melebihi batas.</small>
                     @error('foto_kegiatan')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

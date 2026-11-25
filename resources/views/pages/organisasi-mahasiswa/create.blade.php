@@ -76,8 +76,8 @@
 
                 <div class="col-md-6">
                     <label for="logo" class="form-label fw-semibold text-dark">Logo Organisasi</label>
-                    <input type="file" name="logo" id="logo" class="form-control @error('logo') is-invalid @enderror" accept="image/*">
-                    <small class="text-muted">Format: JPG, PNG, WEBP, SVG (Maks. 20 MB). Disarankan berlatar transparan.</small>
+                    <input type="file" name="logo" id="logo" class="form-control @error('logo') is-invalid @enderror" accept="image/*" data-max-size="5">
+                    <small class="text-muted">Format: JPG, PNG, WEBP, SVG (Maks. 5 MB). Peringatan otomatis akan muncul jika melebihi batas.</small>
                     @error('logo')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
@@ -85,8 +85,8 @@
 
                 <div class="col-md-6">
                     <label for="foto_kegiatan" class="form-label fw-semibold text-dark">Foto Dokumentasi / Banner Kegiatan</label>
-                    <input type="file" name="foto_kegiatan" id="foto_kegiatan" class="form-control @error('foto_kegiatan') is-invalid @enderror" accept="image/*">
-                    <small class="text-muted">Format: JPG, PNG, WEBP (Maks. 20 MB). Foto bersama pengurus / kegiatan unggulan.</small>
+                    <input type="file" name="foto_kegiatan" id="foto_kegiatan" class="form-control @error('foto_kegiatan') is-invalid @enderror" accept="image/*" data-max-size="5">
+                    <small class="text-muted">Format: JPG, PNG, WEBP (Maks. 5 MB). Peringatan otomatis akan muncul jika melebihi batas.</small>
                     @error('foto_kegiatan')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror

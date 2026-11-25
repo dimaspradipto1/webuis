@@ -490,6 +490,121 @@
                 return false;
             }
         });
+
+        // ═══════════════════════════════════════════════════════════════
+        // GLOBAL SWEETALERT2 FILE SIZE & FILE LIMIT VALIDATOR
+        // ═══════════════════════════════════════════════════════════════
+        $(document).on('change', 'input[type="file"]', function () {
+            const input = this;
+            const files = input.files;
+            if (!files || files.length === 0) return;
+
+            // Tentukan batas maksimal dalam MB (default: 5 MB untuk gambar, 20 MB untuk dokumen)
+            let maxMB = parseFloat(input.getAttribute('data-max-size'));
+            if (!maxMB || isNaN(maxMB)) {
+                const accept = (input.getAttribute('accept') || '').toLowerCase();
+                if (accept.includes('image') || accept.includes('png') || accept.includes('jpg') || accept.includes('webp')) {
+                    maxMB = 5;
+                } else {
+                    maxMB = 20;
+                }
+            }
+
+            const maxBytes = maxMB * 1024 * 1024;
+            let oversizedFiles = [];
+
+            for (let i = 0; i < files.length; i++) {
+                if (files[i].size > maxBytes) {
+                    const sizeMB = (files[i].size / (1024 * 1024)).toFixed(2);
+                    oversizedFiles.push(`<b>${files[i].name}</b> (${sizeMB} MB)`);
+                }
+            }
+
+            if (oversizedFiles.length > 0) {
+                const fileListText = oversizedFiles.join('<br>');
+                input.value = ''; // Reset input seketika agar file tidak terkirim
+
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Ukuran Berkas Terlalu Besar!',
+                        html: `
+                            <div class="text-start mt-2">
+                                <p class="mb-2 text-dark">Berkas berikut melebihi batas maksimal <b>${maxMB} MB</b> yang ditentukan:</p>
+                                <div class="p-2.5 mb-3 bg-light rounded-3 border text-danger small font-monospace">${fileListText}</div>
+                                <div class="alert alert-warning py-2 px-3 small mb-0 d-flex align-items-center gap-2">
+                                    <i class="bi bi-exclamation-triangle-fill fs-5 text-warning flex-shrink-0"></i>
+                                    <span>Mohon pilih berkas dengan ukuran lebih kecil atau kompres terlebih dahulu agar tidak ditolak oleh server hosting (Error 403 / Payload Too Large).</span>
+                                </div>
+                            </div>
+                        `,
+                        confirmButtonColor: '#046B26',
+                        confirmButtonText: '<i class="bi bi-check-lg me-1"></i> Saya Mengerti',
+                        customClass: {
+                            popup: 'rounded-4 shadow-lg border-0',
+                            confirmButton: 'px-4 py-2 rounded-3 fw-semibold'
+                        }
+                    });
+                } else {
+                    alert(`Ukuran berkas melebihi batas maksimal ${maxMB} MB. Silakan pilih berkas yang lebih kecil.`);
+                }
+            }
+        });
+
+        // Intercept form submit jika terdapat file yang melebihi batas
+        $(document).on('submit', 'form', function (e) {
+            const form = this;
+            let hasOversized = false;
+            let oversizedMsg = [];
+
+            $(form).find('input[type="file"]').each(function () {
+                const input = this;
+                const files = input.files;
+                if (!files || files.length === 0) return;
+
+                let maxMB = parseFloat(input.getAttribute('data-max-size'));
+                if (!maxMB || isNaN(maxMB)) {
+                    const accept = (input.getAttribute('accept') || '').toLowerCase();
+                    maxMB = (accept.includes('image') || accept.includes('png') || accept.includes('jpg') || accept.includes('webp')) ? 5 : 20;
+                }
+                const maxBytes = maxMB * 1024 * 1024;
+
+                for (let i = 0; i < files.length; i++) {
+                    if (files[i].size > maxBytes) {
+                        hasOversized = true;
+                        oversizedMsg.push(`<b>${files[i].name}</b> (${(files[i].size / (1024 * 1024)).toFixed(2)} MB, batas: ${maxMB} MB)`);
+                    }
+                }
+            });
+
+            if (hasOversized) {
+                e.preventDefault();
+                e.stopImmediatePropagation();
+
+                if (typeof Swal !== 'undefined') {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Tidak Dapat Menyimpan Data!',
+                        html: `
+                            <div class="text-start mt-2">
+                                <p class="mb-2 text-dark">Terdapat berkas yang melebihi batas maksimal server:</p>
+                                <div class="p-2.5 mb-3 bg-light rounded-3 border text-danger small font-monospace">${oversizedMsg.join('<br>')}</div>
+                                <p class="text-muted small mb-0">Silakan ganti berkas di atas dengan ukuran yang sesuai sebelum melanjutkan.</p>
+                            </div>
+                        `,
+                        confirmButtonColor: '#dc3545',
+                        confirmButtonText: '<i class="bi bi-x-lg me-1"></i> Tutup',
+                        customClass: {
+                            popup: 'rounded-4 shadow-lg border-0',
+                            confirmButton: 'px-4 py-2 rounded-3 fw-semibold'
+                        }
+                    });
+                } else {
+                    alert('Terdapat berkas yang melebihi batas ukuran maksimal server.');
+                }
+                return false;
+            }
+        });
     </script>
 
     <!-- TinyMCE CDN & Global Initialization -->
