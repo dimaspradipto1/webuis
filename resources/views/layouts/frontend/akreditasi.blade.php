@@ -374,33 +374,6 @@
       </div>
     </div>
 
-    {{-- KOTAK VERIFIKASI RESMI KEMENDIKBUD / BAN-PT --}}
-    <div class="row justify-content-center" data-aos="fade-up">
-      <div class="col-lg-12">
-        <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white border d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-4" style="border-left: 6px solid #046B26 !important;">
-          <div class="d-flex align-items-start gap-3">
-            <div class="rounded-circle p-3 d-flex align-items-center justify-content-center" style="background: rgba(4, 107, 38, 0.1); width: 56px; height: 56px; min-width: 56px;">
-              <i class="bi bi-shield-check fs-2" style="color: #046B26;"></i>
-            </div>
-            <div>
-              <h5 class="fw-bold text-dark mb-1">Verifikasi Keabsahan Akreditasi Resmi</h5>
-              <p class="text-muted small mb-0" style="line-height: 1.7;">
-                Seluruh program studi dan institusi Universitas Ibnu Sina (UIS) tercatat secara sah dan resmi pada Pangkalan Data Pendidikan Tinggi (PD-DIKTI) Kementerian Pendidikan Tinggi, Sains, dan Teknologi Republik Indonesia serta BAN-PT.
-              </p>
-            </div>
-          </div>
-          <div class="d-flex flex-column flex-sm-row gap-2" style="min-width: 280px;">
-            <a href="https://pddikti.kemdiktisaintek.go.id/" target="_blank" class="btn btn-outline-success rounded-pill fw-bold py-2.5 px-3 text-center" style="font-size: 13.5px;">
-              <i class="bi bi-search me-1"></i> Cek di PD-DIKTI
-            </a>
-            <a href="https://www.banpt.or.id/" target="_blank" class="btn rounded-pill fw-bold py-2.5 px-3 text-center text-white" style="background: #046B26; font-size: 13.5px;">
-              <i class="bi bi-award me-1"></i> Portal BAN-PT
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-
   </div>
 </section>
 
