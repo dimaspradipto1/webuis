@@ -37,7 +37,13 @@
                 Sesuaikan teks judul hero, slogan/subjudul, hierarki jejak navigasi (breadcrumb), serta gambar latar belakang banner untuk setiap menu di website frontend.
             </p>
         </div>
-        <div class="d-flex align-items-center gap-2">
+        <div class="d-flex align-items-center gap-2 flex-wrap">
+            <form action="{{ route('breadcrumb-setting.reset-all') }}" method="POST" onsubmit="return confirm('Muat ulang dan pastikan seluruh 30 menu breadcrumb terisi penuh?')">
+                @csrf
+                <button type="submit" class="btn btn-outline-light btn-sm px-3 py-2 rounded-3 fw-bold shadow-sm">
+                    <i class="bi bi-arrow-repeat me-1"></i> Sinkronkan 30 Menu
+                </button>
+            </form>
             <a href="{{ route('homepage') }}" target="_blank" class="btn btn-warning btn-sm px-3 py-2 rounded-3 fw-bold shadow-sm" style="background: #fed802; color: #111;">
                 <i class="bi bi-box-arrow-up-right me-1"></i> Lihat Frontend
             </a>

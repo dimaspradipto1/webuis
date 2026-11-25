@@ -16,6 +16,11 @@ class BreadcrumbController extends Controller
      */
     public function index(Request $request): View
     {
+        // Auto-seed jika data masih kosong agar selalu terisi penuh 30 menu
+        if (Breadcrumb::count() === 0) {
+            (new BreadcrumbSeeder())->run();
+        }
+
         $kategori = $request->query('kategori');
         $search = trim($request->query('q', ''));
 
@@ -111,14 +116,20 @@ class BreadcrumbController extends Controller
      */
     public function reset(Breadcrumb $breadcrumb): RedirectResponse
     {
-        // Temukan data default dari seeder
-        $reflection = new \ReflectionClass(BreadcrumbSeeder::class);
-        $file = $reflection->getFileName();
-        
-        // Re-run seeder for this page key
         (new BreadcrumbSeeder())->run();
 
         return redirect()->route('breadcrumb-setting.index')
             ->with('success', "Breadcrumb untuk '{$breadcrumb->menu_name}' berhasil di-reset ke standar awal!");
+    }
+
+    /**
+     * Sinkronkan / Muat ulang semua 30 data breadcrumb.
+     */
+    public function resetAll(): RedirectResponse
+    {
+        (new BreadcrumbSeeder())->run();
+
+        return redirect()->route('breadcrumb-setting.index')
+            ->with('success', 'Seluruh 30 menu breadcrumb frontend berhasil disinkronkan dan terisi penuh!');
     }
 }

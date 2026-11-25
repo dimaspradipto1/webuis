@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
             PartnerSeeder::class,
             TestimonialSeeder::class,
             LayananTerkaitSeeder::class,
+            BreadcrumbSeeder::class,
         ]);
     }
 }

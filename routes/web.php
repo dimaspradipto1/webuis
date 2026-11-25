@@ -301,6 +301,7 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
 
     // Pengaturan Breadcrumb & Hero Banner Halaman Frontend
     Route::get('admin-breadcrumb', [BreadcrumbController::class, 'index'])->name('breadcrumb-setting.index');
+    Route::post('admin-breadcrumb/reset-all', [BreadcrumbController::class, 'resetAll'])->name('breadcrumb-setting.reset-all');
     Route::get('admin-breadcrumb/{breadcrumb}/edit', [BreadcrumbController::class, 'edit'])->name('breadcrumb-setting.edit');
     Route::put('admin-breadcrumb/{breadcrumb}', [BreadcrumbController::class, 'update'])->name('breadcrumb-setting.update');
     Route::post('admin-breadcrumb/{breadcrumb}/reset', [BreadcrumbController::class, 'reset'])->name('breadcrumb-setting.reset');
