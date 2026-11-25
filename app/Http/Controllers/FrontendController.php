@@ -899,6 +899,44 @@ class FrontendController extends Controller
         ));
     }
 
+    public function pmbBrosur()
+    {
+        $contact = Contact::first();
+        $pmbSetting = PmbSetting::first();
+        $pmb = \App\Models\InformasiPmbHumas::firstOrCreate(
+            ['id' => 1],
+            [
+                'judul' => 'Informasi Khusus Penerimaan Mahasiswa Baru',
+                'subjudul' => 'Tahun Akademik 2026/2027 — Universitas Ibnu Sina',
+                'badge_text' => 'PMB TA 2026/2027',
+                'link_pendaftaran' => 'https://pmb.uis.ac.id',
+                'no_wa_pmb' => '082283958644',
+                'is_active' => true,
+            ]
+        );
+
+        return view('layouts.frontend.pmb-brosur', compact('contact', 'pmbSetting', 'pmb'));
+    }
+
+    public function pmbPanduan()
+    {
+        $contact = Contact::first();
+        $pmbSetting = PmbSetting::first();
+        $pmb = \App\Models\InformasiPmbHumas::firstOrCreate(
+            ['id' => 1],
+            [
+                'judul' => 'Informasi Khusus Penerimaan Mahasiswa Baru',
+                'subjudul' => 'Tahun Akademik 2026/2027 — Universitas Ibnu Sina',
+                'badge_text' => 'PMB TA 2026/2027',
+                'link_pendaftaran' => 'https://pmb.uis.ac.id',
+                'no_wa_pmb' => '082283958644',
+                'is_active' => true,
+            ]
+        );
+
+        return view('layouts.frontend.pmb-panduan', compact('contact', 'pmbSetting', 'pmb'));
+    }
+
     public function news(Request $request, $categorySlug = null)
     {
         // Jika ada query param ?category=..., redirect 301 ke slug URL

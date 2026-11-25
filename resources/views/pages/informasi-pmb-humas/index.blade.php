@@ -158,9 +158,14 @@
                          SEKSI 2: DOKUMEN RESMI PANDUAN PMB (PDF)
                          ═══════════════════════════════════════════════════════════════ --}}
                     <div class="card border border-light-subtle bg-light p-3 p-md-4 mb-4" style="border-radius: 10px;">
-                        <h6 class="fw-bold text-dark border-bottom pb-2 mb-3">
-                            <i class="bi bi-file-earmark-pdf-fill text-danger me-1"></i> 2. File Dokumen Panduan PMB (PDF)
-                        </h6>
+                        <div class="d-flex align-items-center justify-content-between border-bottom pb-2 mb-3">
+                            <h6 class="fw-bold text-dark mb-0">
+                                <i class="bi bi-file-earmark-pdf-fill text-danger me-1"></i> 2. File Dokumen Panduan PMB (PDF)
+                            </h6>
+                            <a href="{{ route('homepage.pmb-panduan') }}" target="_blank" class="btn btn-sm btn-outline-danger">
+                                <i class="bi bi-box-arrow-up-right me-1"></i> Lihat Halaman Panduan
+                            </a>
+                        </div>
 
                         <div class="row g-3 mb-3">
                             <div class="col-md-6 col-12">
@@ -226,9 +231,14 @@
                          SEKSI 3: GAMBAR BROSUR & POSTER PMB
                          ═══════════════════════════════════════════════════════════════ --}}
                     <div class="card border border-light-subtle bg-light p-3 p-md-4 mb-4" style="border-radius: 10px;">
-                        <h6 class="fw-bold text-dark border-bottom pb-2 mb-3">
-                            <i class="bi bi-images text-success me-1"></i> 3. Gambar Brosur & Poster Infografis PMB
-                        </h6>
+                        <div class="d-flex align-items-center justify-content-between border-bottom pb-2 mb-3">
+                            <h6 class="fw-bold text-dark mb-0">
+                                <i class="bi bi-images text-success me-1"></i> 3. Gambar Brosur & Poster Infografis PMB
+                            </h6>
+                            <a href="{{ route('homepage.pmb-brosur') }}" target="_blank" class="btn btn-sm btn-outline-success">
+                                <i class="bi bi-box-arrow-up-right me-1"></i> Lihat Halaman Brosur
+                            </a>
+                        </div>
 
                         <div class="row g-4">
                             {{-- Poster 1 (Utama) --}}

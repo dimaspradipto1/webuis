@@ -119,6 +119,8 @@ Route::controller(FrontendController::class)->group(function () {
     Route::get('/pendampingan-acara', fn () => redirect()->away('https://sihumas.uisbatam.com/'))->name('homepage.pendampingan-acara');
     Route::get('/survey-layanan', 'surveyLayanan')->name('homepage.survey-layanan');
     Route::get('/informasi-khusus-pmb', 'informasiKhususPmb')->name('homepage.informasi-pmb');
+    Route::get('/brosur-pmb', 'pmbBrosur')->name('homepage.pmb-brosur');
+    Route::get('/panduan-pmb', 'pmbPanduan')->name('homepage.pmb-panduan');
     Route::get('/kontak', 'kontak')->name('homepage.kontak');
 });
 

@@ -17,15 +17,6 @@
     position: relative;
     overflow: hidden;
   }
-  .pmb-hero-modern::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background-image: radial-gradient(rgba(254, 216, 2, 0.15) 1.5px, transparent 1.5px);
-    background-size: 24px 24px;
-    opacity: 0.5;
-    pointer-events: none;
-  }
   .pmb-badge-gold {
     display: inline-flex !important;
     align-items: center !important;
@@ -388,8 +379,8 @@
       <a href="#jadwal-gelombang" class="pmb-nav-pill-link"><i class="bi bi-calendar-event text-success"></i> Jadwal Gelombang</a>
       <a href="#syarat-pendaftaran" class="pmb-nav-pill-link"><i class="bi bi-file-earmark-check text-success"></i> Syarat & Alur</a>
       <a href="#program-beasiswa" class="pmb-nav-pill-link"><i class="bi bi-award text-success"></i> Program Beasiswa</a>
-      <a href="#brosur-pmb" class="pmb-nav-pill-link"><i class="bi bi-images text-success"></i> Brosur & Infografis</a>
-      <a href="#unduh-panduan" class="pmb-nav-pill-link"><i class="bi bi-file-earmark-pdf text-success"></i> Panduan PDF</a>
+      <a href="{{ route('homepage.pmb-brosur') }}" class="pmb-nav-pill-link"><i class="bi bi-images text-success"></i> Brosur & Poster PMB</a>
+      <a href="{{ route('homepage.pmb-panduan') }}" class="pmb-nav-pill-link"><i class="bi bi-file-earmark-pdf text-success"></i> Dokumen Panduan (PDF)</a>
     </div>
     <a href="{{ $pmbPortalUrl }}" target="_blank" class="btn btn-sm btn-success rounded-pill px-3 py-1.5 fw-bold" style="background-color: #046B26; font-size: 12.5px;">
       <i class="bi bi-pencil-square me-1"></i> Portal PMB
@@ -824,82 +815,65 @@
     </section>
 
     {{-- ═════════════════════════════════════════════════════
-         SEKSI 4: BROSUR POSTER & DOKUMEN PANDUAN PMB
+         SEKSI 4: MEDIA BROSUR & PANDUAN RESMI PMB
          ═════════════════════════════════════════════════════ --}}
-    <section class="mb-5" id="brosur-pmb" data-aos="fade-up">
-      <div class="text-center mb-4">
-        <span class="badge px-3 py-1.5 rounded-pill fw-bold text-uppercase" style="background: #eef7f0; color: #046B26; font-size: 12px; letter-spacing: 0.5px;">
-          Media Informasi Visual & Dokumen
-        </span>
-        <h3 class="fw-bold text-dark mt-2">Brosur & Dokumen Panduan Resmi PMB</h3>
-        <p class="text-muted small mx-auto" style="max-width: 650px;">
-          Simak infografis rincian program studi dan unduh salinan resmi buku panduan pendaftaran PMB berformat digital.
-        </p>
-      </div>
-
-      {{-- Dokumen Panduan PDF Card --}}
-      <div class="card border-0 shadow-sm rounded-4 p-4 p-md-4 mb-4 bg-white" id="unduh-panduan" style="border-left: 5px solid #dc2626 !important;">
-        <div class="d-flex flex-column flex-md-row align-items-md-center justify-content-between gap-4">
-          <div class="d-flex align-items-center gap-3">
-            <div class="rounded-4 p-3 d-flex align-items-center justify-content-center text-danger flex-shrink-0" style="background-color: #fee2e2; width: 60px; height: 60px;">
-              <i class="bi bi-file-earmark-pdf-fill fs-2"></i>
-            </div>
+    <section class="mb-5" id="media-pmb" data-aos="fade-up">
+      <div class="row g-4">
+        {{-- Card Brosur & Poster PMB --}}
+        <div class="col-md-6">
+          <div class="card h-100 border-0 shadow-sm rounded-4 p-4 bg-white d-flex flex-column justify-content-between" style="border-top: 4px solid #046B26 !important;">
             <div>
-              <span class="badge bg-danger-subtle text-danger border border-danger-subtle rounded-pill px-2.5 py-0.5 fw-bold small mb-1">
-                DOKUMEN RESMI PMB
-              </span>
-              <h5 class="fw-bold text-dark mb-1">
-                {{ $pmb->file_pdf_nama ?: 'Buku Panduan & Rincian PMB TA 2026/2027.pdf' }}
-              </h5>
-              <p class="text-muted small mb-0">
-                Memuat informasi lengkap daftar program studi, tabel biaya kuliah & angsuran, serta panduan tata cara pendaftaran.
+              <div class="d-flex align-items-center gap-3 mb-3">
+                <div class="rounded-4 p-3 d-flex align-items-center justify-content-center text-success flex-shrink-0" style="background-color: #eef7f0; width: 56px; height: 56px;">
+                  <i class="bi bi-images fs-3 text-success"></i>
+                </div>
+                <div>
+                  <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-2.5 py-0.5 fw-bold small mb-1">
+                    MEDIA VISUAL PMB
+                  </span>
+                  <h5 class="fw-bold text-dark mb-0">Brosur & Poster PMB</h5>
+                </div>
+              </div>
+              <p class="text-muted small mb-4" style="line-height: 1.7;">
+                Lihat dan unduh infografis visual resmi PMB UIS, rincian pilihan program studi, tabel biaya kuliah, dan alur pendaftaran dalam resolusi tinggi.
               </p>
             </div>
-          </div>
-
-          <div class="d-flex flex-wrap align-items-center gap-2 flex-shrink-0">
-            @if(!empty($pmb->file_pdf))
-              <a href="{{ $pmb->pdf_url }}" target="_blank" class="btn-doc-link" title="Buka Dokumen Panduan PMB">
-                <i class="bi {{ str_starts_with($pmb->file_pdf, 'http') ? 'bi-google text-primary' : 'bi-file-earmark-pdf-fill text-danger' }} fs-6"></i>
-                <span>Lihat Dokumen</span>
-                <i class="bi bi-box-arrow-up-right small"></i>
+            <div>
+              <a href="{{ route('homepage.pmb-brosur') }}" class="btn btn-outline-success w-100 rounded-pill py-2.5 fw-bold d-inline-flex align-items-center justify-content-center gap-2">
+                <i class="bi bi-images"></i> Buka Halaman Brosur & Poster
+                <i class="bi bi-arrow-right ms-1"></i>
               </a>
-            @else
-              <span class="badge bg-light text-muted border rounded-pill px-3 py-2 small">
-                <i class="bi bi-clock me-1"></i> Dokumen Panduan Sedang Dipersiapkan
-              </span>
-            @endif
+            </div>
           </div>
         </div>
-      </div>
 
-      {{-- Galeri Poster Brosur PMB --}}
-      <div class="row g-4 justify-content-center">
-        @if(!empty($pmb->gambar_brosur))
-          <div class="{{ !empty($pmb->gambar_brosur_2) ? 'col-md-6' : 'col-md-8' }}">
-            <div class="pmb-poster-wrap" onclick="openPosterModal('{{ $pmb->gambar_brosur_url }}', 'Poster Utama PMB TA 2026/2027')">
-              <img src="{{ $pmb->gambar_brosur_url }}" alt="Poster Utama PMB UIS" class="img-fluid w-100 rounded-4" loading="lazy">
-              <div class="pmb-poster-overlay rounded-4">
-                <div class="rounded-circle bg-white text-success p-3 shadow"><i class="bi bi-arrows-fullscreen fs-5"></i></div>
-                <span class="text-white fw-bold small mt-1">Klik untuk Memperbesar</span>
+        {{-- Card Dokumen Panduan PMB (PDF) --}}
+        <div class="col-md-6">
+          <div class="card h-100 border-0 shadow-sm rounded-4 p-4 bg-white d-flex flex-column justify-content-between" style="border-top: 4px solid #dc2626 !important;">
+            <div>
+              <div class="d-flex align-items-center gap-3 mb-3">
+                <div class="rounded-4 p-3 d-flex align-items-center justify-content-center text-danger flex-shrink-0" style="background-color: #fee2e2; width: 56px; height: 56px;">
+                  <i class="bi bi-file-earmark-pdf-fill fs-3 text-danger"></i>
+                </div>
+                <div>
+                  <span class="badge bg-danger-subtle text-danger border border-danger-subtle rounded-pill px-2.5 py-0.5 fw-bold small mb-1">
+                    DOKUMEN RESMI (PDF)
+                  </span>
+                  <h5 class="fw-bold text-dark mb-0">Dokumen Panduan PMB</h5>
+                </div>
               </div>
+              <p class="text-muted small mb-4" style="line-height: 1.7;">
+                Unduh salinan resmi buku panduan pendaftaran mahasiswa baru berformat PDF yang memuat syarat berkas, petunjuk teknis admisi, dan jadwal seleksi.
+              </p>
             </div>
-            <div class="text-center mt-2 small fw-semibold text-muted">Brosur Utama Penerimaan Mahasiswa Baru</div>
-          </div>
-        @endif
-
-        @if(!empty($pmb->gambar_brosur_2))
-          <div class="{{ !empty($pmb->gambar_brosur) ? 'col-md-6' : 'col-md-8' }}">
-            <div class="pmb-poster-wrap" onclick="openPosterModal('{{ $pmb->gambar_brosur_2_url }}', 'Poster Rincian Program Studi PMB')">
-              <img src="{{ $pmb->gambar_brosur_2_url }}" alt="Poster Rincian PMB UIS" class="img-fluid w-100 rounded-4" loading="lazy">
-              <div class="pmb-poster-overlay rounded-4">
-                <div class="rounded-circle bg-white text-success p-3 shadow"><i class="bi bi-arrows-fullscreen fs-5"></i></div>
-                <span class="text-white fw-bold small mt-1">Klik untuk Memperbesar</span>
-              </div>
+            <div>
+              <a href="{{ route('homepage.pmb-panduan') }}" class="btn btn-outline-danger w-100 rounded-pill py-2.5 fw-bold d-inline-flex align-items-center justify-content-center gap-2">
+                <i class="bi bi-file-earmark-pdf"></i> Buka Halaman Dokumen Panduan
+                <i class="bi bi-arrow-right ms-1"></i>
+              </a>
             </div>
-            <div class="text-center mt-2 small fw-semibold text-muted">Brosur Rincian Program Studi & Alur Pendaftaran</div>
           </div>
-        @endif
+        </div>
       </div>
     </section>
 
