@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 48" width="200" height="48">
+  <defs>
+    <linearGradient id="diktiBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1B75BC"/>
+      <stop offset="100%" stop-color="#0E4275"/>
+    </linearGradient>
+    <linearGradient id="diktiGold" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FBB03B"/>
+      <stop offset="100%" stop-color="#D98200"/>
+    </linearGradient>
+  </defs>
+
+  <!-- White Rounded Pill Outer -->
+  <rect x="1" y="1" width="198" height="46" rx="23" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+
+  <!-- Left Emblem Icon -->
+  <g transform="translate(6, 4)">
+    <circle cx="20" cy="20" r="18" fill="#F4F9FF"/>
+    <!-- Blue Ribbon Loop -->
+    <path d="M12 26 C10 18 16 12 24 10 C28 9 32 12 30 16 C28 20 22 22 18 20" stroke="url(#diktiBlue)" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+    <!-- Golden Ribbon Loop -->
+    <path d="M15 24 C18 30 26 31 31 26 C33 24 32 20 28 19" stroke="url(#diktiGold)" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+    <!-- Star/Dot of Excellence -->
+    <circle cx="21" cy="15" r="2.8" fill="url(#diktiGold)"/>
+  </g>
+
+  <!-- Typography Right -->
+  <g transform="translate(54, 0)">
+    <text x="0" y="22" fill="#D98200" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-size="11" font-weight="900" letter-spacing="0.8">DIKTISAINTEK</text>
+    <text x="0" y="37" fill="#0B3056" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-size="11" font-weight="900" letter-spacing="0.8">BERDAMPAK</text>
+  </g>
+</svg>

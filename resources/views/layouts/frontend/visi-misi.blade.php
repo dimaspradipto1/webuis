@@ -7,8 +7,8 @@
 @push('styles')
 <style>
   /* ═══════════════════════════════════════════════
-     POSTER BANNER VISI, MISI & TATA NILAI UIS
-     (Format Fullwidth Sesuai Desain Acuan Grafis Resmi UIS)
+     BANNER FULLWIDTH VISI, MISI & TATA NILAI UIS
+     (Header Codingan Murni, Tanpa Judul Besar, Fullwidth)
   ═══════════════════════════════════════════════ */
   .visimisi-fullwidth-wrapper {
     width: 100%;
@@ -17,18 +17,119 @@
     background-color: #023612;
   }
 
-  /* 1. Header Grafis Resmi Fullwidth (Logos, Waves & UNIVERSITAS IBNU SINA) */
-  .visimisi-fw-header {
+  /* 1. Baris Header Logo & Teks Murni Codingan (Sesuai Desain Acuan) */
+  .visimisi-brand-header {
     width: 100%;
-    line-height: 0;
     position: relative;
+    background: linear-gradient(135deg, #02501a 0%, #036b24 50%, #024618 100%);
+    padding: 22px 0 20px 0;
+    overflow: hidden;
+    border-bottom: 2px solid rgba(254, 216, 2, 0.45);
+    z-index: 3;
+  }
+
+  /* Aksen Gelombang Hijau Lime Organis di Belakang Header */
+  .visimisi-wave-lines {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.85;
+  }
+
+  /* Aksen Dot Matrix di Sudut */
+  .visimisi-dot-matrix {
+    position: absolute;
+    width: 65px;
+    height: 65px;
+    pointer-events: none;
+    opacity: 0.38;
+    background-image: radial-gradient(#ffffff 1.5px, transparent 1.5px);
+    background-size: 8px 8px;
     z-index: 2;
   }
-  .visimisi-fw-header img {
-    width: 100%;
-    height: auto;
-    display: block;
-    object-fit: cover;
+  .visimisi-dot-matrix.top-left {
+    top: 10px;
+    left: 20px;
+  }
+  .visimisi-dot-matrix.top-right {
+    top: 10px;
+    right: 20px;
+  }
+
+  /* Baris Brand Fleksibel Sesuai Desain Acuan */
+  .visimisi-brand-row {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 36px;
+    flex-wrap: wrap;
+  }
+
+  .brand-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .brand-logo-uis {
+    height: 50px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+  }
+
+  .brand-logo-kemdikbud {
+    height: 44px;
+    width: 44px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+  }
+
+  .brand-logo-dikti {
+    height: 42px;
+    width: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.25));
+  }
+
+  .brand-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.15;
+    font-family: 'Plus Jakarta Sans', Arial, sans-serif;
+    color: #ffffff;
+  }
+  .brand-text .humas {
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.6px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  }
+  .brand-text .univ {
+    font-size: 12.5px;
+    font-weight: 800;
+    letter-spacing: 0.6px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  }
+  .brand-text .name {
+    font-size: 16.5px;
+    font-weight: 900;
+    letter-spacing: 0.8px;
+    text-shadow: 0 1px 3px rgba(0,0,0,0.5);
+  }
+
+  /* Garis Pemisah Vertikal Antar Brand */
+  .brand-divider {
+    width: 2px;
+    height: 38px;
+    background: rgba(255, 255, 255, 0.7);
+    border-radius: 2px;
   }
 
   /* 2. Middle Konten Fullwidth (Background Foto Kampus & Konten Visi, Misi, Tata Nilai) */
@@ -36,13 +137,13 @@
     width: 100%;
     background-color: #034b1a;
     background-image: 
-      linear-gradient(180deg, rgba(2, 60, 22, 0.72) 0%, rgba(4, 90, 32, 0.75) 50%, rgba(2, 45, 16, 0.78) 100%),
+      linear-gradient(180deg, rgba(2, 60, 22, 0.75) 0%, rgba(4, 90, 32, 0.76) 50%, rgba(2, 45, 16, 0.80) 100%),
       url('{{ asset('assets/img/visimisi-banner-middle.jpg') }}');
     background-size: cover;
     background-position: center top;
     background-repeat: repeat-y;
-    padding-top: 24px;
-    padding-bottom: 28px;
+    padding-top: 32px;
+    padding-bottom: 32px;
     position: relative;
     z-index: 2;
   }
@@ -143,7 +244,39 @@
     margin-right: 4px;
   }
 
+  /* Responsif Tablet & Mobile */
+  @media (max-width: 991px) {
+    .visimisi-brand-row {
+      gap: 20px;
+    }
+    .brand-logo-uis {
+      height: 44px;
+    }
+    .brand-logo-kemdikbud {
+      height: 38px;
+      width: 38px;
+    }
+    .brand-logo-dikti {
+      height: 38px;
+    }
+    .brand-text .univ {
+      font-size: 11.5px;
+    }
+    .brand-text .name {
+      font-size: 15px;
+    }
+  }
+
   @media (max-width: 768px) {
+    .visimisi-brand-header {
+      padding: 18px 0 16px 0;
+    }
+    .visimisi-brand-row {
+      gap: 16px;
+    }
+    .brand-divider {
+      display: none;
+    }
     .visimisi-content-card {
       padding: 18px 20px;
       border-radius: 12px;
@@ -157,9 +290,20 @@
   }
 
   @media (max-width: 576px) {
+    .visimisi-brand-header {
+      padding: 16px 10px;
+    }
+    .visimisi-brand-row {
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-item {
+      justify-content: center;
+    }
     .visimisi-fw-body {
-      padding-top: 14px;
-      padding-bottom: 16px;
+      padding-top: 18px;
+      padding-bottom: 20px;
     }
     .visimisi-content-card {
       padding: 14px 16px;
@@ -195,14 +339,61 @@
 ═══════════════════════════════════════════════ -->
 <div class="visimisi-fullwidth-wrapper w-100 p-0 m-0">
 
-  {{-- 1. HEADER GRAFIS RESMI FULLWIDTH (Logos & Judul UNIVERSITAS IBNU SINA) --}}
-  <div class="visimisi-fw-header w-100">
-    <img src="{{ asset('assets/img/visimisi-banner-header.jpg') }}" alt="Universitas Ibnu Sina" class="w-100 d-block">
+  {{-- 1. HEADER GRAFIS RESMI: LOGO & TEKS CODINGAN (TANPA JUDUL BESAR UNIVERSITAS IBNU SINA) --}}
+  <div class="visimisi-brand-header w-100">
+    
+    {{-- Garis Gelombang Hijau Lime Organis --}}
+    <svg class="visimisi-wave-lines" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" preserveAspectRatio="none">
+      <path d="M0,35 C320,105 520,5 840,48 C1160,95 1340,25 1440,55 L1440,0 L0,0 Z" fill="none" stroke="rgba(112, 192, 65, 0.40)" stroke-width="2"/>
+      <path d="M0,55 C360,125 580,22 900,68 C1220,118 1380,38 1440,75 L1440,0 L0,0 Z" fill="none" stroke="rgba(112, 192, 65, 0.28)" stroke-width="2"/>
+      <path d="M0,75 C400,145 640,38 960,88 C1280,138 1400,55 1440,95 L1440,0 L0,0 Z" fill="none" stroke="rgba(112, 192, 65, 0.18)" stroke-width="1.5"/>
+    </svg>
+
+    {{-- Dot Matrix Accents di Sudut Kiri & Kanan --}}
+    <div class="visimisi-dot-matrix top-left"></div>
+    <div class="visimisi-dot-matrix top-right"></div>
+
+    {{-- Konten Logo & Teks Sesuai Gambar Acuan --}}
+    <div class="container position-relative" style="z-index: 3;">
+      <div class="visimisi-brand-row">
+        
+        {{-- Brand 1: Universitas Ibnu Sina --}}
+        <div class="brand-item">
+          <img src="{{ asset('assets/img/logouis.png') }}" alt="Logo UIS" class="brand-logo-uis">
+          <div class="brand-text">
+            <span class="univ">UNIVERSITAS</span>
+            <span class="name">IBNU SINA</span>
+          </div>
+        </div>
+
+        {{-- Divider 1 --}}
+        <div class="brand-divider"></div>
+
+        {{-- Brand 2: Humas Universitas Ibnu Sina & Kemdikbud --}}
+        <div class="brand-item">
+          <img src="{{ asset('assets/img/layanan-terkait/kemdikbud.svg') }}" alt="Logo Kemdikbud" class="brand-logo-kemdikbud">
+          <div class="brand-text">
+            <span class="humas">HUMAS</span>
+            <span class="univ">UNIVERSITAS</span>
+            <span class="name">IBNU SINA</span>
+          </div>
+        </div>
+
+        {{-- Divider 2 --}}
+        <div class="brand-divider"></div>
+
+        {{-- Brand 3: Diktisaintek Berdampak --}}
+        <div class="brand-item">
+          <img src="{{ asset('assets/img/logo-diktisaintek-horizontal.svg') }}" alt="Diktisaintek Berdampak" class="brand-logo-dikti">
+        </div>
+
+      </div>
+    </div>
   </div>
 
   {{-- 2. KONTEN TENGAH FULLWIDTH DENGAN LATAR BELAKANG KAMPUS --}}
   <div class="visimisi-fw-body w-100">
-    <div class="container py-3">
+    <div class="container py-2">
       <div class="row justify-content-center">
         <div class="col-xl-9 col-lg-10 col-12" data-aos="fade-up" data-aos-delay="100">
           
