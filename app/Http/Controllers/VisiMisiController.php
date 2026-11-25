@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\DataTables\VisiMisiDataTable;
 use App\Http\Requests\VisiMisiRequest;
 use App\Models\About;
+use App\Models\Breadcrumb;
 use App\Models\VisiMisi;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -17,8 +18,9 @@ class VisiMisiController extends Controller
     {
         $about = About::first() ?? new About();
         $totalGambar = VisiMisi::whereNotNull('gambar')->count();
+        $breadcrumb = Breadcrumb::getForPage('visi-misi');
 
-        return $dataTable->render('pages.visimisi.index', compact('about', 'totalGambar'));
+        return $dataTable->render('pages.visimisi.index', compact('about', 'totalGambar', 'breadcrumb'));
     }
 
     public function updateHeader(Request $request): RedirectResponse

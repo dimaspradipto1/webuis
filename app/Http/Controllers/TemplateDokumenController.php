@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\TemplateDokumenRequest;
 use App\Http\Requests\TemplateDokumenSettingRequest;
+use App\Models\Breadcrumb;
 use App\Models\TemplateDokumen;
 use App\Models\TemplateDokumenSetting;
 use Illuminate\Http\RedirectResponse;
@@ -26,7 +27,9 @@ class TemplateDokumenController extends Controller
             ]
         );
 
-        return view('pages.template-dokumen.index', compact('templates', 'setting'));
+        $breadcrumb = Breadcrumb::getForPage('template-dokumen');
+
+        return view('pages.template-dokumen.index', compact('templates', 'setting', 'breadcrumb'));
     }
 
     /**

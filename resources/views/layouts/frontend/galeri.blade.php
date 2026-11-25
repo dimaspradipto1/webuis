@@ -21,25 +21,8 @@
 <!-- ═══════════════════════════════════════════════
      GALLERY GRID
 ═══════════════════════════════════════════════ -->
-<section class="section-bg-white">
+<section class="section-bg-white py-5">
   <div class="container">
-    <div class="text-center mb-5" data-aos="fade-up">
-      @if($isHumas)
-        <div class="section-label mx-auto">Dokumentasi Humas</div>
-        <h2 class="section-title">Galeri & <em>Kegiatan Humas</em></h2>
-        <div class="divider-line centered"></div>
-        <p class="section-desc mx-auto">
-          Kumpulan dokumentasi publikasi, liputan media, siaran pers, dan seluruh kegiatan kehumasan Universitas Ibnu Sina.
-        </p>
-      @else
-        <div class="section-label mx-auto">Dokumentasi Kampus</div>
-        <h2 class="section-title">Aktivitas & <em>Kegiatan Mahasiswa</em></h2>
-        <div class="divider-line centered"></div>
-        <p class="section-desc mx-auto">
-          Kumpulan dokumentasi praktikum laboratorium, pengabdian masyarakat, seminar nasional, dan momen prestasi civitas akademika UIS.
-        </p>
-      @endif
-    </div>
 
     @if($isHumas)
       {{-- Dedicated Humas Action Bar (Tanpa Univ) --}}

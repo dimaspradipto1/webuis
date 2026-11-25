@@ -106,24 +106,6 @@
 ═══════════════════════════════════════════════ -->
 <section class="template-doc-section">
   <div class="container text-center">
-    
-    {{-- Header Judul Seksi (Pusat Bantuan & Standar Dokumen) --}}
-    <div class="mb-5" data-aos="fade-up">
-      <div class="section-label mx-auto mb-3">
-        PUSAT BANTUAN & INFORMASI
-      </div>
-      
-      <h2 class="fw-bold mb-0" style="color: #1e3a29; font-size: 32px; letter-spacing: 0.5px; font-family: 'Plus Jakarta Sans', sans-serif;">
-        {{ $setting->judul_seksi ?? 'TEMPLATE DOKUMEN' }}
-      </h2>
-      
-      <div class="divider-line-gold"></div>
-
-      <p class="text-muted mx-auto mb-0" style="max-width: 860px; font-size: 15px; line-height: 1.75;">
-        {!! nl2br(e(trim(html_entity_decode(strip_tags($setting->deskripsi_seksi ?? 'Kami menyediakan Templat untuk Desain, Ms. Power Point, Ms. Word dan berbagai format lainnya. Guna menyeragamkan tampilan desain di lingkungan Universitas Ibnu Sina. Berdasarkan Peraturan Rektor tentang STANDAR KOMUNIKASI MEREK UNIVERSITAS IBNU SINA'), ENT_QUOTES | ENT_HTML5, 'UTF-8')))) !!}
-      </p>
-    </div>
-
     {{-- Grid 3 Kartu Template Dokumen (Persis Image 2) --}}
     <div class="row g-4 justify-content-center">
       @forelse($templates as $index => $item)

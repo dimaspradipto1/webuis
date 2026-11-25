@@ -25,61 +25,24 @@
     </div>
 </div>
 
-{{-- 1. Pengaturan Teks Header Seksi --}}
-<div class="card shadow-sm border-0 mb-4" style="border-radius: 12px;">
-    <div class="card-header bg-white py-3 d-flex align-items-center justify-content-between" style="border-top: 3px solid #046B26; border-radius: 12px 12px 0 0;">
-        <h5 class="mb-0 fw-bold" style="color: #2b2f32; font-size: 16px;">
-            <i class="bi bi-pencil-square me-2" style="color: #046B26;"></i>Pengaturan Judul & Deskripsi Seksi Frontend
-        </h5>
-        <span class="badge" style="background-color: #046B26; color: #ffffff; font-size: 11.5px; font-weight: 700; padding: 6px 12px; border-radius: 6px;">
-            <i class="bi bi-globe2 me-1"></i>Halaman Publik
-        </span>
+{{-- Informasi Pengaturan Breadcrumb & Hero Banner Terpusat --}}
+<div class="alert alert-light border shadow-sm d-flex flex-wrap align-items-center justify-content-between p-3 mb-4 rounded-3" style="border-left: 4px solid #046B26 !important; background: #ffffff;">
+    <div class="d-flex align-items-center gap-3">
+        <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 44px; height: 44px; background: #e8f5e9; color: #046B26; flex-shrink: 0;">
+            <i class="bi bi-compass fs-4"></i>
+        </div>
+        <div>
+            <div class="fw-bold text-dark" style="font-size: 15px;">Pengaturan Judul & Hero Banner Halaman Terpusat di Breadcrumb</div>
+            <div class="text-muted small" style="line-height: 1.4;">Teks judul hero banner, label badge, pengantar slogan, dan jejak navigasi halaman Template Dokumen kini dikelola terpusat di modul Breadcrumb.</div>
+        </div>
     </div>
-    <div class="card-body pt-3 pb-4">
-        <form action="{{ route('template-dokumen.update-setting') }}" method="POST">
-            @csrf
-            @method('PUT')
-
-            <div class="row g-3">
-                <div class="col-md-5 col-12">
-                    <label for="judul_seksi" class="form-label fw-bold text-dark small">
-                        Judul Seksi <span class="text-danger">*</span>
-                    </label>
-                    <input type="text"
-                           id="judul_seksi"
-                           name="judul_seksi"
-                           class="form-control @error('judul_seksi') is-invalid @enderror"
-                           value="{{ old('judul_seksi', $setting->judul_seksi ?? 'TEMPLATE DOKUMEN') }}"
-                           placeholder="Contoh: TEMPLATE DOKUMEN"
-                           required>
-                    <div class="form-text text-muted small">Judul hijau huruf kapital di bagian atas seksi.</div>
-                    @error('judul_seksi')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="col-md-7 col-12">
-                    <label for="deskripsi_seksi" class="form-label fw-bold text-dark small">
-                        Deskripsi / Dasar Aturan Seksi
-                    </label>
-                    <textarea id="deskripsi_seksi"
-                              name="deskripsi_seksi"
-                              rows="3"
-                              class="form-control @error('deskripsi_seksi') is-invalid @enderror"
-                              placeholder="Kami menyediakan Templat untuk Desain, Ms. Power Point, Ms. Word...">{{ old('deskripsi_seksi', $setting->deskripsi_seksi) }}</textarea>
-                    <div class="form-text text-muted small">Teks penjelasan di bawah judul yang menerangkan tujuan & dasar aturan templat.</div>
-                    @error('deskripsi_seksi')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="col-12 text-end pt-2">
-                    <button type="submit" class="btn fw-semibold shadow-sm px-4" style="background-color: #046B26; color: #ffffff; border: none; border-radius: 8px;">
-                        <i class="bi bi-floppy-fill me-1"></i> Simpan Teks Seksi
-                    </button>
-                </div>
-            </div>
-        </form>
+    <div class="d-flex align-items-center gap-2 mt-2 mt-lg-0">
+        <a href="{{ route('breadcrumb-setting.edit', $breadcrumb->id ?? 26) }}" class="btn btn-sm btn-outline-success fw-semibold">
+            <i class="bi bi-pencil-square me-1"></i> Edit Breadcrumb & Hero Banner
+        </a>
+        <a href="{{ route('homepage.template-dokumen') }}" target="_blank" class="btn btn-sm btn-success fw-semibold" style="background-color: #046B26; border-color: #046B26;">
+            <i class="bi bi-box-arrow-up-right me-1"></i> Pratinjau Frontend
+        </a>
     </div>
 </div>
 

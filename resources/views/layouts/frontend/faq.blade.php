@@ -26,18 +26,8 @@
 <!-- ═══════════════════════════════════════════════
      FAQ SECTION
 ═══════════════════════════════════════════════ -->
-<section class="section-bg-sand">
-  <div class="container">
-    
-    <div class="text-center mb-5" data-aos="fade-up">
-      <div class="section-label mx-auto">Pusat Bantuan & Informasi</div>
-      <h2 class="section-title">Pertanyaan yang Sering <em>Diajukan</em></h2>
-      <div class="divider-line centered"></div>
-      <p class="section-desc mx-auto">
-        Kumpulan jawaban informatif seputar proses akademik, persyaratan seleksi masuk, fasilitas, dan kemitraan di UIS.
-      </p>
-    </div>
-
+<section class="section-bg-sand py-5">
+  <div class="container py-2">
     <div class="row justify-content-center">
       <div class="col-lg-9" data-aos="fade-up">
         <div class="accordion" id="faqAccordion">

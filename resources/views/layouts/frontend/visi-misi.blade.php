@@ -88,25 +88,7 @@
      VISI & MISI IMAGES (3 COLUMNS - ONLY IMAGES)
 ═══════════════════════════════════════════════ -->
 <section class="section-bg-sand py-5">
-  <div class="container py-3">
-    <div class="text-center mb-5" data-aos="fade-up">
-      @if(!empty($about->visimisi_label))
-        <div class="section-label">{{ $about->visimisi_label }}</div>
-      @endif
-      <h2 class="section-title">
-        @if(!empty($about->visimisi_judul))
-          {{ $about->visimisi_judul }}
-        @else
-          Visi & Misi <em>Universitas Ibnu Sina</em>
-        @endif
-      </h2>
-      @if(!empty($about->visimisi_deskripsi))
-        <p class="section-desc mx-auto" style="max-width: 650px;">
-          {{ $about->visimisi_deskripsi }}
-        </p>
-      @endif
-    </div>
-
+  <div class="container py-2">
     {{-- Grid 3 Kolom - Hanya Gambar Fullwidth Tanpa Card/Title/Description --}}
     <div class="row g-4 justify-content-center">
       @if(isset($visiMisiGambar) && $visiMisiGambar->isNotEmpty())
