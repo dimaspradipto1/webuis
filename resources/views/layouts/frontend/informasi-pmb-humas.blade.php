@@ -266,7 +266,7 @@
     {{-- ═════════════════════════════════════════════════════
          1. DOKUMEN PANDUAN PDF RESMI
          ═════════════════════════════════════════════════════ --}}
-    <div class="mb-5" data-aos="fade-up">
+    <div class="mb-5" id="unduh-panduan" data-aos="fade-up">
       <div class="d-flex align-items-center gap-2 mb-3">
         <span class="badge bg-danger px-2 py-1"><i class="bi bi-file-earmark-pdf-fill me-1"></i>Dokumen Resmi</span>
         <h4 class="fw-bold text-dark mb-0" style="font-size: 20px;">Buku Panduan & Rincian PMB (PDF)</h4>
@@ -313,7 +313,7 @@
     {{-- ═════════════════════════════════════════════════════
          2. BROSUR & POSTER INFOGRAFIS PMB (IMAGE)
          ═════════════════════════════════════════════════════ --}}
-    <div class="mb-5" data-aos="fade-up">
+    <div class="mb-5" id="brosur-pmb" data-aos="fade-up">
       <div class="d-flex align-items-center justify-content-between mb-3 flex-wrap gap-2">
         <div class="d-flex align-items-center gap-2">
           <span class="badge bg-success px-2 py-1"><i class="bi bi-images me-1"></i>Infografis Visual</span>
@@ -386,7 +386,7 @@
     {{-- ═════════════════════════════════════════════════════
          3. JADWAL GELOMBANG & PERSYARATAN BERKAS
          ═════════════════════════════════════════════════════ --}}
-    <div class="row g-4 mb-5" data-aos="fade-up">
+    <div class="row g-4 mb-5" id="jadwal-gelombang" data-aos="fade-up">
       {{-- Gelombang Pendaftaran --}}
       <div class="col-md-6 col-12">
         <div class="pmb-info-box">
@@ -415,7 +415,7 @@
       </div>
 
       {{-- Persyaratan Berkas --}}
-      <div class="col-md-6 col-12">
+      <div class="col-md-6 col-12" id="persyaratan-pmb">
         <div class="pmb-info-box">
           <div class="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom">
             <div class="rounded-circle p-2 bg-success-subtle text-success fs-5 d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">

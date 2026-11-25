@@ -113,6 +113,35 @@
           </ul>
         </li>
 
+        <!-- PMB Dropdown -->
+        <li class="nav-item dropdown">
+          <a class="nav-link nav-link-custom dropdown-toggle {{ request()->routeIs('homepage.informasi-pmb') || request()->routeIs('homepage.beasiswa*') ? 'active' : '' }}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            PMB <i class="bi bi-chevron-down ms-1" style="font-size: 10px;"></i>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-custom">
+            <li><a class="dropdown-item dropdown-item-custom {{ request()->routeIs('homepage.informasi-pmb') ? 'active' : '' }}" href="{{ route('homepage.informasi-pmb') }}"><i class="bi bi-info-circle"></i> Informasi PMB</a></li>
+            <li><a class="dropdown-item dropdown-item-custom" href="{{ route('homepage.informasi-pmb') }}#jadwal-gelombang"><i class="bi bi-calendar-event"></i> Jadwal Gelombang</a></li>
+            <li><a class="dropdown-item dropdown-item-custom" href="{{ route('homepage.informasi-pmb') }}#persyaratan-pmb"><i class="bi bi-file-earmark-check"></i> Syarat Pendaftaran</a></li>
+            <li><a class="dropdown-item dropdown-item-custom {{ request()->routeIs('homepage.beasiswa*') ? 'active' : '' }}" href="{{ route('homepage.beasiswa') }}"><i class="bi bi-award"></i> Program Beasiswa</a></li>
+            <li><a class="dropdown-item dropdown-item-custom" href="{{ route('homepage.informasi-pmb') }}#brosur-pmb"><i class="bi bi-images"></i> Brosur & Poster PMB</a></li>
+            <li><a class="dropdown-item dropdown-item-custom" href="{{ route('homepage.informasi-pmb') }}#unduh-panduan"><i class="bi bi-file-earmark-pdf"></i> Dokumen Panduan (PDF)</a></li>
+            <li><hr class="dropdown-divider my-1"></li>
+            @php
+              $pmbPortalUrl = $pmbSetting->tombol_link_1 ?? 'https://pmb.uis.ac.id';
+              if (!str_starts_with($pmbPortalUrl, 'http') && !str_starts_with($pmbPortalUrl, '/')) {
+                  $pmbPortalUrl = '/' . $pmbPortalUrl;
+              }
+              $pmbPortalTarget = str_starts_with($pmbPortalUrl, 'http') ? '_blank' : '_self';
+            @endphp
+            <li>
+              <a class="dropdown-item dropdown-item-custom text-success fw-bold d-flex align-items-center justify-content-between" href="{{ $pmbPortalUrl }}" target="{{ $pmbPortalTarget }}">
+                <span><i class="bi bi-pencil-square text-success me-1"></i> Daftar Online</span>
+                <i class="bi bi-box-arrow-up-right small text-muted"></i>
+              </a>
+            </li>
+          </ul>
+        </li>
+
         <!-- Humas -->
         <li class="nav-item">
           <a href="{{ route('homepage.humas') }}" class="nav-link nav-link-custom {{ request()->routeIs('homepage.humas*') ? 'active' : '' }}">Humas</a>
@@ -176,18 +205,7 @@
 
       <!-- CTA Buttons -->
       <div class="d-flex align-items-center gap-2 mt-3 mt-xl-0">
-        @php
-          $pmbNavUrl = $pmbSetting->tombol_link_1 ?? route('homepage.kontak');
-          if (!str_starts_with($pmbNavUrl, 'http') && !str_starts_with($pmbNavUrl, '/')) {
-              $pmbNavUrl = '/' . $pmbNavUrl;
-          }
-          $pmbNavTarget = str_starts_with($pmbNavUrl, 'http') ? '_blank' : '_self';
-        @endphp
-        <a href="{{ $pmbNavUrl }}" target="{{ $pmbNavTarget }}" class="btn-pmb-nav" title="Penerimaan Mahasiswa Baru">
-          <i class="bi bi-pencil-square"></i>
-          <span>PMB</span>
-        </a>
-        <a href="{{ route('login') }}" class="btn-portal-nav" title="Login">
+        <a href="{{ route('login') }}" class="btn-portal-nav" title="Login Portal">
           <i class="bi bi-box-arrow-in-right"></i>
           <span>Login</span>
         </a>
