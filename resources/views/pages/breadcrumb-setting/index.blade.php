@@ -163,8 +163,12 @@
                             </td>
                             <td class="text-center pe-4">
                                 <div class="d-flex align-items-center justify-content-center gap-1">
-                                    <a href="{{ route('breadcrumb-setting.edit', $item->id) }}" class="btn btn-sm btn-primary px-3 rounded-pill fw-semibold" title="Edit Breadcrumb & Banner">
-                                        <i class="bi bi-pencil-square me-1"></i> Edit
+                                    <a href="{{ route('breadcrumb-setting.edit', $item->id) }}" 
+                                       class="btn btn-sm btn-primary rounded-circle d-inline-flex align-items-center justify-content-center shadow-sm" 
+                                       style="width: 34px; height: 34px;" 
+                                       title="Edit Breadcrumb & Hero Banner" 
+                                       data-bs-toggle="tooltip">
+                                        <i class="bi bi-pencil-square fs-6"></i>
                                     </a>
                                 </div>
                             </td>

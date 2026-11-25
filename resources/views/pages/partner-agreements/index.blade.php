@@ -77,7 +77,7 @@
                                 <td>
                                     <div class="d-flex justify-content-end gap-1">
                                         <a href="{{ route('partner.agreements.edit', [$partner, $agreement]) }}"
-                                           class="btn btn-sm btn-warning text-white" title="Edit" aria-label="Edit">
+                                           class="btn btn-sm btn-warning text-dark fw-bold" title="Edit" aria-label="Edit">
                                             <i class="bi bi-pencil-fill"></i>
                                         </a>
                                         <form action="{{ route('partner.agreements.destroy', [$partner, $agreement]) }}"

@@ -268,7 +268,7 @@
                                                         data-bs-toggle="modal" 
                                                         data-bs-target="#modalEditBahasa{{ $b->id }}"
                                                         title="Edit Data Bahasa">
-                                                    <i class="bi bi-pencil-square"></i> Edit
+                                                    <i class="bi bi-pencil-square"></i>
                                                 </button>
 
                                                 @if(!$b->is_default)

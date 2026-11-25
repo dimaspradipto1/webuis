@@ -34,7 +34,7 @@
                     @include('pages.partner-agreements._form')
                     <div class="d-flex gap-2 mt-4">
                         <a href="{{ route('partner.agreements.index', $partner) }}" class="btn btn-outline-secondary">Batal</a>
-                        <button type="submit" class="btn btn-warning text-white"><i class="bi bi-save me-1"></i>Simpan Perubahan</button>
+                        <button type="submit" class="btn btn-warning text-dark fw-bold"><i class="bi bi-save me-1"></i>Simpan Perubahan</button>
                     </div>
                 </form>
             </div>

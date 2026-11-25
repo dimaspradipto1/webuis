@@ -266,7 +266,7 @@
                         <a href="{{ route('sarana.index') }}" class="btn btn-secondary">
                             <i class="bi bi-arrow-left me-1"></i> Batal
                         </a>
-                        <button type="submit" class="btn btn-warning text-white">
+                        <button type="submit" class="btn btn-warning text-dark fw-bold">
                             <i class="bi bi-save me-1"></i> Simpan Perubahan
                         </button>
                     </div>

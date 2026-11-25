@@ -157,7 +157,7 @@
                         <a href="{{ route('tridharma.index') }}" class="btn btn-secondary">
                             <i class="bi bi-arrow-left me-1"></i> Kembali
                         </a>
-                        <button type="submit" class="btn btn-warning text-white">
+                        <button type="submit" class="btn btn-warning text-dark fw-bold">
                             <i class="bi bi-check-lg me-1"></i> Perbarui
                         </button>
                     </div>

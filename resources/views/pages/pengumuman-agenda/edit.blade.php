@@ -219,7 +219,7 @@
                         <a href="{{ route('pengumuman-agenda.index') }}" class="btn btn-secondary">
                             <i class="bi bi-arrow-left me-1"></i> Batal
                         </a>
-                        <button type="submit" class="btn btn-warning text-white px-4">
+                        <button type="submit" class="btn btn-warning text-dark fw-bold px-4">
                             <i class="bi bi-save me-1"></i> Simpan Perubahan
                         </button>
                     </div>

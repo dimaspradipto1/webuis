@@ -117,7 +117,7 @@
                         <a href="{{ route('partner.index') }}" class="btn btn-secondary">
                             <i class="bi bi-arrow-left me-1"></i> Kembali
                         </a>
-                        <button type="submit" class="btn btn-warning text-white fw-semibold">
+                        <button type="submit" class="btn btn-warning text-dark fw-bold fw-semibold">
                             <i class="bi bi-save me-1"></i> Simpan Perubahan Mitra
                         </button>
                     </div>
@@ -175,7 +175,7 @@
                                         <td class="text-end">
                                             <div class="d-flex justify-content-end gap-1">
                                                 <a href="{{ route('partner.agreements.edit', [$partner, $item]) }}"
-                                                   class="btn btn-sm btn-warning text-white" title="Edit">
+                                                   class="btn btn-sm btn-warning text-dark fw-bold" title="Edit">
                                                     <i class="bi bi-pencil-fill"></i>
                                                 </a>
                                                 <form action="{{ route('partner.agreements.destroy', [$partner, $item]) }}"
