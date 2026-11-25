@@ -285,63 +285,7 @@
         </div>
     </div>
 
-    {{-- ═══════════════════════════════════════════════════════════════
-         KARTU 3: PENGATURAN BADGE & IDENTITAS SOSIAL FOOTER KARTU
-         ═══════════════════════════════════════════════════════════════ --}}
-    <div class="accordion mb-4" id="accordionExtraSettings">
-        <div class="accordion-item border shadow-sm rounded-3 overflow-hidden">
-            <h2 class="accordion-header" id="headingExtra">
-                <button class="accordion-button collapsed fw-bold text-dark py-3" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExtra" aria-expanded="false">
-                    <i class="bi bi-sliders me-2 text-success"></i> Pengaturan Badge & Identitas Sosial Media Footer Kartu (Opsional)
-                </button>
-            </h2>
-            <div id="collapseExtra" class="accordion-collapse collapse" data-bs-parent="#accordionExtraSettings">
-                <div class="accordion-body bg-light bg-opacity-25 pt-3 pb-4">
-                    <div class="row g-3">
-                        <div class="col-md-6 col-12">
-                            <label for="visimisi_badge_humas" class="form-label fw-bold small text-dark">Teks Badge Bawah (Pill Kuning)</label>
-                            <input type="text" 
-                                   class="form-control" 
-                                   id="visimisi_badge_humas" 
-                                   name="visimisi_badge_humas" 
-                                   value="{{ old('visimisi_badge_humas', $about->visimisi_badge_humas ?? 'HUMAS UNIVERSITAS IBNU SINA') }}" 
-                                   placeholder="HUMAS UNIVERSITAS IBNU SINA">
-                        </div>
-                        <div class="col-md-6 col-12">
-                            <label for="visimisi_footer_fb" class="form-label fw-bold small text-dark">Label Akun YouTube / Facebook</label>
-                            <input type="text" 
-                                   class="form-control" 
-                                   id="visimisi_footer_fb" 
-                                   name="visimisi_footer_fb" 
-                                   value="{{ old('visimisi_footer_fb', $about->visimisi_footer_fb ?? 'Universitas Ibnu Sina') }}" 
-                                   placeholder="Universitas Ibnu Sina">
-                        </div>
-                        <div class="col-md-6 col-12">
-                            <label for="visimisi_footer_ig" class="form-label fw-bold small text-dark">Label Akun Instagram / TikTok</label>
-                            <input type="text" 
-                                   class="form-control" 
-                                   id="visimisi_footer_ig" 
-                                   name="visimisi_footer_ig" 
-                                   value="{{ old('visimisi_footer_ig', $about->visimisi_footer_ig ?? 'Official.uisbatam') }}" 
-                                   placeholder="Official.uisbatam">
-                        </div>
-                        <div class="col-md-6 col-12">
-                            <label for="visimisi_footer_url" class="form-label fw-bold small text-dark">Domain / Tautan Website Utama</label>
-                            <div class="input-group">
-                                <span class="input-group-text small bg-light text-muted">https://</span>
-                                <input type="text" 
-                                       class="form-control" 
-                                       id="visimisi_footer_url" 
-                                       name="visimisi_footer_url" 
-                                       value="{{ old('visimisi_footer_url', str_replace(['https://', 'http://'], '', $about->visimisi_footer_url ?? 'uis.ac.id')) }}" 
-                                       placeholder="uis.ac.id">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+
 
     {{-- ═══════════════════════════════════════════════════════════════
          TOMBOL SIMPAN UTAMA
