@@ -98,6 +98,8 @@ class VisiMisiController extends Controller
 
         $validated = $request->validate([
             'visimisi_background' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'],
+            'visimisi_padding_top' => ['nullable', 'integer', 'min:0', 'max:500'],
+            'visimisi_padding_bottom' => ['nullable', 'integer', 'min:0', 'max:500'],
             'visimisi_tagline_visi' => ['nullable', 'string', 'max:5000'],
             'visimisi_misi_items' => ['nullable', 'string', 'max:10000'],
             'visimisi_tatanilai_judul' => ['nullable', 'string', 'max:255'],
@@ -179,6 +181,8 @@ class VisiMisiController extends Controller
 
         $neededColumns = [
             'visimisi_background' => 'VARCHAR(255) NULL',
+            'visimisi_padding_top' => 'INT NULL DEFAULT 50',
+            'visimisi_padding_bottom' => 'INT NULL DEFAULT 70',
             'visimisi_tagline_visi' => 'TEXT NULL',
             'visimisi_misi_items' => 'TEXT NULL',
             'visimisi_tatanilai_judul' => 'VARCHAR(255) NULL',

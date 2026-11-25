@@ -45,13 +45,143 @@
 
 
 {{-- ═══════════════════════════════════════════════════════════════
-     FORM KELOLA KONTEN TEKS VISI, MISI & TATA NILAI UIS
-     (Format Murni Teks Dinamis — Best Practice Codingan)
+     FORM KELOLA KONTEN TEKS & BACKGROUND VISI, MISI & TATA NILAI
      ═══════════════════════════════════════════════════════════════ --}}
-<form action="{{ route('visimisi.update-content') }}" method="POST">
+<form action="{{ route('visimisi.update-content') }}" method="POST" enctype="multipart/form-data">
     @csrf
     @method('PUT')
 
+    {{-- KARTU 1: PENGATURAN BACKGROUND BANNER & MARGIN/PADDING KONTEN --}}
+    <div class="card shadow-sm border-0 mb-4" style="border-radius: 12px;">
+        <div class="card-header bg-white py-3 px-4 d-flex align-items-center justify-content-between flex-wrap gap-2" style="border-top: 3px solid #046B26; border-radius: 12px 12px 0 0;">
+            <div class="d-flex align-items-center gap-3">
+                <div class="rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px; background-color: #e8f5e9; color: #046B26;">
+                    <i class="bi bi-image fs-5"></i>
+                </div>
+                <div>
+                    <h5 class="mb-0 fw-bold" style="color: #1e293b; font-size: 16px;">Pengaturan Background Banner & Jarak Konten</h5>
+                    <small class="text-muted">Kelola gambar background banner secara dinamis serta atur batas atas dan bawah jarak konten.</small>
+                </div>
+            </div>
+            @if(!empty($about->visimisi_background))
+                <span class="badge" style="background-color: #046B26; color: #ffffff; font-size: 11.5px; font-weight: 700; padding: 6px 14px; border-radius: 6px;">
+                    <i class="bi bi-check-circle-fill me-1"></i> Background Kustom Aktif
+                </span>
+            @else
+                <span class="badge bg-secondary" style="font-size: 11.5px; font-weight: 700; padding: 6px 14px; border-radius: 6px;">
+                    <i class="bi bi-shield-check me-1"></i> Background Default Resmi
+                </span>
+            @endif
+        </div>
+        <div class="card-body p-4">
+            <div class="row g-4">
+                {{-- Kolom Kiri: Pratinjau & Upload Background --}}
+                <div class="col-lg-7 col-12">
+                    <label class="form-label fw-bold small text-dark mb-2">
+                        Pratinjau Background Banner Saat Ini:
+                    </label>
+                    <div class="position-relative border rounded-3 p-2 bg-light mb-3 text-center overflow-hidden" style="max-height: 220px;">
+                        <img src="{{ $about->visimisi_background_url }}" 
+                             alt="Background Visi Misi" 
+                             class="img-fluid rounded shadow-sm" 
+                             style="max-height: 200px; width: 100%; object-fit: cover;">
+                        @if(!empty($about->visimisi_background))
+                            <div class="position-absolute bottom-0 end-0 p-3">
+                                <button type="button" 
+                                        class="btn btn-sm btn-danger shadow-sm fw-semibold" 
+                                        onclick="if(confirm('Yakin ingin mereset background ke latar belakang default resmi UIS?')) document.getElementById('form-delete-bg').submit();">
+                                    <i class="bi bi-trash-fill me-1"></i> Reset ke Default
+                                </button>
+                            </div>
+                        @endif
+                    </div>
+
+                    <div class="mb-2">
+                        <label for="visimisi_background" class="form-label fw-bold small text-dark">
+                            Ganti / Upload Background Banner Baru <span class="text-muted fw-normal">(Opsional)</span>
+                        </label>
+                        <input type="file" 
+                               class="form-control form-control-sm @error('visimisi_background') is-invalid @enderror" 
+                               id="visimisi_background" 
+                               name="visimisi_background" 
+                               accept="image/jpeg,image/png,image/jpg,image/webp">
+                        <div class="form-text small text-muted">
+                            Format: JPG, JPEG, PNG, WEBP (Maksimal 5 MB). Rekomendasi rasio: 1920x780 atau 1920x1080 piksel responsif.
+                        </div>
+                        @error('visimisi_background')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+                </div>
+
+                {{-- Kolom Kanan: Pengaturan Batas Margin/Padding Konten --}}
+                <div class="col-lg-5 col-12">
+                    <div class="p-3 rounded-3 border h-100" style="background: #fbfdfb; border-color: #d1e7dd !important;">
+                        <h6 class="fw-bold mb-3 text-success d-flex align-items-center gap-2">
+                            <i class="bi bi-arrows-expand"></i> Pengaturan Jarak Konten (Spacing)
+                        </h6>
+
+                        {{-- Batas Atas Konten (Padding Top) --}}
+                        <div class="mb-3">
+                            <label for="visimisi_padding_top" class="form-label fw-bold small text-dark">
+                                <i class="bi bi-arrow-up-circle-fill text-success me-1"></i> Batas Atas Konten (Margin/Padding Top)
+                            </label>
+                            <div class="input-group input-group-sm">
+                                <input type="number" 
+                                       class="form-control @error('visimisi_padding_top') is-invalid @enderror" 
+                                       id="visimisi_padding_top" 
+                                       name="visimisi_padding_top" 
+                                       value="{{ old('visimisi_padding_top', $about->visimisi_padding_top ?? 50) }}" 
+                                       min="0" 
+                                       max="300" 
+                                       step="5" 
+                                       required>
+                                <span class="input-group-text bg-white">px</span>
+                            </div>
+                            <div class="form-text small text-muted mt-1">
+                                Jarak antara batas atas banner dengan kartu Visi (Standar: <strong>50px</strong>).
+                            </div>
+                            @error('visimisi_padding_top')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        {{-- Batas Bawah Konten (Padding Bottom) --}}
+                        <div class="mb-3">
+                            <label for="visimisi_padding_bottom" class="form-label fw-bold small text-dark">
+                                <i class="bi bi-arrow-down-circle-fill text-success me-1"></i> Batas Bawah Konten (Margin/Padding Bottom)
+                            </label>
+                            <div class="input-group input-group-sm">
+                                <input type="number" 
+                                       class="form-control @error('visimisi_padding_bottom') is-invalid @enderror" 
+                                       id="visimisi_padding_bottom" 
+                                       name="visimisi_padding_bottom" 
+                                       value="{{ old('visimisi_padding_bottom', $about->visimisi_padding_bottom ?? 70) }}" 
+                                       min="0" 
+                                       max="300" 
+                                       step="5" 
+                                       required>
+                                <span class="input-group-text bg-white">px</span>
+                            </div>
+                            <div class="form-text small text-muted mt-1">
+                                Jarak antara batas kartu paling bawah dengan akhir background (Standar: <strong>70px</strong>).
+                            </div>
+                            @error('visimisi_padding_bottom')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="alert alert-light border small text-muted p-2 mb-0 mt-3" style="font-size: 11.5px; line-height: 1.5;">
+                            <i class="bi bi-info-circle text-primary me-1"></i> 
+                            Jika konten bertambah banyak ke bawah, background banner akan secara otomatis ikut memanjang ke bawah secara responsif.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- KARTU 2: KONTEN TEKS VISI, MISI & TATA NILAI UIS --}}
     <div class="card shadow-sm border-0 mb-4" style="border-radius: 12px;">
         <div class="card-header bg-white py-3 px-4 d-flex align-items-center justify-content-between flex-wrap gap-2" style="border-top: 3px solid #046B26; border-radius: 12px 12px 0 0;">
             <div class="d-flex align-items-center gap-3">
@@ -195,6 +325,14 @@
         </div>
     </div>
 </form>
+
+{{-- Form Tersembunyi untuk Reset Background ke Default --}}
+@if(!empty($about->visimisi_background))
+<form id="form-delete-bg" action="{{ route('visimisi.delete-background') }}" method="POST" style="display: none;">
+    @csrf
+    @method('DELETE')
+</form>
+@endif
 @endsection
 
 @push('scripts')

@@ -23,6 +23,8 @@ class About extends Model
         'visimisi_judul',
         'visimisi_deskripsi',
         'visimisi_background',
+        'visimisi_padding_top',
+        'visimisi_padding_bottom',
         'visimisi_tagline_visi',
         'visimisi_misi_items',
         'visimisi_tatanilai_judul',
@@ -155,7 +157,10 @@ class About extends Model
             }
         }
 
-        // Default background gambar Visi Misi resmi UIS
+        // Default background gambar Visi Misi resmi UIS (bersih tanpa teks)
+        if (file_exists(public_path('assets/img/visimisi-campus-clean-bg.jpg'))) {
+            return asset('assets/img/visimisi-campus-clean-bg.jpg');
+        }
         if (file_exists(public_path('assets/img/visimisi-default-bg.jpg'))) {
             return asset('assets/img/visimisi-default-bg.jpg');
         }

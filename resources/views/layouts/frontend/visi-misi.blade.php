@@ -14,13 +14,9 @@
     width: 100%;
     position: relative;
     background-color: #034b1a;
-    background-image: 
-      linear-gradient(180deg, rgba(2, 60, 22, 0.28) 0%, rgba(3, 75, 26, 0.40) 30%, rgba(2, 45, 16, 0.75) 100%),
-      url('{{ asset('assets/img/visimisi-campus-clean-bg.jpg') }}');
     background-size: cover;
     background-position: center top;
     background-repeat: no-repeat;
-    padding: 36px 0 65px 0;
     overflow: hidden;
   }
 
@@ -219,7 +215,13 @@
      POSTER RESMI VISI, MISI & TATA NILAI UIS
      (Format Fullwidth Sesuai Desain Acuan Resmi)
 ═══════════════════════════════════════════════ -->
-<div class="visimisi-fullwidth-wrapper w-100 p-0 m-0">
+@php
+  $bgUrl = $about?->visimisi_background_url ?? asset('assets/img/visimisi-campus-clean-bg.jpg');
+  $padTop = (int)($about?->visimisi_padding_top ?? 50);
+  $padBottom = (int)($about?->visimisi_padding_bottom ?? 70);
+@endphp
+<div class="visimisi-fullwidth-wrapper w-100 p-0 m-0" 
+     style="background-image: linear-gradient(180deg, rgba(2, 60, 22, 0.28) 0%, rgba(3, 75, 26, 0.40) 30%, rgba(2, 45, 16, 0.75) 100%), url('{{ $bgUrl }}'); padding-top: {{ $padTop }}px !important; padding-bottom: {{ $padBottom }}px !important;">
 
   {{-- Garis Gelombang Hijau Lime Organis --}}
   <svg class="visimisi-wave-lines" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 120" preserveAspectRatio="none">
