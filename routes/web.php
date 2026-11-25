@@ -204,6 +204,7 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     Route::prefix('admin-akademik')->name('akademik.')->group(function () {
         Route::get('kurikulum', [AkademikController::class, 'kurikulum'])->name('kurikulum');
         Route::get('kalender', [AkademikController::class, 'kalender'])->name('kalender');
+        Route::post('kalender/sync-dokumen', [AkademikController::class, 'syncKalenderFromDokumen'])->name('kalender.sync');
         Route::get('pedoman', [AkademikController::class, 'pedoman'])->name('pedoman');
         Route::get('sistem', [AkademikController::class, 'sistem'])->name('sistem');
         Route::put('{tipe}', [AkademikController::class, 'update'])->name('update');

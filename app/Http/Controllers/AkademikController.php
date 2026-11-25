@@ -154,6 +154,21 @@ class AkademikController extends Controller
 
         // Handle agenda_items for kalender
         if ($tipe === 'kalender') {
+            // Jika ada file dokumen diunggah, otomatis baca konten berkas untuk ditempatkan ke dalam kalender
+            if ($request->hasFile('file_dokumen')) {
+                try {
+                    $parser = app(\App\Services\KalenderParserService::class);
+                    $parsedEvents = $parser->parseFile(
+                        $request->file('file_dokumen')->getRealPath(),
+                        $request->file('file_dokumen')->getClientOriginalName()
+                    );
+                    if (!empty($parsedEvents)) {
+                        $validated['agenda_items'] = $parsedEvents;
+                    }
+                } catch (\Throwable $e) {}
+            }
+
+            // Jika ada perubahan dari tabel agenda di form admin, simpan perubahan tersebut
             if ($request->has('agenda_items') && is_array($request->input('agenda_items'))) {
                 $filteredItems = [];
                 foreach ($request->input('agenda_items') as $agenda) {
@@ -191,5 +206,34 @@ class AkademikController extends Controller
         return redirect()
             ->route($routeName)
             ->with('success', "Pengaturan data {$this->defaults[$tipe]['judul']} berhasil diperbarui!");
+    }
+
+    /**
+     * Membaca ulang berkas dokumen kalender dan menempatkan tanggal/agendanya ke kalender
+     */
+    public function syncKalenderFromDokumen(): RedirectResponse
+    {
+        $item = $this->getOrCreateItem('kalender');
+        $parser = app(\App\Services\KalenderParserService::class);
+
+        $filePath = null;
+        $fileName = '';
+        if ($item->file_dokumen) {
+            $storagePath = storage_path('app/public/' . $item->file_dokumen);
+            $publicPath = public_path('assets/dokumen/akademik/' . basename($item->file_dokumen));
+            if (file_exists($storagePath)) {
+                $filePath = $storagePath;
+            } elseif (file_exists($publicPath)) {
+                $filePath = $publicPath;
+            }
+            $fileName = $item->file_nama ?: basename($item->file_dokumen);
+        }
+
+        $events = $filePath ? $parser->parseFile($filePath, $fileName) : $parser->getDefaultAcademicEvents();
+        $item->update(['agenda_items' => $events]);
+
+        return redirect()
+            ->route('akademik.kalender')
+            ->with('success', 'Konten kalender akademik berhasil dibaca dari dokumen dan ditempatkan ke dalam kalender!');
     }
 }

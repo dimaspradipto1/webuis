@@ -293,8 +293,14 @@ class FrontendController extends Controller
         ]);
         $pageTitle = 'Kalender Akademik';
 
+        $rawAgendas = $item->agenda_items;
+        if (empty($rawAgendas) || !is_array($rawAgendas)) {
+            $rawAgendas = app(\App\Services\KalenderParserService::class)->getDefaultAcademicEvents();
+            $item->update(['agenda_items' => $rawAgendas]);
+        }
+
         // Filter hanya agenda yang statusnya AKTIF (is_active)
-        $agendaItems = collect($item->agenda_items ?? [])
+        $agendaItems = collect($rawAgendas)
             ->filter(function ($ag) {
                 return !isset($ag['is_active']) || $ag['is_active'] === true || $ag['is_active'] === '1' || $ag['is_active'] === 1;
             })
