@@ -271,10 +271,11 @@ Route::middleware(['auth', 'checkrole'])->group(function () {
     });
     Route::put('visimisi-header', [VisiMisiController::class, 'updateHeader'])->name('visimisi.update-header');
     Route::match(['post', 'put'], 'visimisi-konten', [VisiMisiController::class, 'updateContent'])->name('visimisi.update-content');
+    Route::match(['post', 'put'], 'visimisi/update-content', [VisiMisiController::class, 'updateContent']);
     Route::post('visimisi-background', [VisiMisiController::class, 'updateBackground'])->name('visimisi.update-background');
+    Route::post('visimisi/update-background', [VisiMisiController::class, 'updateBackground']);
     Route::delete('visimisi-delete-background', [VisiMisiController::class, 'deleteBackground'])->name('visimisi.delete-background');
     Route::delete('visimisi/delete-background', [VisiMisiController::class, 'deleteBackground']);
-    Route::post('visimisi/update-content', [VisiMisiController::class, 'updateContent']);
     Route::resource('visimisi', VisiMisiController::class);
     Route::resource('nilaiperusahaan', NilaiPerusahaanController::class);
     Route::resource('faculty-stat', FacultyStatController::class);

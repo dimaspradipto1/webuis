@@ -50,17 +50,27 @@ class VisiMisiController extends Controller
     }
 
     /**
-     * Upload dan simpan khusus Background Utama Visi Misi
+     * Upload dan simpan khusus Background Utama dan Spacing Visi Misi
      */
     public function updateBackground(Request $request): RedirectResponse
     {
         $this->ensureSchemaExists();
 
-        $request->validate([
-            'visimisi_background' => ['required', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'],
+        $validated = $request->validate([
+            'visimisi_background' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'],
+            'visimisi_padding_top' => ['nullable', 'integer', 'min:0', 'max:500'],
+            'visimisi_padding_bottom' => ['nullable', 'integer', 'min:0', 'max:500'],
         ]);
 
         $about = About::firstOrCreate(['id' => 1]);
+        $updateData = [];
+
+        if ($request->has('visimisi_padding_top')) {
+            $updateData['visimisi_padding_top'] = $request->input('visimisi_padding_top');
+        }
+        if ($request->has('visimisi_padding_bottom')) {
+            $updateData['visimisi_padding_bottom'] = $request->input('visimisi_padding_bottom');
+        }
 
         if ($request->hasFile('visimisi_background')) {
             if ($about->visimisi_background) {
@@ -72,20 +82,14 @@ class VisiMisiController extends Controller
                     @unlink(public_path('storage/' . $oldPath));
                 }
             }
-            $path = $request->file('visimisi_background')->store('visi-misi', 'public');
-
-            if (!Schema::hasColumn('abouts', 'visimisi_background')) {
-                try {
-                    \Illuminate\Support\Facades\DB::statement("ALTER TABLE `abouts` ADD COLUMN `visimisi_background` VARCHAR(255) NULL AFTER `visimisi_deskripsi`");
-                } catch (\Throwable $e) {
-                    \Illuminate\Support\Facades\Log::error('Auto add column visimisi_background failed: ' . $e->getMessage());
-                }
-            }
-
-            $about->update(['visimisi_background' => $path]);
+            $updateData['visimisi_background'] = $request->file('visimisi_background')->store('visi-misi', 'public');
         }
 
-        alert()->success('Berhasil!', 'Background utama Visi & Misi berhasil diunggah dan disimpan.');
+        if (!empty($updateData)) {
+            $about->update($updateData);
+        }
+
+        alert()->success('Berhasil!', 'Pengaturan background dan jarak margin banner berhasil disimpan.');
         return redirect()->route('visimisi.index');
     }
 

@@ -45,11 +45,11 @@
 
 
 {{-- ═══════════════════════════════════════════════════════════════
-     FORM KELOLA KONTEN TEKS & BACKGROUND VISI, MISI & TATA NILAI
+     FORM 1: PENGATURAN BACKGROUND BANNER & JARAK KONTEN (SPACING)
+     (Dedicated Form untuk Upload File & Angka Jarak — Aman dari ModSecurity/WAF LiteSpeed)
      ═══════════════════════════════════════════════════════════════ --}}
-<form action="{{ route('visimisi.update-content') }}" method="POST" enctype="multipart/form-data">
+<form action="{{ route('visimisi.update-background') }}" method="POST" enctype="multipart/form-data">
     @csrf
-    @method('PUT')
 
     {{-- KARTU 1: PENGATURAN BACKGROUND BANNER & MARGIN/PADDING KONTEN --}}
     <div class="card shadow-sm border-0 mb-4" style="border-radius: 12px;">
@@ -179,7 +179,21 @@
                 </div>
             </div>
         </div>
+        <div class="card-footer bg-white py-3 px-4 d-flex justify-content-between align-items-center flex-wrap gap-2 border-top">
+            <span class="small text-muted"><i class="bi bi-info-circle me-1"></i> Klik simpan untuk menerapkan gambar background baru dan pengaturan jarak spacing.</span>
+            <button type="submit" class="btn btn-success fw-semibold px-4 py-2 shadow-sm">
+                <i class="bi bi-cloud-arrow-up-fill me-1"></i> Simpan Background & Jarak
+            </button>
+        </div>
     </div>
+</form>
+
+{{-- ═══════════════════════════════════════════════════════════════
+     FORM 2: KELOLA KONTEN TEKS VISI, MISI & TATA NILAI UIS
+     (Format Standar Form POST — Murni Konten Teks, Bebas Block WAF LiteSpeed)
+     ═══════════════════════════════════════════════════════════════ --}}
+<form action="{{ route('visimisi.update-content') }}" method="POST">
+    @csrf
 
     {{-- KARTU 2: KONTEN TEKS VISI, MISI & TATA NILAI UIS --}}
     <div class="card shadow-sm border-0 mb-4" style="border-radius: 12px;">
