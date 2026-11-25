@@ -49,16 +49,6 @@
         <span>/</span>
         <span class="active">{{ $active }}</span>
       </div>
-
-      @auth
-        @if($bc && (Auth::user()?->isAdmin() || Auth::user()?->roles === 'admin'))
-          <div class="mt-3 pt-1">
-            <a href="{{ route('breadcrumb-setting.edit', $bc->id) }}" target="_blank" class="btn btn-sm rounded-pill px-3 py-1 shadow-sm fw-bold d-inline-flex align-items-center gap-1" style="font-size: 11.5px; background: #fed802; color: #111; border: 1px solid rgba(0,0,0,0.15);">
-              <i class="bi bi-pencil-square"></i> Edit Breadcrumb & Hero Halaman Ini
-            </a>
-          </div>
-        @endif
-      @endauth
     </div>
   </div>
 </div>
