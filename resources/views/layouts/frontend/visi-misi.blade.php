@@ -159,25 +159,6 @@
     .visimisi-fullwidth-wrapper {
       padding: 26px 0 46px 0;
     }
-    .visimisi-brand-row {
-      gap: 20px;
-    }
-    .brand-logo-uis {
-      height: 44px;
-    }
-    .brand-logo-kemdikbud {
-      height: 38px;
-      width: 38px;
-    }
-    .brand-logo-dikti {
-      height: 38px;
-    }
-    .brand-text .univ {
-      font-size: 11.5px;
-    }
-    .brand-text .name {
-      font-size: 15px;
-    }
     .visimisi-content-card {
       padding: 20px 24px;
     }
@@ -190,12 +171,6 @@
   }
 
   @media (max-width: 768px) {
-    .visimisi-brand-row {
-      gap: 16px;
-    }
-    .brand-divider {
-      display: none;
-    }
     .visimisi-content-card {
       padding: 18px 20px;
       border-radius: 12px;
@@ -211,18 +186,6 @@
   @media (max-width: 576px) {
     .visimisi-fullwidth-wrapper {
       padding: 20px 0 35px 0;
-    }
-    .visimisi-brand-row {
-      flex-direction: column;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 16px;
-    }
-    .brand-divider {
-      display: none;
-    }
-    .brand-item {
-      justify-content: center;
     }
     .visimisi-content-card {
       padding: 14px 16px;
@@ -271,41 +234,6 @@
 
   <div class="container position-relative" style="z-index: 3;">
     
-    {{-- 1. Baris Brand Logo & Teks Sesuai Gambar Acuan Resmi --}}
-    <div class="visimisi-brand-row">
-      
-      {{-- Brand 1: Universitas Ibnu Sina --}}
-      <div class="brand-item">
-        <img src="{{ asset('assets/img/logouis.png') }}" alt="Logo UIS" class="brand-logo-uis">
-        <div class="brand-text">
-          <span class="univ">UNIVERSITAS</span>
-          <span class="name">IBNU SINA</span>
-        </div>
-      </div>
-
-      {{-- Divider 1 --}}
-      <div class="brand-divider"></div>
-
-      {{-- Brand 2: Humas Universitas Ibnu Sina & Kemdikbud --}}
-      <div class="brand-item">
-        <img src="{{ asset('assets/img/layanan-terkait/kemdikbud.svg') }}" alt="Logo Kemdikbud" class="brand-logo-kemdikbud">
-        <div class="brand-text">
-          <span class="humas">HUMAS</span>
-          <span class="univ">UNIVERSITAS</span>
-          <span class="name">IBNU SINA</span>
-        </div>
-      </div>
-
-      {{-- Divider 2 --}}
-      <div class="brand-divider"></div>
-
-      {{-- Brand 3: Diktisaintek Berdampak --}}
-      <div class="brand-item">
-        <img src="{{ asset('assets/img/logo-diktisaintek-horizontal.svg') }}" alt="Diktisaintek Berdampak" class="brand-logo-dikti">
-      </div>
-
-    </div>
-
     {{-- Konten Dinamis Visi, Misi & Tata Nilai UIS --}}
     <div class="row justify-content-center">
       <div class="col-xl-9 col-lg-10 col-12" data-aos="fade-up" data-aos-delay="100">
