@@ -16,7 +16,7 @@ use Illuminate\View\View;
 
 class VisiMisiController extends Controller
 {
-    public function index(): View
+    public function index(VisiMisiDataTable $dataTable)
     {
         $this->ensureSchemaExists();
 
@@ -46,7 +46,7 @@ class VisiMisiController extends Controller
 
         $breadcrumb = Breadcrumb::getForPage('visi-misi');
 
-        return view('pages.visimisi.index', compact('about', 'breadcrumb'));
+        return $dataTable->render('pages.visimisi.index', compact('about', 'breadcrumb'));
     }
 
     /**
