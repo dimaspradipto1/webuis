@@ -82,9 +82,11 @@
                     </label>
                     <div class="position-relative border rounded-3 p-2 bg-light mb-3 text-center overflow-hidden" style="max-height: 220px;">
                         <img src="{{ $about->visimisi_background_url }}" 
+                             id="preview-bg-img"
                              alt="Background Visi Misi" 
                              class="img-fluid rounded shadow-sm" 
-                             style="max-height: 200px; width: 100%; object-fit: cover;">
+                             style="max-height: 200px; width: 100%; object-fit: cover;"
+                             onerror="this.onerror=null; this.src='{{ asset('assets/img/visimisi-campus-clean-bg.jpg') }}';">
                         @if(!empty($about->visimisi_background))
                             <div class="position-absolute bottom-0 end-0 p-3">
                                 <button type="button" 
@@ -374,6 +376,21 @@
             mainForm.addEventListener('submit', function () {
                 if (typeof tinymce !== 'undefined') {
                     tinymce.triggerSave();
+                }
+            });
+        }
+
+        const bgInput = document.getElementById('visimisi_background');
+        const bgPreview = document.getElementById('preview-bg-img');
+        if (bgInput && bgPreview) {
+            bgInput.addEventListener('change', function (e) {
+                const file = e.target.files && e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function (evt) {
+                        bgPreview.src = evt.target.result;
+                    };
+                    reader.readAsDataURL(file);
                 }
             });
         }

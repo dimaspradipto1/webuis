@@ -107,11 +107,12 @@ class VisiMisiController extends Controller
                 $oldBase = basename($oldClean);
 
                 try {
-                    if (Storage::disk('public')->exists($oldClean)) {
-                        Storage::disk('public')->delete($oldClean);
-                    }
+                    Storage::disk('public')->delete([$oldClean, 'visi-misi/' . $oldBase]);
                     if (file_exists(public_path('storage/' . $oldClean))) {
                         @unlink(public_path('storage/' . $oldClean));
+                    }
+                    if (file_exists(public_path('storage/visi-misi/' . $oldBase))) {
+                        @unlink(public_path('storage/visi-misi/' . $oldBase));
                     }
                     if (file_exists(public_path('assets/img/' . $oldBase))) {
                         @unlink(public_path('assets/img/' . $oldBase));
@@ -119,7 +120,7 @@ class VisiMisiController extends Controller
                 } catch (\Throwable $e) {}
             }
 
-            $updateData['visimisi_background'] = $filename;
+            $updateData['visimisi_background'] = 'visi-misi/' . $filename;
         }
 
         if (!empty($updateData)) {

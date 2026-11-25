@@ -149,38 +149,39 @@ class About extends Model
 
             $cleanPath = ltrim(preg_replace('#^(public/|storage/)#', '', $raw), '/');
             $baseName = basename($cleanPath);
+            $subPath = str_contains($cleanPath, '/') ? $cleanPath : ('visi-misi/' . $cleanPath);
 
-            // 1. Cek di public/assets/img/ (paling cepat & aman tanpa ketergantungan symlink)
+            // 1. Cek di public/assets/img/ (jika tersalin langsung ke folder assets)
             if (file_exists(public_path('assets/img/' . $baseName))) {
                 $ver = filemtime(public_path('assets/img/' . $baseName));
                 return asset('assets/img/' . $baseName) . '?v=' . $ver;
             }
 
-            // 2. Cek di public/storage/
+            // 2. Cek di public/storage/ (jika symlink aktif)
+            if (file_exists(public_path('storage/' . $subPath))) {
+                $ver = filemtime(public_path('storage/' . $subPath));
+                return asset('storage/' . $subPath) . '?v=' . $ver;
+            }
             if (file_exists(public_path('storage/' . $cleanPath))) {
                 $ver = filemtime(public_path('storage/' . $cleanPath));
                 return asset('storage/' . $cleanPath) . '?v=' . $ver;
             }
 
-            // 3. Cek di public root
+            // 3. Cek di Storage disk public (melalui storage fallback route di web.php)
+            try {
+                if (\Illuminate\Support\Facades\Storage::disk('public')->exists($subPath)) {
+                    return asset('storage/' . $subPath) . '?v=' . time();
+                }
+                if (\Illuminate\Support\Facades\Storage::disk('public')->exists($cleanPath)) {
+                    return asset('storage/' . $cleanPath) . '?v=' . time();
+                }
+            } catch (\Throwable $e) {}
+
+            // 4. Cek di public root
             if (file_exists(public_path($cleanPath))) {
                 $ver = filemtime(public_path($cleanPath));
                 return asset($cleanPath) . '?v=' . $ver;
             }
-
-            // 4. Cek di Storage disk public
-            try {
-                if (\Illuminate\Support\Facades\Storage::disk('public')->exists($cleanPath)) {
-                    return \Illuminate\Support\Facades\Storage::disk('public')->url($cleanPath);
-                }
-            } catch (\Throwable $e) {}
-
-            // 5. Fallback jika ada data file kustom di DB tapi file_exists server gagal:
-            // Tetap arahkan ke asset kustom agar browser me-request file kustom (bukan revert ke default!)
-            if (str_contains($cleanPath, '/')) {
-                return asset('storage/' . $cleanPath) . '?v=' . time();
-            }
-            return asset('assets/img/' . $baseName) . '?v=' . time();
         }
 
         // Default background gambar Visi Misi resmi UIS (bersih tanpa teks)
@@ -193,7 +194,7 @@ class About extends Model
             return asset('assets/img/visimisi-default-bg.jpg') . '?v=' . $ver;
         }
 
-        return null;
+        return asset('assets/img/visimisi-campus-clean-bg.jpg');
     }
 
     /**

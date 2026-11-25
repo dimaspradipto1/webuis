@@ -332,9 +332,13 @@ Route::get('/api/live-state', [\App\Http\Controllers\ThemeSettingController::cla
 
 // Fallback Serving Storage (Menjamin semua file upload tetap tampil meskipun symlink public/storage belum dibuat di cPanel/shared hosting)
 Route::get('/storage/{path}', function (string $path) {
-    $cleanPath = ltrim($path, '/');
-    if (!\Illuminate\Support\Facades\Storage::disk('public')->exists($cleanPath)) {
-        abort(404);
+    $cleanPath = ltrim(urldecode($path), '/');
+    if (\Illuminate\Support\Facades\Storage::disk('public')->exists($cleanPath)) {
+        return \Illuminate\Support\Facades\Storage::disk('public')->response($cleanPath);
     }
-    return \Illuminate\Support\Facades\Storage::disk('public')->response($cleanPath);
+    $baseName = basename($cleanPath);
+    if (\Illuminate\Support\Facades\Storage::disk('public')->exists('visi-misi/' . $baseName)) {
+        return \Illuminate\Support\Facades\Storage::disk('public')->response('visi-misi/' . $baseName);
+    }
+    abort(404);
 })->where('path', '.*')->name('storage.fallback');
