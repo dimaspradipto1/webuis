@@ -65,7 +65,7 @@
     justify-content: center;
     gap: 36px;
     flex-wrap: wrap;
-    margin-bottom: 22px;
+    margin-bottom: 32px;
   }
 
   .brand-item {
@@ -127,36 +127,6 @@
     height: 38px;
     background: rgba(255, 255, 255, 0.7);
     border-radius: 2px;
-  }
-
-  /* Judul Besar Ikonik UNIVERSITAS IBNU SINA Sesuai Desain Acuan */
-  .visimisi-title-wrap {
-    position: relative;
-    z-index: 3;
-    margin: 16px 0 28px 0;
-  }
-  .visimisi-banner-title {
-    font-family: 'Plus Jakarta Sans', Arial, sans-serif;
-    font-weight: 900;
-    font-style: italic;
-    font-size: 46px;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    line-height: 1.15;
-    margin-bottom: 0;
-    display: inline-block;
-    filter: drop-shadow(0 4px 16px rgba(0, 0, 0, 0.85));
-  }
-  .visimisi-banner-title .text-white {
-    color: #ffffff;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.75);
-  }
-  .visimisi-banner-title .text-yellow {
-    color: #fed802;
-    background: linear-gradient(180deg, #fff8a6 0%, #fed802 60%, #dfb500 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.55));
   }
 
   /* Section Badge Pills: VISI:, MISI:, TATA NILAI UIS "CIP": */
@@ -265,9 +235,6 @@
     .brand-text .name {
       font-size: 15px;
     }
-    .visimisi-banner-title {
-      font-size: 34px;
-    }
     .visimisi-content-card {
       padding: 20px 24px;
     }
@@ -313,13 +280,6 @@
     }
     .brand-item {
       justify-content: center;
-    }
-    .visimisi-banner-title {
-      font-size: 24px;
-      letter-spacing: 0.8px;
-    }
-    .visimisi-title-wrap {
-      margin: 10px 0 20px 0;
     }
     .visimisi-content-card {
       padding: 14px 16px;
@@ -403,14 +363,7 @@
 
     </div>
 
-    {{-- 2. Judul Besar Ikonik UNIVERSITAS IBNU SINA Sesuai Gambar Acuan Asli --}}
-    <div class="visimisi-title-wrap text-center" data-aos="fade-down" data-aos-delay="50">
-      <h1 class="visimisi-banner-title">
-        <span class="text-white">UNIVERSITAS</span> <span class="text-yellow">IBNU SINA</span>
-      </h1>
-    </div>
-
-    {{-- 3. Konten Dinamis Terletak Langsung Di Bawah UNIVERSITAS IBNU SINA --}}
+    {{-- Konten Dinamis Visi, Misi & Tata Nilai UIS --}}
     <div class="row justify-content-center">
       <div class="col-xl-9 col-lg-10 col-12" data-aos="fade-up" data-aos-delay="100">
           
