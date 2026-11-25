@@ -141,7 +141,7 @@
                     </h6>
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <label for="nama_ketua" class="form-label fw-semibold text-dark">Nama Ketua Organisasi</label>
                     <input type="text" name="nama_ketua" id="nama_ketua" class="form-control @error('nama_ketua') is-invalid @enderror" value="{{ old('nama_ketua', $organisasiMahasiswa->nama_ketua) }}">
                     @error('nama_ketua')
@@ -149,18 +149,10 @@
                     @enderror
                 </div>
 
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <label for="nama_wakil" class="form-label fw-semibold text-dark">Nama Wakil Ketua</label>
                     <input type="text" name="nama_wakil" id="nama_wakil" class="form-control @error('nama_wakil') is-invalid @enderror" value="{{ old('nama_wakil', $organisasiMahasiswa->nama_wakil) }}">
                     @error('nama_wakil')
-                        <div class="invalid-feedback">{{ $message }}</div>
-                    @enderror
-                </div>
-
-                <div class="col-md-4">
-                    <label for="pembina" class="form-label fw-semibold text-dark">Dosen Pembina Organisasi</label>
-                    <input type="text" name="pembina" id="pembina" class="form-control @error('pembina') is-invalid @enderror" value="{{ old('pembina', $organisasiMahasiswa->pembina) }}">
-                    @error('pembina')
                         <div class="invalid-feedback">{{ $message }}</div>
                     @enderror
                 </div>

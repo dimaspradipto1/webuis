@@ -44,8 +44,8 @@ class OrganisasiMahasiswaDataTable extends DataTable
                 if (! empty($o->nama_ketua)) {
                     $html .= '<div><strong>Ketua:</strong> '.e($o->nama_ketua).'</div>';
                 }
-                if (! empty($o->pembina)) {
-                    $html .= '<div class="text-muted"><strong>Pembina:</strong> '.e($o->pembina).'</div>';
+                if (! empty($o->nama_wakil)) {
+                    $html .= '<div class="text-muted"><strong>Wakil:</strong> '.e($o->nama_wakil).'</div>';
                 }
                 $html .= '</div>';
 
@@ -141,7 +141,7 @@ class OrganisasiMahasiswaDataTable extends DataTable
             Column::make('logo_preview')->title('Logo')->width('70px')->addClass('text-center')->searchable(false)->orderable(false),
             Column::make('nama_organisasi')->title('Nama Organisasi & Periode')->width('260px')->searchable(true),
             Column::make('kategori')->title('Kategori')->width('180px')->addClass('text-center')->searchable(true),
-            Column::make('kepengurusan')->title('Ketua & Pembina')->width('180px')->searchable(false),
+            Column::make('kepengurusan')->title('Ketua & Wakil')->width('180px')->searchable(false),
             Column::make('kontak')->title('Media Sosial / Pendaftaran')->width('130px')->addClass('text-center')->searchable(false),
             Column::make('status')->title('Status')->width('90px')->addClass('text-center'),
             Column::computed('action')->title('Aksi')->exportable(false)->printable(false)->width('90px')->addClass('text-center'),

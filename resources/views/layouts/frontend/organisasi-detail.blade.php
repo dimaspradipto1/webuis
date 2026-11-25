@@ -98,17 +98,7 @@
               </div>
             @endif
 
-            @if(!empty($organisasi->pembina))
-              <div class="col-sm-6">
-                <div class="info-badge-box">
-                  <div class="info-badge-icon" style="background: #046B26; color: #ffffff;"><i class="bi bi-mortarboard-fill"></i></div>
-                  <div>
-                    <small class="text-muted d-block">Dosen Pembina</small>
-                    <strong class="text-dark">{{ $organisasi->pembina }}</strong>
-                  </div>
-                </div>
-              </div>
-            @endif
+
 
             @if(!empty($organisasi->periode))
               <div class="col-sm-6">
