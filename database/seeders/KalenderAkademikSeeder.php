@@ -18,6 +18,7 @@ class KalenderAkademikSeeder extends Seeder
         ]);
 
         $kalender->agenda_items = [
+            // --- SEMESTER GANJIL 2026/2027 ---
             [
                 'semester' => 'Ganjil',
                 'kegiatan' => 'Pembayaran Biaya Kuliah & Registrasi Ulang Mahasiswa',
@@ -52,11 +53,35 @@ class KalenderAkademikSeeder extends Seeder
             ],
             [
                 'semester' => 'Ganjil',
+                'kegiatan' => 'Masa Revisi / Perubahan Kartu Rencana Studi (KRS)',
+                'tanggal_mulai' => '2026-09-07',
+                'tanggal_selesai' => '2026-09-12',
+                'kategori' => 'Akademik',
+                'keterangan' => 'Batas akhir pembatalan dan tambah mata kuliah',
+            ],
+            [
+                'semester' => 'Ganjil',
                 'kegiatan' => 'Ujian Tengah Semester (UTS) Ganjil',
                 'tanggal_mulai' => '2026-10-19',
                 'tanggal_selesai' => '2026-10-31',
                 'kategori' => 'Ujian',
                 'keterangan' => 'Pelaksanaan UTS terjadwal',
+            ],
+            [
+                'semester' => 'Ganjil',
+                'kegiatan' => 'Perkuliahan Efektif Tengah Semester & Bimbingan Skripsi/Tesis',
+                'tanggal_mulai' => '2026-11-02',
+                'tanggal_selesai' => '2026-11-21',
+                'kategori' => 'Perkuliahan',
+                'keterangan' => 'Perkuliahan sesi paruh kedua semester ganjil',
+            ],
+            [
+                'semester' => 'Ganjil',
+                'kegiatan' => 'Batas Penginputan Nilai UTS ke SIAKAD & Verifikasi Dosen',
+                'tanggal_mulai' => '2026-11-23',
+                'tanggal_selesai' => '2026-11-28',
+                'kategori' => 'Akademik',
+                'keterangan' => 'Penginputan nilai UTS oleh dosen pengampu',
             ],
             [
                 'semester' => 'Ganjil',
@@ -83,6 +108,16 @@ class KalenderAkademikSeeder extends Seeder
                 'keterangan' => 'Batas penginputan nilai ke PD-DIKTI',
             ],
             [
+                'semester' => 'Ganjil',
+                'kegiatan' => 'Yudisium Kelulusan Periode Ganjil',
+                'tanggal_mulai' => '2027-01-16',
+                'tanggal_selesai' => '2027-01-16',
+                'kategori' => 'Wisuda',
+                'keterangan' => 'Sidang Yudisium Fakultas',
+            ],
+
+            // --- SEMESTER GENAP 2026/2027 ---
+            [
                 'semester' => 'Genap',
                 'kegiatan' => 'Pembayaran Biaya Kuliah & Registrasi Ulang Semester Genap',
                 'tanggal_mulai' => '2027-01-11',
@@ -108,6 +143,14 @@ class KalenderAkademikSeeder extends Seeder
             ],
             [
                 'semester' => 'Genap',
+                'kegiatan' => 'Masa Revisi / Batal Tambah Mata Kuliah Semester Genap',
+                'tanggal_mulai' => '2027-02-15',
+                'tanggal_selesai' => '2027-02-20',
+                'kategori' => 'Akademik',
+                'keterangan' => 'Penyesuaian KRS semester genap',
+            ],
+            [
+                'semester' => 'Genap',
                 'kegiatan' => 'Ujian Tengah Semester (UTS) Genap',
                 'tanggal_mulai' => '2027-04-05',
                 'tanggal_selesai' => '2027-04-17',
@@ -116,11 +159,27 @@ class KalenderAkademikSeeder extends Seeder
             ],
             [
                 'semester' => 'Genap',
+                'kegiatan' => 'Batas Akhir Perkuliahan Semester Genap',
+                'tanggal_mulai' => '2027-05-29',
+                'tanggal_selesai' => '2027-05-29',
+                'kategori' => 'Perkuliahan',
+                'keterangan' => 'Penutupan perkuliahan genap',
+            ],
+            [
+                'semester' => 'Genap',
                 'kegiatan' => 'Ujian Akhir Semester (UAS) Genap',
                 'tanggal_mulai' => '2027-05-31',
                 'tanggal_selesai' => '2027-06-12',
                 'kategori' => 'Ujian',
                 'keterangan' => 'Ujian Akhir Genap',
+            ],
+            [
+                'semester' => 'Genap',
+                'kegiatan' => 'Libur Semester Genap & Program KKN / Magang Industri',
+                'tanggal_mulai' => '2027-06-14',
+                'tanggal_selesai' => '2027-07-31',
+                'kategori' => 'Libur',
+                'keterangan' => 'Pelaksanaan KKN dan MBKM',
             ],
             [
                 'semester' => 'Genap',
