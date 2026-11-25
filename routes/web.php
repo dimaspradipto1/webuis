@@ -74,6 +74,7 @@ Route::controller(FrontendController::class)->group(function () {
     Route::get('/pedoman-akademik', 'pedomanAkademik')->name('homepage.pedoman-akademik');
     Route::get('/sistem-akademik', 'sistemAkademik')->name('homepage.sistem-akademik');
     Route::get('/program-studi', 'programStudi')->name('homepage.program-studi');
+    Route::get('/fakultas', 'programStudi')->name('homepage.fakultas');
     Route::get('/program-studi/{slug}', 'programStudiDetail')->name('homepage.program-studi.detail');
     Route::get('/kampus-berdampak', 'kampusBerdampak')->name('homepage.kampus-berdampak');
     Route::get('/kerjasama', 'kerjasama')->name('homepage.kerjasama');

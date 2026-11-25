@@ -41,44 +41,9 @@
         </li>
 
 
-        <!-- Program Studi Dropdown -->
-        <li class="nav-item dropdown">
-          <a class="nav-link nav-link-custom dropdown-toggle {{ request()->routeIs('homepage.layanan*') || request()->routeIs('homepage.program-studi*') ? 'active' : '' }}" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Fakultas <i class="bi bi-chevron-down ms-1" style="font-size: 10px;"></i>
-          </a>
-          <ul class="dropdown-menu dropdown-menu-custom">
-            @if(isset($navProdis) && $navProdis->count() > 0)
-              @foreach($navProdis as $navProdi)
-                @php
-                  $rawLink = trim($navProdi->link ?? '');
-                  if (!empty($rawLink) && !str_starts_with($rawLink, 'http://') && !str_starts_with($rawLink, 'https://') && !str_starts_with($rawLink, '/') && !str_starts_with($rawLink, '#')) {
-                      $rawLink = 'https://' . $rawLink;
-                  }
-                  $hasLink = !empty($rawLink);
-                  $prodiHref = $hasLink ? $rawLink : route('homepage.program-studi');
-                  $isExternal = $hasLink && (str_starts_with($rawLink, 'http://') || str_starts_with($rawLink, 'https://'));
-                @endphp
-                <li>
-                  <a class="dropdown-item dropdown-item-custom"
-                     href="{{ $prodiHref }}"
-                     @if($isExternal) target="_blank" rel="noopener noreferrer" @endif>
-                    <i class="bi {{ $navProdi->icon ?: 'bi-mortarboard-fill' }}" style="color: var(--uis-green);"></i>
-                    <span>{{ $navProdi->judul }}</span>
-                    @if($isExternal)
-                      <i class="bi bi-box-arrow-up-right ms-auto text-muted" style="font-size: 10px;" title="Buka website fakultas"></i>
-                    @endif
-                  </a>
-                </li>
-              @endforeach
-              <li><hr class="dropdown-divider my-1"></li>
-            @endif
-            <li>
-              <a class="dropdown-item dropdown-item-custom {{ request()->routeIs('homepage.program-studi*') || request()->routeIs('homepage.layanan*') ? 'active' : '' }}" href="{{ route('homepage.program-studi') }}">
-                <i class="bi bi-journal-bookmark-fill" style="color: var(--uis-green);"></i>
-                <span class="fw-semibold">Program Studi UIS (S1 & S2)</span>
-              </a>
-            </li>
-          </ul>
+        <!-- Fakultas (Langsung tanpa Dropdown) -->
+        <li class="nav-item">
+          <a href="{{ route('homepage.program-studi') }}" class="nav-link nav-link-custom {{ request()->routeIs('homepage.layanan*') || request()->routeIs('homepage.program-studi*') || request()->routeIs('homepage.fakultas*') ? 'active' : '' }}">Fakultas</a>
         </li>
 
         <!-- Kemahasiswaan Dropdown -->

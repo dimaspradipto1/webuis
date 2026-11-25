@@ -141,7 +141,7 @@
                     </div>
                 </div>
                 <div class="pv-menu">
-                    <span class="active">Beranda</span><span>Profil <i class="bi bi-chevron-down" style="font-size:9px"></i></span><span>Fakultas <i class="bi bi-chevron-down" style="font-size:9px"></i></span><span>Kemahasiswaan</span><span>Informasi</span><span>Humas</span><span>Kontak</span>
+                    <span class="active">Beranda</span><span>Profil <i class="bi bi-chevron-down" style="font-size:9px"></i></span><span>Fakultas</span><span>Kemahasiswaan</span><span>Informasi</span><span>Humas</span><span>Kontak</span>
                 </div>
                 <span class="pv-lang" id="pvLang"><i class="bi bi-translate"></i> Bahasa Indonesia <i class="bi bi-chevron-down"></i></span>
                 <span class="pv-pmb"><i class="bi bi-pencil-square me-1"></i>PMB</span>

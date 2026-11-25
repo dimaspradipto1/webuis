@@ -100,14 +100,7 @@
           </li>
 
 
-          <!-- 4. Fakultas (Sesuai Urutan Header) -->
-          <li class="nav-item">
-            <a class="nav-link {{ Route::is('layanan.*') ? '' : 'collapsed' }}" href="{{ route('layanan.index') }}">
-              <i class="bi bi-mortarboard"></i><span>Fakultas</span>
-            </a>
-          </li>
-
-          <!-- 4b. Program Studi (Di Bawah Menu Fakultas) -->
+          <!-- 4. Program Studi (Sesuai Urutan Header) -->
           <li class="nav-item">
             <a class="nav-link {{ Route::is('program-studi.*') ? '' : 'collapsed' }}" data-bs-target="#prodi-nav" data-bs-toggle="collapse" href="#">
               <i class="bi bi-journal-bookmark-fill"></i><span>Program Studi</span><i class="bi bi-chevron-down ms-auto"></i>
