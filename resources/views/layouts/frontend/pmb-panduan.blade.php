@@ -308,29 +308,6 @@
       </div>
     </div>
 
-    {{-- ═════════════════════════════════════════════════════
-         4. CALL TO ACTION BOTTOM
-         ═════════════════════════════════════════════════════ --}}
-    <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 text-white text-center" style="background: linear-gradient(135deg, #023814 0%, #046B26 60%, #024719 100%); border: 2px solid rgba(254, 216, 2, 0.4) !important;">
-      <span class="badge px-3 py-1.5 rounded-pill mb-2 fw-bold text-dark mx-auto" style="background: #FED802;">
-        PORTAL PMB DARING
-      </span>
-      <h3 class="fw-bold mb-2 text-white">Sudah Membaca Panduan? Daftarkan Diri Anda Sekarang</h3>
-      <p class="text-white-50 mx-auto small mb-4" style="max-width: 600px; line-height: 1.7;">
-        Masuk ke portal admisi resmi Universitas Ibnu Sina untuk memulai proses registrasi mahasiswa baru secara online.
-      </p>
-
-      <div class="d-flex flex-wrap justify-content-center gap-3">
-        <a href="{{ $pmbPortalUrl }}" target="_blank" class="btn px-4 py-2.5 rounded-pill fw-bold shadow-sm d-inline-flex align-items-center gap-2 text-dark" style="background-color: #FED802; font-size: 14px;">
-          <i class="bi bi-pencil-square fs-6"></i> Buka Portal PMB Online
-          <i class="bi bi-box-arrow-up-right small ms-1"></i>
-        </a>
-        <a href="https://wa.me/{{ $cleanWa }}?text=Halo%20Panitia%20PMB%20Universitas%20Ibnu%20Sina,%20saya%20sudah%20membaca%20dokumen%20panduan%20dan%20ingin%20konsultasi%20pendaftaran" target="_blank" class="btn btn-outline-light px-4 py-2.5 rounded-pill fw-semibold d-inline-flex align-items-center gap-2" style="font-size: 14px;">
-          <i class="bi bi-whatsapp text-success"></i> Hubungi Helpdesk PMB
-        </a>
-      </div>
-    </div>
-
   </div>
 </main>
 
