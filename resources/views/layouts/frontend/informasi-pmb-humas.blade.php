@@ -311,82 +311,20 @@
     </nav>
 
     <div class="row align-items-center g-4">
-      <div class="col-lg-8">
+      <div class="col-12">
         <span class="pmb-badge-gold">
           <i class="bi bi-patch-check-fill"></i> {{ $pmb->badge_text ?: 'PMB TA 2026/2027' }}
         </span>
         <h1 class="pmb-hero-title">
           {{ $pmb->judul ?: 'Informasi Khusus Penerimaan Mahasiswa Baru' }}
         </h1>
-        <p class="pmb-hero-subtitle">
+        <p class="pmb-hero-subtitle mb-0">
           {{ $pmb->subjudul ?: 'Tahun Akademik 2026/2027 — Universitas Ibnu Sina (UIS) Batam' }}
         </p>
-
-        @php
-          $pmbPortalUrl = $pmb->link_pendaftaran ?: ($pmbSetting->tombol_link_1 ?? 'https://pmb.uis.ac.id');
-          if (!str_starts_with($pmbPortalUrl, 'http://') && !str_starts_with($pmbPortalUrl, 'https://')) {
-              $pmbPortalUrl = 'https://' . $pmbPortalUrl;
-          }
-        @endphp
-
-        <div class="d-flex flex-wrap align-items-center gap-2 pt-1">
-          <a href="{{ $pmbPortalUrl }}" target="_blank" class="btn px-4 py-2.5 rounded-pill fw-bold shadow-sm d-inline-flex align-items-center gap-2 text-dark" style="background-color: #FED802; border: 2px solid #FED802; font-size: 14px;">
-            <i class="bi bi-pencil-square fs-6"></i> Daftar PMB Online Sekarang
-            <i class="bi bi-box-arrow-up-right small ms-1"></i>
-          </a>
-
-          @if(!empty($pmb->file_pdf))
-            <a href="{{ $pmb->pdf_url }}" target="_blank" class="btn btn-outline-light px-3 py-2.5 rounded-pill fw-semibold d-inline-flex align-items-center gap-2" style="font-size: 13.5px;">
-              <i class="bi bi-file-earmark-pdf-fill text-warning"></i> Unduh Panduan PDF
-            </a>
-          @endif
-
-          @if(!empty($pmb->no_wa_pmb))
-            @php
-              $cleanWa = preg_replace('/[^0-9]/', '', $pmb->no_wa_pmb);
-              if (str_starts_with($cleanWa, '0')) {
-                  $cleanWa = '62' . substr($cleanWa, 1);
-              }
-            @endphp
-            <a href="https://wa.me/{{ $cleanWa }}?text=Halo%20Panitia%20PMB%20Universitas%20Ibnu%20Sina,%20saya%20ingin%20berkonsultasi%20mengenai%20pendaftaran%20mahasiswa%20baru" target="_blank" class="btn btn-outline-light px-3 py-2.5 rounded-pill fw-semibold d-inline-flex align-items-center gap-2" style="font-size: 13.5px; background: rgba(37, 211, 102, 0.2); border-color: #25D366;">
-              <i class="bi bi-whatsapp text-success"></i> WhatsApp Panitia
-            </a>
-          @endif
-        </div>
-      </div>
-
-      <div class="col-lg-4 text-center d-none d-lg-block">
-        <div class="p-4 rounded-4 shadow-sm" style="background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(254, 216, 2, 0.3);">
-          <div class="rounded-circle p-3 d-inline-flex align-items-center justify-content-center mb-2 shadow" style="background: #FED802; width: 68px; height: 68px;">
-            <i class="bi bi-mortarboard-fill fs-2" style="color: #046B26;"></i>
-          </div>
-          <h6 class="fw-bold text-white mb-1">Universitas Ibnu Sina</h6>
-          <div class="text-warning small fw-bold">Kampusnya Profesional Muda</div>
-          <hr class="border-secondary opacity-50 my-2">
-          <div class="small text-white-50">Terakreditasi Baik Sekali BAN-PT</div>
-        </div>
       </div>
     </div>
   </div>
 </header>
-
-<!-- ══════════════════════════════════════════════════════
-     2. IN-PAGE STICKY NAV PILLS
-     ══════════════════════════════════════════════════════ -->
-<nav class="pmb-nav-pills-bar py-2 d-none d-md-block">
-  <div class="container d-flex align-items-center justify-content-between overflow-x-auto">
-    <div class="d-flex align-items-center gap-1">
-      <a href="#jadwal-gelombang" class="pmb-nav-pill-link"><i class="bi bi-calendar-event text-success"></i> Jadwal Gelombang</a>
-      <a href="#syarat-pendaftaran" class="pmb-nav-pill-link"><i class="bi bi-file-earmark-check text-success"></i> Syarat & Alur</a>
-      <a href="#program-beasiswa" class="pmb-nav-pill-link"><i class="bi bi-award text-success"></i> Program Beasiswa</a>
-      <a href="{{ route('homepage.pmb-brosur') }}" class="pmb-nav-pill-link"><i class="bi bi-images text-success"></i> Brosur & Poster PMB</a>
-      <a href="{{ route('homepage.pmb-panduan') }}" class="pmb-nav-pill-link"><i class="bi bi-file-earmark-pdf text-success"></i> Dokumen Panduan (PDF)</a>
-    </div>
-    <a href="{{ $pmbPortalUrl }}" target="_blank" class="btn btn-sm btn-success rounded-pill px-3 py-1.5 fw-bold" style="background-color: #046B26; font-size: 12.5px;">
-      <i class="bi bi-pencil-square me-1"></i> Portal PMB
-    </a>
-  </div>
-</nav>
 
 <!-- ══════════════════════════════════════════════════════
      3. HIGHLIGHT METRIK UTAMA
@@ -678,190 +616,7 @@
     </section>
 
     {{-- ═════════════════════════════════════════════════════
-         SEKSI 3: PROGRAM BEASISWA MASUK KULIAH (PMB)
-         ═════════════════════════════════════════════════════ --}}
-    <section class="mb-5" id="program-beasiswa" data-aos="fade-up">
-      <div class="text-center mb-4">
-        <span class="badge px-3 py-1.5 rounded-pill fw-bold text-uppercase" style="background: #eef7f0; color: #046B26; font-size: 12px; letter-spacing: 0.5px;">
-          Bantuan Pendidikan
-        </span>
-        <h3 class="fw-bold text-dark mt-2">Program Beasiswa Kuliah Universitas Ibnu Sina</h3>
-        <p class="text-muted small mx-auto" style="max-width: 650px;">
-          Universitas Ibnu Sina berkomitmen membuka kesempatan kuliah bagi generasi muda berprestasi melalui berbagai skema beasiswa penuh maupun potongan biaya perkuliahan.
-        </p>
-      </div>
-
-      {{-- Catatan Khusus Beasiswa PMB dari Admin --}}
-      @if(!empty($pmb->beasiswa_info))
-        <div class="alert alert-light border border-success-subtle rounded-4 p-4 mb-4 shadow-sm bg-white">
-          <div class="d-flex align-items-center gap-2 mb-1">
-            <i class="bi bi-award-fill text-warning fs-5"></i>
-            <h6 class="fw-bold text-dark mb-0">Informasi Kuota & Jalur Beasiswa TA 2026/2027</h6>
-          </div>
-          <p class="text-muted small mb-0" style="line-height: 1.8; white-space: pre-line;">
-            {{ $pmb->beasiswa_info }}
-          </p>
-        </div>
-      @endif
-
-      {{-- Grid Kartu Jalur Beasiswa PMB --}}
-      <div class="row g-4">
-        @php
-          $beasiswaItems = $jalurBeasiswa ?? \App\Models\BeasiswaSetting::defaultJalur();
-        @endphp
-
-        @foreach($beasiswaItems as $index => $b)
-          <div class="col-md-6 col-lg-4">
-            <div class="beasiswa-card">
-              <div>
-                <div class="d-flex align-items-center justify-content-between mb-2">
-                  <div class="beasiswa-icon-wrap">
-                    <i class="bi {{ $b['icon'] ?? 'bi-award-fill' }}"></i>
-                  </div>
-                  <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-2.5 py-1 small fw-bold">
-                    {{ $b['badge'] ?? 'Beasiswa Resmi' }}
-                  </span>
-                </div>
-
-                <h5 class="fw-bold text-dark mb-2" style="font-size: 16.5px;">
-                  {{ $b['judul'] ?? 'Jalur Beasiswa' }}
-                </h5>
-
-                <p class="text-muted small mb-3" style="line-height: 1.6;">
-                  {{ $b['ringkasan'] ?? ($b['deskripsi'] ?? 'Program beasiswa pendidikan bagi calon mahasiswa baru UIS.') }}
-                </p>
-
-                @if(!empty($b['manfaat']))
-                  <div class="p-2.5 rounded-3 bg-light border small mb-3">
-                    <div class="fw-semibold text-dark mb-1" style="font-size: 12px;">Keuntungan / Manfaat:</div>
-                    <div class="text-muted small" style="line-height: 1.5; white-space: pre-line;">
-                      {{ Str::limit($b['manfaat'], 110) }}
-                    </div>
-                  </div>
-                @endif
-              </div>
-
-              <div>
-                <button type="button" class="btn btn-outline-success w-100 rounded-pill btn-sm fw-bold py-2 d-flex align-items-center justify-content-center gap-1" data-bs-toggle="modal" data-bs-target="#modalBeasiswa{{ $index }}">
-                  <i class="bi bi-info-circle"></i> Rincian & Syarat Beasiswa
-                </button>
-              </div>
-            </div>
-          </div>
-
-          {{-- Modal Detail Beasiswa --}}
-          <div class="modal fade" id="modalBeasiswa{{ $index }}" tabindex="-1" aria-hidden="true">
-            <div class="modal-dialog modal-dialog-centered modal-lg">
-              <div class="modal-content rounded-4 border-0 shadow-lg">
-                <div class="modal-header bg-success text-white rounded-top-4 py-3" style="background-color: #046B26 !important;">
-                  <h5 class="modal-title fw-bold fs-6 d-flex align-items-center gap-2">
-                    <i class="bi {{ $b['icon'] ?? 'bi-award' }}"></i> {{ $b['judul'] }}
-                  </h5>
-                  <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body p-4">
-                  <div class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3 py-1 mb-3 fw-bold">
-                    {{ $b['badge'] ?? 'Beasiswa' }}
-                  </div>
-                  <h6 class="fw-bold text-dark mb-2">Deskripsi Program</h6>
-                  <p class="text-muted small mb-3" style="line-height: 1.7;">{{ $b['deskripsi'] ?? $b['ringkasan'] }}</p>
-
-                  @if(!empty($b['manfaat']))
-                    <h6 class="fw-bold text-dark mb-2">Manfaat & Pembiayaan</h6>
-                    <div class="p-3 rounded-3 bg-light border small text-dark mb-3" style="line-height: 1.7; white-space: pre-line;">
-                      {{ $b['manfaat'] }}
-                    </div>
-                  @endif
-
-                  @if(!empty($b['syarat']))
-                    <h6 class="fw-bold text-dark mb-2">Persyaratan Khusus</h6>
-                    <div class="p-3 rounded-3 bg-light border small text-dark mb-3" style="line-height: 1.7; white-space: pre-line;">
-                      {{ $b['syarat'] }}
-                    </div>
-                  @endif
-
-                  @if(!empty($b['periode']))
-                    <div class="small text-muted"><i class="bi bi-clock me-1 text-success"></i><strong>Waktu Seleksi:</strong> {{ $b['periode'] }}</div>
-                  @endif
-                </div>
-                <div class="modal-footer bg-light rounded-bottom-4 py-2.5">
-                  <a href="{{ $pmbPortalUrl }}" target="_blank" class="btn btn-success rounded-pill btn-sm px-4 fw-bold" style="background-color: #046B26;">
-                    Daftar Jalur Ini
-                  </a>
-                  <button type="button" class="btn btn-secondary rounded-pill btn-sm px-3" data-bs-dismiss="modal">Tutup</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        @endforeach
-      </div>
-    </section>
-
-    {{-- ═════════════════════════════════════════════════════
-         SEKSI 4: MEDIA BROSUR & PANDUAN RESMI PMB
-         ═════════════════════════════════════════════════════ --}}
-    <section class="mb-5" id="media-pmb" data-aos="fade-up">
-      <div class="row g-4">
-        {{-- Card Brosur & Poster PMB --}}
-        <div class="col-md-6">
-          <div class="card h-100 border-0 shadow-sm rounded-4 p-4 bg-white d-flex flex-column justify-content-between" style="border-top: 4px solid #046B26 !important;">
-            <div>
-              <div class="d-flex align-items-center gap-3 mb-3">
-                <div class="rounded-4 p-3 d-flex align-items-center justify-content-center text-success flex-shrink-0" style="background-color: #eef7f0; width: 56px; height: 56px;">
-                  <i class="bi bi-images fs-3 text-success"></i>
-                </div>
-                <div>
-                  <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-2.5 py-0.5 fw-bold small mb-1">
-                    MEDIA VISUAL PMB
-                  </span>
-                  <h5 class="fw-bold text-dark mb-0">Brosur & Poster PMB</h5>
-                </div>
-              </div>
-              <p class="text-muted small mb-4" style="line-height: 1.7;">
-                Lihat dan unduh infografis visual resmi PMB UIS, rincian pilihan program studi, tabel biaya kuliah, dan alur pendaftaran dalam resolusi tinggi.
-              </p>
-            </div>
-            <div>
-              <a href="{{ route('homepage.pmb-brosur') }}" class="btn btn-outline-success w-100 rounded-pill py-2.5 fw-bold d-inline-flex align-items-center justify-content-center gap-2">
-                <i class="bi bi-images"></i> Buka Halaman Brosur & Poster
-                <i class="bi bi-arrow-right ms-1"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-
-        {{-- Card Dokumen Panduan PMB (PDF) --}}
-        <div class="col-md-6">
-          <div class="card h-100 border-0 shadow-sm rounded-4 p-4 bg-white d-flex flex-column justify-content-between" style="border-top: 4px solid #dc2626 !important;">
-            <div>
-              <div class="d-flex align-items-center gap-3 mb-3">
-                <div class="rounded-4 p-3 d-flex align-items-center justify-content-center text-danger flex-shrink-0" style="background-color: #fee2e2; width: 56px; height: 56px;">
-                  <i class="bi bi-file-earmark-pdf-fill fs-3 text-danger"></i>
-                </div>
-                <div>
-                  <span class="badge bg-danger-subtle text-danger border border-danger-subtle rounded-pill px-2.5 py-0.5 fw-bold small mb-1">
-                    DOKUMEN RESMI (PDF)
-                  </span>
-                  <h5 class="fw-bold text-dark mb-0">Dokumen Panduan PMB</h5>
-                </div>
-              </div>
-              <p class="text-muted small mb-4" style="line-height: 1.7;">
-                Unduh salinan resmi buku panduan pendaftaran mahasiswa baru berformat PDF yang memuat syarat berkas, petunjuk teknis admisi, dan jadwal seleksi.
-              </p>
-            </div>
-            <div>
-              <a href="{{ route('homepage.pmb-panduan') }}" class="btn btn-outline-danger w-100 rounded-pill py-2.5 fw-bold d-inline-flex align-items-center justify-content-center gap-2">
-                <i class="bi bi-file-earmark-pdf"></i> Buka Halaman Dokumen Panduan
-                <i class="bi bi-arrow-right ms-1"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    {{-- ═════════════════════════════════════════════════════
-         SEKSI 5: CALL TO ACTION AKHIR & KONSULTASI
+         SEKSI 3: CALL TO ACTION AKHIR & KONSULTASI
          ═════════════════════════════════════════════════════ --}}
     <section class="card border-0 shadow-lg rounded-4 p-4 p-md-5 text-white text-center position-relative overflow-hidden" style="background: linear-gradient(135deg, #023814 0%, #046B26 60%, #024719 100%); border: 2px solid rgba(254, 216, 2, 0.4) !important;" data-aos="fade-up">
       <div class="position-relative" style="z-index: 2;">
@@ -879,7 +634,7 @@
           </a>
 
           @if(!empty($cleanWa))
-            <a href="https://wa.me/{{ $cleanWa }}?text=Halo%20Panitia%20PMB%20Universitas%20Ibnu%20Sina,%20saya%20ingin%20bertanya%20mengenai%20pendaftaran" target="_blank" class="btn btn-outline-light px-4 py-2.5 rounded-pill fw-semibold d-inline-flex align-items-center gap-2" style="font-size: 14px;">
+            <a href="https://wa.me/{{ $cleanWa }}?text=Halo%20Admin%20PMB%20Universitas%20Ibnu%20Sina,%20saya%20ingin%20bertanya%20mengenai%20pendaftaran" target="_blank" class="btn btn-outline-light px-4 py-2.5 rounded-pill fw-semibold d-inline-flex align-items-center gap-2" style="font-size: 14px;">
               <i class="bi bi-whatsapp text-success"></i> Konsultasi via WhatsApp
             </a>
           @endif
@@ -890,28 +645,4 @@
   </div>
 </main>
 
-{{-- Modal Zoom Poster Brosur --}}
-<div class="modal fade" id="modalPosterPmb" tabindex="-1" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-xl">
-    <div class="modal-content bg-transparent border-0">
-      <div class="modal-body p-0 text-center position-relative">
-        <button type="button" class="btn btn-light rounded-circle position-absolute top-0 end-0 m-3 shadow" data-bs-dismiss="modal" aria-label="Close" style="width: 40px; height: 40px; z-index: 10;">
-          <i class="bi bi-x-lg"></i>
-        </button>
-        <img id="posterModalImg" src="" alt="Poster PMB" class="img-fluid rounded-4 shadow-lg" style="max-height: 90vh;">
-      </div>
-    </div>
-  </div>
-</div>
-
-<script>
-function openPosterModal(imgSrc, title) {
-  const modalImg = document.getElementById('posterModalImg');
-  if (modalImg) {
-    modalImg.src = imgSrc;
-  }
-  const modal = new bootstrap.Modal(document.getElementById('modalPosterPmb'));
-  modal.show();
-}
-</script>
 @endsection
