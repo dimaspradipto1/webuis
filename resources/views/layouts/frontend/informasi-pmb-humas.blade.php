@@ -297,6 +297,18 @@
 
 @section('content')
 
+@php
+  $pmbPortalUrl = ($pmb?->link_pendaftaran) ?: ($pmbSetting->tombol_link_1 ?? 'https://pmb.uis.ac.id');
+  if (!str_starts_with($pmbPortalUrl, 'http://') && !str_starts_with($pmbPortalUrl, 'https://')) {
+      $pmbPortalUrl = 'https://' . $pmbPortalUrl;
+  }
+
+  $cleanWa = !empty($pmb?->no_wa_pmb) ? preg_replace('/[^0-9]/', '', $pmb->no_wa_pmb) : '6282283958644';
+  if (str_starts_with($cleanWa, '0')) {
+      $cleanWa = '62' . substr($cleanWa, 1);
+  }
+@endphp
+
 <!-- ══════════════════════════════════════════════════════
      1. HERO HEADER UTAMA PMB
      ══════════════════════════════════════════════════════ -->
