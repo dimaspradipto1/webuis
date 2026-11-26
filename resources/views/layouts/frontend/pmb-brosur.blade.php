@@ -453,8 +453,8 @@
         <a href="{{ $pmbPortalUrl }}" target="_blank" rel="noopener noreferrer" class="btn fw-bold px-4 py-2.5 rounded-pill shadow" style="background-color: #FED802; color: #111827;">
           <i class="bi bi-pencil-square me-1"></i> Daftar PMB Online Sekarang <i class="bi bi-box-arrow-up-right ms-1 small"></i>
         </a>
-        <a href="https://wa.me/{{ $cleanWa }}?text=Halo%20Panitia%20PMB%20UIS,%20saya%20ingin%20berkonsultasi%20pendaftaran" target="_blank" rel="noopener noreferrer" class="btn btn-outline-light px-4 py-2.5 rounded-pill fw-semibold">
-          <i class="bi bi-whatsapp me-1 text-success"></i> Tanya Panitia PMB
+        <a href="https://wa.me/{{ $cleanWa }}?text=Halo%20Admin%20PMB%20UIS,%20saya%20ingin%20berkonsultasi%20pendaftaran" target="_blank" rel="noopener noreferrer" class="btn btn-outline-light px-4 py-2.5 rounded-pill fw-semibold">
+          <i class="bi bi-whatsapp me-1 text-success"></i> Tanya Admin
         </a>
       </div>
     </div>
