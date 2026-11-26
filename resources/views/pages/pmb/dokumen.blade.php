@@ -12,8 +12,6 @@
     </nav>
 </div>
 
-@include('pages.pmb.nav-tabs')
-
 @if(session('success'))
     <div class="alert alert-success alert-dismissible fade show d-flex align-items-center mb-4 rounded-3 border-0 shadow-sm" role="alert">
         <i class="bi bi-check-circle-fill me-2 fs-5"></i>
