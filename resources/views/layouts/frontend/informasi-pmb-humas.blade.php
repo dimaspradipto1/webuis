@@ -412,18 +412,18 @@
     {{-- ═════════════════════════════════════════════════════
          SEKSI 1: JADWAL GELOMBANG PENDAFTARAN
          ═════════════════════════════════════════════════════ --}}
-    <section class="mb-5" id="jadwal-gelombang" data-aos="fade-up">
-      <div class="text-center mb-4">
+    <section class="mb-4" id="jadwal-gelombang" data-aos="fade-up">
+      <div class="text-center mb-3">
         <span class="badge px-3 py-1.5 rounded-pill fw-bold text-uppercase" style="background: #eef7f0; color: #046B26; font-size: 12px; letter-spacing: 0.5px;">
           Jadwal Pendaftaran
         </span>
-        <h3 class="fw-bold text-dark mt-2">Jadwal Gelombang Penerimaan Mahasiswa Baru</h3>
-        <p class="text-muted small mx-auto" style="max-width: 650px;">
+        <h3 class="fw-bold text-dark mt-2 mb-1">Jadwal Gelombang Penerimaan Mahasiswa Baru</h3>
+        <p class="text-muted small mx-auto mb-0" style="max-width: 650px;">
           Pendaftaran dibuka dalam beberapa gelombang. Daftarkan diri Anda lebih awal untuk mendapatkan kemudahan registrasi dan prioritas beasiswa kuliah.
         </p>
       </div>
 
-      <div class="row g-4 justify-content-center mb-4">
+      <div class="row g-3 g-md-4 justify-content-center">
         {{-- Card Gelombang 1 --}}
         <div class="col-md-4">
           <div class="gelombang-card active-wave">
@@ -504,13 +504,13 @@
     {{-- ═════════════════════════════════════════════════════
          SEKSI 2: SYARAT PENDAFTARAN & ALUR PENDAFTARAN
          ═════════════════════════════════════════════════════ --}}
-    <section class="mb-5" id="syarat-pendaftaran" data-aos="fade-up">
-      <div class="text-center mb-4">
+    <section class="mb-4" id="syarat-pendaftaran" data-aos="fade-up">
+      <div class="text-center mb-3">
         <span class="badge px-3 py-1.5 rounded-pill fw-bold text-uppercase" style="background: #eef7f0; color: #046B26; font-size: 12px; letter-spacing: 0.5px;">
           Persyaratan & Tata Cara
         </span>
-        <h3 class="fw-bold text-dark mt-2">Syarat Berkas & Alur Pendaftaran PMB</h3>
-        <p class="text-muted small mx-auto" style="max-width: 650px;">
+        <h3 class="fw-bold text-dark mt-2 mb-1">Syarat Berkas & Alur Pendaftaran PMB</h3>
+        <p class="text-muted small mx-auto mb-0" style="max-width: 650px;">
           Persiapkan kelengkapan dokumen administrasi Anda dan ikuti 4 langkah mudah alur registrasi mahasiswa baru UIS.
         </p>
       </div>
