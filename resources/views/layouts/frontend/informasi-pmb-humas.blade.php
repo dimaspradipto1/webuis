@@ -459,23 +459,6 @@
 <main class="py-5" style="background-color: #f7faf7;">
   <div class="container">
 
-    {{-- Pengantar Resmi PMB --}}
-    @if(!empty($pmb->deskripsi_singkat))
-      <div class="card border-0 shadow-sm rounded-4 p-4 mb-5 bg-white" style="border-left: 5px solid #046B26 !important;">
-        <div class="d-flex align-items-start gap-3">
-          <div class="rounded-circle p-2.5 d-flex align-items-center justify-content-center text-white flex-shrink-0" style="background-color: #046B26; width: 44px; height: 44px;">
-            <i class="bi bi-info-circle-fill fs-5"></i>
-          </div>
-          <div>
-            <h5 class="fw-bold text-dark mb-1">Pengumuman Resmi PMB Universitas Ibnu Sina</h5>
-            <p class="text-muted small mb-0" style="line-height: 1.8; font-size: 14px;">
-              {{ $pmb->deskripsi_singkat }}
-            </p>
-          </div>
-        </div>
-      </div>
-    @endif
-
     {{-- ═════════════════════════════════════════════════════
          SEKSI 1: JADWAL GELOMBANG PENDAFTARAN
          ═════════════════════════════════════════════════════ --}}
