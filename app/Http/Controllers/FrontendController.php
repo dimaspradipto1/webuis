@@ -55,6 +55,7 @@ use App\Models\Unduhan;
 use App\Models\VisiMisi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class FrontendController extends Controller
@@ -926,6 +927,51 @@ class FrontendController extends Controller
         $categories = $brosurs->pluck('kategori_fakultas')->unique()->filter()->values();
 
         return view('layouts.frontend.pmb-brosur', compact('contact', 'pmbSetting', 'pmb', 'brosurs', 'categories'));
+    }
+
+    /**
+     * Unduh Poster Gambar Brosur PMB dengan Nama Asli (Original)
+     */
+    public function downloadBrosur($id)
+    {
+        \App\Models\PmbBrosur::ensureTableExists();
+
+        $realId = \App\Support\VirtualSlug::decode($id) ?? (is_numeric($id) ? (int) $id : null);
+        $brosur = \App\Models\PmbBrosur::findOrFail($realId ?? $id);
+        $filePath = $brosur->gambar;
+
+        if (!$filePath || !Storage::disk('public')->exists($filePath)) {
+            // Cek jika gambar berada di path publik
+            $publicCandidate = public_path('storage/' . $filePath);
+            if (file_exists($publicCandidate)) {
+                return response()->download($publicCandidate, $brosur->nama_download);
+            }
+            return redirect()->back()->with('error', 'File poster tidak ditemukan di penyimpanan server.');
+        }
+
+        return Storage::disk('public')->download($filePath, $brosur->nama_download);
+    }
+
+    /**
+     * Unduh Dokumen PDF Brosur PMB dengan Nama Asli (Original)
+     */
+    public function downloadBrosurPdf($id)
+    {
+        \App\Models\PmbBrosur::ensureTableExists();
+
+        $realId = \App\Support\VirtualSlug::decode($id) ?? (is_numeric($id) ? (int) $id : null);
+        $brosur = \App\Models\PmbBrosur::findOrFail($realId ?? $id);
+        $filePath = $brosur->file_pdf;
+
+        if (!$filePath || !Storage::disk('public')->exists($filePath)) {
+            $publicCandidate = public_path('storage/' . $filePath);
+            if (file_exists($publicCandidate)) {
+                return response()->download($publicCandidate, $brosur->nama_pdf_download);
+            }
+            return redirect()->back()->with('error', 'File dokumen PDF brosur tidak ditemukan di server.');
+        }
+
+        return Storage::disk('public')->download($filePath, $brosur->nama_pdf_download);
     }
 
     public function pmbPanduan()

@@ -17,7 +17,9 @@ class PmbBrosur extends Model
         'judul',
         'kategori_fakultas',
         'gambar',
+        'nama_file_asli',
         'file_pdf',
+        'nama_pdf_asli',
         'deskripsi',
         'tahun_akademik',
         'urutan',
@@ -41,13 +43,26 @@ class PmbBrosur extends Model
                     $table->string('judul');
                     $table->string('kategori_fakultas')->default('Universitas');
                     $table->string('gambar');
+                    $table->string('nama_file_asli')->nullable();
                     $table->string('file_pdf')->nullable();
+                    $table->string('nama_pdf_asli')->nullable();
                     $table->text('deskripsi')->nullable();
                     $table->string('tahun_akademik')->nullable()->default('2026/2027');
                     $table->integer('urutan')->default(0);
                     $table->boolean('is_active')->default(true);
                     $table->timestamps();
                 });
+            } else {
+                if (! Schema::hasColumn('pmb_brosurs', 'nama_file_asli')) {
+                    Schema::table('pmb_brosurs', function (Blueprint $table) {
+                        $table->string('nama_file_asli')->nullable()->after('gambar');
+                    });
+                }
+                if (! Schema::hasColumn('pmb_brosurs', 'nama_pdf_asli')) {
+                    Schema::table('pmb_brosurs', function (Blueprint $table) {
+                        $table->string('nama_pdf_asli')->nullable()->after('file_pdf');
+                    });
+                }
             }
         } catch (\Throwable $e) {
             // Fail silently
@@ -98,5 +113,44 @@ class PmbBrosur extends Model
             'Program Pascasarjana' => 'Pascasarjana',
             default => 'Universitas',
         };
+    }
+
+    /**
+     * Nama file original yang aman dan rapi untuk proses unduh (download)
+     */
+    public function getNamaDownloadAttribute(): string
+    {
+        $ext = pathinfo($this->gambar ?? '', PATHINFO_EXTENSION) ?: 'png';
+
+        if (!empty($this->nama_file_asli) && !preg_match('/^[a-zA-Z0-9]{30,}\.[a-z]+$/', $this->nama_file_asli)) {
+            $name = $this->nama_file_asli;
+            $nameExt = pathinfo($name, PATHINFO_EXTENSION);
+            if (empty($nameExt)) {
+                $name .= '.' . $ext;
+            }
+            return $name;
+        }
+
+        // Jika nama_file_asli kosong atau hash bawaan, gunakan judul resmi brosur
+        $base = !empty($this->judul) ? $this->judul : 'Brosur PMB UIS';
+        return 'Brosur PMB - ' . $base . '.' . $ext;
+    }
+
+    /**
+     * Nama file PDF original untuk proses unduh
+     */
+    public function getNamaPdfDownloadAttribute(): string
+    {
+        if (!empty($this->nama_pdf_asli) && !preg_match('/^[a-zA-Z0-9]{30,}\.pdf$/i', $this->nama_pdf_asli)) {
+            $name = $this->nama_pdf_asli;
+            $nameExt = pathinfo($name, PATHINFO_EXTENSION);
+            if (empty($nameExt)) {
+                $name .= '.pdf';
+            }
+            return $name;
+        }
+
+        $base = !empty($this->judul) ? $this->judul : 'Panduan Brosur PMB UIS';
+        return 'Panduan - ' . $base . '.pdf';
     }
 }

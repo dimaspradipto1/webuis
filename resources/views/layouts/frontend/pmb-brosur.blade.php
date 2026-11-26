@@ -67,72 +67,140 @@
     padding: 3px 7px;
   }
 
-  /* Gallery Card */
+  /* Gallery Card - Borderless & Modern Showcase */
   .gallery-brosur-card {
     background: #ffffff;
-    border-radius: 16px;
-    border: 1px solid #e5e7eb;
-    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+    border-radius: 18px;
+    border: none !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     overflow: hidden;
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    position: relative;
   }
   .gallery-brosur-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 14px 28px rgba(4, 107, 38, 0.12);
-    border-color: #046B26;
+    transform: translateY(-5px);
+    box-shadow: 0 16px 36px rgba(4, 107, 38, 0.15);
   }
+
+  /* Image Wrapper - Full Width Edge-to-Edge with A4 Ratio */
   .gallery-img-wrapper {
     position: relative;
-    background: #0b1320;
+    width: 100%;
+    aspect-ratio: 1 / 1.414; /* Rasio A4 Standar Brosur PMB */
     overflow: hidden;
     cursor: pointer;
-    height: 290px;
+    background: #f8fafc;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 6px;
-    border-radius: 12px;
-    margin: 8px 8px 0 8px;
   }
   .gallery-img-wrapper img {
-    max-width: 100%;
-    max-height: 100%;
-    width: auto;
-    height: auto;
-    object-fit: contain;
-    border-radius: 6px;
-    transition: transform 0.3s ease;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center top;
+    transition: transform 0.4s ease;
   }
   .gallery-brosur-card:hover .gallery-img-wrapper img {
-    transform: scale(1.02);
+    transform: scale(1.03);
   }
+
+  /* Floating Badges on Top of Image */
+  .floating-badge-fakultas {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 5;
+    padding: 5px 12px;
+    border-radius: 50px;
+    font-size: 11px;
+    font-weight: 700;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    letter-spacing: 0.2px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+  }
+  .floating-badge-ta {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 5;
+    padding: 4px 10px;
+    border-radius: 50px;
+    font-size: 10.5px;
+    font-weight: 600;
+    background: rgba(15, 23, 42, 0.72);
+    color: #ffffff;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+
+  /* Overlay on Hover */
   .gallery-overlay {
     position: absolute;
     inset: 0;
-    background: rgba(4, 107, 38, 0.4);
+    background: linear-gradient(to top, rgba(4, 107, 38, 0.65) 0%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.35) 100%);
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 0;
-    transition: opacity 0.2s ease;
-    border-radius: 12px;
+    transition: opacity 0.25s ease;
+    z-index: 4;
   }
   .gallery-brosur-card:hover .gallery-overlay {
     opacity: 1;
   }
   .gallery-overlay-badge {
-    background: rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.85);
     color: #ffffff;
-    padding: 6px 14px;
+    padding: 8px 16px;
     border-radius: 50px;
-    font-size: 11.5px;
+    font-size: 12px;
     font-weight: 700;
-    backdrop-filter: blur(4px);
-    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    backdrop-filter: blur(6px);
+    box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    transform: translateY(8px);
+    transition: transform 0.25s ease;
+  }
+  .gallery-brosur-card:hover .gallery-overlay-badge {
+    transform: translateY(0);
+  }
+
+  .gallery-card-body {
+    padding: 14px 16px 4px 16px;
+    background: #ffffff;
+  }
+  .gallery-card-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: #1e293b;
+    line-height: 1.4;
+    margin-bottom: 4px;
+    transition: color 0.2s ease;
+  }
+  .gallery-brosur-card:hover .gallery-card-title {
+    color: #046B26;
+  }
+  .gallery-card-desc {
+    color: #64748b;
+    font-size: 11.5px;
+    line-height: 1.5;
+    margin-bottom: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .gallery-card-footer {
+    padding: 8px 16px 16px 16px;
+    background: #ffffff;
   }
 
   .btn-download-action {
@@ -140,7 +208,7 @@
     color: #ffffff !important;
     font-weight: 700;
     border-radius: 10px;
-    padding: 8px 12px;
+    padding: 9px 12px;
     font-size: 12px;
     transition: all 0.2s ease;
     border: none;
@@ -149,6 +217,7 @@
     align-items: center;
     justify-content: center;
     gap: 6px;
+    text-decoration: none;
   }
   .btn-download-action:hover {
     background: linear-gradient(135deg, #03531e 0%, #012d10 100%);
@@ -161,13 +230,14 @@
     border: 1.5px solid #fca5a5;
     font-weight: 700;
     border-radius: 10px;
-    padding: 7px 10px;
+    padding: 8px 11px;
     font-size: 11.5px;
     transition: all 0.2s ease;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     gap: 4px;
+    text-decoration: none;
   }
   .btn-pdf-action:hover {
     background: #dc2626;
@@ -181,8 +251,8 @@
     border: 1.5px solid #046B26;
     font-weight: 700;
     border-radius: 10px;
-    padding: 7px 11px;
-    font-size: 12px;
+    padding: 8px 12px;
+    font-size: 12.5px;
     transition: all 0.2s ease;
   }
   .btn-preview-action:hover {
@@ -281,71 +351,72 @@
         @endforeach
       </div>
 
-      {{-- GRID GALERI POSTER & BROSUR (Rasio Kompak 4 Kolom) --}}
+      {{-- GRID GALERI POSTER & BROSUR (Borderless & Full Poster View) --}}
       <div class="row g-3 g-md-4 mb-5" id="galleryBrosurGrid">
         @foreach($brosurs as $b)
           @php
             $slugCat = \Illuminate\Support\Str::slug($b->kategori_fakultas ?: 'universitas');
-            $badgeColor = match ($b->kategori_fakultas) {
-                'Fakultas Sains dan Teknologi' => 'background:#0d6efd;color:#ffffff;',
-                'Fakultas Ekonomi dan Bisnis' => 'background:#0284c7;color:#ffffff;',
-                'Fakultas Ilmu Kesehatan' => 'background:#dc2626;color:#ffffff;',
-                'Program Pascasarjana' => 'background:#7c3aed;color:#ffffff;',
-                default => 'background:#046B26;color:#ffffff;',
+            $badgeBg = match ($b->kategori_fakultas) {
+                'Fakultas Sains dan Teknologi' => 'background: rgba(13, 110, 253, 0.92); color: #ffffff;',
+                'Fakultas Ekonomi dan Bisnis' => 'background: rgba(2, 132, 199, 0.92); color: #ffffff;',
+                'Fakultas Ilmu Kesehatan' => 'background: rgba(220, 38, 38, 0.92); color: #ffffff;',
+                'Program Pascasarjana' => 'background: rgba(124, 58, 237, 0.92); color: #ffffff;',
+                default => 'background: rgba(4, 107, 38, 0.92); color: #ffffff;',
             };
           @endphp
           <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 gallery-item" data-category="{{ $slugCat }}">
             <div class="gallery-brosur-card">
               <div>
-                {{-- Header Card: Fakultas & Tahun --}}
-                <div class="p-2.5 px-3 border-bottom d-flex align-items-center justify-content-between bg-white">
-                  <span class="badge rounded-pill px-2.5 py-1 fw-bold text-truncate" style="{{ $badgeColor }} font-size: 10.5px; max-width: 170px;">
-                    <i class="bi bi-bookmark-fill me-1"></i> {{ $b->kategori_fakultas ?: 'Universitas' }}
-                  </span>
-                  @if($b->tahun_akademik)
-                    <span class="text-muted fw-semibold" style="font-size: 11px;">
-                      TA: {{ $b->tahun_akademik }}
-                    </span>
-                  @endif
-                </div>
-
-                {{-- Gambar Cover Brosur (Object-Fit Contain & Full View) --}}
+                {{-- Gambar Cover Brosur (Tampil Full Tanpa Border Box) --}}
                 <div class="gallery-img-wrapper btn-trigger-lightbox" 
                      data-title="{{ $b->judul }}" 
                      data-kategori="{{ $b->kategori_fakultas }}" 
                      data-img="{{ $b->gambar_url }}" 
-                     data-pdf="{{ $b->pdf_url ?? '' }}"
-                     title="Klik untuk melihat & memperbesar">
+                     data-download="{{ route('homepage.pmb-brosur.download', $b->id) }}"
+                     data-pdf="{{ $b->file_pdf ? route('homepage.pmb-brosur.download-pdf', $b->id) : '' }}"
+                     title="Klik untuk melihat poster & zoom in">
+                  
+                  {{-- Floating Badge Kategori & TA --}}
+                  <span class="floating-badge-fakultas" style="{{ $badgeBg }}">
+                    <i class="bi bi-bookmark-fill me-1"></i> {{ $b->kategori_badge ?? ($b->kategori_fakultas ?: 'Universitas') }}
+                  </span>
+                  @if($b->tahun_akademik)
+                    <span class="floating-badge-ta">
+                      TA {{ $b->tahun_akademik }}
+                    </span>
+                  @endif
+
                   <img src="{{ $b->gambar_url }}" alt="{{ $b->judul }}" loading="lazy">
+                  
                   <div class="gallery-overlay">
                     <span class="gallery-overlay-badge">
-                      <i class="bi bi-zoom-in me-1"></i> Zoom In
+                      <i class="bi bi-arrows-angle-expand me-1"></i> Zoom In / Pratinjau
                     </span>
                   </div>
                 </div>
 
                 {{-- Deskripsi & Judul Brosur --}}
-                <div class="p-3">
-                  <h6 class="fw-bold text-dark mb-1 text-truncate" style="font-size: 14.5px; line-height: 1.4;" title="{{ $b->judul }}">
+                <div class="gallery-card-body">
+                  <h6 class="gallery-card-title text-truncate" title="{{ $b->judul }}">
                     {{ $b->judul }}
                   </h6>
                   @if(!empty($b->deskripsi))
-                    <p class="text-muted small mb-0 mt-1" style="line-height: 1.5; font-size: 11.5px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;">
+                    <p class="gallery-card-desc">
                       {{ $b->deskripsi }}
                     </p>
                   @endif
                 </div>
               </div>
 
-              {{-- Tombol Aksi di Bawah Card --}}
-              <div class="p-3 pt-0">
+              {{-- Tombol Aksi di Bawah Card (Download Menggunakan Nama Asli) --}}
+              <div class="gallery-card-footer">
                 <div class="d-flex align-items-center gap-2">
-                  <a href="{{ $b->gambar_url }}" download class="btn-download-action flex-fill">
+                  <a href="{{ route('homepage.pmb-brosur.download', $b->id) }}" class="btn-download-action flex-fill" title="Unduh Poster Resolusi Asli">
                     <i class="bi bi-download"></i> Unduh Poster
                   </a>
 
                   @if($b->file_pdf)
-                    <a href="{{ $b->pdf_url }}" target="_blank" class="btn-pdf-action" title="Unduh / Buka Dokumen PDF">
+                    <a href="{{ route('homepage.pmb-brosur.download-pdf', $b->id) }}" class="btn-pdf-action" title="Unduh File Dokumen PDF Resmi">
                       <i class="bi bi-file-earmark-pdf-fill"></i> PDF
                     </a>
                   @endif
@@ -354,8 +425,9 @@
                           data-title="{{ $b->judul }}" 
                           data-kategori="{{ $b->kategori_fakultas }}" 
                           data-img="{{ $b->gambar_url }}" 
-                          data-pdf="{{ $b->pdf_url ?? '' }}" 
-                          title="Zoom In / Pratinjau">
+                          data-download="{{ route('homepage.pmb-brosur.download', $b->id) }}"
+                          data-pdf="{{ $b->file_pdf ? route('homepage.pmb-brosur.download-pdf', $b->id) : '' }}" 
+                          title="Zoom In & Pratinjau Layar Penuh">
                     <i class="bi bi-zoom-in"></i>
                   </button>
                 </div>
@@ -554,12 +626,13 @@ document.addEventListener('DOMContentLoaded', function () {
       const title = this.getAttribute('data-title') || 'Brosur PMB UIS';
       const kategori = this.getAttribute('data-kategori') || 'Universitas';
       const imgSrc = this.getAttribute('data-img') || '';
+      const downloadSrc = this.getAttribute('data-download') || imgSrc;
       const pdfSrc = this.getAttribute('data-pdf') || '';
 
       lightboxTitle.innerText = title;
       lightboxKategori.innerText = kategori;
       lightboxImg.src = imgSrc;
-      lightboxDownloadBtn.href = imgSrc;
+      lightboxDownloadBtn.href = downloadSrc;
       if (lightboxNewTabBtn) lightboxNewTabBtn.href = imgSrc;
 
       if (pdfSrc) {

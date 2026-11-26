@@ -215,6 +215,7 @@
                                 <a id="edit_gambar_link" href="#" target="_blank">
                                     <img id="edit_gambar_img" src="#" alt="Poster" class="rounded border shadow-sm" style="max-height: 120px; object-fit: contain;">
                                 </a>
+                                <div class="small text-muted mt-1" id="edit_gambar_filename" style="font-size: 11.5px;"></div>
                             </div>
                         </div>
 
@@ -288,9 +289,15 @@
 
             // Pratinjau Gambar
             const gambarUrl = btn.data('gambar-url');
+            const namaAsli = btn.data('nama-asli');
             if (gambarUrl) {
                 $('#edit_gambar_img').attr('src', gambarUrl);
                 $('#edit_gambar_link').attr('href', gambarUrl);
+                if (namaAsli) {
+                    $('#edit_gambar_filename').html('<i class="bi bi-file-earmark-image me-1 text-success"></i> Nama File: <strong>' + namaAsli + '</strong>');
+                } else {
+                    $('#edit_gambar_filename').empty();
+                }
                 $('#edit_preview_container').show();
             } else {
                 $('#edit_preview_container').hide();
@@ -298,10 +305,11 @@
 
             // Status PDF
             const pdfUrl = btn.data('pdf-url');
+            const namaPdf = btn.data('nama-pdf');
             if (pdfUrl) {
                 $('#edit_pdf_info').html(`
-                    <a href="${pdfUrl}" target="_blank" class="btn btn-sm btn-outline-danger py-0.5 px-2 rounded-pill small">
-                        <i class="bi bi-file-earmark-pdf-fill me-1"></i> Buka PDF Tersimpan
+                    <a href="${pdfUrl}" target="_blank" class="btn btn-sm btn-outline-danger py-1 px-3 rounded-pill small fw-semibold">
+                        <i class="bi bi-file-earmark-pdf-fill me-1"></i> ${namaPdf || 'Buka PDF Tersimpan'}
                     </a>
                 `);
                 $('#edit_hapus_pdf_wrapper').show();

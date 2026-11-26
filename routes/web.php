@@ -120,6 +120,8 @@ Route::controller(FrontendController::class)->group(function () {
     Route::get('/survey-layanan', 'surveyLayanan')->name('homepage.survey-layanan');
     Route::get('/informasi-khusus-pmb', 'informasiKhususPmb')->name('homepage.informasi-pmb');
     Route::get('/brosur-pmb', 'pmbBrosur')->name('homepage.pmb-brosur');
+    Route::get('/brosur-pmb/download/{id}', 'downloadBrosur')->name('homepage.pmb-brosur.download');
+    Route::get('/brosur-pmb/download-pdf/{id}', 'downloadBrosurPdf')->name('homepage.pmb-brosur.download-pdf');
     Route::get('/panduan-pmb', 'pmbPanduan')->name('homepage.pmb-panduan');
     Route::get('/kontak', 'kontak')->name('homepage.kontak');
 });

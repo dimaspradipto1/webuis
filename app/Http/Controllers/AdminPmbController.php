@@ -171,18 +171,38 @@ class AdminPmbController extends Controller
             'is_active' => 'nullable|boolean',
         ]);
 
-        $gambarPath = $request->file('gambar')->store('pmb-brosur', 'public');
+        // Simpan gambar dengan nama original yang aman
+        $fileGambar = $request->file('gambar');
+        $originalGambarName = $fileGambar->getClientOriginalName();
+        $cleanGambarName = pathinfo($originalGambarName, PATHINFO_FILENAME);
+        $extGambar = $fileGambar->getClientOriginalExtension() ?: 'png';
+        $safeGambarTarget = \Illuminate\Support\Str::slug($cleanGambarName) . '.' . $extGambar;
+        if (Storage::disk('public')->exists('pmb-brosur/' . $safeGambarTarget)) {
+            $safeGambarTarget = \Illuminate\Support\Str::slug($cleanGambarName) . '_' . date('Ymd_His') . '.' . $extGambar;
+        }
+        $gambarPath = $fileGambar->storeAs('pmb-brosur', $safeGambarTarget, 'public');
 
         $pdfPath = null;
+        $originalPdfName = null;
         if ($request->hasFile('file_pdf')) {
-            $pdfPath = $request->file('file_pdf')->store('pmb-brosur-pdf', 'public');
+            $filePdf = $request->file('file_pdf');
+            $originalPdfName = $filePdf->getClientOriginalName();
+            $cleanPdfName = pathinfo($originalPdfName, PATHINFO_FILENAME);
+            $extPdf = $filePdf->getClientOriginalExtension() ?: 'pdf';
+            $safePdfTarget = \Illuminate\Support\Str::slug($cleanPdfName) . '.' . $extPdf;
+            if (Storage::disk('public')->exists('pmb-brosur-pdf/' . $safePdfTarget)) {
+                $safePdfTarget = \Illuminate\Support\Str::slug($cleanPdfName) . '_' . date('Ymd_His') . '.' . $extPdf;
+            }
+            $pdfPath = $filePdf->storeAs('pmb-brosur-pdf', $safePdfTarget, 'public');
         }
 
         PmbBrosur::create([
             'judul' => $validated['judul'],
             'kategori_fakultas' => $validated['kategori_fakultas'],
             'gambar' => $gambarPath,
+            'nama_file_asli' => $originalGambarName,
             'file_pdf' => $pdfPath,
+            'nama_pdf_asli' => $originalPdfName,
             'deskripsi' => $validated['deskripsi'] ?? null,
             'tahun_akademik' => $validated['tahun_akademik'] ?? '2026/2027',
             'urutan' => $validated['urutan'] ?? 0,
@@ -217,7 +237,16 @@ class AdminPmbController extends Controller
             if ($brosur->gambar && Storage::disk('public')->exists($brosur->gambar)) {
                 Storage::disk('public')->delete($brosur->gambar);
             }
-            $brosur->gambar = $request->file('gambar')->store('pmb-brosur', 'public');
+            $fileGambar = $request->file('gambar');
+            $originalGambarName = $fileGambar->getClientOriginalName();
+            $cleanGambarName = pathinfo($originalGambarName, PATHINFO_FILENAME);
+            $extGambar = $fileGambar->getClientOriginalExtension() ?: 'png';
+            $safeGambarTarget = \Illuminate\Support\Str::slug($cleanGambarName) . '.' . $extGambar;
+            if (Storage::disk('public')->exists('pmb-brosur/' . $safeGambarTarget)) {
+                $safeGambarTarget = \Illuminate\Support\Str::slug($cleanGambarName) . '_' . date('Ymd_His') . '.' . $extGambar;
+            }
+            $brosur->gambar = $fileGambar->storeAs('pmb-brosur', $safeGambarTarget, 'public');
+            $brosur->nama_file_asli = $originalGambarName;
         }
 
         // PDF Baru
@@ -225,12 +254,22 @@ class AdminPmbController extends Controller
             if ($brosur->file_pdf && Storage::disk('public')->exists($brosur->file_pdf)) {
                 Storage::disk('public')->delete($brosur->file_pdf);
             }
-            $brosur->file_pdf = $request->file('file_pdf')->store('pmb-brosur-pdf', 'public');
+            $filePdf = $request->file('file_pdf');
+            $originalPdfName = $filePdf->getClientOriginalName();
+            $cleanPdfName = pathinfo($originalPdfName, PATHINFO_FILENAME);
+            $extPdf = $filePdf->getClientOriginalExtension() ?: 'pdf';
+            $safePdfTarget = \Illuminate\Support\Str::slug($cleanPdfName) . '.' . $extPdf;
+            if (Storage::disk('public')->exists('pmb-brosur-pdf/' . $safePdfTarget)) {
+                $safePdfTarget = \Illuminate\Support\Str::slug($cleanPdfName) . '_' . date('Ymd_His') . '.' . $extPdf;
+            }
+            $brosur->file_pdf = $filePdf->storeAs('pmb-brosur-pdf', $safePdfTarget, 'public');
+            $brosur->nama_pdf_asli = $originalPdfName;
         } elseif ($request->boolean('hapus_pdf') && $brosur->file_pdf) {
             if (Storage::disk('public')->exists($brosur->file_pdf)) {
                 Storage::disk('public')->delete($brosur->file_pdf);
             }
             $brosur->file_pdf = null;
+            $brosur->nama_pdf_asli = null;
         }
 
         $brosur->judul = $validated['judul'];
