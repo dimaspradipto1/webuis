@@ -55,13 +55,6 @@
         </span>
     </div>
     <div class="card-body p-4">
-        <div class="alert alert-info border-0 rounded-3 mb-4 d-flex align-items-center gap-3" style="background-color: #e8f5e9; color: #1e3a1e;">
-            <i class="bi bi-info-circle-fill text-success fs-4"></i>
-            <div class="small">
-                Halaman ini menampung seluruh brosur promosi dan poster infografis PMB untuk <strong>Universitas</strong> maupun setiap <strong>Fakultas</strong> (Teknik / Sains & Teknologi, FEB, FIKES, Pascasarjana). Pengunjung di website publik dapat memfilter brosur berdasarkan fakultas dan mengunduh resolusi HD.
-            </div>
-        </div>
-
         <div class="table-responsive">
             {{ $dataTable->table([
                 'class' => 'table table-striped table-bordered align-middle',
