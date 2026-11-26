@@ -61,18 +61,21 @@
                     <input type="text" id="subjudul" name="subjudul" class="form-control" value="{{ old('subjudul', $pmb->subjudul) }}" placeholder="Tahun Akademik 2026/2027 — Universitas Ibnu Sina">
                 </div>
 
-                <div class="mb-3">
-                    <label for="deskripsi_singkat" class="form-label fw-bold text-dark small">Teks Pengumuman Resmi / Sambutan PMB</label>
-                    <textarea id="deskripsi_singkat" name="deskripsi_singkat" class="form-control" rows="3" placeholder="Teks pengantar informasi pendaftaran mahasiswa baru...">{{ old('deskripsi_singkat', $pmb->deskripsi_singkat) }}</textarea>
-                </div>
-
-                <div class="mb-2">
-                    <label for="no_wa_pmb" class="form-label fw-bold text-dark small">Nomor WhatsApp Helpdesk Panitia PMB</label>
-                    <div class="input-group">
-                        <span class="input-group-text bg-light text-success"><i class="bi bi-whatsapp"></i></span>
-                        <input type="text" id="no_wa_pmb" name="no_wa_pmb" class="form-control" value="{{ old('no_wa_pmb', $pmb->no_wa_pmb) }}" placeholder="Contoh: 082283958644">
+                <div class="row g-3 mb-3">
+                    <div class="col-md-6">
+                        <label for="link_pendaftaran" class="form-label fw-bold text-dark small">Tautan Portal Pendaftaran Online (Link PMB)</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light text-success"><i class="bi bi-box-arrow-up-right"></i></span>
+                            <input type="url" id="link_pendaftaran" name="link_pendaftaran" class="form-control" value="{{ old('link_pendaftaran', $pmb->link_pendaftaran ?: 'https://pmb.uis.ac.id') }}" placeholder="https://pmb.uis.ac.id">
+                        </div>
                     </div>
-                    <div class="form-text small">Nomor tujuan konsultasi calon mahasiswa baru melalui tombol WhatsApp.</div>
+                    <div class="col-md-6">
+                        <label for="no_wa_pmb" class="form-label fw-bold text-dark small">Nomor WhatsApp Helpdesk Panitia PMB</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light text-success"><i class="bi bi-whatsapp"></i></span>
+                            <input type="text" id="no_wa_pmb" name="no_wa_pmb" class="form-control" value="{{ old('no_wa_pmb', $pmb->no_wa_pmb) }}" placeholder="Contoh: 082283958644">
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -86,9 +89,9 @@
                     <label for="gelombang_info" class="form-label fw-bold text-dark small">
                         Daftar Jadwal Gelombang (Poin-Poin / Timeline) <span class="text-danger">*</span>
                     </label>
-                    <textarea id="gelombang_info" name="gelombang_info" class="form-control" rows="5" placeholder="Contoh:&#10;• Gelombang I : Januari - Maret 2026 (Potongan Biaya Pendaftaran)&#10;• Gelombang II : April - Juni 2026 (Jalur Reguler & Beasiswa)&#10;• Gelombang III: Juli - September 2026 (Jalur Kuota Terakhir)" required>{{ old('gelombang_info', $pmb->gelombang_info) }}</textarea>
+                    <textarea id="gelombang_info" name="gelombang_info" class="form-control font-monospace small" rows="5" placeholder="Contoh:&#10;• Gelombang I : Januari - Maret 2026&#10;• Gelombang II : April - Juni 2026&#10;• Gelombang III: Juli - September 2026" required>{{ old('gelombang_info', $pmb->gelombang_info ?: "• Gelombang I : Januari - Maret 2026\n• Gelombang II : April - Juni 2026\n• Gelombang III: Juli - September 2026") }}</textarea>
                     <div class="form-text small text-muted mt-2">
-                        Gunakan simbol poin (• atau angka) dan baris baru untuk memisahkan setiap gelombang pendaftaran.
+                        Format: <code>• Nama Gelombang : Rentang Waktu</code> (Setiap baris akan ditampilkan sebagai card gelombang interaktif di frontend).
                     </div>
                 </div>
             </div>
@@ -106,28 +109,6 @@
                     <textarea id="persyaratan_info" name="persyaratan_info" class="form-control" rows="6" placeholder="Contoh:&#10;1. Salinan Ijazah / SKL SMA/SMK/MA/Sederajat yang dilegalisir (2 lembar)&#10;2. Salinan Kartu Keluarga (KK) dan KTP calon mahasiswa (2 lembar)&#10;3. Pas foto berwarna ukuran 3x4 (3 lembar)&#10;4. Mengisi formulir pendaftaran daring di portal resmi PMB UIS" required>{{ old('persyaratan_info', $pmb->persyaratan_info) }}</textarea>
                     <div class="form-text small text-muted mt-2">
                         Gunakan penomoran (1, 2, 3...) agar di halaman frontend tampil dalam bentuk checklist dokumen interaktif.
-                    </div>
-                </div>
-            </div>
-
-            {{-- SEKSI 4: PROGRAM BEASISWA PMB --}}
-            <div class="card border-0 shadow-sm rounded-4 p-4 mb-4 bg-white" id="seksi-beasiswa">
-                <div class="d-flex align-items-center justify-content-between border-bottom pb-3 mb-4">
-                    <h5 class="fw-bold text-dark mb-0 d-flex align-items-center gap-2">
-                        <i class="bi bi-award-fill text-danger fs-4"></i> 4. Program Beasiswa Masuk Kuliah PMB
-                    </h5>
-                    <a href="{{ route('beasiswa.admin') }}" class="btn btn-sm btn-outline-danger rounded-pill px-3 py-1 fw-semibold">
-                        <i class="bi bi-gear-fill me-1"></i> Kelola Detail Jalur Beasiswa
-                    </a>
-                </div>
-
-                <div class="mb-3">
-                    <label for="beasiswa_info" class="form-label fw-bold text-dark small">
-                        Catatan & Pengumuman Tambahan Program Beasiswa PMB (Opsional)
-                    </label>
-                    <textarea id="beasiswa_info" name="beasiswa_info" class="form-control" rows="3" placeholder="Informasi singkat atau catatan khusus kuota beasiswa PMB tahun ini...">{{ old('beasiswa_info', $pmb->beasiswa_info) }}</textarea>
-                    <div class="form-text small text-muted mt-1">
-                        Daftar jalur beasiswa (KIP-K, Prestasi Akademik, Non-Akademik, Tahfidz, Industri, dan Yayasan) secara otomatis disinkronkan dan ditampilkan di halaman PMB.
                     </div>
                 </div>
             </div>
@@ -169,7 +150,6 @@
                     <div class="d-flex flex-column gap-1 small">
                         <a href="#seksi-gelombang" class="text-decoration-none text-muted py-1"><i class="bi bi-arrow-down-short text-success"></i> Menuju Jadwal Gelombang</a>
                         <a href="#seksi-syarat" class="text-decoration-none text-muted py-1"><i class="bi bi-arrow-down-short text-success"></i> Menuju Syarat Pendaftaran</a>
-                        <a href="#seksi-beasiswa" class="text-decoration-none text-muted py-1"><i class="bi bi-arrow-down-short text-success"></i> Menuju Program Beasiswa</a>
                     </div>
                 </div>
             </div>

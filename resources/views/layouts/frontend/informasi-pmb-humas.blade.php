@@ -424,80 +424,31 @@
       </div>
 
       <div class="row g-3 g-md-4 justify-content-center">
-        {{-- Card Gelombang 1 --}}
+        @foreach($pmb->parsed_gelombang as $wave)
         <div class="col-md-4">
-          <div class="gelombang-card active-wave">
+          <div class="gelombang-card {{ $wave['active'] ? 'active-wave' : '' }}">
             <div class="d-flex align-items-center justify-content-between mb-3">
-              <span class="badge bg-success rounded-pill px-3 py-1 fw-bold small">
-                <i class="bi bi-broadcast me-1"></i> Sedang Dibuka
+              <span class="badge {{ $wave['badge_class'] }} rounded-pill px-3 py-1 fw-bold small">
+                @if($wave['active']) <i class="bi bi-broadcast me-1"></i> @endif {{ $wave['badge'] }}
               </span>
-              <span class="text-success fw-bold small">Gelombang I</span>
+              <span class="{{ $wave['active'] ? 'text-success' : 'text-muted' }} fw-bold small">{{ $wave['wave'] }}</span>
             </div>
-            <h5 class="fw-bold text-dark mb-2">Gelombang Dini & Prestasi</h5>
+            <h5 class="fw-bold text-dark mb-2">{{ $wave['title'] }}</h5>
             <div class="p-2.5 rounded-3 bg-light border mb-3 small">
-              <i class="bi bi-calendar2-week text-success me-1"></i>
-              <strong>Januari – Maret 2026</strong>
+              <i class="bi bi-calendar2-week {{ $wave['active'] ? 'text-success' : 'text-primary' }} me-1"></i>
+              <strong>{{ $wave['date'] }}</strong>
             </div>
             <ul class="list-unstyled small text-muted mb-4 d-flex flex-column gap-2" style="line-height: 1.6;">
-              <li><i class="bi bi-check2 text-success me-1 fw-bold"></i> Potongan Biaya Pendaftaran Awal</li>
-              <li><i class="bi bi-check2 text-success me-1 fw-bold"></i> Prioritas Seleksi Jalur Beasiswa Kuliah</li>
-              <li><i class="bi bi-check2 text-success me-1 fw-bold"></i> Kepastian Kuota Program Studi Pilihan</li>
+              @foreach($wave['perks'] as $perk)
+                <li><i class="bi bi-check2 {{ $wave['active'] ? 'text-success' : 'text-primary' }} me-1 fw-bold"></i> {{ $perk }}</li>
+              @endforeach
             </ul>
-            <a href="{{ $pmbPortalUrl }}" target="_blank" class="btn btn-success w-100 rounded-pill btn-sm fw-bold py-2 shadow-sm" style="background-color: #046B26;">
-              Daftar Gelombang I
+            <a href="{{ $pmbPortalUrl }}" target="_blank" class="btn {{ $wave['btn_class'] }} w-100 rounded-pill btn-sm fw-bold py-2 shadow-sm" style="{{ $wave['btn_style'] }}">
+              {{ $wave['btn_text'] }}
             </a>
           </div>
         </div>
-
-        {{-- Card Gelombang 2 --}}
-        <div class="col-md-4">
-          <div class="gelombang-card">
-            <div class="d-flex align-items-center justify-content-between mb-3">
-              <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-3 py-1 fw-bold small">
-                Mendatang
-              </span>
-              <span class="text-muted fw-bold small">Gelombang II</span>
-            </div>
-            <h5 class="fw-bold text-dark mb-2">Gelombang Reguler Utama</h5>
-            <div class="p-2.5 rounded-3 bg-light border mb-3 small">
-              <i class="bi bi-calendar2-week text-primary me-1"></i>
-              <strong>April – Juni 2026</strong>
-            </div>
-            <ul class="list-unstyled small text-muted mb-4 d-flex flex-column gap-2" style="line-height: 1.6;">
-              <li><i class="bi bi-check2 text-primary me-1 fw-bold"></i> Jalur Reguler Sarjana (S1) & Magister (S2)</li>
-              <li><i class="bi bi-check2 text-primary me-1 fw-bold"></i> Seleksi Administrasi & CBT Online</li>
-              <li><i class="bi bi-check2 text-primary me-1 fw-bold"></i> Program Beasiswa Kemitraan & Yayasan</li>
-            </ul>
-            <a href="{{ $pmbPortalUrl }}" target="_blank" class="btn btn-outline-success w-100 rounded-pill btn-sm fw-bold py-2">
-              Daftar Gelombang II
-            </a>
-          </div>
-        </div>
-
-        {{-- Card Gelombang 3 --}}
-        <div class="col-md-4">
-          <div class="gelombang-card">
-            <div class="d-flex align-items-center justify-content-between mb-3">
-              <span class="badge bg-warning-subtle text-dark border border-warning-subtle rounded-pill px-3 py-1 fw-bold small">
-                Kuota Terakhir
-              </span>
-              <span class="text-muted fw-bold small">Gelombang III</span>
-            </div>
-            <h5 class="fw-bold text-dark mb-2">Gelombang Penutup</h5>
-            <div class="p-2.5 rounded-3 bg-light border mb-3 small">
-              <i class="bi bi-calendar2-week text-warning me-1"></i>
-              <strong>Juli – September 2026</strong>
-            </div>
-            <ul class="list-unstyled small text-muted mb-4 d-flex flex-column gap-2" style="line-height: 1.6;">
-              <li><i class="bi bi-check2 text-dark me-1 fw-bold"></i> Pengisian Kuota Terakhir Program Studi</li>
-              <li><i class="bi bi-check2 text-dark me-1 fw-bold"></i> Tes Masuk & Wawancara Khusus</li>
-              <li><i class="bi bi-check2 text-dark me-1 fw-bold"></i> Pembekalan PKKMB Mahasiswa Baru</li>
-            </ul>
-            <a href="{{ $pmbPortalUrl }}" target="_blank" class="btn btn-outline-secondary w-100 rounded-pill btn-sm py-2">
-              Informasi Gelombang III
-            </a>
-          </div>
-        </div>
+        @endforeach
       </div>
     </section>
 

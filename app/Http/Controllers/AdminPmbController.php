@@ -53,6 +53,7 @@ class AdminPmbController extends Controller
             'subjudul' => 'nullable|string|max:255',
             'badge_text' => 'nullable|string|max:100',
             'deskripsi_singkat' => 'nullable|string',
+            'link_pendaftaran' => 'nullable|string|max:255',
             'no_wa_pmb' => 'nullable|string|max:50',
             'gelombang_info' => 'nullable|string',
             'persyaratan_info' => 'nullable|string',
@@ -65,6 +66,7 @@ class AdminPmbController extends Controller
             'subjudul' => $validated['subjudul'] ?? null,
             'badge_text' => $validated['badge_text'] ?? null,
             'deskripsi_singkat' => $validated['deskripsi_singkat'] ?? null,
+            'link_pendaftaran' => $validated['link_pendaftaran'] ?? ($pmb->link_pendaftaran ?: 'https://pmb.uis.ac.id'),
             'no_wa_pmb' => $validated['no_wa_pmb'] ?? null,
             'gelombang_info' => $validated['gelombang_info'] ?? $pmb->gelombang_info,
             'persyaratan_info' => $validated['persyaratan_info'] ?? $pmb->persyaratan_info,
@@ -72,7 +74,7 @@ class AdminPmbController extends Controller
             'is_active' => $request->has('is_active'),
         ]);
 
-        return redirect()->back()->with('success', 'Informasi PMB (termasuk Jadwal Gelombang, Syarat, dan Beasiswa) berhasil diperbarui!');
+        return redirect()->back()->with('success', 'Informasi PMB (Jadwal Gelombang & Syarat Berkas) berhasil diperbarui!');
     }
 
     /**

@@ -97,4 +97,117 @@ class InformasiPmbHumas extends Model
 
         return $raw ?: '6282283958644';
     }
+
+    /**
+     * Parse daftar gelombang dari teks admin gelombang_info menjadi array card dinamis.
+     */
+    public function getParsedGelombangAttribute(): array
+    {
+        $defaultWaves = [
+            [
+                'wave' => 'Gelombang I',
+                'title' => 'Gelombang Dini & Prestasi',
+                'date' => 'Januari – Maret 2026',
+                'badge' => 'Sedang Dibuka',
+                'badge_class' => 'bg-success text-white',
+                'active' => true,
+                'btn_text' => 'Daftar Gelombang I',
+                'btn_class' => 'btn-success',
+                'btn_style' => 'background-color: #046B26;',
+                'perks' => [
+                    'Potongan Biaya Pendaftaran Awal',
+                    'Prioritas Seleksi Jalur Beasiswa Kuliah',
+                    'Kepastian Kuota Program Studi Pilihan',
+                ],
+            ],
+            [
+                'wave' => 'Gelombang II',
+                'title' => 'Gelombang Reguler Utama',
+                'date' => 'April – Juni 2026',
+                'badge' => 'Mendatang',
+                'badge_class' => 'bg-primary-subtle text-primary border border-primary-subtle',
+                'active' => false,
+                'btn_text' => 'Daftar Gelombang II',
+                'btn_class' => 'btn-outline-success',
+                'btn_style' => '',
+                'perks' => [
+                    'Jalur Reguler Sarjana (S1) & Magister (S2)',
+                    'Seleksi Administrasi & CBT Online',
+                    'Program Beasiswa Kemitraan & Yayasan',
+                ],
+            ],
+            [
+                'wave' => 'Gelombang III',
+                'title' => 'Gelombang Penutup',
+                'date' => 'Juli – September 2026',
+                'badge' => 'Kuota Terakhir',
+                'badge_class' => 'bg-warning-subtle text-dark border border-warning-subtle',
+                'active' => false,
+                'btn_text' => 'Informasi Gelombang III',
+                'btn_class' => 'btn-outline-secondary',
+                'btn_style' => '',
+                'perks' => [
+                    'Pengisian Kuota Terakhir Program Studi',
+                    'Tes Masuk & Wawancara Khusus',
+                    'Pembekalan PKKMB Mahasiswa Baru',
+                ],
+            ],
+        ];
+
+        $raw = trim((string) ($this->gelombang_info ?? ''));
+        if (empty($raw)) {
+            return $defaultWaves;
+        }
+
+        $lines = array_values(array_filter(array_map('trim', explode("\n", $raw))));
+        if (empty($lines)) {
+            return $defaultWaves;
+        }
+
+        $result = [];
+        foreach ($lines as $index => $line) {
+            $cleanLine = ltrim($line, "•*- 0..9.)");
+            $wave = 'Gelombang ' . ($index + 1);
+            $date = $cleanLine;
+            $title = $defaultWaves[$index]['title'] ?? ('Penerimaan Gelombang ' . ($index + 1));
+
+            if (str_contains($cleanLine, ':')) {
+                $parts = explode(':', $cleanLine, 2);
+                $wave = trim($parts[0]);
+                $date = trim($parts[1]);
+            }
+
+            if (preg_match('/^(.*?)\s*\((.*?)\)$/', $date, $matches)) {
+                $date = trim($matches[1]);
+                $title = trim($matches[2]);
+            }
+
+            $badge = $defaultWaves[$index]['badge'] ?? ($index === 0 ? 'Sedang Dibuka' : 'Informasi Gelombang');
+            $badgeClass = $defaultWaves[$index]['badge_class'] ?? ($index === 0 ? 'bg-success text-white' : 'bg-primary-subtle text-primary border border-primary-subtle');
+            $btnText = $defaultWaves[$index]['btn_text'] ?? ('Daftar ' . $wave);
+            $btnClass = $defaultWaves[$index]['btn_class'] ?? ($index === 0 ? 'btn-success' : 'btn-outline-success');
+            $btnStyle = $defaultWaves[$index]['btn_style'] ?? ($index === 0 ? 'background-color: #046B26;' : '');
+            $active = ($index === 0);
+            $perks = $defaultWaves[$index]['perks'] ?? [
+                'Pendaftaran Online Portal PMB',
+                'Seleksi Administrasi & Verifikasi Berkas',
+                'Pilihan Program Studi Terakreditasi',
+            ];
+
+            $result[] = [
+                'wave' => $wave,
+                'title' => $title,
+                'date' => $date,
+                'badge' => $badge,
+                'badge_class' => $badgeClass,
+                'active' => $active,
+                'btn_text' => $btnText,
+                'btn_class' => $btnClass,
+                'btn_style' => $btnStyle,
+                'perks' => $perks,
+            ];
+        }
+
+        return !empty($result) ? $result : $defaultWaves;
+    }
 }
