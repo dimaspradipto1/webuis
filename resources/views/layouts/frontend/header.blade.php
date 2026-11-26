@@ -120,8 +120,6 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-custom">
             <li><a class="dropdown-item dropdown-item-custom {{ request()->routeIs('homepage.informasi-pmb') ? 'active' : '' }}" href="{{ route('homepage.informasi-pmb') }}"><i class="bi bi-info-circle-fill" style="color: #046B26;"></i> Informasi PMB</a></li>
-            <li><a class="dropdown-item dropdown-item-custom" href="{{ route('homepage.informasi-pmb') }}#jadwal-gelombang"><i class="bi bi-calendar-event"></i> Jadwal Gelombang</a></li>
-            <li><a class="dropdown-item dropdown-item-custom" href="{{ route('homepage.informasi-pmb') }}#syarat-pendaftaran"><i class="bi bi-file-earmark-check"></i> Syarat Pendaftaran</a></li>
             <li><a class="dropdown-item dropdown-item-custom {{ request()->routeIs('homepage.beasiswa') ? 'active' : '' }}" href="{{ route('homepage.beasiswa') }}"><i class="bi bi-award"></i> Program Beasiswa</a></li>
             <li><a class="dropdown-item dropdown-item-custom {{ request()->routeIs('homepage.pmb-brosur') ? 'active' : '' }}" href="{{ route('homepage.pmb-brosur') }}"><i class="bi bi-images"></i> Brosur & Poster PMB</a></li>
             <li><a class="dropdown-item dropdown-item-custom {{ request()->routeIs('homepage.pmb-panduan') ? 'active' : '' }}" href="{{ route('homepage.pmb-panduan') }}"><i class="bi bi-file-earmark-pdf"></i> Dokumen Panduan (PDF)</a></li>
