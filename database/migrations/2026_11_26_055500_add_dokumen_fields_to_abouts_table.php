@@ -12,9 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('abouts', function (Blueprint $table) {
-            $table->string('dokumen_file')->nullable()->after('video_file');
-            $table->string('dokumen_nama')->nullable()->after('dokumen_file');
-            $table->string('dokumen_link', 1000)->nullable()->after('dokumen_nama');
+            if (! Schema::hasColumn('abouts', 'dokumen_file')) {
+                $table->string('dokumen_file')->nullable()->after('video_file');
+            }
+            if (! Schema::hasColumn('abouts', 'dokumen_nama')) {
+                $table->string('dokumen_nama')->nullable()->after('dokumen_file');
+            }
+            if (! Schema::hasColumn('abouts', 'dokumen_link')) {
+                $table->string('dokumen_link', 1000)->nullable()->after('dokumen_nama');
+            }
         });
     }
 
@@ -24,7 +30,19 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('abouts', function (Blueprint $table) {
-            $table->dropColumn(['dokumen_file', 'dokumen_nama', 'dokumen_link']);
+            $columnsToDrop = [];
+            if (Schema::hasColumn('abouts', 'dokumen_file')) {
+                $columnsToDrop[] = 'dokumen_file';
+            }
+            if (Schema::hasColumn('abouts', 'dokumen_nama')) {
+                $columnsToDrop[] = 'dokumen_nama';
+            }
+            if (Schema::hasColumn('abouts', 'dokumen_link')) {
+                $columnsToDrop[] = 'dokumen_link';
+            }
+            if (! empty($columnsToDrop)) {
+                $table->dropColumn($columnsToDrop);
+            }
         });
     }
 };
