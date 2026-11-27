@@ -365,27 +365,15 @@
               </div>
             @endif
           </div>
-          {{-- BAR DI BAWAH VIDEO: DOKUMEN PROFIL & YOUTUBE BUTTON SEJAJAR --}}
-          <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mt-2 px-1">
-            @if($about?->hasDokumen())
-              <a href="{{ $about->dokumen_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm text-white fw-semibold d-inline-flex align-items-center gap-1 shadow-sm" style="background-color: #046B26; font-size: 12px; border-radius: 6px; padding: 4px 12px;">
-                <i class="bi bi-file-earmark-pdf-fill text-warning"></i>
-                <span>{{ $about->dokumen_nama ?: 'Baca Selengkapnya' }}</span>
-                <i class="bi bi-box-arrow-up-right ms-1" style="font-size: 10px;"></i>
+          {{-- BAR DI BAWAH VIDEO: LINK YOUTUBE (TEKS RAPI TANPA TOMBOL HIJAU) --}}
+          @if($about->youtube_watch_url)
+            <div class="d-flex justify-content-end align-items-center gap-1.5 mt-2 px-1 text-muted" style="font-size: 12.5px;">
+              <span>Video bermasalah saat diputar?</span>
+              <a href="{{ $about->youtube_watch_url }}" target="_blank" rel="noopener noreferrer" class="text-decoration-underline fw-semibold d-inline-flex align-items-center gap-1" style="color: #4b5563 !important;">
+                <i class="bi bi-youtube text-danger"></i> Buka Langsung di YouTube <i class="bi bi-box-arrow-up-right ms-0.5" style="font-size: 10px;"></i>
               </a>
-            @else
-              <div></div>
-            @endif
-
-            @if($about->youtube_watch_url)
-              <div class="d-flex align-items-center gap-2 ms-auto">
-                <span class="text-muted small" style="font-size: 12px;">Video bermasalah saat diputar?</span>
-                <a href="{{ $about->youtube_watch_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm text-white fw-semibold d-inline-flex align-items-center gap-1" style="background-color: #046B26; font-size: 12px; border-radius: 6px; padding: 4px 12px;">
-                  <i class="bi bi-youtube text-warning"></i> Buka Langsung di YouTube <i class="bi bi-box-arrow-up-right ms-1" style="font-size: 10px;"></i>
-                </a>
-              </div>
-            @endif
-          </div>
+            </div>
+          @endif
         </div>
 
         {{-- Content / Deskripsi Kanan --}}
@@ -417,19 +405,11 @@
 
             {{-- Tombol Baca Selengkapnya --}}
             <div class="pt-3 mt-3 border-top d-flex flex-wrap align-items-center gap-2">
-              @if($about?->hasDokumen())
-                <a href="{{ $about->dokumen_url }}" target="_blank" rel="noopener noreferrer" class="btn text-white fw-bold d-inline-flex align-items-center gap-2 shadow-sm px-3 py-2" style="background: linear-gradient(135deg, #046B26 0%, #03531e 100%); border-radius: 8px; font-size: 13.5px; transition: all 0.25s ease;">
-                  <i class="bi bi-file-earmark-text-fill text-warning"></i>
-                  <span>{{ $about->dokumen_nama ?: 'Baca Selengkapnya' }}</span>
-                  <i class="bi bi-box-arrow-up-right ms-1" style="font-size: 11px;"></i>
-                </a>
-              @else
-                <a href="{{ route('homepage.tentang') }}" class="btn text-white fw-bold d-inline-flex align-items-center gap-2 shadow-sm px-3 py-2" style="background: linear-gradient(135deg, #046B26 0%, #03531e 100%); border-radius: 8px; font-size: 13.5px; transition: all 0.25s ease;">
-                  <i class="bi bi-book-half text-warning"></i>
-                  <span>Baca Selengkapnya</span>
-                  <i class="bi bi-arrow-right ms-1"></i>
-                </a>
-              @endif
+              <a href="{{ route('homepage.tentang') }}" class="btn text-white fw-bold d-inline-flex align-items-center gap-2 shadow-sm px-3 py-2" style="background: linear-gradient(135deg, #046B26 0%, #03531e 100%); border-radius: 8px; font-size: 13.5px; transition: all 0.25s ease;">
+                <i class="bi bi-book-half text-warning"></i>
+                <span>Tentang Universitas Selengkapnya</span>
+                <i class="bi bi-arrow-right ms-1"></i>
+              </a>
               <a href="{{ route('homepage.tentang') }}" class="btn btn-outline-success fw-semibold d-inline-flex align-items-center gap-1 px-3 py-2" style="border-radius: 8px; font-size: 13.5px; border-color: #046B26; color: #046B26;">
                 <i class="bi bi-info-circle"></i>
                 Halaman Profil Lengkap
@@ -443,13 +423,6 @@
     <!-- TOMBOL CTA PROFIL LENGKAP -->
     <div class="row justify-content-center mb-4" data-aos="fade-up" data-aos-delay="250">
       <div class="col-12 text-center d-flex flex-wrap justify-content-center gap-3">
-        @if($about?->hasDokumen())
-          <a href="{{ $about->dokumen_url }}" target="_blank" rel="noopener noreferrer" class="btn-primary-hero d-inline-flex align-items-center gap-2" style="background: linear-gradient(135deg, #046B26 0%, #03531e 100%); padding: 12px 28px; border-radius: 30px;">
-            <i class="bi bi-file-earmark-pdf-fill text-warning fs-5"></i>
-            <span>{{ $about->dokumen_nama ?: 'Baca Selengkapnya (Dokumen Profil UIS)' }}</span>
-            <i class="bi bi-box-arrow-up-right ms-1" style="font-size: 12px;"></i>
-          </a>
-        @endif
         <a href="{{ route('homepage.tentang') }}" class="btn btn-outline-success fw-bold d-inline-flex align-items-center gap-2 px-4 py-2" style="border-radius: 30px; font-size: 15px; border: 2px solid #046B26; color: #046B26; background: #fff;">
           <i class="bi bi-info-circle"></i>
           Profil Lengkap Universitas Ibnu Sina

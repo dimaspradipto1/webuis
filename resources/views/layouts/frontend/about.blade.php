@@ -51,36 +51,15 @@
                 </div>
               @endif
             </div>
-            {{-- BAR DI BAWAH VIDEO: DOKUMEN PROFIL & YOUTUBE BUTTON SEJAJAR --}}
-            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mt-2 px-1">
-              @if($about?->hasDokumen())
-                <a href="{{ $about->dokumen_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm text-white fw-semibold d-inline-flex align-items-center gap-2 shadow-sm" style="background-color: #046B26; font-size: 12.5px; border-radius: 6px; padding: 4px 14px;">
-                  <i class="bi bi-file-earmark-pdf-fill text-warning"></i>
-                  <span>{{ $about->dokumen_nama ?: 'Baca Selengkapnya' }}</span>
-                  <i class="bi bi-box-arrow-up-right ms-1" style="font-size: 10px;"></i>
+            {{-- BAR DI BAWAH VIDEO: LINK YOUTUBE (TEKS RAPI TANPA TOMBOL HIJAU) --}}
+            @if($about->youtube_watch_url)
+              <div class="d-flex justify-content-end align-items-center gap-1.5 mt-2 px-1 text-muted" style="font-size: 12.5px;">
+                <span>Video bermasalah saat diputar?</span>
+                <a href="{{ $about->youtube_watch_url }}" target="_blank" rel="noopener noreferrer" class="text-decoration-underline fw-semibold d-inline-flex align-items-center gap-1" style="color: #4b5563 !important;">
+                  <i class="bi bi-youtube text-danger"></i> Buka Langsung di YouTube <i class="bi bi-box-arrow-up-right ms-0.5" style="font-size: 10px;"></i>
                 </a>
-              @else
-                <div></div>
-              @endif
-
-              @if($about->youtube_watch_url)
-                <div class="d-flex align-items-center gap-2 ms-auto">
-                  <span class="text-muted small">Video bermasalah saat diputar?</span>
-                  <a href="{{ $about->youtube_watch_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm text-white fw-semibold d-inline-flex align-items-center gap-1" style="background-color: #046B26; font-size: 12.5px; border-radius: 6px; padding: 4px 12px;">
-                    <i class="bi bi-youtube text-warning"></i> Buka Langsung di YouTube <i class="bi bi-box-arrow-up-right ms-1" style="font-size: 10px;"></i>
-                  </a>
-                </div>
-              @endif
-            </div>
-          </div>
-        @elseif($about?->hasDokumen())
-          {{-- Fallback jika tidak ada video namun ada dokumen profil --}}
-          <div class="mb-4" data-aos="fade-up" data-aos-delay="100">
-            <a href="{{ $about->dokumen_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm text-white fw-semibold d-inline-flex align-items-center gap-2 shadow-sm" style="background-color: #046B26; font-size: 13px; border-radius: 6px; padding: 6px 16px;">
-              <i class="bi bi-file-earmark-pdf-fill text-warning"></i>
-              <span>{{ $about->dokumen_nama ?: 'Baca Selengkapnya (Dokumen Profil)' }}</span>
-              <i class="bi bi-box-arrow-up-right ms-1" style="font-size: 10px;"></i>
-            </a>
+              </div>
+            @endif
           </div>
         @endif
 
