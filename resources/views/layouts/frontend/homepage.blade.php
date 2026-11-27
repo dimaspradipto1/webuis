@@ -436,13 +436,6 @@
     <!-- TOMBOL CTA PROFIL LENGKAP -->
     <div class="row justify-content-center mb-4" data-aos="fade-up" data-aos-delay="250">
       <div class="col-12 text-center d-flex flex-wrap justify-content-center gap-3">
-        @if($about?->hasDokumen())
-          <a href="{{ $about->dokumen_url }}" target="_blank" rel="noopener noreferrer" class="btn fw-bold d-inline-flex align-items-center gap-2 shadow-sm" style="background: #ffffff; color: #1f2937; border: 1.5px solid #d1d5db; padding: 10px 24px; border-radius: 30px; font-size: 14px; text-decoration: none;">
-            <i class="bi bi-file-earmark-pdf-fill text-danger fs-5"></i>
-            <span style="color: #1f2937; font-weight: 700;">{{ $about->dokumen_nama ?: 'Flyer Profil Universitas Ibnu Sina' }}</span>
-            <i class="bi bi-box-arrow-up-right ms-1 text-muted" style="font-size: 11px;"></i>
-          </a>
-        @endif
         <a href="{{ route('homepage.tentang') }}" class="btn btn-outline-success fw-bold d-inline-flex align-items-center gap-2 px-4 py-2" style="border-radius: 30px; font-size: 14.5px; border: 2px solid #046B26; color: #046B26; background: #fff;">
           <i class="bi bi-info-circle"></i>
           Profil Lengkap Universitas Ibnu Sina
