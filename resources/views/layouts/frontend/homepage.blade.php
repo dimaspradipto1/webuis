@@ -365,15 +365,29 @@
               </div>
             @endif
           </div>
-          {{-- BAR DI BAWAH VIDEO: LINK YOUTUBE (TEKS RAPI TANPA TOMBOL HIJAU) --}}
-          @if($about->youtube_watch_url)
-            <div class="d-flex justify-content-end align-items-center gap-1.5 mt-2 px-1 text-muted" style="font-size: 12.5px;">
-              <span>Video bermasalah saat diputar?</span>
-              <a href="{{ $about->youtube_watch_url }}" target="_blank" rel="noopener noreferrer" class="text-decoration-underline fw-semibold d-inline-flex align-items-center gap-1" style="color: #4b5563 !important;">
-                <i class="bi bi-youtube text-danger"></i> Buka Langsung di YouTube <i class="bi bi-box-arrow-up-right ms-0.5" style="font-size: 10px;"></i>
+          {{-- BAR DI BAWAH VIDEO: DOKUMEN PROFIL & LINK YOUTUBE --}}
+          <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mt-2 px-1">
+            @if($about?->hasDokumen())
+              <a href="{{ $about->dokumen_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm d-inline-flex align-items-center gap-2 shadow-sm fw-bold text-white" style="background-color: #046B26; color: #ffffff !important; font-size: 12px; border-radius: 6px; padding: 5px 14px; text-decoration: none;">
+                <i class="bi bi-file-earmark-pdf-fill text-warning"></i>
+                <span style="color: #ffffff !important; font-weight: 700;">{{ $about->dokumen_nama ?: 'Flyer Profil Universitas' }}</span>
+                <i class="bi bi-box-arrow-up-right ms-1 text-white-50" style="font-size: 10px;"></i>
               </a>
-            </div>
-          @endif
+            @else
+              <div></div>
+            @endif
+
+            @if($about->youtube_watch_url)
+              <div class="d-flex align-items-center gap-2 ms-auto text-muted small" style="font-size: 12.5px;">
+                <span>Video bermasalah saat diputar?</span>
+                <a href="{{ $about->youtube_watch_url }}" target="_blank" rel="noopener noreferrer" class="fw-semibold d-inline-flex align-items-center gap-1.5 text-danger text-decoration-none" style="color: #dc2626 !important; font-size: 12.5px;">
+                  <i class="bi bi-youtube fs-6" style="color: #ff0000;"></i>
+                  <span style="text-decoration: underline; text-underline-offset: 3px;">Buka Langsung di YouTube</span>
+                  <i class="bi bi-box-arrow-up-right text-muted ms-0.5" style="font-size: 10px;"></i>
+                </a>
+              </div>
+            @endif
+          </div>
         </div>
 
         {{-- Content / Deskripsi Kanan --}}
@@ -423,7 +437,14 @@
     <!-- TOMBOL CTA PROFIL LENGKAP -->
     <div class="row justify-content-center mb-4" data-aos="fade-up" data-aos-delay="250">
       <div class="col-12 text-center d-flex flex-wrap justify-content-center gap-3">
-        <a href="{{ route('homepage.tentang') }}" class="btn btn-outline-success fw-bold d-inline-flex align-items-center gap-2 px-4 py-2" style="border-radius: 30px; font-size: 15px; border: 2px solid #046B26; color: #046B26; background: #fff;">
+        @if($about?->hasDokumen())
+          <a href="{{ $about->dokumen_url }}" target="_blank" rel="noopener noreferrer" class="btn fw-bold d-inline-flex align-items-center gap-2 shadow-sm text-white" style="background: linear-gradient(135deg, #046B26 0%, #03531e 100%); color: #ffffff !important; padding: 11px 26px; border-radius: 30px; font-size: 14.5px; text-decoration: none;">
+            <i class="bi bi-file-earmark-pdf-fill text-warning fs-5"></i>
+            <span style="color: #ffffff !important; font-weight: 700;">{{ $about->dokumen_nama ?: 'Flyer Profil Universitas Ibnu Sina' }}</span>
+            <i class="bi bi-box-arrow-up-right ms-1 text-white-50" style="font-size: 11px;"></i>
+          </a>
+        @endif
+        <a href="{{ route('homepage.tentang') }}" class="btn btn-outline-success fw-bold d-inline-flex align-items-center gap-2 px-4 py-2" style="border-radius: 30px; font-size: 14.5px; border: 2px solid #046B26; color: #046B26; background: #fff;">
           <i class="bi bi-info-circle"></i>
           Profil Lengkap Universitas Ibnu Sina
         </a>
