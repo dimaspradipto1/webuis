@@ -54,10 +54,10 @@
             {{-- BAR DI BAWAH VIDEO: DOKUMEN PROFIL & LINK YOUTUBE --}}
             <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mt-2 px-1">
               @if($about?->hasDokumen())
-                <a href="{{ $about->dokumen_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm d-inline-flex align-items-center gap-2 shadow-sm fw-bold text-white" style="background-color: #046B26; color: #ffffff !important; font-size: 12.5px; border-radius: 6px; padding: 5px 14px; text-decoration: none;">
-                  <i class="bi bi-file-earmark-pdf-fill text-warning"></i>
-                  <span style="color: #ffffff !important; font-weight: 700;">{{ $about->dokumen_nama ?: 'Flyer Profil Universitas' }}</span>
-                  <i class="bi bi-box-arrow-up-right ms-1 text-white-50" style="font-size: 10px;"></i>
+                <a href="{{ $about->dokumen_url }}" target="_blank" rel="noopener noreferrer" class="btn btn-sm d-inline-flex align-items-center gap-2 shadow-sm fw-semibold" style="background-color: #ffffff; color: #1f2937; border: 1px solid #d1d5db; font-size: 12.5px; border-radius: 6px; padding: 5px 14px; text-decoration: none;">
+                  <i class="bi bi-file-earmark-pdf-fill text-danger"></i>
+                  <span style="color: #1f2937; font-weight: 600;">{{ $about->dokumen_nama ?: 'Flyer Profil Universitas' }}</span>
+                  <i class="bi bi-box-arrow-up-right ms-1 text-muted" style="font-size: 10px;"></i>
                 </a>
               @else
                 <div></div>
@@ -65,7 +65,6 @@
 
               @if($about->youtube_watch_url)
                 <div class="d-flex align-items-center gap-2 ms-auto text-muted small" style="font-size: 12.5px;">
-                  <span>Video bermasalah saat diputar?</span>
                   <a href="{{ $about->youtube_watch_url }}" target="_blank" rel="noopener noreferrer" class="fw-semibold d-inline-flex align-items-center gap-1.5 text-danger text-decoration-none" style="color: #dc2626 !important; font-size: 12.5px;">
                     <i class="bi bi-youtube fs-6" style="color: #ff0000;"></i>
                     <span style="text-decoration: underline; text-underline-offset: 3px;">Buka Langsung di YouTube</span>

@@ -298,7 +298,7 @@
 @section('content')
 
 @php
-  $pmbPortalUrl = ($pmb?->link_pendaftaran) ?: ($pmbSetting->tombol_link_1 ?? 'https://pmb.uis.ac.id');
+  $pmbPortalUrl = $pmbPortalUrl ?? (($pmb?->link_pendaftaran) ?: ($pmbSetting->tombol_link_1 ?? 'https://pmb.uis.ac.id'));
   if (!str_starts_with($pmbPortalUrl, 'http://') && !str_starts_with($pmbPortalUrl, 'https://')) {
       $pmbPortalUrl = 'https://' . $pmbPortalUrl;
   }

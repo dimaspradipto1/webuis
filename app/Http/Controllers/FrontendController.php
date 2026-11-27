@@ -889,10 +889,16 @@ class FrontendController extends Controller
             ]
         );
 
+        $pmbPortalUrl = ($pmb?->link_pendaftaran) ?: ($pmbSetting->tombol_link_1 ?? 'https://pmb.uis.ac.id');
+        if (!str_starts_with($pmbPortalUrl, 'http://') && !str_starts_with($pmbPortalUrl, 'https://')) {
+            $pmbPortalUrl = 'https://' . $pmbPortalUrl;
+        }
+
         return view('layouts.frontend.informasi-pmb-humas', compact(
             'contact',
             'pmbSetting',
             'pmb',
+            'pmbPortalUrl',
             'beasiswaSetting',
             'jalurBeasiswa',
             'beasiswaStats',
