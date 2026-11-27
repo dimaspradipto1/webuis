@@ -113,6 +113,41 @@ class FileUploadService
     }
 
     /**
+     * Process embedded base64 images in HTML content, saving them as files
+     * and replacing base64 data URIs with proper /storage/news/content/... URLs.
+     */
+    public function processBase64ContentImages(?string $content, string $directory = 'news/content', string $disk = 'public'): ?string
+    {
+        if (empty($content) || ! str_contains($content, 'data:image/')) {
+            return $content;
+        }
+
+        return preg_replace_callback('/<img[^>]+src=["\'](data:image\/([a-zA-Z0-9\+\-\.]+);base64,([^"\']+))["\'][^>]*>/i', function ($matches) use ($directory, $disk) {
+            $fullImgTag = $matches[0];
+            $base64Data = $matches[1];
+            $imageExtension = strtolower($matches[2]);
+            $rawBinary = base64_decode($matches[3]);
+
+            if (! $rawBinary) {
+                return $fullImgTag;
+            }
+
+            if ($imageExtension === 'jpeg') {
+                $imageExtension = 'jpg';
+            } elseif (! in_array($imageExtension, ['jpg', 'png', 'webp', 'gif', 'svg'])) {
+                $imageExtension = 'jpg';
+            }
+
+            $filename = trim($directory, '/') . '/' . Str::random(40) . '.' . $imageExtension;
+            Storage::disk($disk)->put($filename, $rawBinary);
+
+            $assetUrl = asset('storage/' . $filename);
+
+            return str_replace($base64Data, $assetUrl, $fullImgTag);
+        }, $content);
+    }
+
+    /**
      * Extract and delete images embedded inside HTML content (e.g. TinyMCE uploads).
      */
     public function deleteEmbeddedContentImages(?string $htmlContent, string $disk = 'public'): void

@@ -21,5 +21,7 @@ return Application::configure(basePath: dirname(__DIR__))
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {
-        //
+        $exceptions->render(function (\Illuminate\Http\Exceptions\PostTooLargeException $e, $request) {
+            return back()->withInput()->with('error', 'Ukuran data atau file yang dikirim terlalu besar melebihi batas server. Silakan naikkan limit post_max_size di cPanel atau kurangi ukuran file/gambar.');
+        });
     })->create();

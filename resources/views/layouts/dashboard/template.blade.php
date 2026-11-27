@@ -626,6 +626,7 @@
                             image_title: true,
                             image_caption: true,
                             automatic_uploads: true,
+                            paste_data_images: true,
                             file_picker_types: 'image',
                             setup: function (editor) {
                                 editor.ui.registry.addButton('togglecaption', {
